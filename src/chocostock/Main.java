@@ -3,5 +3,6 @@ public class Main {
 
         System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque");
         System.out.println("Amatongas Mais ou menos né!");
+        int eu = 0;
     }
 }
