@@ -4,14 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="estruturação do projeto e criação de classes">
+    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco">
+      <change afterPath="$PROJECT_DIR$/src/chocostock/Funcoes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/chocostock/Status.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Endereco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Estoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Pedido.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Colaborador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Funcionario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Equipamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Equipamento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/chocolates/Barra.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/chocolates/Bombom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/chocolates/Drageado.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +32,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -65,15 +76,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "MaraoLT",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MaraoLT&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -98,11 +109,20 @@
       <option name="project" value="LOCAL" />
       <updated>1715047075627</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco">
+      <option name="closed" value="true" />
+      <created>1715136907505</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715136907505</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="estruturação do projeto e criação de classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="estruturação do projeto e criação de classes" />
+    <MESSAGE value="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco" />
+    <option name="LAST_COMMIT_MESSAGE" value="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco" />
   </component>
 </project>

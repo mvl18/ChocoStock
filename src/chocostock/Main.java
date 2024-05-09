@@ -2,6 +2,7 @@ package chocostock;
 
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
+import chocostock.colaboladores.Funcionario;
 
 public class Main {
     public static void main(String[] args) {

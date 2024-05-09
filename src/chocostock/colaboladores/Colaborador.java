@@ -49,11 +49,15 @@ public class Colaborador {
 
     @Override
     public String toString() {
-        return "Colaborador{" +
-                "nome='" + nome + '\'' +
+        return "nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", endereco=" + endereco +
                 '}';
+    }
+
+
+    public String toString(boolean titulo) {
+        return "Colaborador{" + this.toString();
     }
 }

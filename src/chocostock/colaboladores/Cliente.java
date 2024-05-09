@@ -25,9 +25,8 @@ public class Cliente extends Colaborador {
 
     @Override
     public String toString() { // teste de como fazer um toString() decente
-        return super.toString() +
-                "Cliente{" +
-                "id=" + id +
+        return "Cliente{" + super.toString() +
+                ", id=" + id +
                 ", pedidos=" + pedidos +
                 '}';
     }
