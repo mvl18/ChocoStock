@@ -1,18 +1,28 @@
 package chocostock;
 
 public class Endereco {
+    private int numero;
     private String cep;
     private String rua;
     private String bairro;
     private String cidade;
-    private String estado;
+    private Estados estado;
 
-    public Endereco(String cep, String rua, String bairro, String cidade, String estado) {
+    public Endereco(int numero, String cep, String rua, String bairro, String cidade, Estados estado) {
+        this.numero = numero;
         this.cep = cep;
         this.rua = rua;
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public String getCep() {
@@ -47,22 +57,19 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    public String getEstado() {
+    public Estados getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estados estado) {
         this.estado = estado;
     }
 
-    @Override
     public String toString() {
-        return "Endereco{" +
-                "cep='" + cep + '\'' +
-                ", rua='" + rua + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", estado='" + estado + '\'' +
-                '}';
+        return "CEP: " + cep +
+                "\nRua " + rua + ", " + numero + " - Bairro " + bairro +
+                "\n" + cidade + " (" + estado.getCodigo() + ")";
     }
 }
+
+

@@ -13,7 +13,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.");
-
         // TESTES INICIAIS MARAOLT
         Endereco endereco1 = new Endereco("17154-1283", "Rua Alves Brito", "Barao Geraldo", "Campinas", "SP");
         System.out.println(endereco1);
@@ -21,6 +20,12 @@ public class Main {
         Cliente cliente2 = new Cliente("Jose", "1132932843", "jose.jose@gmail.com", endereco1);
         System.out.println(cliente1);
         System.out.println(cliente2);
+
+        // Exemplo de instanciação de endereço e de mudança de estado
+        Endereco endereco = new Endereco(34,"1403128", "Pitágoras", "Limoeiro", "Gotham", Estados.SP);
+        System.out.println(endereco);
+        endereco.setEstado(Estados.AC);
+        System.out.println(endereco);
 
         Loja loja = new Loja("Primeira e unica loja!", endereco1);
         loja.addPedido(novoPedido(scanner));
