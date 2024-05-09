@@ -8,10 +8,12 @@ import java.util.Date;
 
 public class Caixa extends Produto {
     private ArrayList<Chocolate> chocolates;
+    private TiposCaixas tipo;
 
-    public Caixa(String nome, int quantidade, float preco, TiposChocolates tipo, Date validade, int peso, Embalagem embalagem, ArrayList<Chocolate> chocolates) {
-        super(nome, quantidade, preco, tipo, validade, peso, embalagem);
+    public Caixa(String nome, int quantidade, float preco, Date validade, int peso, Embalagem embalagem, ArrayList<Chocolate> chocolates, TiposCaixas tipo) {
+        super(nome, quantidade, preco, validade, peso, embalagem);
         this.chocolates = chocolates;
+        this.tipo = tipo;
     }
 
     public ArrayList<Chocolate> getChocolates() {
@@ -20,6 +22,14 @@ public class Caixa extends Produto {
 
     public void setChocolates(ArrayList<Chocolate> chocolates) {
         this.chocolates = chocolates;
+    }
+
+    public TiposCaixas getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TiposCaixas tipo) {
+        this.tipo = tipo;
     }
 
     public boolean addChocolate(Chocolate chocolate) {

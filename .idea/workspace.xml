@@ -4,24 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco">
-      <change afterPath="$PROJECT_DIR$/src/chocostock/Funcoes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chocostock/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" afterDir="false" />
+    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="inicio da classe:&#10;-Loja">
+      <change afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Complementos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Estoque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Pedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Colaborador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Equipamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Equipamento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Loja.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Loja.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Status.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/chocolates/Barra.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/chocolates/Bombom.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/chocolates/Drageado.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,12 +108,30 @@
       <option name="project" value="LOCAL" />
       <updated>1715136907505</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="inicio das classes:&#10;-Caixa&#10;-Chocolate&#10;-Cliente&#10;-Equipamento&#10;-Estoque&#10;-Item&#10;-Pedido&#10;-Produto">
+      <option name="closed" value="true" />
+      <created>1715223868011</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715223868011</updated>
+    </task>
+    <task id="LOCAL-00004" summary="inicio da classe:&#10;-Loja">
+      <option name="closed" value="true" />
+      <created>1715224017131</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1715224017131</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="estruturação do projeto e criação de classes" />
     <MESSAGE value="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco" />
-    <option name="LAST_COMMIT_MESSAGE" value="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco" />
+    <MESSAGE value="inicio das classes:&#10;-Caixa&#10;-Chocolate&#10;-Cliente&#10;-Equipamento&#10;-Estoque&#10;-Item&#10;-Pedido&#10;-Produto" />
+    <MESSAGE value="inicio da classe:&#10;-Loja" />
+    <option name="LAST_COMMIT_MESSAGE" value="inicio da classe:&#10;-Loja" />
   </component>
 </project>

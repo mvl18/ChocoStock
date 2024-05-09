@@ -19,6 +19,8 @@ public class Loja {
         this.colaboradors = colaboradors;
     }
 
+
+
     public String getDescricao() {
         return descricao;
     }
