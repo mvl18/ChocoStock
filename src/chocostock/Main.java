@@ -3,8 +3,10 @@ package chocostock;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque");
-        System.out.println("Amatongas Mais ou menos né!");
-        int eu = 0;
+        // Exemplo de instanciação de endereço e de mudança de estado
+        Endereco endereco = new Endereco(34,"1403128", "Pitágoras", "Limoeiro", "Gotham", Estados.SP);
+        System.out.println(endereco);
+        endereco.setEstado(Estados.AC);
+        System.out.println(endereco);
     }
 }
