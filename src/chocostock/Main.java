@@ -8,7 +8,6 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque");
-
         // TESTES INICIAIS MARAOLT
         Endereco endereco1 = new Endereco("17154-1283", "Rua Alves Brito", "Barao Geraldo", "Campinas", "SP");
         System.out.println(endereco1);
