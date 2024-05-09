@@ -15,5 +15,11 @@ public class Main {
         Cliente cliente2 = new Cliente("Jose", "1132932843", "jose.jose@gmail.com", endereco1);
         System.out.println(cliente1);
         System.out.println(cliente2);
+      
+        // Exemplo de instanciação de endereço e de mudança de estado
+        Endereco endereco = new Endereco(34,"1403128", "Pitágoras", "Limoeiro", "Gotham", Estados.SP);
+        System.out.println(endereco);
+        endereco.setEstado(Estados.AC);
+        System.out.println(endereco);
     }
 }
