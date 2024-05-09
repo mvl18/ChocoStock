@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="inicio da classe:&#10;-Loja">
-      <change afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Complementos.java" afterDir="false" />
+    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="criando os Enums e reformulacao do Chocolate e Caixa">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Estoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Funcoes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Funcoes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Loja.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Loja.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Material.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715224017131</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="criando os Enums e reformulacao do Chocolate e Caixa">
+      <option name="closed" value="true" />
+      <created>1715262539249</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715262539250</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -132,6 +139,7 @@
     <MESSAGE value="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco" />
     <MESSAGE value="inicio das classes:&#10;-Caixa&#10;-Chocolate&#10;-Cliente&#10;-Equipamento&#10;-Estoque&#10;-Item&#10;-Pedido&#10;-Produto" />
     <MESSAGE value="inicio da classe:&#10;-Loja" />
-    <option name="LAST_COMMIT_MESSAGE" value="inicio da classe:&#10;-Loja" />
+    <MESSAGE value="criando os Enums e reformulacao do Chocolate e Caixa" />
+    <option name="LAST_COMMIT_MESSAGE" value="criando os Enums e reformulacao do Chocolate e Caixa" />
   </component>
 </project>

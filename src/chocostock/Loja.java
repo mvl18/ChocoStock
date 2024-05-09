@@ -1,6 +1,8 @@
 package chocostock;
 
 import chocostock.colaboladores.Colaborador;
+import chocostock.itens.Equipamento;
+import chocostock.itens.Material;
 
 import java.util.ArrayList;
 
@@ -9,16 +11,15 @@ public class Loja {
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
     private Estoque estoque;
-    private ArrayList<Colaborador> colaboradors;
+    private ArrayList<Colaborador> colaboradores;
 
-    public Loja(String descricao, Endereco endereco, ArrayList<Pedido> pedidos, Estoque estoque, ArrayList<Colaborador> colaboradors) {
+    public Loja(String descricao, Endereco endereco) {
         this.descricao = descricao;
         this.endereco = endereco;
-        this.pedidos = pedidos;
-        this.estoque = estoque;
-        this.colaboradors = colaboradors;
+        this.pedidos = new ArrayList<Pedido>();
+        this.estoque =  new Estoque(new ArrayList<Item>(), new ArrayList<Item>(), new ArrayList<Item>());
+        this.colaboradores = new ArrayList<Colaborador>();
     }
-
 
 
     public String getDescricao() {
@@ -53,11 +54,30 @@ public class Loja {
         this.estoque = estoque;
     }
 
-    public ArrayList<Colaborador> getColaboradors() {
-        return colaboradors;
+    public ArrayList<Colaborador> getColaboradores() {
+        return colaboradores;
     }
 
-    public void setColaboradors(ArrayList<Colaborador> colaboradors) {
-        this.colaboradors = colaboradors;
+    public void setColaboradores(ArrayList<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
+    }
+
+    public boolean addPedido(Pedido pedido) {
+        if (!this.pedidos.contains(pedido)) {
+            this.getPedidos().add(pedido);
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public boolean removePedido(Pedido pedido) {
+        if (this.pedidos.contains(pedido)) {
+            this.getPedidos().remove(pedido);
+            return true;
+        }
+
+        return false;
     }
 }

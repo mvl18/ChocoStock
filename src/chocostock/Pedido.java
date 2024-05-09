@@ -18,17 +18,27 @@ public class Pedido {
     private ArrayList<TiposChocolates> produtos_pendentes; //talvez seja bom ter uma quantidade junto, mas ai precisa fazer algo diferente de ArrayList<E>
     private float preco_total;
 
-    public Pedido(int id, int id_cliente, Date data, Date data_entrega, boolean pago, Status status, ArrayList<Produto> produtos, ArrayList<TiposChocolates> produtos_pendentes, float preco_total) {
+    public Pedido(int id_cliente, Date data, Date data_entrega, boolean pago, Status status, ArrayList<TiposChocolates> produtos_pendentes, float preco_total) {
         this.id = id_pedidos++;
         this.id_cliente = id_cliente;
-        this.data = new Date(); // talvez esse Date n funcione pq ele só pega a data do dia q foi criado, ou seja, da hr q o código esta sendo executado
+        this.data = data; // talvez esse Date n funcione pq ele só pega a data do dia q foi criado, ou seja, da hr q o código esta sendo executado
         this.data_entrega = data_entrega;
         this.pago = pago;
         this.status = status;
-        this.produtos = produtos;
+        this.produtos = new ArrayList<Produto>();
         this.produtos_pendentes = produtos_pendentes;
         this.preco_total = preco_total;
     }
+
+    public Pedido(int id_cliente, Date data_entrega, boolean pago, Status status, float preco_total) {
+        this(id_cliente, new Date(), data_entrega, pago, status, new ArrayList<TiposChocolates>(), preco_total);
+    }
+
+    public Pedido() {
+        this(-1, new Date(), false, Status.PENDENDE, 0.0F);
+    }
+
+
 
     public int getId() {
         return id;

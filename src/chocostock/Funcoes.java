@@ -1,5 +1,6 @@
 package chocostock;
 
-public class Funcoes {
+import java.util.ArrayList;
 
+public class Funcoes {
 }
