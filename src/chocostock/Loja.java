@@ -2,10 +2,7 @@ package chocostock;
 
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
-import chocostock.itens.Equipamento;
-import chocostock.itens.Material;
 
-import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -174,8 +171,20 @@ public class Loja implements AddRemove, Escolhivel {
 
     public Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
-
-
+        System.out.println("Cadastrando novo cliente: ");
+        // Cliente(String nome, String telefone, String email, Endereco endereco)
+        // NOME
+        System.out.println("Nome do cliente: ");
+        cliente.setNome(scanner.nextLine());
+        // TELEFONE
+        System.out.println("Telefone do cliente: ");
+        cliente.setTelefone(scanner.nextLine()); // MATHEUS regex
+        // EMAIL
+        System.out.println("Email do cliente: ");
+        cliente.setEmail(scanner.nextLine());
+        // ENDERECO
+        System.out.println("Criando endereco: ");
+        cliente.setEndereco(cliente.criaEndereco(scanner));
 
         return cliente;
     }
