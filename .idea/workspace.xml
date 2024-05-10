@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="criando a loja">
-      <change afterPath="$PROJECT_DIR$/src/chocostock/AddRemove.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chocostock/Escolha.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Endereco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Estoque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Funcoes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Escolha.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Estados.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Estados.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Loja.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Loja.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Pedido.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Colaborador.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715224017131</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="interface Escolhivel generica">
+      <option name="closed" value="true" />
+      <created>1715379732741</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715379732741</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -141,6 +145,7 @@
     <MESSAGE value="inicio das classes:&#10;-Colaborador&#10;-Cliente&#10;-Funcionario&#10;-Empresa&#10;-Endereco" />
     <MESSAGE value="inicio das classes:&#10;-Caixa&#10;-Chocolate&#10;-Cliente&#10;-Equipamento&#10;-Estoque&#10;-Item&#10;-Pedido&#10;-Produto" />
     <MESSAGE value="inicio da classe:&#10;-Loja" />
-    <option name="LAST_COMMIT_MESSAGE" value="inicio da classe:&#10;-Loja" />
+    <MESSAGE value="interface Escolhivel generica" />
+    <option name="LAST_COMMIT_MESSAGE" value="interface Escolhivel generica" />
   </component>
 </project>

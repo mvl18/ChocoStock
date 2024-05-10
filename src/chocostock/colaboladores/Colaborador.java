@@ -1,8 +1,12 @@
 package chocostock.colaboladores;
 
-import chocostock.Endereco;
+import chocostock.*;
 
-public class Colaborador {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Colaborador implements Nomeavel, Escolhivel {
     private String nome;
     private String telefone;
     private String email;
@@ -60,4 +64,31 @@ public class Colaborador {
     public String toString(boolean titulo) {
         return "Colaborador{" + this.toString();
     }
+
+    public Endereco criaEndereco(Scanner scanner) {
+        //Endereco(int numero, String cep, String rua, String bairro, String cidade, Estados estado)
+        Endereco endereco = new Endereco();
+        // CEP
+        System.out.println("CEP: ");
+        endereco.setCep(scanner.nextLine());
+        // ESTADO
+        System.out.println("Estado: ");
+        ArrayList<Estados> listaEstados = new ArrayList<>(Arrays.asList(Estados.values()));
+        endereco.setEstado(escolheObjeto(scanner, listaEstados));
+        // CIDADE
+        System.out.println("Cidade: ");
+        endereco.setCidade(scanner.nextLine());
+        // BAIRRO
+        System.out.println("Bairro: ");
+        endereco.setBairro(scanner.nextLine());
+        // RUA
+        System.out.println("Rua: ");
+        endereco.setRua(scanner.nextLine());
+        // NUMERO
+        System.out.println("Numero do endereco: ");
+        endereco.setNumero(Integer.parseInt(scanner.nextLine()));
+
+        return endereco;
+    }
+
 }

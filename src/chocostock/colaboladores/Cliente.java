@@ -1,11 +1,13 @@
 package chocostock.colaboladores;
 
 import chocostock.Endereco;
+import chocostock.Identificavel;
 import chocostock.Pedido;
+import com.sun.source.doctree.IndexTree;
 
 import java.util.ArrayList;
 
-public class Cliente extends Colaborador {
+public class Cliente extends Colaborador implements Identificavel {
     private static int id_clientes = 100000;
     private final int id; // final, pois nao pode ser modificado apos criado
     private ArrayList<Integer> pedidos;
@@ -34,8 +36,7 @@ public class Cliente extends Colaborador {
 
     @Override
     public String toString() { // teste de como fazer um toString() decente
-        return "Cliente{" + super.toString() +
-                ", id=" + id +
+        return "Cliente{id=" + id + ", " + super.toString() +
                 ", pedidos=" + pedidos +
                 '}';
     }

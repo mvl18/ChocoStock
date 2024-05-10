@@ -1,5 +1,8 @@
 package chocostock;
 
+import javax.xml.stream.events.EndElement;
+import java.util.Scanner;
+
 public class Endereco {
     private int numero;
     private String cep;
@@ -69,10 +72,21 @@ public class Endereco {
         this.estado = estado;
     }
 
-    public String toString() {
+    public String toString(boolean bool) {
         return "CEP: " + cep +
                 "\nRua " + rua + ", " + numero + " - Bairro " + bairro +
                 "\n" + cidade + " (" + estado.getCodigo() + ")";
+    }
+
+    public String toString() {
+        return "Endereco{" +
+                "numero=" + numero +
+                ", cep='" + cep + '\'' +
+                ", rua='" + rua + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", estado=" + estado +
+                '}';
     }
 }
 

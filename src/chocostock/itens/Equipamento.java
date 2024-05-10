@@ -30,4 +30,5 @@ public class Equipamento extends Item {
     public void setFornecedor(Empresa fornecedor) {
         this.fornecedor = fornecedor;
     }
+
 }

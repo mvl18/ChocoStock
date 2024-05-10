@@ -12,13 +12,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.\n" +
-                "Digite 'add' para adicionar pedidos, ou 'sair' para encerrar o programa!");
+        System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.\n");
 
         Scanner scanner = new Scanner(System.in);
 
         Endereco endereco = CriarTeste.Endereco();
 //        System.out.println(endereco);
+
+        // TESTES INICIAIS MARAOLT
 
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
@@ -26,97 +27,25 @@ public class Main {
 //        System.out.println(cliente2);
 
         Loja loja = new Loja("Primeira e unica loja!", endereco);
+        loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);
 
         System.out.println("=========================");
-        String comando = scanner.nextLine();
         boolean continuar = true;
         while(continuar) {
+            System.out.println("Digite 'add' para adicionar pedidos, ou 'end' para encerrar o programa!");
+            String comando = scanner.nextLine();
             switch(comando) {
-                case "add": loja.addPedido(novoPedido(scanner, loja));
+                case "add": loja.addPedido(loja.novoPedido(scanner, loja));
                             break;
-                case "sair": continuar = false;
+                case "end": continuar = false;
                              break;
             }
         }
-        System.out.println(loja.getClientes());
-        System.out.println(loja.getPedidos());
 
-
+        System.out.println(loja.listaClientes());
+        System.out.println(loja.listaPedidos());
 
         scanner.close();
-    }
-
-
-    public static Pedido novoPedido(Scanner scanner, Loja loja)  {
-        Pedido pedido = new Pedido();
-        System.out.println("Novo pedido com id " + pedido.getId() + " criado com sucesso.\nQual cliente fez esse pedido? ");
-        // CLIENTE
-        System.out.println("1-Mostrar lista de clientes ja cadastrados.\n2-Adicionar novo cliente.");
-        int resposta = scanner.nextInt();
-        scanner.nextLine();
-        switch (resposta) {
-            case 1:
-                System.out.println(loja.getClientes());
-                // escolheObjeto(scanner, loja.getClientes());
-                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite '1'");
-                if (scanner.nextInt() == 1) {
-                    Cliente cliente = novoCliente(scanner);
-                    loja.addCliente(cliente);
-                    pedido.setId_cliente(cliente.getId());
-                }
-                scanner.nextLine();
-                break;
-            case 2:
-                Cliente cliente = novoCliente(scanner);
-                loja.addCliente(cliente);
-                pedido.setId_cliente(cliente.getId());
-                break;
-            default:
-                System.out.println("Da proxima selecione uma resposta valida! Finalizando programa!");
-                break;
-        }
-        // DATA_ENTREGA
-        System.out.println("Qual a data de entrega do pedido? ");
-        // escolheData();
-        System.out.println("Ainda nao implementado");
-        // PAGO OU N
-        System.out.println("O pedido feito ja foi pago? Sim OU Nao");
-        boolean pago = scanner.nextBoolean();
-        scanner.nextLine();
-        pedido.setPago(pago);
-        if (pago) {
-            System.out.println("Pedido foi marcado como pago!");
-        } else {
-            System.out.println("Pedido foi marcado como nao pago!");
-        }
-
-        // STATUS
-        for (Status status : Status.values()) {
-            System.out.println(status);
-        }
-        System.out.println("Qual o status do pedido dentre os acima? ");
-        String status_resp = scanner.nextLine();
-        for (Status status : Status.values()) {
-            if (status.getNome().equals(status_resp)) {
-                pedido.setStatus(status);
-                break;
-            }
-        }
-        System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
-        // PRODUTOS_PENDENTES
-        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-
-        // PRECO TOTAL
-
-        return pedido;
-    }
-
-    public static Cliente novoCliente(Scanner scanner) {
-        Cliente cliente = new Cliente();
-
-
-
-        return cliente;
     }
 }
