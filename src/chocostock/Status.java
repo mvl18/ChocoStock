@@ -2,7 +2,7 @@ package chocostock;
 
 public enum Status implements Identificavel, Nomeavel {
     CANCELADO("CANCELADO", 1),
-    PENDENDE("PENDENTE", 2),
+    PENDENTE("PENDENTE", 2),
     PRONTO("PRONTO", 3),
     TRANSITO("TRANSITO", 4),
     FINALIZADO("FINALIZADO", 5);
