@@ -2,7 +2,7 @@ package chocostock;
 
 public enum Status {
     CANCELADO("CANCELADO"),
-    PENDENDE("PENDENTE"),
+    PENDENTE("PENDENTE"),
     PRONTO("PRONTO"),
     TRANSITO("TRANSITO"),
     FINALIZADO("FINALIZADO");
