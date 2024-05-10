@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="inicio da classe:&#10;-Loja">
-      <change afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Complementos.java" afterDir="false" />
+    <list default="true" id="deea3c48-5cbf-4809-baf2-9656aa0ee639" name="Changes" comment="criando a loja">
+      <change afterPath="$PROJECT_DIR$/src/chocostock/AddRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/chocostock/Escolha.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Endereco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Estoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Funcoes.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Loja.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Loja.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Pedido.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/Produto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Caixa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/Chocolate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/colaboladores/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chocostock/itens/produtos/TiposChocolates.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +28,12 @@
       <list>
         <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -73,7 +81,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;MaraoLT&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="SharedIndexes">

@@ -1,8 +1,12 @@
 package chocostock;
 
+import chocostock.itens.Equipamento;
+import chocostock.itens.Material;
+import chocostock.itens.Produto;
+
 import java.util.ArrayList;
 
-public class Estoque {
+public class Estoque implements AddRemove {
     private ArrayList<Item> produtos;
     private ArrayList<Item> materiais;
     private ArrayList<Item> equipamentos;
@@ -36,4 +40,28 @@ public class Estoque {
     public void setEquipamentos(ArrayList<Item> equipamentos) {
         this.equipamentos = equipamentos;
     }
+
+    public boolean addProduto(Produto produto) {
+        return addObjeto(produtos, produto);
+    }
+
+    public boolean removeProduto(Produto produto) {
+        return removeObjeto(produtos, produto);
+    }
+
+    public boolean addEquipamento(Equipamento equipamento) {
+        return addObjeto(equipamentos, equipamento);
+    }
+
+    public boolean removeEquipamento(Equipamento equipamento) {
+        return removeObjeto(equipamentos, equipamento);
+    }
+
+    public boolean addMaterial(Material material) {
+        return addObjeto(materiais, material);
+    }
+
+    public boolean removeMaterial(Material material) {
+            return removeObjeto(materiais, material);
+        }
 }
