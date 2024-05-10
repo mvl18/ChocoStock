@@ -107,4 +107,19 @@ public class Pedido {
     public void setPreco_total(float preco_total) {
         this.preco_total = preco_total;
     }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", id_cliente=" + id_cliente +
+                ", data=" + data +
+                ", data_entrega=" + data_entrega +
+                ", pago=" + pago +
+                ", status=" + status +
+                ", produtos=" + produtos +
+                ", produtos_pendentes=" + produtos_pendentes +
+                ", preco_total=" + preco_total +
+                '}';
+    }
 }

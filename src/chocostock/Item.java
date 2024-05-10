@@ -1,6 +1,6 @@
 package chocostock;
 
-public abstract class Item {
+public abstract class Item implements Identificavel, Nomeavel  {
     private int id;
     private String nome;
     private int quantidade;

@@ -1,8 +1,9 @@
 package chocostock.colaboladores;
 
 import chocostock.Endereco;
+import chocostock.Identificavel;
 
-public class Funcionario extends Colaborador {
+public class Funcionario extends Colaborador implements Identificavel {
     private static int id_funcionarios = 100000;
     private final int id;
     private String cargo;
@@ -30,6 +31,11 @@ public class Funcionario extends Colaborador {
             default:
                 this.salario = 0.0F;
         }
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public String getCargo() {

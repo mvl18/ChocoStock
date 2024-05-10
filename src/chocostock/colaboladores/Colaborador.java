@@ -1,8 +1,10 @@
 package chocostock.colaboladores;
 
 import chocostock.Endereco;
+import chocostock.Identificavel;
+import chocostock.Nomeavel;
 
-public class Colaborador {
+public class Colaborador implements Nomeavel {
     private String nome;
     private String telefone;
     private String email;
