@@ -17,6 +17,10 @@ public class Endereco {
         this.estado = estado;
     }
 
+    public Endereco() {
+        this(0, "", "", "", "", Estados.AC); // seria bom criar um estado default talvez
+    }
+
     public int getNumero() {
         return numero;
     }

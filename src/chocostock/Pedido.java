@@ -25,8 +25,8 @@ public class Pedido {
         this.data_entrega = data_entrega;
         this.pago = pago;
         this.status = status;
-        this.produtos = new ArrayList<Produto>();
         this.produtos_pendentes = produtos_pendentes;
+        this.produtos = new ArrayList<Produto>();
         this.preco_total = preco_total;
     }
 

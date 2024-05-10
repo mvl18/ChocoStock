@@ -3,12 +3,10 @@ package chocostock;
 import chocostock.itens.Equipamento;
 import chocostock.itens.Material;
 import chocostock.itens.Produto;
-import chocostock.itens.produtos.Chocolate;
 
-import javax.print.attribute.standard.OrientationRequested;
 import java.util.ArrayList;
 
-public class Estoque {
+public class Estoque implements AddRemove {
     private ArrayList<Item> produtos;
     private ArrayList<Item> materiais;
     private ArrayList<Item> equipamentos;
@@ -44,59 +42,26 @@ public class Estoque {
     }
 
     public boolean addProduto(Produto produto) {
-        if (!this.produtos.contains(produto)) {
-            this.getProdutos().add(produto);
-            return true;
-        }
-
-        return false;
-
+        return addObjeto(produtos, produto);
     }
 
     public boolean removeProduto(Produto produto) {
-        if (this.produtos.contains(produto)) {
-            this.getProdutos().remove(produto);
-            return true;
-        }
-
-        return false;
+        return removeObjeto(produtos, produto);
     }
 
     public boolean addEquipamento(Equipamento equipamento) {
-        if (!this.equipamentos.contains(equipamento)) {
-            this.getEquipamentos().add(equipamento);
-            return true;
-        }
-
-        return false;
-
+        return addObjeto(equipamentos, equipamento);
     }
 
     public boolean removeEquipamento(Equipamento equipamento) {
-        if (this.equipamentos.contains(equipamento)) {
-            this.getEquipamentos().remove(equipamento);
-            return true;
-        }
-
-        return false;
+        return removeObjeto(equipamentos, equipamento);
     }
 
     public boolean addMaterial(Material material) {
-        if (!this.materiais.contains(material)) {
-            this.getMateriais().add(material);
-            return true;
-        }
-
-        return false;
-
+        return addObjeto(materiais, material);
     }
 
-    public boolean removeMaterial(Equipamento material) {
-        if (this.materiais.contains(material)) {
-            this.getMateriais().remove(material);
-            return true;
+    public boolean removeMaterial(Material material) {
+            return removeObjeto(materiais, material);
         }
-
-        return false;
-    }
 }

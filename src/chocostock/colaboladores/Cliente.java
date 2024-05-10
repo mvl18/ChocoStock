@@ -15,8 +15,17 @@ public class Cliente extends Colaborador {
         this.pedidos = new ArrayList<Integer>();
     }
 
+    public Cliente() {
+
+        this("", "", "", new Endereco());
+    }
+
     public ArrayList<Integer> getPedidos() {
         return pedidos;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setPedidos(ArrayList<Integer> pedidos) {
