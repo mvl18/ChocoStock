@@ -35,7 +35,7 @@ public class Pedido {
     }
 
     public Pedido() {
-        this(-1, new Date(), false, Status.PENDENDE, 0.0F);
+        this(-1, new Date(), false, Status.PENDENTE, 0.0F);
     }
 
 

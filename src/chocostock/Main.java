@@ -12,28 +12,33 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.");
+        System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.\n" +
+                "Digite 'add' para adicionar pedidos, ou 'sair' para encerrar o programa!");
 
         Scanner scanner = new Scanner(System.in);
 
-        // Exemplo de instanciação de endereço e de mudança de estado
-        Endereco endereco = new Endereco(34,"1403128", "Pitágoras", "Limoeiro", "Gotham", Estados.SP);
-        System.out.println(endereco);
-        endereco.setEstado(Estados.AC);
-        System.out.println(endereco);
+        Endereco endereco = CriarTeste.Endereco();
+//        System.out.println(endereco);
 
-        // TESTES INICIAIS MARAOLT
-        System.out.println(endereco);
-        Colaborador cliente1 = new Cliente("Andre", "1923949394", "andre.andre@gmail.com", endereco);
-        Cliente cliente2 = new Cliente("Jose", "1132932843", "jose.jose@gmail.com", endereco);
-        System.out.println(cliente1);
-        System.out.println(cliente2);
-
+        Colaborador cliente1 = CriarTeste.Cliente("André Silva");
+        Cliente cliente2 = CriarTeste.Cliente("José");
+//        System.out.println(cliente1);
+//        System.out.println(cliente2);
 
         Loja loja = new Loja("Primeira e unica loja!", endereco);
-        loja.addPedido(novoPedido(scanner, loja));
-        loja.addPedido(novoPedido(scanner, loja));
-        loja.addPedido(novoPedido(scanner, loja));
+        loja.addCliente(cliente2);
+
+        System.out.println("=========================");
+        String comando = scanner.nextLine();
+        boolean continuar = true;
+        while(continuar) {
+            switch(comando) {
+                case "add": loja.addPedido(novoPedido(scanner, loja));
+                            break;
+                case "sair": continuar = false;
+                             break;
+            }
+        }
         System.out.println(loja.getClientes());
         System.out.println(loja.getPedidos());
 
