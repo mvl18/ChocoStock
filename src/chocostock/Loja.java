@@ -2,13 +2,15 @@ package chocostock;
 
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
-import jdk.jshell.StatementSnippet;
+import chocostock.enuns.Status;
+import chocostock.interfaces.AddRemove;
+import chocostock.interfaces.Escolhivel;
+import chocostock.itens.Item;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Loja implements AddRemove, Escolhivel {

@@ -1,4 +1,4 @@
-package chocostock;
+package chocostock.interfaces;
 
 public interface Codificavel {
     String getCodigo();

@@ -1,6 +1,6 @@
-package chocostock.itens;
+package chocostock.itens.produtos;
 
-import chocostock.Item;
+import chocostock.itens.Item;
 
 public class Material extends Item {
     public Material(String nome, int quantidade, float preco) {
