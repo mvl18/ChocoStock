@@ -3,25 +3,26 @@ package chocostock;
 import chocostock.itens.Produto;
 import chocostock.itens.produtos.TiposChocolates;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Pedido {
     private static int id_pedidos = 100000;
     private int id;
     private int id_cliente;
-    private Date data;
-    private Date data_entrega;
+    private LocalDate data;
+    private LocalDate data_entrega;
     private boolean pago;
     private Status status;
     private ArrayList<Produto> produtos;
     private ArrayList<TiposChocolates> produtos_pendentes; //talvez seja bom ter uma quantidade junto, mas ai precisa fazer algo diferente de ArrayList<E>
     private float preco_total;
 
-    public Pedido(int id_cliente, Date data, Date data_entrega, boolean pago, Status status, ArrayList<TiposChocolates> produtos_pendentes, float preco_total) {
+    public Pedido(int id_cliente, LocalDate data, LocalDate data_entrega, boolean pago, Status status, ArrayList<TiposChocolates> produtos_pendentes, float preco_total) {
         this.id = id_pedidos++;
         this.id_cliente = id_cliente;
-        this.data = data; // talvez esse Date n funcione pq ele só pega a data do dia q foi criado, ou seja, da hr q o código esta sendo executado
+        this.data = data;
         this.data_entrega = data_entrega;
         this.pago = pago;
         this.status = status;
@@ -30,12 +31,12 @@ public class Pedido {
         this.preco_total = preco_total;
     }
 
-    public Pedido(int id_cliente, Date data_entrega, boolean pago, Status status, float preco_total) {
-        this(id_cliente, new Date(), data_entrega, pago, status, new ArrayList<TiposChocolates>(), preco_total);
+    public Pedido(int id_cliente, LocalDate data_entrega, boolean pago, Status status, float preco_total) {
+        this(id_cliente, LocalDate.now(), data_entrega, pago, status, new ArrayList<TiposChocolates>(), preco_total);
     }
 
     public Pedido() {
-        this(-1, new Date(), false, Status.PENDENTE, 0.0F);
+        this(-1, LocalDate.parse("01/01/2001", DateTimeFormatter.ofPattern("dd/MM/yyyy")), false, Status.PENDENTE, 0.0F);
     }
 
 
@@ -52,19 +53,19 @@ public class Pedido {
         this.id_cliente = id_cliente;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
-    public Date getData_entrega() {
+    public LocalDate getData_entrega() {
         return data_entrega;
     }
 
-    public void setData_entrega(Date data_entrega) {
+    public void setData_entrega(LocalDate data_entrega) {
         this.data_entrega = data_entrega;
     }
 

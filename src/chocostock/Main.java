@@ -2,12 +2,6 @@ package chocostock;
 
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
-import chocostock.colaboladores.Funcionario;
-import jdk.jshell.execution.JdiExecutionControl;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -19,12 +13,10 @@ public class Main {
         Endereco endereco = CriarTeste.Endereco();
 //        System.out.println(enderecmaino);
 
+      
         // TESTES INICIAIS MARAOLT
-
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
-//        System.out.println(cliente1);
-//        System.out.println(cliente2);
 
         Loja loja = new Loja("Primeira e unica loja!", endereco);
         loja.addCliente((Cliente) cliente1);

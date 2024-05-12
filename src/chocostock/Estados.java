@@ -1,6 +1,6 @@
 package chocostock;
 
-public enum Estados implements Nomeavel {
+public enum Estados implements Nomeavel, Codificavel {
     AC("AC", "Acre"),
     AL("AL", "Alagoas"),
     AP("AP", "Amapá"),

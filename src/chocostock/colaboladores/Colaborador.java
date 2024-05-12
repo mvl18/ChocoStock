@@ -73,8 +73,8 @@ public class Colaborador implements Nomeavel, Escolhivel {
         endereco.setCep(scanner.nextLine());
         // ESTADO
         System.out.println("Estado: ");
-        ArrayList<Estados> listaEstados = new ArrayList<>(Arrays.asList(Estados.values()));
-        endereco.setEstado(escolheObjeto(scanner, listaEstados));
+        // ArrayList<Estados> listaEstados = new ArrayList<>(Arrays.asList(Estados.values()));
+        endereco.setEstado(escolheObjeto(scanner, Estados.values()));
         // CIDADE
         System.out.println("Cidade: ");
         endereco.setCidade(scanner.nextLine());

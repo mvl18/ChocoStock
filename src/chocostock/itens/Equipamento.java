@@ -1,9 +1,10 @@
 package chocostock.itens;
 
 import chocostock.Item;
+import chocostock.Nomeavel;
 import chocostock.colaboladores.Empresa;
 
-public class Equipamento extends Item {
+public class Equipamento extends Item implements Nomeavel {
     private static int id_equipamentos = 100000;
     private String marca;
     private Empresa fornecedor;
