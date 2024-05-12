@@ -63,5 +63,5 @@ public class Estoque implements AddRemove {
 
     public boolean removeMaterial(Material material) {
             return removeObjeto(materiais, material);
-        }
+    }
 }
