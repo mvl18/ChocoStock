@@ -2,7 +2,11 @@ package chocostock;
 
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
+import jdk.jshell.StatementSnippet;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -116,7 +120,6 @@ public class Loja implements AddRemove, Escolhivel {
         scanner.nextLine();
         switch (resposta) {
             case 1:
-                // .out.println(loja.getClientes());
                 System.out.println(listaClientes());
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'sair'");
                 Cliente cliente = escolheObjeto(scanner, loja.getClientes());
@@ -139,7 +142,7 @@ public class Loja implements AddRemove, Escolhivel {
         }
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
-        // escolheData();
+        pedido.setData_entrega(escolheData(scanner));
         System.out.println("Ainda nao implementado");
         // PAGO OU N
         System.out.println("O pedido feito ja foi pago? Sim OU Nao");
@@ -157,8 +160,7 @@ public class Loja implements AddRemove, Escolhivel {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
-        ArrayList<Status> listaStatus = new ArrayList<>(Arrays.asList(Status.values())); // tranforma Array de C em ArrayLista<> do Java
-        pedido.setStatus(escolheObjeto(scanner, listaStatus));
+        pedido.setStatus(escolheObjeto(scanner, Status.values()));
 
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
         // PRODUTOS_PENDENTES
@@ -169,10 +171,25 @@ public class Loja implements AddRemove, Escolhivel {
         return pedido;
     }
 
+    private LocalDate escolheData(Scanner scanner) {
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.println("Digite a data no formato dd/MM/yyyy:");
+        String inputData = scanner.nextLine();
+
+        try {
+            LocalDate data = LocalDate.parse(inputData, dateFormatter);
+            System.out.println("Data inserida: " + dateFormatter.format(data));
+            return data;
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de data inválido. Por favor, insira a data no formato dd/MM/yyyy.");
+            return LocalDate.parse("01/01/2001", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+    }
+
     public Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
-        // Cliente(String nome, String telefone, String email, Endereco endereco)
         // NOME
         System.out.println("Nome do cliente: ");
         cliente.setNome(scanner.nextLine());

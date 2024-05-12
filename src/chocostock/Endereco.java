@@ -1,7 +1,5 @@
 package chocostock;
 
-import javax.xml.stream.events.EndElement;
-import java.util.Scanner;
 
 public class Endereco {
     private int numero;
