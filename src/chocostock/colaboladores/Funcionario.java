@@ -1,7 +1,7 @@
 package chocostock.colaboladores;
 
 import chocostock.Endereco;
-import chocostock.Identificavel;
+import chocostock.interfaces.Identificavel;
 
 public class Funcionario extends Colaborador implements Identificavel {
     private static int id_funcionarios = 100000;

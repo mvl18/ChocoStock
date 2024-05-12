@@ -1,9 +1,10 @@
 package chocostock.colaboladores;
 
 import chocostock.*;
+import chocostock.enuns.Estados;
+import chocostock.interfaces.Escolhivel;
+import chocostock.interfaces.Nomeavel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Colaborador implements Nomeavel, Escolhivel {

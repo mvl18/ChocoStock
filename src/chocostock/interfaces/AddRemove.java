@@ -1,4 +1,4 @@
-package chocostock;
+package chocostock.interfaces;
 
 import java.util.ArrayList;
 

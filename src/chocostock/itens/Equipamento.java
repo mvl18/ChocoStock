@@ -1,7 +1,6 @@
 package chocostock.itens;
 
-import chocostock.Item;
-import chocostock.Nomeavel;
+import chocostock.interfaces.Nomeavel;
 import chocostock.colaboladores.Empresa;
 
 public class Equipamento extends Item implements Nomeavel {

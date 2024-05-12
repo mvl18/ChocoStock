@@ -1,9 +1,7 @@
 package chocostock.colaboladores;
 
 import chocostock.Endereco;
-import chocostock.Identificavel;
-import chocostock.Pedido;
-import com.sun.source.doctree.IndexTree;
+import chocostock.interfaces.Identificavel;
 
 import java.util.ArrayList;
 

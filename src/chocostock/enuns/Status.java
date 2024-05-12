@@ -1,4 +1,7 @@
-package chocostock;
+package chocostock.enuns;
+
+import chocostock.interfaces.Identificavel;
+import chocostock.interfaces.Nomeavel;
 
 public enum Status implements Identificavel, Nomeavel {
     CANCELADO("Cancelado", 1),
