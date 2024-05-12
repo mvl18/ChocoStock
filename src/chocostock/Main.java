@@ -11,6 +11,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Endereco endereco = CriarTeste.Endereco();
+//        System.out.println(enderecmaino);
+
+      
+        // TESTES INICIAIS MARAOLT
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
 

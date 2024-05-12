@@ -165,7 +165,6 @@ public class Loja implements AddRemove, Escolhivel {
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
         // PRODUTOS_PENDENTES
         System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-
         // PRECO TOTAL
 
         return pedido;
