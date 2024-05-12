@@ -1,7 +1,9 @@
 package chocostock;
 
+import chocostock.interfaces.AddRemove;
 import chocostock.itens.Equipamento;
-import chocostock.itens.Material;
+import chocostock.itens.Item;
+import chocostock.itens.produtos.Material;
 import chocostock.itens.Produto;
 
 import java.util.ArrayList;

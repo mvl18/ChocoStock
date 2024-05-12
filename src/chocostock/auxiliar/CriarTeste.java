@@ -1,5 +1,7 @@
-package chocostock;
+package chocostock.auxiliar;
 
+import chocostock.Endereco;
+import chocostock.enuns.Estados;
 import chocostock.colaboladores.Cliente;
 
 import java.util.Random;

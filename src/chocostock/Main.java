@@ -1,5 +1,6 @@
 package chocostock;
 
+import chocostock.auxiliar.CriarTeste;
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
 import java.util.Scanner;

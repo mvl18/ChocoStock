@@ -1,6 +1,8 @@
 package chocostock;
 
 
+import chocostock.enuns.Estados;
+
 public class Endereco {
     private int numero;
     private String cep;

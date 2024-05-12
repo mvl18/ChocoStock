@@ -1,6 +1,9 @@
-package chocostock;
+package chocostock.itens;
 
-public abstract class Item implements Identificavel, Nomeavel  {
+import chocostock.interfaces.Identificavel;
+import chocostock.interfaces.Nomeavel;
+
+public abstract class Item implements Identificavel, Nomeavel {
     private int id;
     private String nome;
     private int quantidade;

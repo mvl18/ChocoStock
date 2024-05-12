@@ -1,5 +1,6 @@
 package chocostock;
 
+import chocostock.enuns.Status;
 import chocostock.itens.Produto;
 import chocostock.itens.produtos.TiposChocolates;
 
