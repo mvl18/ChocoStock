@@ -17,7 +17,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Endereco endereco = CriarTeste.Endereco();
-//        System.out.println(endereco);
+//        System.out.println(enderecmaino);
 
         // TESTES INICIAIS MARAOLT
 
