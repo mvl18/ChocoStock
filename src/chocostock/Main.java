@@ -1,8 +1,8 @@
 package chocostock;
 
 import chocostock.auxiliar.CriarTeste;
-import chocostock.colaboladores.Cliente;
-import chocostock.colaboladores.Colaborador;
+import chocostock.colaboradores.Cliente;
+import chocostock.colaboradores.Colaborador;
 import java.util.Scanner;
 
 public class Main {
@@ -22,17 +22,20 @@ public class Main {
         Loja loja = new Loja("Primeira e unica loja!", endereco);
         loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);
+        System.out.println("teste");
 
         System.out.println("=========================");
         boolean continuar = true;
         while(continuar) {
-            System.out.println("Digite 'add' para adicionar pedidos, ou 'end' para encerrar o programa!");
+            System.out.println("Digite 'add' para adicionar pedidos, 'list' para mostrar a lista de pedidos, ou 'end' para encerrar o programa!");
             String comando = scanner.nextLine();
             switch(comando) {
                 case "add": loja.addPedido(loja.novoPedido(scanner, loja));
-                            break;
+                    break;
+                case "list": System.out.println(loja.listaPedidos());
+                    break;
                 case "end": continuar = false;
-                             break;
+                    break;
             }
         }
 
