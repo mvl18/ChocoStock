@@ -148,28 +148,26 @@ public class Loja implements AddRemove, Escolhivel, ValidadorInput {
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
         pedido.setData_entrega(escolheData(scanner));
-        System.out.println("Ainda nao implementado");
         // PAGO OU N
         pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito ja foi pago? Sim OU Nao", "Por favor, insira uma resposta valida. ",
                 input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
-                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim")); // depois MaraoLT explica
-        if (pedido.isPago()) {
-            System.out.println("Pedido foi marcado como pago!");
-        } else {
-            System.out.println("Pedido foi marcado como nao pago!");
-        }
-
+                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
+        System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
         // STATUS
         for (Status status : Status.values()) {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
         pedido.setStatus(escolheObjeto(scanner, Status.values()));
-
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
         // PRODUTOS_PENDENTES
         System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
+        // pedido.setProdutos(escolheObjeto(scanner, )); // precisa ver com todos como fazer ALERT
+        // pega_produtos_do_estoque() para tirar de pendentes
         // PRECO TOTAL
+        pedido.calculaPrecoTotal();
+        System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + ".");
+
 
         return pedido;
     }

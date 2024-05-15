@@ -124,4 +124,8 @@ public class Pedido {
                 ", preco_total=" + preco_total +
                 '}';
     }
+
+    public float calculaPrecoTotal() {
+        return 0.0F; // fazer
+    }
 }

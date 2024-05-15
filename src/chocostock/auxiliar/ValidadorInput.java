@@ -11,7 +11,8 @@ public interface ValidadorInput {
         do {
             System.out.println(prompt);
             input = scanner.nextLine();
-            inputnorm = Normalizer.normalize(input.toLowerCase().replaceAll("\\s", ""), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+            inputnorm = Normalizer.normalize(input.toLowerCase().replaceAll("\\s", ""), Normalizer.Form.NFD)
+                    .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
             if (!validador.isValid(inputnorm)) {
                 System.out.println(mensagemErro);

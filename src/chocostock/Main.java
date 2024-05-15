@@ -31,11 +31,11 @@ public class Main {
             String comando = scanner.nextLine();
             switch(comando) {
                 case "add": loja.addPedido(loja.novoPedido(scanner, loja));
-                            break;
+                    break;
                 case "list": System.out.println(loja.listaPedidos());
-                             break;
+                    break;
                 case "end": continuar = false;
-                             break;
+                    break;
             }
         }
 
