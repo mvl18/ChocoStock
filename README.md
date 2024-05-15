@@ -1,3 +1,4 @@
+***
 # **ChocoStock - O doce controle de vendas e estoque**
 ## Descrição
 - Este é um projeto de um sistema de controle de estoque e vendas para uma fábrica de chocolate, desenvolvido em Java como parte de um Projeto Prático da matéria **MC302 - Programação Orientada a Objetos do Instituto de Computação da UNICAMP** no ano de 2024. O sistema permite gerenciar o estoque de produtos da fábrica, realizar vendas e controlar o fluxo de entrada e saída de produtos.
@@ -22,14 +23,14 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - Histórico de todos os pedidos, bem como a capacidade de gerar relatórios de venda e estoque.
 
 ## [Diagrama UML do Projeto](https://app.diagrams.net/#G1ob392-avmraMdT-HdXfV2x8NyNQ4EVuE#%7B%22pageId%22%3A%22X-9vTq_ojHjCq0rzShb6%22%7D)
-![Diagrama UML](imagens/ChocoStock_UML_Transparent.png)
+![Diagrama UML](imagens/ChocoStock_UML.png)
 
 ### Classes
 - `Loja`:
 - `Endereço`:
 - `Pedido`:
 - `Colaborador`:
-- `Cliente`: Classe abstrata
+- `Cliente`:
 - `Fornecedor`:
 - `Funcionario`:
 - `Estoque`:
@@ -48,6 +49,7 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - `TipoEmbalagens`: Enumera os tipos de embalagem que a fábrica precisa comprar.
 - `TiposIngredientes`: Enumera os tipos de ingredientes que a fábrica precisa comprar.
 - `TiposChocolates`: Enumera todos os tipos de chocolate que a fábrica produz.
+- `TiposComplementos`: Enumera todos os complementos para os chocolates.
 - `TiposCaixas`: Enumera todos os tipos de caixa que a fábrica vende.
 
 ### Interfaces
