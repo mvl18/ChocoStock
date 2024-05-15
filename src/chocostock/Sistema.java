@@ -36,6 +36,7 @@ public class Sistema {
                 """;
         System.out.println(msg);
         opcao = input.nextInt();
+        input.nextLine();
         switch(opcao) {
             case 0: finalizarSistema();
                     break;
@@ -61,6 +62,7 @@ public class Sistema {
                 (0) - Voltar para o menu inicial.""";
         System.out.println(msg);
         opcao = input.nextInt();
+        input.nextLine();
         switch(opcao) {
             case 0: menuInicial();
                     break;
@@ -83,7 +85,7 @@ public class Sistema {
         msg = """
                 --- MENU ESTOQUE ---
                 (X) - Adicionar Produto
-                (X) - Adicionar Ingrediente
+                (2) - Adicionar Ingrediente
                 (X) - Adicionar Embalagem
                 (X) - Status Produto
                 (X) - Status Ingredientes
@@ -102,8 +104,10 @@ public class Sistema {
                 (x) - Adicionar Funcionario
                 (x) - Listar Clientes
                 (x) - Listar Fornecedor
-                (x) - Listar Funcionario"""
-        return;
+                (x) - Listar Funcionario""";
+        System.out.println(msg);
+        System.out.println("Nao implementado. Voltando para o MENU INICIAL.");
+        menuInicial();
     }
 
     public void finalizarSistema() {
