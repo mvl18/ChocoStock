@@ -1,19 +1,21 @@
 package chocostock;
 
-import chocostock.colaboladores.Cliente;
-import chocostock.colaboladores.Colaborador;
+import chocostock.auxiliar.ValidadorInput;
+import chocostock.colaboradores.Cliente;
+import chocostock.colaboradores.Colaborador;
 import chocostock.enuns.Status;
 import chocostock.interfaces.AddRemove;
 import chocostock.interfaces.Escolhivel;
 import chocostock.itens.Item;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Loja implements AddRemove, Escolhivel {
+public class Loja implements AddRemove, Escolhivel, ValidadorInput {
     private String descricao;
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
@@ -125,6 +127,7 @@ public class Loja implements AddRemove, Escolhivel {
         switch (resposta) {
             case 1:
                 System.out.println(listaClientes());
+                System.out.println("Insira o ID ou nome do seu cliente");
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'sair'");
                 Cliente cliente = escolheObjeto(scanner, loja.getClientes());
                 if (cliente == null) {
@@ -147,55 +150,62 @@ public class Loja implements AddRemove, Escolhivel {
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
         pedido.setData_entrega(escolheData(scanner));
-        System.out.println("Ainda nao implementado");
         // PAGO OU N
-        System.out.println("O pedido feito ja foi pago? Sim OU Nao");
-        boolean pago = scanner.nextBoolean();
-        scanner.nextLine();
-        pedido.setPago(pago);
-        if (pago) {
-            System.out.println("Pedido foi marcado como pago!");
-        } else {
-            System.out.println("Pedido foi marcado como nao pago!");
-        }
-
+        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito ja foi pago? Sim OU Nao", "Por favor, insira uma resposta valida. ",
+                input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
+                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
+        System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
         // STATUS
         for (Status status : Status.values()) {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
         pedido.setStatus(escolheObjeto(scanner, Status.values()));
-
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
         // PRODUTOS_PENDENTES
         System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
+        // pedido.setProdutos(escolheObjeto(scanner, )); // precisa ver com todos como fazer ALERT
+        // pega_produtos_do_estoque() para tirar de pendentes
         // PRECO TOTAL
+        pedido.calculaPrecoTotal();
+        System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + ".");
+
 
         return pedido;
     }
 
     private LocalDate escolheData(Scanner scanner) {
-
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.println("Digite a data no formato dd/MM/yyyy:");
-        String inputData = scanner.nextLine();
+        LocalDate data = null;
+        boolean dataValida = false;
 
-        try {
-            LocalDate data = LocalDate.parse(inputData, dateFormatter);
-            System.out.println("Data inserida: " + dateFormatter.format(data));
-            return data;
-        } catch (DateTimeParseException e) {
-            System.out.println("Formato de data inválido. Por favor, insira a data no formato dd/MM/yyyy.");
-            return LocalDate.parse("01/01/2001", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        while (!dataValida) {
+            System.out.println("Digite a data no formato dd/MM/yyyy:");
+            String inputData = scanner.nextLine();
+
+            try {
+                data = LocalDate.parse(inputData, dateFormatter);
+                if (!data.isBefore(LocalDate.now())) {
+                    System.out.println("Data inserida: " + dateFormatter.format(data));
+                    dataValida = true;
+                } else {
+                    System.out.println("Por favor, insira uma data futura.");
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de data inválido. Por favor, insira a data no formato dd/MM/yyyy.");
+            }
         }
+
+        return data;
     }
+
 
     public Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
         // NOME
-        System.out.println("Nome do cliente: ");
-        cliente.setNome(scanner.nextLine());
+        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome invalido.",
+                input -> !input.matches(".*\\d.*")));
         // TELEFONE
         System.out.println("Telefone do cliente: ");
         cliente.setTelefone(scanner.nextLine()); // MATHEUS regex

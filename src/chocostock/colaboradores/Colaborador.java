@@ -1,4 +1,4 @@
-package chocostock.colaboladores;
+package chocostock.colaboradores;
 
 import chocostock.*;
 import chocostock.enuns.Estados;

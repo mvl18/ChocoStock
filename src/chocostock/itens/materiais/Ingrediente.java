@@ -1,6 +1,6 @@
 package chocostock.itens.materiais;
 
-import chocostock.colaboladores.Colaborador;
+import chocostock.colaboradores.Colaborador;
 import chocostock.itens.produtos.Material;
 
 import java.util.Date;
