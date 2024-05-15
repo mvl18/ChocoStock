@@ -1,5 +1,6 @@
 package chocostock;
 
+import chocostock.auxiliar.Verifica;
 import chocostock.colaboladores.Cliente;
 import chocostock.colaboladores.Colaborador;
 import chocostock.enuns.Status;
@@ -196,7 +197,12 @@ public class Loja implements AddRemove, Escolhivel {
         cliente.setNome(scanner.nextLine());
         // TELEFONE
         System.out.println("Telefone do cliente: ");
-        cliente.setTelefone(scanner.nextLine()); // MATHEUS regex
+        String telefone = scanner.nextLine();
+        while (!Verifica.Telefone(telefone)) {
+            System.out.println("Insira um número válido, não esqueça o DDD!");
+            telefone = scanner.nextLine();
+        }
+        cliente.setTelefone(telefone.replaceAll("\\D", ""));
         // EMAIL
         System.out.println("Email do cliente: ");
         cliente.setEmail(scanner.nextLine());
