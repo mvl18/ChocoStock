@@ -2,10 +2,10 @@ package chocostock.colaboladores;
 
 import chocostock.Endereco;
 
-public class Empresa extends Colaborador {
+public class Fornecedor extends Colaborador {
     private int cnpj;
     private String site;
-    public Empresa(String nome, String telefone, String email, Endereco endereco, int cnpj, String site) {
+    public Fornecedor(String nome, String telefone, String email, Endereco endereco, int cnpj, String site) {
         super(nome, telefone, email, endereco);
         this.cnpj = cnpj;
         this.site = site;

@@ -14,6 +14,8 @@ public class Main {
         Endereco endereco = CriarTeste.Endereco();
 //        System.out.println(enderecmaino);
 
+
+
       
         // TESTES INICIAIS MARAOLT
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
@@ -38,6 +40,11 @@ public class Main {
 
         System.out.println(loja.listaClientes());
         System.out.println(loja.listaPedidos());
+
+        //TESTE DE SISTEMA DOUGLAS
+        Sistema sistema = new Sistema(scanner, loja);
+        System.out.println(loja.listaPedidos());
+        sistema.iniciarSistema();
 
         scanner.close();
     }

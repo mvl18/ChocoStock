@@ -95,6 +95,8 @@ public class Loja implements AddRemove, Escolhivel {
         return removeObjeto(clientes, cliente);
     }
 
+    public int getNumeroPedidos() {return this.pedidos.size();}
+
     public String listaClientes() {
         String texto = "";
         for (Cliente cliente : clientes) {
