@@ -22,6 +22,7 @@ public class Main {
         Loja loja = new Loja("Primeira e unica loja!", endereco);
         loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);
+        System.out.println("teste");
 
         System.out.println("=========================");
         boolean continuar = true;
