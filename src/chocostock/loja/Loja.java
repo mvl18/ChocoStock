@@ -1,6 +1,7 @@
 package chocostock.loja;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
 import chocostock.interfaces.Iteravel;
@@ -174,9 +175,8 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
         // PAGO OU N
-        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
-                input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
-                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
+        pedido.setPago(Processa.normaliza(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
+                input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
         // STATUS

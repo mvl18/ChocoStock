@@ -1,5 +1,6 @@
 package chocostock.auxiliar;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,6 +25,7 @@ public class Verifica {
     public static boolean isNumero(String numero) {
         return numero.matches("-?\\d+(\\.\\d+)?");
     }
+
 
     public static boolean isData(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
