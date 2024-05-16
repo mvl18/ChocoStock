@@ -79,8 +79,9 @@ public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
         System.out.println(endereco.getEstado().getNome() + " é o estado do endereço? (S ou N)");
         if (scanner.nextLine().equals("N")) {
             System.out.println("Estado: ");
-            endereco.setEstado(escolheObjeto(scanner, Estados.values()));
+            endereco.setEstado(escolheObjeto(scanner, Estados.values(), "obrigatorio"));
         }
+
         // CIDADE
         System.out.println("Cidade: ");
         endereco.setCidade(scanner.nextLine());

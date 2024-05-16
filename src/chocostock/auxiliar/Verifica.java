@@ -1,6 +1,11 @@
 package chocostock.auxiliar;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Verifica {
+
     public static boolean isTelefone(String telefone) {
         String teste_telefone = telefone.replaceAll("\\D", "");
         return teste_telefone.length() >= 10;
@@ -14,5 +19,22 @@ public class Verifica {
     public static boolean isCep(String cep) {
         String teste_cep = cep.replaceAll("\\D", "");
         return teste_cep.length() >= 7 && teste_cep.length() <= 8;
+
+    public static boolean isNumero(String numero) {
+        return numero.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    public static boolean isData(String dataString) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate data = LocalDate.parse(dataString, dateFormatter);
+            if (!data.isBefore(LocalDate.now())) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 }
