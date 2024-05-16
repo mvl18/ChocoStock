@@ -223,6 +223,11 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         return cliente;
     }
 
+    /*
+    BUGS:
+    -Digita uma string quando pede INT ou FLOAT
+    -Digita ID de ingrediente invalido (1-17)
+     */
      public Ingrediente novoIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
         int opcao;
