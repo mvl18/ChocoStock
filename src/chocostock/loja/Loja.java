@@ -203,22 +203,20 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
     private LocalDate escolheData(Scanner scanner) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
         return LocalDate.parse((getInput(scanner, "Digite a data futura no formato dd/MM/yyyy: ",
                 "Formato de data inválido. Por favor, insira a data futura no formato dd/MM/yyyy.",
-                Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
+
 
     public Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
         // NOME
-        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome inválido.",
-                                 input -> !input.matches(".*\\d.*")));
+        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome inválido.", Verifica::isNome));
         // TELEFONE
         cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
-                                     Verifica::isTelefone).replaceAll("\\D", ""));
-
+                Verifica::isTelefone).replaceAll("\\D", ""));
         // EMAIL
-        cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!",
-                                  Verifica::isEmail));
+        cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!", Verifica::isEmail));
         // ENDERECO
         System.out.println("Criando endereço: ");
         cliente.setEndereco(cliente.criaEndereco(scanner));
@@ -246,17 +244,20 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         // ingrediente.setTipo(TiposIngredientes.getTipoPorId(opcao));
         ingrediente.setNome(ingrediente.getTipo().getNome());
         //Quantidade
-        System.out.println("Quantas unidades foram compradas?");
-        ingrediente.setQuantidade(input.nextInt());
-        input.nextLine();
+//        System.out.println("Quantas unidades foram compradas?");
+//        ingrediente.setQuantidade(input.nextInt());
+//        input.nextLine();
+        ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas?", "Quantidade invalida", Verifica::isNatural)));
         //Unidade
-        System.out.println("Quantos kg por unidade:");
-        texto = input.nextLine();
-        ingrediente.setUnidade(Float.parseFloat(texto));
+//        System.out.println("Quantos kg por unidade:");
+//        texto = input.nextLine();
+//        ingrediente.setUnidade(Float.parseFloat(texto));
+        ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade?", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
         //Preco
-        System.out.println("Digite o preco da compra:");
-        texto = input.nextLine();
-        ingrediente.setPreco(Float.parseFloat(texto));
+//        System.out.println("Digite o preco da compra:");
+//        texto = input.nextLine();
+//        ingrediente.setPreco(Float.parseFloat(texto));
+        ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
         //Data Compra e Validade
         System.out.println("Digite a data da compra (dd/mm/yyyy)");
         ingrediente.setDataCompra(escolheData(input));
