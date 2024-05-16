@@ -1,7 +1,6 @@
 package chocostock.auxiliar;
 
-import chocostock.Endereco;
-import chocostock.enuns.Estados;
+import chocostock.enums.Estados;
 import chocostock.colaboradores.Cliente;
 
 import java.util.Random;

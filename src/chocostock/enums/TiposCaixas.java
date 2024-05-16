@@ -1,4 +1,4 @@
-package chocostock.itens.produtos;
+package chocostock.enums;
 
 public enum TiposCaixas {
     CAIXA_MINI_TABLETS_70,

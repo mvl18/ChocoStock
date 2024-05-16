@@ -1,6 +1,6 @@
-package chocostock.itens.produtos;
+package chocostock.enums;
 
-public enum Complementos {
+public enum TiposComplementos {
     NIBS_CACAU,
     CAJU,
     AVELA,

@@ -1,8 +1,8 @@
-package chocostock;
+package chocostock.loja;
 
-import chocostock.enuns.Status;
-import chocostock.itens.Produto;
-import chocostock.itens.produtos.TiposChocolates;
+import chocostock.enums.Status;
+import chocostock.itens.produtos.Produto;
+import chocostock.enums.TiposChocolates;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -123,5 +123,9 @@ public class Pedido {
                 ", produtos_pendentes=" + produtos_pendentes +
                 ", preco_total=" + preco_total +
                 '}';
+    }
+
+    public float calculaPrecoTotal() {
+        return 0.0F; // fazer
     }
 }

@@ -1,4 +1,4 @@
-package chocostock.itens.produtos;
+package chocostock.enums;
 
 public enum TiposChocolates {
     CHOCOLATE_AO_LEITE_CARAMELIZADO,
