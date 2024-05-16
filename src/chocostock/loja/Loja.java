@@ -1,6 +1,9 @@
 package chocostock.loja;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.colaboradores.Fornecedor;
+import chocostock.colaboradores.Funcionario;
+import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Colaborador;
@@ -17,13 +20,14 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
+public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput {
     private String descricao;
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
     private Estoque estoque;
     private ArrayList<Cliente> clientes;
-    private ArrayList<Colaborador> funcionarios;
+    private ArrayList<Funcionario> funcionarios;
+    private ArrayList<Fornecedor> fornecedores;
 
     public Loja(String descricao, Endereco endereco) {
         this.descricao = descricao;
@@ -31,7 +35,8 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         this.pedidos = new ArrayList<Pedido>();
         this.estoque =  new Estoque(new ArrayList<Item>(), new ArrayList<Item>(), new ArrayList<Item>());
         this.clientes = new ArrayList<Cliente>();
-        this.funcionarios = new ArrayList<Colaborador>();
+        this.funcionarios = new ArrayList<Funcionario>();
+        this.fornecedores = new ArrayList<Fornecedor>();
     }
 
 
@@ -75,12 +80,20 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         this.clientes = clientes;
     }
 
-    public ArrayList<Colaborador> getFuncionarios() {
+    public ArrayList<Funcionario> getFuncionarios() {
         return funcionarios;
     }
 
-    public void setFuncionarios(ArrayList<Colaborador> funcionarios) {
+    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
+    }
+
+    public ArrayList<Fornecedor> getFornecedores() {
+        return fornecedores;
+    }
+
+    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
     }
 
     public boolean addPedido(Pedido pedido) {
@@ -99,24 +112,26 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         return removeObjeto(clientes, cliente);
     }
 
+    public boolean addFornecedor(Fornecedor fornecedor) {
+        return addObjeto(fornecedores, fornecedor);
+    }
+
+    public boolean removeFornecedor(Fornecedor fornecedor) {
+        return removeObjeto(fornecedores, fornecedor);
+    }
+
     public int getNumeroPedidos() {return this.pedidos.size();}
 
     public String listaClientes() {
-        String texto = "";
-        for (Cliente cliente : clientes) {
-            texto += cliente.toString() + "\n";
-        }
+        return listaObjetos(clientes);
+    }
 
-        return texto;
+    public String listaFornecedores() {
+        return listaObjetos(fornecedores);
     }
 
     public String listaPedidos() {
-        String texto = "";
-        for (Pedido pedido : pedidos) {
-            texto += pedido.toString() + "\n";
-        }
-
-        return texto;
+        return listaObjetos(pedidos);
     }
 
     public Pedido novoPedido(Scanner scanner, Loja loja)  {

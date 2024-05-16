@@ -57,8 +57,7 @@ public class Colaborador implements Nomeavel, Escolhivel {
         return "nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
-                ", endereco=" + endereco +
-                '}';
+                ", endereco=" + endereco;
     }
 
 

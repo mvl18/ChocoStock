@@ -4,6 +4,7 @@ import chocostock.interfaces.Codificavel;
 import chocostock.interfaces.Nomeavel;
 
 public enum Estados implements Nomeavel, Codificavel {
+    XX("XX", null),
     AC("AC", "Acre"),
     AL("AL", "Alagoas"),
     AP("AP", "Amapá"),
