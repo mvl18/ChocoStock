@@ -1,6 +1,6 @@
-package chocostock.colaboladores;
+package chocostock.colaboradores;
 
-import chocostock.Endereco;
+import chocostock.auxiliar.Endereco;
 
 public class Fornecedor extends Colaborador {
     private int cnpj;

@@ -1,6 +1,7 @@
 package chocostock.itens.produtos;
 
-import chocostock.itens.Produto;
+import chocostock.enums.TiposComplementos;
+import chocostock.enums.TiposChocolates;
 import chocostock.itens.materiais.Embalagem;
 
 import java.util.ArrayList;
@@ -10,10 +11,10 @@ public class Chocolate extends Produto {
     private int lote;
     private TiposChocolates tipo;
     private int intensidade;
-    private ArrayList<Complementos> complementos;
+    private ArrayList<TiposComplementos> complementos;
     private String origem;
 
-    public Chocolate(String nome, int quantidade, float preco, TiposChocolates tipo, Date validade, int peso, Embalagem embalagem, int lote, int intensidade, ArrayList<Complementos> complementos, String origem) {
+    public Chocolate(String nome, int quantidade, float preco, TiposChocolates tipo, Date validade, int peso, Embalagem embalagem, int lote, int intensidade, ArrayList<TiposComplementos> complementos, String origem) {
         super(nome, quantidade, preco, validade, peso, embalagem);
         this.lote = lote;
         this.tipo = tipo;

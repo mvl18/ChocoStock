@@ -1,17 +1,19 @@
-package chocostock;
+package chocostock.loja;
 
-import chocostock.interfaces.AddRemove;
+import chocostock.interfaces.AddRemovivel;
 import chocostock.itens.Equipamento;
 import chocostock.itens.Item;
+import chocostock.itens.materiais.Material;
+import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;
-import chocostock.itens.materiais.TiposIngredientes;
-import chocostock.itens.produtos.Material;
-import chocostock.itens.Produto;
+import chocostock.enums.TiposIngredientes;
+import chocostock.itens.materiais.Material;
+import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Estoque implements AddRemove {
+public class Estoque implements AddRemovivel {
     private ArrayList<Item> produtos;
     private ArrayList<Item> materiais;
     private ArrayList<Item> equipamentos;

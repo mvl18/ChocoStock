@@ -1,7 +1,7 @@
-package chocostock;
+package chocostock.auxiliar;
 
 
-import chocostock.enuns.Estados;
+import chocostock.enums.Estados;
 
 public class Endereco {
     private int numero;

@@ -22,6 +22,7 @@ public interface Escolhivel {
                         if (((Identificavel) objeto).getId() == Integer.parseInt(escolha)) {
                             escolhidos.add(objeto);
                             i++;
+                            break;
                         }
                     }
                 } else {
@@ -29,12 +30,14 @@ public interface Escolhivel {
                         if (((Nomeavel) objeto).getNome().equals(escolha)) {
                             escolhidos.add(objeto);
                             i++;
+                            break;
                         }
                     }
                     if (objeto instanceof Codificavel) {
                         if (((Codificavel) objeto).getCodigo().equals(escolha)) {
                             escolhidos.add(objeto);
                             i++;
+                            break;
                         }
                     }
                 }

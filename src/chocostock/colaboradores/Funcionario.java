@@ -1,6 +1,6 @@
-package chocostock.colaboladores;
+package chocostock.colaboradores;
 
-import chocostock.Endereco;
+import chocostock.auxiliar.Endereco;
 import chocostock.interfaces.Identificavel;
 
 public class Funcionario extends Colaborador implements Identificavel {

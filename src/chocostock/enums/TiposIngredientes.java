@@ -1,4 +1,4 @@
-package chocostock.itens.materiais;
+package chocostock.enums;
 
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;

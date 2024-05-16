@@ -1,5 +1,7 @@
 package chocostock;
 
+import chocostock.loja.Loja;
+
 import java.util.Scanner;
 
 public class Sistema {

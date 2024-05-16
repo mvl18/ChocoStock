@@ -1,6 +1,6 @@
 package chocostock.itens.produtos;
 
-import chocostock.itens.Produto;
+import chocostock.enums.TiposCaixas;
 import chocostock.itens.materiais.Embalagem;
 
 import java.util.ArrayList;
