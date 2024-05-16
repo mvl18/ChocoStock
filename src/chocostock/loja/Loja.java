@@ -1,6 +1,9 @@
 package chocostock.loja;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.colaboradores.Fornecedor;
+import chocostock.colaboradores.Funcionario;
+import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Colaborador;
@@ -14,18 +17,19 @@ import chocostock.enums.TiposIngredientes;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
-import java.time.chrono.MinguoEra;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
+public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput {
     private String descricao;
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
     private Estoque estoque;
     private ArrayList<Cliente> clientes;
-    private ArrayList<Colaborador> funcionarios;
+    private ArrayList<Funcionario> funcionarios;
+    private ArrayList<Fornecedor> fornecedores;
 
     public Loja(String descricao, Endereco endereco) {
         this.descricao = descricao;
@@ -33,7 +37,8 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         this.pedidos = new ArrayList<Pedido>();
         this.estoque =  new Estoque(new ArrayList<Item>(), new ArrayList<Item>(), new ArrayList<Item>());
         this.clientes = new ArrayList<Cliente>();
-        this.funcionarios = new ArrayList<Colaborador>();
+        this.funcionarios = new ArrayList<Funcionario>();
+        this.fornecedores = new ArrayList<Fornecedor>();
     }
 
 
@@ -77,12 +82,20 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         this.clientes = clientes;
     }
 
-    public ArrayList<Colaborador> getFuncionarios() {
+    public ArrayList<Funcionario> getFuncionarios() {
         return funcionarios;
     }
 
-    public void setFuncionarios(ArrayList<Colaborador> funcionarios) {
+    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
+    }
+
+    public ArrayList<Fornecedor> getFornecedores() {
+        return fornecedores;
+    }
+
+    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
     }
 
     public boolean addPedido(Pedido pedido) {
@@ -101,24 +114,26 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         return removeObjeto(clientes, cliente);
     }
 
+    public boolean addFornecedor(Fornecedor fornecedor) {
+        return addObjeto(fornecedores, fornecedor);
+    }
+
+    public boolean removeFornecedor(Fornecedor fornecedor) {
+        return removeObjeto(fornecedores, fornecedor);
+    }
+
     public int getNumeroPedidos() {return this.pedidos.size();}
 
     public String listaClientes() {
-        String texto = "";
-        for (Cliente cliente : clientes) {
-            texto += cliente.toString() + "\n";
-        }
+        return listaObjetos(clientes);
+    }
 
-        return texto;
+    public String listaFornecedores() {
+        return listaObjetos(fornecedores);
     }
 
     public String listaPedidos() {
-        String texto = "";
-        for (Pedido pedido : pedidos) {
-            texto += pedido.toString() + "\n";
-        }
-
-        return texto;
+        return listaObjetos(pedidos);
     }
 
     public Pedido novoPedido(Scanner scanner, Loja loja)  {
@@ -126,7 +141,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         System.out.println("Novo pedido com id " + pedido.getId() + " criado com sucesso.\nQual cliente fez esse pedido? ");
 
         // CLIENTE
-        System.out.println("1-Mostrar lista de clientes ja cadastrados.\n2-Adicionar novo cliente.");
+        System.out.println("1-Mostrar lista de clientes já cadastrados.\n2-Adicionar novo cliente.");
         int resposta = scanner.nextInt();
         scanner.nextLine();
         switch (resposta) {
@@ -134,7 +149,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 System.out.println(listaClientes());
                 System.out.println("Insira o ID ou nome do seu cliente");
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'");
-                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuario listado.", "novo");
+                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
                     Cliente cliente2 = novoCliente(scanner);
                     loja.addCliente(cliente2);
@@ -149,7 +164,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 pedido.setId_cliente(cliente2.getId());
                 break;
             default:
-                System.out.println("Da proxima selecione uma resposta valida! Finalizando programa!");
+                System.out.println("Da práxima selecione uma resposta valida! Finalizando programa!");
                 break;
         }
 
@@ -159,7 +174,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
         // PAGO OU N
-        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito ja foi pago? Sim OU Nao", "Por favor, insira uma resposta valida. ",
+        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
                 input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
                 Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
@@ -169,7 +184,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status invalido. Digite um numero valido ou o nome do status.", "obrigatorio"));
+        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "Obrigatório"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
         // PRODUTOS_PENDENTES
@@ -196,14 +211,14 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
         // NOME
-        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome invalido.", Verifica::isNome));
+        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome inválido.", Verifica::isNome));
         // TELEFONE
         cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
                 Verifica::isTelefone).replaceAll("\\D", ""));
         // EMAIL
         cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!", Verifica::isEmail));
         // ENDERECO
-        System.out.println("Criando endereco: ");
+        System.out.println("Criando endereço: ");
         cliente.setEndereco(cliente.criaEndereco(scanner));
 
         return cliente;

@@ -26,7 +26,7 @@ public class Endereco implements Escolhivel {
     }
 
     public Endereco() {
-        this(0, "", "", "", "", Estados.AC); // seria bom criar um estado default talvez
+        this(0, "", "", "", "", Estados.XX);
     }
 
     public int getNumero() {
@@ -105,14 +105,13 @@ public class Endereco implements Escolhivel {
     }
 
     public String toString() {
-        return "Endereco{" +
-                "numero=" + numero +
-                ", cep='" + cep + '\'' +
-                ", rua='" + rua + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", estado=" + estado +
-                '}';
+        return " Rua " + rua +
+                ", n° " + numero +
+                " - Bairro " + bairro +
+                ". CEP: " + cep +
+                ". " + cidade +
+                " - " + estado
+                ;
     }
 }
 

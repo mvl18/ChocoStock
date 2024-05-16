@@ -60,8 +60,7 @@ public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
         return "nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
-                ", endereco=" + endereco +
-                '}';
+                ", endereco=" + endereco;
     }
 
 
