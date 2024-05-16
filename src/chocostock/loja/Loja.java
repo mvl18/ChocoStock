@@ -10,7 +10,7 @@ import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Escolhivel;
 import chocostock.itens.Item;
 import chocostock.itens.materiais.Ingrediente;
-import chocostock.itens.materiais.TiposIngredientes;
+import chocostock.enums.TiposIngredientes;
 
 import java.text.Normalizer;
 import java.time.LocalDate;

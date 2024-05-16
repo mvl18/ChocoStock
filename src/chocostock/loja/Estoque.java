@@ -7,8 +7,6 @@ import chocostock.itens.materiais.Material;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.enums.TiposIngredientes;
-import chocostock.itens.materiais.Material;
-import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

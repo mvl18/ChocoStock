@@ -60,7 +60,7 @@ public class Sistema {
                 Selecione uma opcao:
                 (1) - Novo pedido.
                 (2) - Listar pedidos.
-                (3) - Atualizar pedido.
+                (x) - Atualizar pedido.
                 (0) - Voltar para o menu inicial.""";
         System.out.println(msg);
         opcao = input.nextInt();
