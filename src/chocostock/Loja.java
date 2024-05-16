@@ -6,6 +6,8 @@ import chocostock.enuns.Status;
 import chocostock.interfaces.AddRemove;
 import chocostock.interfaces.Escolhivel;
 import chocostock.itens.Item;
+import chocostock.itens.materiais.Ingrediente;
+import chocostock.itens.materiais.TiposIngredientes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -207,5 +209,39 @@ public class Loja implements AddRemove, Escolhivel {
         cliente.setEndereco(cliente.criaEndereco(scanner));
 
         return cliente;
+    }
+
+     public Ingrediente novoIngrediente(Scanner input) {
+        Ingrediente ingrediente = new Ingrediente();
+        int opcao;
+        String texto;
+        //Tipo
+        System.out.println("Escolha um tipo de ingrediente para adicionar:");
+        estoque.imprimirIngredientes();
+        opcao = input.nextInt();
+        input.nextLine();
+        ingrediente.setTipo(TiposIngredientes.getTipoPorId(opcao));
+        ingrediente.setNome(ingrediente.getTipo().getNome());
+        //Quantidade
+        System.out.println("Quantas unidades foram compradas?");
+        ingrediente.setQuantidade(input.nextInt());
+        input.nextLine();
+        //Unidade
+        System.out.println("Quantos kg por unidade:");
+        texto = input.nextLine();
+        ingrediente.setUnidade(Float.parseFloat(texto));
+        //Preco
+        System.out.println("Digite o preco da compra:");
+        texto = input.nextLine();
+        ingrediente.setPreco(Float.parseFloat(texto));
+        //Data Compra e Validade
+        System.out.println("Digite a data da compra (dd/mm/yyyy)");
+        ingrediente.setDataCompra(escolheData(input));
+        System.out.println("Digite a data de validade: (dd/mm/yyyy)");
+        ingrediente.setValidade(escolheData(input));
+        //Fornecedor
+        System.out.println("Fornecedores atuais:");
+        System.out.println("Nao Implementado.");
+        return ingrediente;
     }
 }

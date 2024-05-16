@@ -3,6 +3,7 @@ package chocostock.itens.materiais;
 import chocostock.colaboladores.Colaborador;
 import chocostock.itens.produtos.Material;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Ingrediente extends Material {
@@ -12,23 +13,28 @@ public class Ingrediente extends Material {
     //MATERIAL:
 
     private TiposIngredientes tipo;
-    private Date dataCompra;
-    private Date validade;
+    private float unidade; // Em kg
+    private LocalDate dataCompra;
+    private LocalDate validade;
     private Colaborador fornecedor;
 
     public Ingrediente(String nome, int quantidade, float preco) {
         super(nome, quantidade, preco);
     }
 
+    public Ingrediente() {
+        this("", 0, 0.0f);
+    }
+
     public TiposIngredientes getTipo() {
         return tipo;
     }
 
-    public Date getDataCompra() {
+    public LocalDate getDataCompra() {
         return dataCompra;
     }
 
-    public Date getValidade() {
+    public LocalDate getValidade() {
         return validade;
     }
 
@@ -36,15 +42,23 @@ public class Ingrediente extends Material {
         return fornecedor;
     }
 
+    public float getUnidade() {
+        return unidade;
+    }
+
     public void setTipo(TiposIngredientes tipo) {
         this.tipo = tipo;
     }
 
-    public void setDataCompra(Date dataCompra) {
+    public void setUnidade(float unidade) {
+        this.unidade = unidade;
+    }
+
+    public void setDataCompra(LocalDate dataCompra) {
         this.dataCompra = dataCompra;
     }
 
-    public void setValidade(Date validade) {
+    public void setValidade(LocalDate validade) {
         this.validade = validade;
     }
 

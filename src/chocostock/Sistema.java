@@ -88,12 +88,23 @@ public class Sistema {
                 (2) - Adicionar Ingrediente
                 (X) - Adicionar Embalagem
                 (X) - Status Produto
-                (X) - Status Ingredientes
+                (5) - Status Ingredientes
                 (X) - Status Embalagens
                 """;
         System.out.println(msg);
-        System.out.println("Nao implementado. Voltando para o MENU INICIAL.");
-        menuInicial();
+        opcao = input.nextInt();
+        input.nextLine();
+        switch(opcao){
+            case 2: loja.getEstoque().addMaterial(loja.novoIngrediente(input));
+                    menuEstoque();
+                    break;
+            case 5: System.out.println(loja.getEstoque().statusIngredientes());
+                    menuEstoque();
+                    break;
+            default: System.out.println("Opcao invalida. Voltando para o MENU INICIAL.");
+                     menuInicial();
+                     break;
+        }
     }
 
     public void menuColaboradores(){
