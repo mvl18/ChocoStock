@@ -122,6 +122,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
     public Pedido novoPedido(Scanner scanner, Loja loja)  {
         Pedido pedido = new Pedido();
         System.out.println("Novo pedido com id " + pedido.getId() + " criado com sucesso.\nQual cliente fez esse pedido? ");
+
         // CLIENTE
         System.out.println("1-Mostrar lista de clientes ja cadastrados.\n2-Adicionar novo cliente.");
         int resposta = scanner.nextInt();
@@ -130,8 +131,8 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
             case 1:
                 System.out.println(listaClientes());
                 System.out.println("Insira o ID ou nome do seu cliente");
-                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'sair'");
-                Cliente cliente = escolheObjeto(scanner, loja.getClientes());
+                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'");
+                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "novo");
                 if (cliente == null) {
                     Cliente cliente2 = novoCliente(scanner);
                     loja.addCliente(cliente2);
@@ -149,56 +150,43 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 System.out.println("Da proxima selecione uma resposta valida! Finalizando programa!");
                 break;
         }
+
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
         pedido.setData_entrega(escolheData(scanner));
+        System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
+
         // PAGO OU N
         pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito ja foi pago? Sim OU Nao", "Por favor, insira uma resposta valida. ",
                 input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
                 Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
+
         // STATUS
         for (Status status : Status.values()) {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values()));
+        pedido.setStatus(escolheObjeto(scanner, Status.values(), "obrigatorio"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
+
         // PRODUTOS_PENDENTES
         System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
+
         // pedido.setProdutos(escolheObjeto(scanner, )); // precisa ver com todos como fazer ALERT
         // pega_produtos_do_estoque() para tirar de pendentes
+
         // PRECO TOTAL
         pedido.calculaPrecoTotal();
         System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + ".");
 
-
         return pedido;
     }
 
-    private LocalDate escolheData(Scanner scanner) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate data = null;
-        boolean dataValida = false;
-
-        while (!dataValida) {
-            System.out.println("Digite a data no formato dd/MM/yyyy:");
-            String inputData = scanner.nextLine();
-
-            try {
-                data = LocalDate.parse(inputData, dateFormatter);
-                if (!data.isBefore(LocalDate.now())) {
-                    System.out.println("Data inserida: " + dateFormatter.format(data));
-                    dataValida = true;
-                } else {
-                    System.out.println("Por favor, insira uma data futura.");
-                }
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de data inválido. Por favor, insira a data no formato dd/MM/yyyy.");
-            }
-        }
-
-        return data;
+    private LocalDate escolheData(Scanner scanner) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
+        return LocalDate.parse((getInput(scanner, "Digite a data futura no formato dd/MM/yyyy: ",
+                "Formato de data inválido. Por favor, insira a data futura no formato dd/MM/yyyy.",
+                Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
 
@@ -210,7 +198,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 input -> !input.matches(".*\\d.*")));
         // TELEFONE
         cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
-                                    Verifica::Telefone).replaceAll("\\D", ""));
+                                    Verifica::isTelefone).replaceAll("\\D", ""));
         // EMAIL
         System.out.println("Email do cliente: ");
         cliente.setEmail(scanner.nextLine());
