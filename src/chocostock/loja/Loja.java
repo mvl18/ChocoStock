@@ -1,10 +1,12 @@
-package chocostock;
+package chocostock.loja;
 
-import chocostock.auxiliar.ValidadorInput;
+import chocostock.auxiliar.Endereco;
+import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Colaborador;
-import chocostock.enuns.Status;
-import chocostock.interfaces.AddRemove;
+import chocostock.auxiliar.Verifica;
+import chocostock.enums.Status;
+import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Escolhivel;
 import chocostock.itens.Item;
 
@@ -15,7 +17,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Loja implements AddRemove, Escolhivel, ValidadorInput {
+public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
     private String descricao;
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
@@ -207,8 +209,8 @@ public class Loja implements AddRemove, Escolhivel, ValidadorInput {
         cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome invalido.",
                 input -> !input.matches(".*\\d.*")));
         // TELEFONE
-        System.out.println("Telefone do cliente: ");
-        cliente.setTelefone(scanner.nextLine()); // MATHEUS regex
+        cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
+                                    Verifica::Telefone).replaceAll("\\D", ""));
         // EMAIL
         System.out.println("Email do cliente: ");
         cliente.setEmail(scanner.nextLine());

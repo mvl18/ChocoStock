@@ -2,7 +2,7 @@ package chocostock.interfaces;
 
 import java.util.ArrayList;
 
-public interface AddRemove {
+public interface AddRemovivel {
     default <T> boolean addObjeto(ArrayList<T> lista, T objeto) {
         if(!lista.contains(objeto)) {
             lista.add(objeto);

@@ -1,8 +1,11 @@
 package chocostock;
 
 import chocostock.auxiliar.CriarTeste;
+import chocostock.auxiliar.Endereco;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Colaborador;
+import chocostock.loja.Loja;
+
 import java.util.Scanner;
 
 public class Main {
@@ -24,7 +27,6 @@ public class Main {
         Loja loja = new Loja("Primeira e unica loja!", endereco);
         loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);
-        System.out.println("teste");
 
         System.out.println("=========================");
         boolean continuar = true;

@@ -43,10 +43,10 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - `Caixa`:
 - `Chocolate`:
 
-### Enuns
+### Enums
 - `Estados`: Lista as unidades federativas possíveis para os endereços.
 - `Status`: Seta o status do pedido.
-- `TipoEmbalagens`: Enumera os tipos de embalagem que a fábrica precisa comprar.
+- `TiposEmbalagens`: Enumera os tipos de embalagem que a fábrica precisa comprar.
 - `TiposIngredientes`: Enumera os tipos de ingredientes que a fábrica precisa comprar.
 - `TiposChocolates`: Enumera todos os tipos de chocolate que a fábrica produz.
 - `TiposComplementos`: Enumera todos os complementos para os chocolates.

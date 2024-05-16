@@ -1,8 +1,8 @@
-package chocostock;
+package chocostock.loja;
 
-import chocostock.enuns.Status;
-import chocostock.itens.Produto;
-import chocostock.itens.produtos.TiposChocolates;
+import chocostock.enums.Status;
+import chocostock.itens.produtos.Produto;
+import chocostock.enums.TiposChocolates;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

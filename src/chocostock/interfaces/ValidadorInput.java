@@ -1,4 +1,4 @@
-package chocostock.auxiliar;
+package chocostock.interfaces;
 
 import java.text.Normalizer;
 import java.util.Scanner;
