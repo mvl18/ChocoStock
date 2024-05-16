@@ -109,10 +109,11 @@ public interface ValidadorInput {
         String mensagemOpcoes = "";
         boolean inicioZero = opcaoMin == 0;
         int inicial = inicioZero ? 1 : opcaoMin;
+        int fim = inicioZero ? (opcoes.length-1) : (opcoes.length);
 
         mensagemOpcoes += "--- " + opcoes[0] + " ---\nSelecione uma das opções:\n";
-        for (int i = inicial; i < inicial + opcoes.length - 1; i++) {
-            mensagemOpcoes += "(" + i + ") - " + opcoes[i - inicial] + "\n";
+        for (int i = inicial; i < fim; i++) {
+            mensagemOpcoes += "(" + (i) + ") - " + opcoes[i - inicial + 1] + "\n";
         }
         if (inicioZero) {
             mensagemOpcoes += "(0) - " + opcoes[opcoes.length - 1];

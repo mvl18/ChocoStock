@@ -137,15 +137,15 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
     public Pedido novoPedido(Scanner scanner, Loja loja)  {
         Pedido pedido = new Pedido();
-        String msg =   """
-                --- NOVO PEDIDO ---
-                Selecione uma das opções:
-                (1) - Mostrar lista de clientes já cadastrados.
-                (2) - Adicionar novo cliente.
-                """;
+//        String msg =   """
+//                --- NOVO PEDIDO ---
+//                Selecione uma das opções:
+//                (1) - Mostrar lista de clientes já cadastrados.
+//                (2) - Adicionar novo cliente.
+//                """;
 
         // CLIENTE
-        switch (verificaOpcao(scanner, msg, 0, 2)) {
+        switch (verificaOpcao(scanner, new String[]{"NOVO PEDIDO", "Mostrar lista de clientes já cadastrados.", "Adicionar novo cliente."}, 1)) {
             case 1:
                 System.out.println(listaClientes());
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
@@ -202,14 +202,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
     private ArrayList<Produto> escolheProdutos(Scanner scanner) {
         ArrayList<Produto> produtosEscolhidos = new ArrayList<Produto>();
-        String msg =   """
-                --- PRODUTOS DO PEDIDO ---
-                Selecione uma das opções:
-                (1) - Adicionar produto.
-                (2) - Listar produtos adicionados
-                (0) - Finalizar escolhas.
-                """;
-        switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados", "Finalizar escolhas."}, 0)) {
+        switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
             case 1:
                 // selecionaProduto();
 
@@ -261,34 +254,20 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         estoque.imprimirIngredientes();
         ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
                 "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
-//        opcao = input.nextInt();
-//        input.nextLine();
-        // ingrediente.setTipo(TiposIngredientes.getTipoPorId(opcao));
         ingrediente.setNome(ingrediente.getTipo().getNome());
 
         //Quantidade
-//        System.out.println("Quantas unidades foram compradas?");
-//        ingrediente.setQuantidade(input.nextInt());
-//        input.nextLine();
         ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas?", "Quantidade invalida", Verifica::isNatural)));
 
         //Unidade
-//        System.out.println("Quantos kg por unidade:");
-//        texto = input.nextLine();
-//        ingrediente.setUnidade(Float.parseFloat(texto));
         ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade?", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
 
         //Preco
-//        System.out.println("Digite o preco da compra:");
-//        texto = input.nextLine();
-//        ingrediente.setPreco(Float.parseFloat(texto));
         ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
         //Data Compra e Validade
-        //System.out.println("Digite a data da compra (dd/mm/yyyy)");
         ingrediente.setDataCompra(escolheData(input, "Digite a data da compra: (dd/mm/yyyy)",
                 "Formato de data inválido. Por favor, insira a data no formato dd/mm/yyyy."));
-        //System.out.println("Digite a data de validade: (dd/mm/yyyy)");
         ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)",
                 "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy."));
 
