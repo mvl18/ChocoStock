@@ -36,26 +36,6 @@ public class Main {
         loja.addFornecedor(new Fornecedor("Sorvemix"));
         loja.addFornecedor(new Fornecedor("Kalunga"));
 
-        System.out.println("=========================");
-        boolean continuar = true;
-        while(continuar) {
-            System.out.println("Digite 'add' para adicionar pedidos, 'pedidos' para mostrar a lista de pedidos, 'fornecedores' para mostrar a lista de fornecedores, ou 'end' para encerrar o programa!");
-            String comando = scanner.nextLine();
-            switch(comando) {
-                case "add": loja.addPedido(loja.novoPedido(scanner, loja));
-                    break;
-                case "pedidos": System.out.println(loja.listaPedidos());
-                    break;
-                case "fornecedores": System.out.println(loja.listaFornecedores());
-                    break;
-                case "end": continuar = false;
-                    break;
-            }
-        }
-
-        System.out.println(loja.listaClientes());
-        System.out.println(loja.listaPedidos());
-
         //TESTE DE SISTEMA DOUGLAS
         Sistema sistema = new Sistema(scanner, loja);
         System.out.println(loja.listaPedidos());
