@@ -18,7 +18,7 @@ public interface ValidadorInput {
      * @param prompt A mensagem exibida para solicitar a entrada do usuário.
      * @param mensagemErro A mensagem exibida quando a entrada do usuário é inválida.
      * @param validador O validador de entrada para verificar se a entrada do usuário é válida.
-     * @return A entrada do usuário válida.
+     * @return A entrada do usuário válida na forma de String().
      */
     default String getInput(Scanner scanner, String prompt, String mensagemErro, Validador validador) {
         String input, inputnorm;
@@ -50,5 +50,74 @@ public interface ValidadorInput {
          * @return true se a entrada do usuário for válida, caso contrário false.
          */
         boolean isValid(String input);
+    }
+
+
+    /**
+     * Obtém a entrada do usuário com validação.
+     *
+     * @param scanner O objeto Scanner para entrada do usuário.
+     * @param mensagemOpcoes A mensagem exibida para solicitar a entrada do usuário.
+     *                       Exemplo:
+     *                msg = """
+     *                 --- MENU COLABORADORES ---
+     *                 (1) - Adicionar Cliente
+     *                 (x) - Adicionar Fornecedor
+     *                 (x) - Adicionar Funcionário
+     *                 (4) - Listar Clientes
+     *                 (5) - Listar Fornecedores
+     *                 (x) - Listar Funcionario
+     *                 (0) - Voltar para o menu inicial.""";
+     * @param opcaoMin O menor número que o usuário pode digitar (nesse caso seria o 0).
+     * @param opcaoMax  O maior número que o usuário pode digitar (nesse caso seria o "6").
+     * @return O int digitado pelo usuário.
+     * Exemplo de input: verificaOpcao(scanner, msg, 0, 6)
+     */
+    default int verificaOpcao(Scanner scanner, String mensagemOpcoes, int opcaoMin, int opcaoMax) {
+        int resposta = 0;
+        boolean opcaoValida = false;
+
+        while (!opcaoValida) {
+            System.out.println(mensagemOpcoes);
+            if (scanner.hasNextInt()) {
+                resposta = scanner.nextInt();
+                if (resposta >= opcaoMin && resposta <= opcaoMax) {
+                    opcaoValida = true;
+                } else {
+                    System.out.println("Seleção inválida. Por favor, escolha uma opção de " + opcaoMin + " a " + opcaoMax + ".");
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, digite um número.");
+                scanner.next();
+            }
+        }
+
+        return resposta;
+    }
+
+    /**
+     * Obtém a entrada do usuário com validação.
+     *
+     * @param scanner O objeto Scanner para entrada do usuário.
+     * @param opcoes É uma lista de String() que tem como primeira String um título e o resto das Strings são as opções.
+     * @param opcaoMin O menor número que o usuário pode digitar (nesse caso seria o 0).
+     *                 OBS.: Se o número mínimo for 0, ele representa a última opção passada.
+     * @return O int digitado pelo usuário.
+     * Exemplo de input: verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados", "Finalizar escolhas."}, 0)
+     */
+    default int verificaOpcao(Scanner scanner, String opcoes[], int opcaoMin) {
+        String mensagemOpcoes = "";
+        boolean inicioZero = opcaoMin == 0;
+        int inicial = inicioZero ? 1 : opcaoMin;
+
+        mensagemOpcoes += "--- " + opcoes[0] + " ---\nSelecione uma das opções:\n";
+        for (int i = inicial; i < inicial + opcoes.length - 1; i++) {
+            mensagemOpcoes += "(" + i + ") - " + opcoes[i - inicial] + "\n";
+        }
+        if (inicioZero) {
+            mensagemOpcoes += "(0) - " + opcoes[opcoes.length - 1];
+        }
+
+        return verificaOpcao(scanner, mensagemOpcoes, opcaoMin, opcaoMin + opcoes.length);
     }
 }

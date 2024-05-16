@@ -1,10 +1,11 @@
 package chocostock;
 
+import chocostock.interfaces.ValidadorInput;
 import chocostock.loja.Loja;
 
 import java.util.Scanner;
 
-public class Sistema {
+public class Sistema implements ValidadorInput {
 
     private Scanner input;
     private String msg;
@@ -36,9 +37,10 @@ public class Sistema {
                 (3) - Menu Colaboradores.
                 (0) - Encerrar Sistema.
                 """;
-        System.out.println(msg);
-        opcao = input.nextInt();
-        input.nextLine();
+//        System.out.println(msg);
+//        opcao = input.nextInt();
+//        input.nextLine();
+        opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: finalizarSistema();
                     break;
@@ -62,9 +64,10 @@ public class Sistema {
                 (2) - Listar pedidos.
                 (x) - Atualizar pedido.
                 (0) - Voltar para o menu inicial.""";
-        System.out.println(msg);
-        opcao = input.nextInt();
-        input.nextLine();
+//        System.out.println(msg);
+//        opcao = input.nextInt();
+//        input.nextLine();
+        opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: menuInicial();
                     break;
@@ -93,9 +96,10 @@ public class Sistema {
                 (5) - Status Ingredientes
                 (X) - Status Embalagens
                 """;
-        System.out.println(msg);
-        opcao = input.nextInt();
-        input.nextLine();
+//        System.out.println(msg);
+//        opcao = input.nextInt();
+//        input.nextLine();
+        opcao = verificaOpcao(input, msg, 1, 6);
         switch(opcao){
             case 2: loja.getEstoque().addMaterial(loja.novoIngrediente(input));
                     menuEstoque();
@@ -119,9 +123,10 @@ public class Sistema {
                 (5) - Listar Fornecedores
                 (x) - Listar Funcionario
                 (0) - Voltar para o menu inicial.""";
-        System.out.println(msg);
-        opcao = input.nextInt();
-        input.nextLine();
+//        System.out.println(msg);
+//        opcao = input.nextInt();
+//        input.nextLine();
+        opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 1: loja.addCliente(loja.novoCliente(input));
                     menuColaboradores();
