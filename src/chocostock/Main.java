@@ -16,7 +16,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Endereco endereco = CriarTeste.Endereco();
-      
+
+        // Marao
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
         Loja loja = new Loja("Primeira e única loja!", endereco);

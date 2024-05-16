@@ -26,8 +26,19 @@ public class Verifica {
         return numero.matches("-?\\d+(\\.\\d+)?");
     }
 
+    public static boolean isNatural(String numero) {
+        return numero.matches("[1-9]\\d*");
+    }
 
-    public static boolean isData(String dataString) {
+    public static boolean isFloat(String numero) {
+        return numero.matches("[1-9]\\d*(\\.\\d+)?|0([.,])\\d+");
+    }
+
+    public static boolean isNome(String nome) {
+        return nome.matches("[A-Za-zÀ-ÿ'-]+( [A-Za-zÀ-ÿ'-]+)*");
+    }
+
+    public static boolean isDataFutura(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
             LocalDate data = LocalDate.parse(dataString, dateFormatter);
