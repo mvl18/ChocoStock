@@ -5,7 +5,7 @@ import chocostock.interfaces.Iteravel;
 import chocostock.itens.Equipamento;
 import chocostock.itens.Item;
 import chocostock.itens.materiais.Embalagem;
-import chocostock.itens.materiais.Material;
+import chocostock.itens.materiais.Suprimento;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.enums.TiposIngredientes;
@@ -19,10 +19,11 @@ public class Estoque implements AddRemovivel, Iteravel {
     private ArrayList<Item> equipamentos;
     private ArrayList<Embalagem> embalagens;
 
-    public Estoque(ArrayList<Item> produtos, ArrayList<Item> materiais, ArrayList<Item> equipamentos) {
-        this.produtos = produtos;
-        this.materiais = materiais;
-        this.equipamentos = equipamentos;
+    public Estoque() {
+        this.produtos = new ArrayList<Item>();
+        this.materiais = new ArrayList<Item>();
+        this.equipamentos = new ArrayList<Item>();
+        this.embalagens = new ArrayList<Embalagem>();
     }
 
     public ArrayList<Item> getProdutos() {
@@ -49,8 +50,8 @@ public class Estoque implements AddRemovivel, Iteravel {
         this.equipamentos = equipamentos;
     }
 
-    public void addEmbalagem(Embalagem embalagem) {
-        embalagens.add(embalagem);
+    public boolean addEmbalagem(Embalagem embalagem) {
+        return addObjeto(embalagens, embalagem);
     }
 
     public String listaEmbalagens() {
@@ -73,12 +74,12 @@ public class Estoque implements AddRemovivel, Iteravel {
         return removeObjeto(equipamentos, equipamento);
     }
 
-    public boolean addMaterial(Material material) {
-        return addObjeto(materiais, material);
+    public boolean addMaterial(Suprimento suprimento) {
+        return addObjeto(materiais, suprimento);
     }
 
-    public boolean removeMaterial(Material material) {
-            return removeObjeto(materiais, material);
+    public boolean removeMaterial(Suprimento suprimento) {
+            return removeObjeto(materiais, suprimento);
     }
 
     public void imprimirIngredientes(){

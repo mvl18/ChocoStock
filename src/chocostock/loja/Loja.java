@@ -35,13 +35,13 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.descricao = descricao;
         this.endereco = endereco;
         this.pedidos = new ArrayList<Pedido>();
-        this.estoque =  new Estoque(new ArrayList<Item>(), new ArrayList<Item>(), new ArrayList<Item>());
+        this.estoque =  new Estoque();
         this.clientes = new ArrayList<Cliente>();
         this.funcionarios = new ArrayList<Funcionario>();
         this.fornecedores = new ArrayList<Fornecedor>();
     }
 
-
+    // DESCRIÇÃO
     public String getDescricao() {
         return descricao;
     }
@@ -50,6 +50,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.descricao = descricao;
     }
 
+    // ENDEREÇO
     public Endereco getEndereco() {
         return endereco;
     }
@@ -58,6 +59,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.endereco = endereco;
     }
 
+    // PEDIDOS
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
@@ -66,6 +68,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.pedidos = pedidos;
     }
 
+    // ESTOQUE
     public Estoque getEstoque() {
         return estoque;
     }
@@ -74,6 +77,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.estoque = estoque;
     }
 
+    // CLIENTES
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
@@ -82,6 +86,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.clientes = clientes;
     }
 
+    // FUNCIONÁRIOS
     public ArrayList<Funcionario> getFuncionarios() {
         return funcionarios;
     }
@@ -90,13 +95,9 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.funcionarios = funcionarios;
     }
 
+    // FORNECEDORES
     public ArrayList<Fornecedor> getFornecedores() {
         return fornecedores;
-    }
-
-    // Passível de erro
-    public Fornecedor getFornecedor(int i) {
-        return fornecedores.get(i);
     }
 
     public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
@@ -169,7 +170,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
                 pedido.setId_cliente(cliente2.getId());
                 break;
             default:
-                System.out.println("Da práxima selecione uma resposta valida! Finalizando programa!");
+                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
                 break;
         }
 
