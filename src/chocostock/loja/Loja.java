@@ -197,13 +197,14 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         System.out.println("Cadastrando novo cliente: ");
         // NOME
         cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome invalido.",
-                input -> !input.matches(".*\\d.*")));
+                                 input -> !input.matches(".*\\d.*")));
         // TELEFONE
         cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
-                                    Verifica::isTelefone).replaceAll("\\D", ""));
+                                     Verifica::isTelefone).replaceAll("\\D", ""));
+
         // EMAIL
-        System.out.println("Email do cliente: ");
-        cliente.setEmail(scanner.nextLine());
+        cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!",
+                                  Verifica::isEmail));
         // ENDERECO
         System.out.println("Criando endereco: ");
         cliente.setEndereco(cliente.criaEndereco(scanner));

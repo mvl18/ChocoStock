@@ -20,7 +20,7 @@ public class Sistema {
 
     public void iniciarSistema(){
         msg =  """
-                --- Bem-vinfo ao ChocoStock! ---
+                --- Bem-vindo ao ChocoStock! ---
                 O doce controle de vendas e estoque!
                 """;
         System.out.println(msg);
