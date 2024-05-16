@@ -1,11 +1,11 @@
-package chocostock.colaboladores;
+package chocostock.colaboradores;
 
-import chocostock.Endereco;
+import chocostock.auxiliar.Endereco;
 
-public class Empresa extends Colaborador {
+public class Fornecedor extends Colaborador {
     private int cnpj;
     private String site;
-    public Empresa(String nome, String telefone, String email, Endereco endereco, int cnpj, String site) {
+    public Fornecedor(String nome, String telefone, String email, Endereco endereco, int cnpj, String site) {
         super(nome, telefone, email, endereco);
         this.cnpj = cnpj;
         this.site = site;

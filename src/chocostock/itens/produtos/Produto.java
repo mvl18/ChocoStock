@@ -1,5 +1,6 @@
-package chocostock.itens;
+package chocostock.itens.produtos;
 
+import chocostock.itens.Item;
 import chocostock.itens.materiais.Embalagem;
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package chocostock.itens.produtos;
+package chocostock.itens.materiais;
 
 import chocostock.itens.Item;
 

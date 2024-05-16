@@ -1,7 +1,7 @@
-package chocostock.colaboladores;
+package chocostock.colaboradores;
 
-import chocostock.*;
-import chocostock.enuns.Estados;
+import chocostock.auxiliar.Endereco;
+import chocostock.enums.Estados;
 import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.Nomeavel;
 

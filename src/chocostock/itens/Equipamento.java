@@ -1,14 +1,14 @@
 package chocostock.itens;
 
+import chocostock.colaboradores.Fornecedor;
 import chocostock.interfaces.Nomeavel;
-import chocostock.colaboladores.Empresa;
 
 public class Equipamento extends Item implements Nomeavel {
     private static int id_equipamentos = 100000;
     private String marca;
-    private Empresa fornecedor;
+    private Fornecedor fornecedor;
 
-    public Equipamento(String nome, int quantidade, float preco, String marca, Empresa fornecedor) {
+    public Equipamento(String nome, int quantidade, float preco, String marca, Fornecedor fornecedor) {
         super(nome, quantidade, preco);
         this.setId(id_equipamentos++);
         this.marca = marca;
@@ -23,11 +23,11 @@ public class Equipamento extends Item implements Nomeavel {
         this.marca = marca;
     }
 
-    public Empresa getFornecedor() {
+    public Fornecedor getFornecedor() {
         return fornecedor;
     }
 
-    public void setFornecedor(Empresa fornecedor) {
+    public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
 

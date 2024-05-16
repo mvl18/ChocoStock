@@ -1,4 +1,4 @@
-package chocostock.itens.materiais;
+package chocostock.enums;
 
 public enum TiposIngredientes {
     //Produtos e Codigos retirados da planilha

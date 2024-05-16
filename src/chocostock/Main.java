@@ -1,8 +1,11 @@
 package chocostock;
 
 import chocostock.auxiliar.CriarTeste;
-import chocostock.colaboladores.Cliente;
-import chocostock.colaboladores.Colaborador;
+import chocostock.auxiliar.Endereco;
+import chocostock.colaboradores.Cliente;
+import chocostock.colaboradores.Colaborador;
+import chocostock.loja.Loja;
+
 import java.util.Scanner;
 
 public class Main {
@@ -13,6 +16,8 @@ public class Main {
 
         Endereco endereco = CriarTeste.Endereco();
 //        System.out.println(enderecmaino);
+
+
 
       
         // TESTES INICIAIS MARAOLT
@@ -26,18 +31,25 @@ public class Main {
         System.out.println("=========================");
         boolean continuar = true;
         while(continuar) {
-            System.out.println("Digite 'add' para adicionar pedidos, ou 'end' para encerrar o programa!");
+            System.out.println("Digite 'add' para adicionar pedidos, 'list' para mostrar a lista de pedidos, ou 'end' para encerrar o programa!");
             String comando = scanner.nextLine();
             switch(comando) {
                 case "add": loja.addPedido(loja.novoPedido(scanner, loja));
-                            break;
+                    break;
+                case "list": System.out.println(loja.listaPedidos());
+                    break;
                 case "end": continuar = false;
-                             break;
+                    break;
             }
         }
 
         System.out.println(loja.listaClientes());
         System.out.println(loja.listaPedidos());
+
+        //TESTE DE SISTEMA DOUGLAS
+        Sistema sistema = new Sistema(scanner, loja);
+        System.out.println(loja.listaPedidos());
+        sistema.iniciarSistema();
 
         scanner.close();
     }
