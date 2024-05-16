@@ -4,12 +4,14 @@ import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 public abstract class Item implements Identificavel, Nomeavel {
+    private static int idItem = 100000;
     private int id;
     private String nome;
     private int quantidade;
     private float preco;
 
     public Item(String nome, int quantidade, float preco) {
+        this.id = idItem++;
         this.nome = nome;
         this.quantidade = quantidade;
         this.preco = preco;
