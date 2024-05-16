@@ -1,8 +1,10 @@
 package chocostock.loja;
 
 import chocostock.interfaces.AddRemovivel;
+import chocostock.interfaces.Iteravel;
 import chocostock.itens.Equipamento;
 import chocostock.itens.Item;
+import chocostock.itens.materiais.Embalagem;
 import chocostock.itens.materiais.Material;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;
@@ -11,10 +13,11 @@ import chocostock.enums.TiposIngredientes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Estoque implements AddRemovivel {
+public class Estoque implements AddRemovivel, Iteravel {
     private ArrayList<Item> produtos;
     private ArrayList<Item> materiais;
     private ArrayList<Item> equipamentos;
+    private ArrayList<Embalagem> embalagens;
 
     public Estoque(ArrayList<Item> produtos, ArrayList<Item> materiais, ArrayList<Item> equipamentos) {
         this.produtos = produtos;
@@ -44,6 +47,14 @@ public class Estoque implements AddRemovivel {
 
     public void setEquipamentos(ArrayList<Item> equipamentos) {
         this.equipamentos = equipamentos;
+    }
+
+    public void addEmbalagem(Embalagem embalagem) {
+        embalagens.add(embalagem);
+    }
+
+    public String listaEmbalagens() {
+        return listaObjetos(embalagens);
     }
 
     public boolean addProduto(Produto produto) {

@@ -94,6 +94,11 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return fornecedores;
     }
 
+    // Passível de erro
+    public Fornecedor getFornecedor(int i) {
+        return fornecedores.get(i);
+    }
+
     public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
         this.fornecedores = fornecedores;
     }
