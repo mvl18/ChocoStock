@@ -116,28 +116,27 @@ public class Sistema {
                 (x) - Adicionar Fornecedor
                 (x) - Adicionar Funcionário
                 (4) - Listar Clientes
-                (x) - Listar Fornecedor
-                (x) - Listar Funcionário
+                (5) - Listar Fornecedores
+                (x) - Listar Funcionario
                 (0) - Voltar para o menu inicial.""";
         System.out.println(msg);
         opcao = input.nextInt();
         input.nextLine();
-        switch(opcao) {
-            case 1:
-                loja.addCliente(loja.novoCliente(input));
-                menuColaboradores();
-                break;
-            case 4:
-                System.out.println(loja.listaClientes());
-                menuColaboradores();
-                break;
-            case 0:
-                menuInicial();
-                break;
-            default:
-                System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
-                menuInicial();
-                break;
+        switch(opcao){
+            case 1: loja.addCliente(loja.novoCliente(input));
+                    menuColaboradores();
+                    break;
+            case 4: System.out.println(loja.listaClientes());
+                    menuColaboradores();
+                    break;
+            case 5: System.out.println(loja.listaFornecedores());
+                    menuColaboradores();
+                    break;
+            case 0: menuInicial();
+                    break;
+            default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
+                     menuInicial();
+                     break;
         }
     }
 

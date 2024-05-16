@@ -26,7 +26,7 @@ public class Endereco implements Escolhivel {
     }
 
     public Endereco() {
-        this(0, "", "", "", "", Estados.AC); // seria bom criar um estado default talvez
+        this(0, "", "", "", "", Estados.XX);
     }
 
     public int getNumero() {
