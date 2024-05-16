@@ -74,7 +74,7 @@ public class Sistema {
             case 2: System.out.println("Pedidos Atuais:\n" + loja.listaPedidos());
                     menuPedidos();
                     break;
-            case 3: System.out.println("Nao implementado\n");//loja.atualizaPedido();
+            case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
                     menuPedidos();
                     break;
             default: System.out.println("Opcao invalida. Voltando para o MENU INICIAL.");
@@ -116,7 +116,7 @@ public class Sistema {
                 (x) - Adicionar Fornecedor
                 (x) - Adicionar Funcionario
                 (4) - Listar Clientes
-                (x) - Listar Fornecedor
+                (5) - Listar Fornecedores
                 (x) - Listar Funcionario
                 (0) - Voltar para o menu inicial.""";
         System.out.println(msg);
@@ -129,11 +129,14 @@ public class Sistema {
             case 4: System.out.println(loja.listaClientes());
                     menuColaboradores();
                     break;
+            case 5: System.out.println(loja.listaFornecedores());
+                    menuColaboradores();
+                    break;
             case 0: menuInicial();
                     break;
         }
 
-        System.out.println("Nao implementado. Voltando para o MENU INICIAL.");
+        System.out.println("Não implementado. Voltando para o MENU INICIAL.");
         menuInicial();
     }
 
