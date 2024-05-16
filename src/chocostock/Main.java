@@ -19,7 +19,7 @@ public class Main {
       
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
-        Loja loja = new Loja("Primeira e unica loja!", endereco);
+        Loja loja = new Loja("Primeira e única loja!", endereco);
         loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);
 

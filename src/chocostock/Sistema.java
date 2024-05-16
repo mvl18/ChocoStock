@@ -30,7 +30,7 @@ public class Sistema {
     public void menuInicial(){
         msg =   """
                 --- MENU INICIAL ---
-                Selecione uma das opcoes:
+                Selecione uma das opções:
                 (1) - Menu Pedidos.
                 (2) - Menu Estoque.
                 (3) - Menu Colaboradores.
@@ -48,7 +48,7 @@ public class Sistema {
                     break;
             case 3: menuColaboradores();
                     break;
-            default: System.out.println("Opcao invalida.");
+            default: System.out.println("Opção inválida.");
                      menuInicial();
                      break;
         }
@@ -57,7 +57,7 @@ public class Sistema {
     public void menuPedidos(){
         msg = """
                 --- MENU PEDIDOS ---
-                Selecione uma opcao:
+                Selecione uma opção:
                 (1) - Novo pedido.
                 (2) - Listar pedidos.
                 (x) - Atualizar pedido.
@@ -77,7 +77,7 @@ public class Sistema {
             case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
                     menuPedidos();
                     break;
-            default: System.out.println("Opcao invalida. Voltando para o MENU INICIAL.");
+            default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
                      menuInicial();
                      break;
         }
@@ -103,7 +103,7 @@ public class Sistema {
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
                     menuEstoque();
                     break;
-            default: System.out.println("Opcao invalida. Voltando para o MENU INICIAL.");
+            default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
                      menuInicial();
                      break;
         }
@@ -114,7 +114,7 @@ public class Sistema {
                 --- MENU COLABORADORES ---
                 (1) - Adicionar Cliente
                 (x) - Adicionar Fornecedor
-                (x) - Adicionar Funcionario
+                (x) - Adicionar Funcionário
                 (4) - Listar Clientes
                 (5) - Listar Fornecedores
                 (x) - Listar Funcionario
@@ -134,10 +134,10 @@ public class Sistema {
                     break;
             case 0: menuInicial();
                     break;
+            default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
+                     menuInicial();
+                     break;
         }
-
-        System.out.println("Não implementado. Voltando para o MENU INICIAL.");
-        menuInicial();
     }
 
     public void finalizarSistema() {
