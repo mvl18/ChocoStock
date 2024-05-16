@@ -134,7 +134,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 System.out.println(listaClientes());
                 System.out.println("Insira o ID ou nome do seu cliente");
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'");
-                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "novo");
+                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuario listado.", "novo");
                 if (cliente == null) {
                     Cliente cliente2 = novoCliente(scanner);
                     loja.addCliente(cliente2);
@@ -169,7 +169,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values(), "obrigatorio"));
+        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status invalido. Digite um numero valido ou o nome do status.", "obrigatorio"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
         // PRODUTOS_PENDENTES
@@ -224,9 +224,12 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         //Tipo
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
         estoque.imprimirIngredientes();
-        opcao = input.nextInt();
-        input.nextLine();
-        ingrediente.setTipo(TiposIngredientes.getTipoPorId(opcao));
+        ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
+                "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.",
+                "obrigatorio"));
+//        opcao = input.nextInt();
+//        input.nextLine();
+        // ingrediente.setTipo(TiposIngredientes.getTipoPorId(opcao));
         ingrediente.setNome(ingrediente.getTipo().getNome());
         //Quantidade
         System.out.println("Quantas unidades foram compradas?");
