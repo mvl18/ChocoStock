@@ -2,6 +2,7 @@ package chocostock.itens.materiais;
 
 import chocostock.colaboradores.Colaborador;
 import chocostock.enums.TiposIngredientes;
+import chocostock.interfaces.Nomeavel;
 
 import java.time.LocalDate;
 import java.util.Date;
