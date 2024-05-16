@@ -1,6 +1,7 @@
 package chocostock.enums;
 
 import chocostock.interfaces.Codificavel;
+import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 public enum Estados implements Nomeavel, Codificavel {
@@ -35,10 +36,12 @@ public enum Estados implements Nomeavel, Codificavel {
 
     private final String codigo;
     private final String nome;
+    private final int id;
 
-    Estados(String codigo, String nome) {
+    Estados(String codigo, String nome, int id) {
         this.codigo = codigo;
         this.nome = nome;
+        this.id = id;
     }
 
     public String getCodigo() {
@@ -47,5 +50,9 @@ public enum Estados implements Nomeavel, Codificavel {
 
     public String getNome() {
         return nome;
+    }
+
+    public int getId() {
+        return id;
     }
 }

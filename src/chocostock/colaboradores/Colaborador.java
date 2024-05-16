@@ -1,13 +1,15 @@
 package chocostock.colaboradores;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Verifica;
 import chocostock.enums.Estados;
 import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.Nomeavel;
+import chocostock.interfaces.ValidadorInput;
 
 import java.util.Scanner;
 
-public class Colaborador implements Nomeavel, Escolhivel {
+public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
     private String nome;
     private String telefone;
     private String email;
@@ -69,12 +71,15 @@ public class Colaborador implements Nomeavel, Escolhivel {
         //Endereco(int numero, String cep, String rua, String bairro, String cidade, Estados estado)
         Endereco endereco = new Endereco();
         // CEP
-        System.out.println("CEP: ");
-        endereco.setCep(scanner.nextLine());
+        endereco.setCep(getInput(scanner, "CEP: ", "Insira um CEP válido!",
+                                 Verifica::isCep).replaceAll("\\D", ""));
         // ESTADO
-        System.out.println("Estado: ");
-        // ArrayList<Estados> listaEstados = new ArrayList<>(Arrays.asList(Estados.values()));
-        endereco.setEstado(escolheObjeto(scanner, Estados.values()));
+        endereco.achaEstado(endereco.getCep());
+        System.out.println(endereco.getEstado().getNome() + " é o estado do endereço? (S ou N)");
+        if (scanner.nextLine().equals("N")) {
+            System.out.println("Estado: ");
+            endereco.setEstado(escolheObjeto(scanner, Estados.values(), "Estado invalido. Por favor, digite a sigla ou nome de um dos estados validos.", "obrigatorio"));
+        }
         // CIDADE
         System.out.println("Cidade: ");
         endereco.setCidade(scanner.nextLine());

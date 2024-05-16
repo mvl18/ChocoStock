@@ -12,17 +12,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.\n");
-
+        //System.out.println("Bem-vindo ao ChocoStock! O doce controle de vendas e estoque.\n"); // primeira linha de codigo NAO APAGAR
         Scanner scanner = new Scanner(System.in);
 
         Endereco endereco = CriarTeste.Endereco();
-//        System.out.println(enderecmaino);
-
-        // TESTES INICIAIS MARAOLT
+      
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
-
         Loja loja = new Loja("Primeira e unica loja!", endereco);
         loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);

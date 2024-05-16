@@ -37,7 +37,7 @@ public class Pedido {
     }
 
     public Pedido() {
-        this(-1, LocalDate.parse("01/01/2001", DateTimeFormatter.ofPattern("dd/MM/yyyy")), false, Status.PENDENTE, 0.0F);
+        this(-1, null, false, Status.PENDENTE, 0.0F);
     }
 
 
