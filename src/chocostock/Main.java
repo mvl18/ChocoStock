@@ -16,12 +16,9 @@ public class Main {
         Endereco endereco = CriarTeste.Endereco();
         Colaborador cliente1 = CriarTeste.Cliente("André Silva");
         Cliente cliente2 = CriarTeste.Cliente("José");
-        Loja loja = new Loja("Primeira e unica loja!", endereco);
+        Loja loja = new Loja("Primeira e única loja!", endereco);
         loja.addCliente((Cliente) cliente1);
         loja.addCliente(cliente2);
-
-        System.out.println(loja.listaClientes());
-        System.out.println(loja.listaPedidos());
 
         //TESTE DE SISTEMA DOUGLAS
         Sistema sistema = new Sistema(scanner, loja);

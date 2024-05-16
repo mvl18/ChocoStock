@@ -126,7 +126,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         System.out.println("Novo pedido com id " + pedido.getId() + " criado com sucesso.\nQual cliente fez esse pedido? ");
 
         // CLIENTE
-        System.out.println("1-Mostrar lista de clientes ja cadastrados.\n2-Adicionar novo cliente.");
+        System.out.println("1-Mostrar lista de clientes já cadastrados.\n2-Adicionar novo cliente.");
         int resposta = scanner.nextInt();
         scanner.nextLine();
         switch (resposta) {
@@ -134,7 +134,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 System.out.println(listaClientes());
                 System.out.println("Insira o ID ou nome do seu cliente");
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'");
-                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuario listado.", "novo");
+                Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
                     Cliente cliente2 = novoCliente(scanner);
                     loja.addCliente(cliente2);
@@ -149,7 +149,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 pedido.setId_cliente(cliente2.getId());
                 break;
             default:
-                System.out.println("Da proxima selecione uma resposta valida! Finalizando programa!");
+                System.out.println("Da práxima selecione uma resposta valida! Finalizando programa!");
                 break;
         }
 
@@ -159,7 +159,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
         // PAGO OU N
-        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito ja foi pago? Sim OU Nao", "Por favor, insira uma resposta valida. ",
+        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
                 input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
                 Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
@@ -169,7 +169,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status invalido. Digite um numero valido ou o nome do status.", "obrigatorio"));
+        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "Obrigatório"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
         // PRODUTOS_PENDENTES
@@ -191,12 +191,11 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
                 Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
-
     public Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
         // NOME
-        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome invalido.",
+        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome inválido.",
                                  input -> !input.matches(".*\\d.*")));
         // TELEFONE
         cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
@@ -206,7 +205,7 @@ public class Loja implements AddRemovivel, Escolhivel, ValidadorInput {
         cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!",
                                   Verifica::isEmail));
         // ENDERECO
-        System.out.println("Criando endereco: ");
+        System.out.println("Criando endereço: ");
         cliente.setEndereco(cliente.criaEndereco(scanner));
 
         return cliente;

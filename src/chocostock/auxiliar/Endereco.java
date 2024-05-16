@@ -105,14 +105,13 @@ public class Endereco implements Escolhivel {
     }
 
     public String toString() {
-        return "Endereco{" +
-                "numero=" + numero +
-                ", cep='" + cep + '\'' +
-                ", rua='" + rua + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", estado=" + estado +
-                '}';
+        return " Rua " + rua +
+                ", n° " + numero +
+                " - Bairro " + bairro +
+                ". CEP: " + cep +
+                ". " + cidade +
+                " - " + estado
+                ;
     }
 }
 
