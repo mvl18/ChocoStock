@@ -60,7 +60,7 @@ public class Sistema {
                 Selecione uma opcao:
                 (1) - Novo pedido.
                 (2) - Listar pedidos.
-                (3) - Atualizar pedido.
+                (x) - Atualizar pedido.
                 (0) - Voltar para o menu inicial.""";
         System.out.println(msg);
         opcao = input.nextInt();
@@ -90,24 +90,49 @@ public class Sistema {
                 (2) - Adicionar Ingrediente
                 (X) - Adicionar Embalagem
                 (X) - Status Produto
-                (X) - Status Ingredientes
+                (5) - Status Ingredientes
                 (X) - Status Embalagens
                 """;
         System.out.println(msg);
-        System.out.println("Nao implementado. Voltando para o MENU INICIAL.");
-        menuInicial();
+        opcao = input.nextInt();
+        input.nextLine();
+        switch(opcao){
+            case 2: loja.getEstoque().addMaterial(loja.novoIngrediente(input));
+                    menuEstoque();
+                    break;
+            case 5: System.out.println(loja.getEstoque().statusIngredientes());
+                    menuEstoque();
+                    break;
+            default: System.out.println("Opcao invalida. Voltando para o MENU INICIAL.");
+                     menuInicial();
+                     break;
+        }
     }
 
     public void menuColaboradores(){
         msg = """
                 --- MENU COLABORADORES ---
-                (x) - Adicionar Cliente
+                (1) - Adicionar Cliente
                 (x) - Adicionar Fornecedor
                 (x) - Adicionar Funcionario
-                (x) - Listar Clientes
+                (4) - Listar Clientes
                 (x) - Listar Fornecedor
-                (x) - Listar Funcionario""";
+                (x) - Listar Funcionario
+                (0) - Voltar para o menu inicial.""";
         System.out.println(msg);
+        opcao = input.nextInt();
+        input.nextLine();
+        switch(opcao){
+            case 1: loja.addCliente(loja.novoCliente(input));
+                    menuColaboradores();
+                    break;
+            case 4: System.out.println(loja.listaClientes());
+                    menuColaboradores();
+                    break;
+            case 0: menuInicial();
+                    break;
+        }
+
         System.out.println("Nao implementado. Voltando para o MENU INICIAL.");
         menuInicial();
     }
