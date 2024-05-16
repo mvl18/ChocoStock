@@ -19,6 +19,7 @@ public class Verifica {
     public static boolean isCep(String cep) {
         String teste_cep = cep.replaceAll("\\D", "");
         return teste_cep.length() >= 7 && teste_cep.length() <= 8;
+    }
 
     public static boolean isNumero(String numero) {
         return numero.matches("-?\\d+(\\.\\d+)?");
