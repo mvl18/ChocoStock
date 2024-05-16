@@ -1,43 +1,46 @@
 package chocostock.enums;
 
 import chocostock.interfaces.Codificavel;
+import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
-public enum Estados implements Nomeavel, Codificavel {
-    AC("AC", "Acre"),
-    AL("AL", "Alagoas"),
-    AP("AP", "Amapá"),
-    AM("AM", "Amazonas"),
-    BA("BA", "Bahia"),
-    CE("CE", "Ceará"),
-    DF("DF", "Distrito Federal"),
-    ES("ES", "Espírito Santo"),
-    GO("GO", "Goiás"),
-    MA("MA", "Maranhão"),
-    MT("MT", "Mato Grosso"),
-    MS("MS", "Mato Grosso do Sul"),
-    MG("MG", "Minas Gerais"),
-    PA("PA", "Pará"),
-    PB("PB", "Paraíba"),
-    PR("PR", "Paraná"),
-    PE("PE", "Pernambuco"),
-    PI("PI", "Piauí"),
-    RJ("RJ", "Rio de Janeiro"),
-    RN("RN", "Rio Grande do Norte"),
-    RS("RS", "Rio Grande do Sul"),
-    RO("RO", "Rondônia"),
-    RR("RR", "Roraima"),
-    SC("SC", "Santa Catarina"),
-    SP("SP", "São Paulo"),
-    SE("SE", "Sergipe"),
-    TO("TO", "Tocantins");
+public enum Estados implements Nomeavel, Codificavel, Identificavel {
+    AC("AC", "Acre", 699),
+    AL("AL", "Alagoas", 570),
+    AP("AP", "Amapá", 689),
+    AM("AM", "Amazonas", 690),
+    BA("BA", "Bahia", 400),
+    CE("CE", "Ceará", 600),
+    DF("DF", "Distrito Federal", 700),
+    ES("ES", "Espírito Santo", 290),
+    GO("GO", "Goiás", 728),
+    MA("MA", "Maranhão", 650),
+    MT("MT", "Mato Grosso", 780),
+    MS("MS", "Mato Grosso do Sul", 790),
+    MG("MG", "Minas Gerais", 300),
+    PA("PA", "Pará", 660),
+    PB("PB", "Paraíba", 580),
+    PR("PR", "Paraná", 800),
+    PE("PE", "Pernambuco", 500),
+    PI("PI", "Piauí", 640),
+    RJ("RJ", "Rio de Janeiro", 200),
+    RN("RN", "Rio Grande do Norte", 590),
+    RS("RS", "Rio Grande do Sul", 900),
+    RO("RO", "Rondônia", 789),
+    RR("RR", "Roraima", 693),
+    SC("SC", "Santa Catarina", 880),
+    SP("SP", "São Paulo", 10),
+    SE("SE", "Sergipe", 490),
+    TO("TO", "Tocantins", 770);
 
     private final String codigo;
     private final String nome;
+    private final int id;
 
-    Estados(String codigo, String nome) {
+    Estados(String codigo, String nome, int id) {
         this.codigo = codigo;
         this.nome = nome;
+        this.id = id;
     }
 
     public String getCodigo() {
@@ -46,5 +49,9 @@ public enum Estados implements Nomeavel, Codificavel {
 
     public String getNome() {
         return nome;
+    }
+
+    public int getId() {
+        return id;
     }
 }

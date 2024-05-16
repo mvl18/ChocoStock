@@ -2,8 +2,13 @@ package chocostock.auxiliar;
 
 
 import chocostock.enums.Estados;
+import chocostock.interfaces.Escolhivel;
 
-public class Endereco {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Endereco implements Escolhivel {
     private int numero;
     private String cep;
     private String rua;
@@ -76,6 +81,27 @@ public class Endereco {
         return "CEP: " + cep +
                 "\nRua " + rua + ", " + numero + " - Bairro " + bairro +
                 "\n" + cidade + " (" + estado.getCodigo() + ")";
+    }
+
+    public void achaEstado(String CEP) {
+        int id = Integer.parseInt(CEP)/100000;
+
+        List<Integer> idsEstados = new ArrayList<Integer>();
+        for (Estados estado : Estados.values()) {
+            idsEstados.add(estado.getId());
+        }
+
+        Collections.sort(idsEstados);
+        int i = 0;
+        for (;i < idsEstados.size(); i++) {
+            if (idsEstados.get(i) > id)
+                break;
+            continue;
+        }
+        for (Estados estado : Estados.values()) {
+            if (estado.getId() == idsEstados.get(i-1))
+                setEstado(estado);
+        }
     }
 
     public String toString() {
