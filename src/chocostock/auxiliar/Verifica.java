@@ -24,39 +24,41 @@ public class Verifica {
     }
 
     public static boolean isCnpj(String cnpj) {
-        int soma = 0, peso = 2, digito1, digito2, tamanho = cnpj.length() - 2;
+        int soma = 0, peso = 5;
         cnpj = cnpj.replaceAll("[^0-9]", "");
 
         if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {
             return false;
         }
 
-        for (int i = tamanho - 1; i >= 0; i--) {
-            soma += Integer.parseInt(cnpj.substring(i, i + 1)) * peso;
-            peso++;
-            if (peso == 10) {
-                peso = 2;
+        for (int i = 0; i < cnpj.length()-2; i++) {
+            soma += Character.getNumericValue(cnpj.charAt(i)) * peso;
+            peso--;
+            if (peso == 1) {
+                peso = 9;
             }
         }
 
         int digito = 11 - (soma % 11);
-        digito1 = (digito >= 10) ? 0 : digito;
+        int digito1 = (digito >= 10) ? 0 : digito;
+
+        if (Character.getNumericValue(cnpj.charAt(12)) != digito1)
+            return false;
 
         soma = 0;
-        peso = 2;
-        for (int i = tamanho; i >= 0; i--) {
-            soma += Integer.parseInt(cnpj.substring(i, i + 1)) * peso;
-            peso++;
-            if (peso == 10) {
-                peso = 2;
+        peso = 6;
+        for (int i = 0; i < cnpj.length()-1; i++) {
+            soma += Character.getNumericValue(cnpj.charAt(i)) * peso;
+            peso--;
+            if (peso == 1) {
+                peso = 9;
             }
         }
 
         digito = 11 - (soma % 11);
-        digito2 = (digito >= 10) ? 0 : digito;
+        int digito2 = (digito >= 10) ? 0 : digito;
 
-        return (digito1 == Integer.parseInt(cnpj.substring(tamanho, tamanho + 1)) &&
-                digito2 == Integer.parseInt(cnpj.substring(tamanho + 1)));
+        return (Character.getNumericValue(cnpj.charAt(13)) == digito2);
     }
 
     public static boolean isSite(String site) {
