@@ -92,6 +92,7 @@ public interface ValidadorInput {
                 scanner.next();
             }
         }
+        scanner.nextLine();
 
         return resposta;
     }
