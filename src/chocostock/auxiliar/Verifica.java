@@ -4,6 +4,7 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Pattern;
 
 public class Verifica {
 
@@ -20,6 +21,49 @@ public class Verifica {
     public static boolean isCep(String cep) {
         String teste_cep = cep.replaceAll("\\D", "");
         return teste_cep.length() >= 7 && teste_cep.length() <= 8;
+    }
+
+    public static boolean isCnpj(String cnpj) {
+        int soma = 0, peso = 5;
+        cnpj = cnpj.replaceAll("[^0-9]", "");
+
+        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {
+            return false;
+        }
+
+        for (int i = 0; i < cnpj.length()-2; i++) {
+            soma += Character.getNumericValue(cnpj.charAt(i)) * peso;
+            peso--;
+            if (peso == 1) {
+                peso = 9;
+            }
+        }
+
+        int digito = 11 - (soma % 11);
+        int digito1 = (digito >= 10) ? 0 : digito;
+
+        if (Character.getNumericValue(cnpj.charAt(12)) != digito1)
+            return false;
+
+        soma = 0;
+        peso = 6;
+        for (int i = 0; i < cnpj.length()-1; i++) {
+            soma += Character.getNumericValue(cnpj.charAt(i)) * peso;
+            peso--;
+            if (peso == 1) {
+                peso = 9;
+            }
+        }
+
+        digito = 11 - (soma % 11);
+        int digito2 = (digito >= 10) ? 0 : digito;
+
+        return (Character.getNumericValue(cnpj.charAt(13)) == digito2);
+    }
+
+    public static boolean isSite(String site) {
+        String regex = "^(http(s)?://)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(/[a-zA-Z0-9-._?%&=]*)?$";
+        return Pattern.matches(regex, site);
     }
 
     public static boolean isNumero(String numero) {
