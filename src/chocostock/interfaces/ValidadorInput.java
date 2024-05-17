@@ -81,6 +81,7 @@ public interface ValidadorInput {
             System.out.println(mensagemOpcoes);
             if (scanner.hasNextInt()) {
                 resposta = scanner.nextInt();
+                scanner.nextLine();
                 if (resposta >= opcaoMin && resposta <= opcaoMax) {
                     opcaoValida = true;
                 } else {
@@ -101,7 +102,7 @@ public interface ValidadorInput {
      * @param scanner O objeto Scanner para entrada do usuário.
      * @param opcoes É uma lista de String() que tem como primeira String um título e o resto das Strings são as opções.
      * @param opcaoMin O menor número que o usuário pode digitar (nesse caso seria o 0).
-     *                 OBS.: Se o número mínimo for 0, ele representa a última opção passada.
+     *                 OBS.: Se o número mínimo for 0, a opção 0 será a última passada.
      * @return O int digitado pelo usuário.
      * Exemplo de input: verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados", "Finalizar escolhas."}, 0)
      */

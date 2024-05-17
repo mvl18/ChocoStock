@@ -18,7 +18,6 @@ public class Main {
         Endereco endereco = CriarTeste.Endereco();
         Loja loja = new Loja("Primeira e única loja!", endereco);
 
-
         CriarTeste.addTudo(loja);
 
         //TESTE DE SISTEMA DOUGLAS

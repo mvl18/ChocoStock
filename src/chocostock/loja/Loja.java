@@ -4,16 +4,15 @@ import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
+import chocostock.enums.*;
 import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
-import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Escolhivel;
-import chocostock.itens.Item;
 import chocostock.itens.materiais.Ingrediente;
-import chocostock.enums.TiposIngredientes;
+import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
@@ -143,13 +142,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
     public Pedido novoPedido(Scanner scanner, Loja loja)  {
         Pedido pedido = new Pedido();
-//        String msg =   """
-//                --- NOVO PEDIDO ---
-//                Selecione uma das opções:
-//                (1) - Mostrar lista de clientes já cadastrados.
-//                (2) - Adicionar novo cliente.
-//                """;
-
         // CLIENTE
         switch (verificaOpcao(scanner, new String[]{"NOVO PEDIDO", "Mostrar lista de clientes já cadastrados.", "Adicionar novo cliente."}, 1)) {
             case 1:
@@ -175,6 +167,11 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
                 break;
         }
 
+        // PRODUTOS_PENDENTES
+        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
+        pedido.setProdutos_pendentes(escolheProdutos(scanner));
+        // pega_produtos_do_estoque() para tirar de pendentes
+
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
         pedido.setData_entrega(escolheDataFutura(scanner, "Digite a data futura no formato dd/MM/yyyy: ",
@@ -194,11 +191,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
-        // PRODUTOS_PENDENTES
-        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-        pedido.setProdutos(escolheProdutos(scanner));
-        // pega_produtos_do_estoque() para tirar de pendentes
-
         // PRECO TOTAL
         pedido.calculaPrecoTotal();
         System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + ".");
@@ -206,17 +198,60 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return pedido;
     }
 
-    private ArrayList<Produto> escolheProdutos(Scanner scanner) {
-        ArrayList<Produto> produtosEscolhidos = new ArrayList<Produto>();
-        switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
-            case 1:
-                // selecionaProduto();
-
-            case 2:
-                // imprime produtosEscolhidos
-            default:
-                return produtosEscolhidos;
+    private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
+        ArrayList<Pendente> produtosEscolhidos = new ArrayList<Pendente>();
+        while (true) {
+            switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
+                case 1: produtosEscolhidos.add(selecionaProduto(scanner));
+                    break;
+                case 2:
+                    // imprime produtosEscolhidos
+                    break;
+                default:
+                    return produtosEscolhidos;
+            }
         }
+    }
+
+    private Pendente selecionaProduto(Scanner scanner) {
+        Pendente produtoPendente = new Pendente();
+        return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
+            case 1 -> {
+                yield selecionaBarra(scanner, produtoPendente);
+            }
+            case 2 -> {
+                //selecionaCaixa(scanner);
+                yield produtoPendente;
+            }
+            default -> // se o usuario digitar 0
+                    null;
+        };
+    }
+
+    private Pendente selecionaBarra(Scanner scanner, Pendente produtoPendente) {
+        for (TiposChocolates tipo : TiposChocolates.values()) {
+            System.out.println(tipo.getId() + "-" + tipo.getNome());
+        }
+        produtoPendente.setNome(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+
+        for (TiposComplementos complemento : TiposComplementos.values()) {
+            System.out.println(complemento.getId() + "-" + complemento.getNome());
+        }
+        System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.\nDigite 'sair' para finalizar escolha.");
+        ArrayList<TiposComplementos> complementos = escolheObjeto(scanner, TiposComplementos.values(),
+                "Por favor selecione um complemento válido.",
+                "sair", TiposComplementos.values().length);
+        ArrayList<String> nomes_complementos = new ArrayList<String>();
+        for (TiposComplementos complemento : complementos) {
+            produtoPendente.addComplemento(complemento.getNome());
+        }
+
+
+        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
+                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
+
+        return produtoPendente;
+
     }
 
     private LocalDate escolheDataFutura(Scanner scanner, String prompt, String mensagemErro) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
@@ -245,11 +280,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return cliente;
     }
 
-    /*
-    BUGS:
-    -Digita uma string quando pede INT ou FLOAT
-    -Digita ID de ingrediente invalido (1-17)
-     */
      public Ingrediente novoIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
         int opcao;
