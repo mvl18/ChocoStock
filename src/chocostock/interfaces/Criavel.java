@@ -32,7 +32,7 @@ public interface Criavel extends ValidadorInput, Escolhivel {
 
     default Fornecedor criarFornecedor(Scanner scanner) {
         Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", input -> !input.matches(".*\\d.*")));
+        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
         fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
         fornecedor.setTelefone(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
         fornecedor.setTelefone(getInput(scanner, "Endereço do fornecedor:", "Endereço inválido. Insira novamente.", Verifica::isNome)); // Mudar o isNome?
