@@ -2,10 +2,9 @@ package chocostock.loja;
 
 import chocostock.enums.Status;
 import chocostock.itens.produtos.Produto;
-import chocostock.enums.TiposChocolates;
+import chocostock.itens.produtos.Pendente;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Pedido {
@@ -16,11 +15,11 @@ public class Pedido {
     private LocalDate data_entrega;
     private boolean pago;
     private Status status;
-    private ArrayList<Produto> produtos;
-    private ArrayList<TiposChocolates> produtos_pendentes; //talvez seja bom ter uma quantidade junto, mas ai precisa fazer algo diferente de ArrayList<E>
+    private ArrayList<Pendente> produtos;
+    private ArrayList<Pendente> produtos_pendentes; //talvez seja bom ter uma quantidade junto, mas ai precisa fazer algo diferente de ArrayList<E>
     private float preco_total;
 
-    public Pedido(int id_cliente, LocalDate data, LocalDate data_entrega, boolean pago, Status status, ArrayList<TiposChocolates> produtos_pendentes, float preco_total) {
+    public Pedido(int id_cliente, LocalDate data, LocalDate data_entrega, boolean pago, Status status, ArrayList<Pendente> produtos_pendentes, float preco_total) {
         this.id = id_pedidos++;
         this.id_cliente = id_cliente;
         this.data = data;
@@ -28,12 +27,12 @@ public class Pedido {
         this.pago = pago;
         this.status = status;
         this.produtos_pendentes = produtos_pendentes;
-        this.produtos = new ArrayList<Produto>();
+        this.produtos = new ArrayList<Pendente>();
         this.preco_total = preco_total;
     }
 
     public Pedido(int id_cliente, LocalDate data_entrega, boolean pago, Status status, float preco_total) {
-        this(id_cliente, LocalDate.now(), data_entrega, pago, status, new ArrayList<TiposChocolates>(), preco_total);
+        this(id_cliente, LocalDate.now(), data_entrega, pago, status, new ArrayList<Pendente>(), preco_total);
     }
 
     public Pedido() {
@@ -86,19 +85,19 @@ public class Pedido {
         this.status = status;
     }
 
-    public ArrayList<Produto> getProdutos() {
+    public ArrayList<Pendente> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(ArrayList<Produto> produtos) {
+    public void setProdutos(ArrayList<Pendente> produtos) {
         this.produtos = produtos;
     }
 
-    public ArrayList<TiposChocolates> getProdutos_pendentes() {
+    public ArrayList<Pendente> getProdutos_pendentes() {
         return produtos_pendentes;
     }
 
-    public void setProdutos_pendentes(ArrayList<TiposChocolates> produtos_pendentes) {
+    public void setProdutos_pendentes(ArrayList<Pendente> produtos_pendentes) {
         this.produtos_pendentes = produtos_pendentes;
     }
 

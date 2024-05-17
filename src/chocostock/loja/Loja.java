@@ -4,16 +4,15 @@ import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
+import chocostock.enums.*;
 import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
-import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Escolhivel;
-import chocostock.itens.Item;
 import chocostock.itens.materiais.Ingrediente;
-import chocostock.enums.TiposIngredientes;
+import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
@@ -141,17 +140,60 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return listaObjetos(pedidos);
     }
 
-    public ArrayList<Produto> escolheProdutos(Scanner scanner) {
-        ArrayList<Produto> produtosEscolhidos = new ArrayList<Produto>();
-        switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
-            case 1:
-                // selecionaProduto();
-
-            case 2:
-                // imprime produtosEscolhidos
-            default:
-                return produtosEscolhidos;
+    private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
+        ArrayList<Pendente> produtosEscolhidos = new ArrayList<Pendente>();
+        while (true) {
+            switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
+                case 1: produtosEscolhidos.add(selecionaProduto(scanner));
+                    break;
+                case 2:
+                    // imprime produtosEscolhidos
+                    break;
+                default:
+                    return produtosEscolhidos;
+            }
         }
+    }
+
+    private Pendente selecionaProduto(Scanner scanner) {
+        Pendente produtoPendente = new Pendente();
+        return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
+            case 1 -> {
+                yield selecionaBarra(scanner, produtoPendente);
+            }
+            case 2 -> {
+                //selecionaCaixa(scanner);
+                yield produtoPendente;
+            }
+            default -> // se o usuario digitar 0
+                    null;
+        };
+    }
+
+    private Pendente selecionaBarra(Scanner scanner, Pendente produtoPendente) {
+        for (TiposChocolates tipo : TiposChocolates.values()) {
+            System.out.println(tipo.getId() + "-" + tipo.getNome());
+        }
+        produtoPendente.setNome(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+
+        for (TiposComplementos complemento : TiposComplementos.values()) {
+            System.out.println(complemento.getId() + "-" + complemento.getNome());
+        }
+        System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.\nDigite 'sair' para finalizar escolha.");
+        ArrayList<TiposComplementos> complementos = escolheObjeto(scanner, TiposComplementos.values(),
+                "Por favor selecione um complemento válido.",
+                "sair", TiposComplementos.values().length);
+        ArrayList<String> nomes_complementos = new ArrayList<String>();
+        for (TiposComplementos complemento : complementos) {
+            produtoPendente.addComplemento(complemento.getNome());
+        }
+
+
+        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
+                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
+
+        return produtoPendente;
+
     }
 
     public Ingrediente estocarIngrediente(Scanner input) {
