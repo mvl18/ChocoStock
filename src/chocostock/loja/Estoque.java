@@ -1,9 +1,11 @@
 package chocostock.loja;
 
 import chocostock.interfaces.AddRemovivel;
+import chocostock.interfaces.Iteravel;
 import chocostock.itens.Equipamento;
 import chocostock.itens.Item;
-import chocostock.itens.materiais.Material;
+import chocostock.itens.materiais.Embalagem;
+import chocostock.itens.materiais.Suprimento;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.enums.TiposIngredientes;
@@ -11,15 +13,17 @@ import chocostock.enums.TiposIngredientes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Estoque implements AddRemovivel {
+public class Estoque implements AddRemovivel, Iteravel {
     private ArrayList<Item> produtos;
     private ArrayList<Item> materiais;
     private ArrayList<Item> equipamentos;
+    private ArrayList<Embalagem> embalagens;
 
-    public Estoque(ArrayList<Item> produtos, ArrayList<Item> materiais, ArrayList<Item> equipamentos) {
-        this.produtos = produtos;
-        this.materiais = materiais;
-        this.equipamentos = equipamentos;
+    public Estoque() {
+        this.produtos = new ArrayList<Item>();
+        this.materiais = new ArrayList<Item>();
+        this.equipamentos = new ArrayList<Item>();
+        this.embalagens = new ArrayList<Embalagem>();
     }
 
     public ArrayList<Item> getProdutos() {
@@ -46,6 +50,14 @@ public class Estoque implements AddRemovivel {
         this.equipamentos = equipamentos;
     }
 
+    public boolean addEmbalagem(Embalagem embalagem) {
+        return addObjeto(embalagens, embalagem);
+    }
+
+    public String listaEmbalagens() {
+        return listaObjetos(embalagens);
+    }
+
     public boolean addProduto(Produto produto) {
         return addObjeto(produtos, produto);
     }
@@ -62,12 +74,12 @@ public class Estoque implements AddRemovivel {
         return removeObjeto(equipamentos, equipamento);
     }
 
-    public boolean addMaterial(Material material) {
-        return addObjeto(materiais, material);
+    public boolean addMaterial(Suprimento suprimento) {
+        return addObjeto(materiais, suprimento);
     }
 
-    public boolean removeMaterial(Material material) {
-            return removeObjeto(materiais, material);
+    public boolean removeMaterial(Suprimento suprimento) {
+            return removeObjeto(materiais, suprimento);
     }
 
     public void imprimirIngredientes(){

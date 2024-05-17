@@ -1,17 +1,16 @@
 package chocostock.itens.materiais;
 
 import chocostock.colaboradores.Colaborador;
+import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposIngredientes;
-import chocostock.interfaces.Nomeavel;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-public class Ingrediente extends Material {
+public class Ingrediente extends Suprimento {
 
     //Propriedades Herdadas:
     //ITEM: id, nome, quantidade, preco
-    //MATERIAL:
+    //SUPRIMENTO: fornecedor
 
     private TiposIngredientes tipo;
     private float unidade; // Em kg
@@ -19,12 +18,12 @@ public class Ingrediente extends Material {
     private LocalDate validade;
     private Colaborador fornecedor;
 
-    public Ingrediente(String nome, int quantidade, float preco) {
-        super(nome, quantidade, preco);
+    public Ingrediente(String nome, int quantidade, float preco, Fornecedor fornecedor) {
+        super(nome, quantidade, preco, fornecedor);
     }
 
     public Ingrediente() {
-        this("", 0, 0.0f);
+        this("", 0, 0.0f, new Fornecedor());
     }
 
     public TiposIngredientes getTipo() {
