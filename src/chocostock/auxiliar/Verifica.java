@@ -1,5 +1,6 @@
 package chocostock.auxiliar;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -37,15 +38,22 @@ public class Verifica {
         return nome.matches("[A-Za-zÀ-ÿ'-]+( [A-Za-zÀ-ÿ'-]+)*");
     }
 
+
+    public static boolean isData(String dataString) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate data = LocalDate.parse(dataString, dateFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
     public static boolean isDataFutura(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
             LocalDate data = LocalDate.parse(dataString, dateFormatter);
-            if (!data.isBefore(LocalDate.now())) {
-                return true;
-            } else {
-                return false;
-            }
+            return (!data.isBefore(LocalDate.now()));
         } catch (DateTimeParseException e) {
             return false;
         }

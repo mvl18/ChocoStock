@@ -1,12 +1,12 @@
 package chocostock.loja;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
 import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
-import chocostock.colaboradores.Colaborador;
 import chocostock.auxiliar.Verifica;
 import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
@@ -14,11 +14,10 @@ import chocostock.interfaces.Escolhivel;
 import chocostock.itens.Item;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.enums.TiposIngredientes;
+import chocostock.itens.produtos.Produto;
 
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -144,17 +143,19 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
     public Pedido novoPedido(Scanner scanner, Loja loja)  {
         Pedido pedido = new Pedido();
-        System.out.println("Novo pedido com id " + pedido.getId() + " criado com sucesso.\nQual cliente fez esse pedido? ");
+//        String msg =   """
+//                --- NOVO PEDIDO ---
+//                Selecione uma das opções:
+//                (1) - Mostrar lista de clientes já cadastrados.
+//                (2) - Adicionar novo cliente.
+//                """;
 
         // CLIENTE
-        System.out.println("1-Mostrar lista de clientes já cadastrados.\n2-Adicionar novo cliente.");
-        int resposta = scanner.nextInt();
-        scanner.nextLine();
-        switch (resposta) {
+        switch (verificaOpcao(scanner, new String[]{"NOVO PEDIDO", "Mostrar lista de clientes já cadastrados.", "Adicionar novo cliente."}, 1)) {
             case 1:
                 System.out.println(listaClientes());
+                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
                 System.out.println("Insira o ID ou nome do seu cliente");
-                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'");
                 Cliente cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
                     Cliente cliente2 = novoCliente(scanner);
@@ -176,13 +177,13 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
-        pedido.setData_entrega(escolheData(scanner));
+        pedido.setData_entrega(escolheDataFutura(scanner, "Digite a data futura no formato dd/MM/yyyy: ",
+                "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy."));
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
         // PAGO OU N
-        pedido.setPago(Normalizer.normalize(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
-                input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
-                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").equals("sim"));
+        pedido.setPago(Processa.normaliza(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
+                input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
         // STATUS
@@ -190,13 +191,12 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
             System.out.println(status.getId() + "-" + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "Obrigatório"));
+        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
         // PRODUTOS_PENDENTES
         System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-
-        // pedido.setProdutos(escolheObjeto(scanner, )); // precisa ver com todos como fazer ALERT
+        pedido.setProdutos(escolheProdutos(scanner));
         // pega_produtos_do_estoque() para tirar de pendentes
 
         // PRECO TOTAL
@@ -206,10 +206,25 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return pedido;
     }
 
-    private LocalDate escolheData(Scanner scanner) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
-        return LocalDate.parse((getInput(scanner, "Digite a data futura no formato dd/MM/yyyy: ",
-                "Formato de data inválido. Por favor, insira a data futura no formato dd/MM/yyyy.",
-                Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    private ArrayList<Produto> escolheProdutos(Scanner scanner) {
+        ArrayList<Produto> produtosEscolhidos = new ArrayList<Produto>();
+        switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
+            case 1:
+                // selecionaProduto();
+
+            case 2:
+                // imprime produtosEscolhidos
+            default:
+                return produtosEscolhidos;
+        }
+    }
+
+    private LocalDate escolheDataFutura(Scanner scanner, String prompt, String mensagemErro) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
+        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    private LocalDate escolheData(Scanner scanner, String prompt, String mensagemErro) {
+        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
 
@@ -239,36 +254,29 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         Ingrediente ingrediente = new Ingrediente();
         int opcao;
         String texto;
+
         //Tipo
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
         estoque.imprimirIngredientes();
         ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
-                "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.",
-                "obrigatorio"));
-//        opcao = input.nextInt();
-//        input.nextLine();
-        // ingrediente.setTipo(TiposIngredientes.getTipoPorId(opcao));
+                "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
         ingrediente.setNome(ingrediente.getTipo().getNome());
+
         //Quantidade
-//        System.out.println("Quantas unidades foram compradas?");
-//        ingrediente.setQuantidade(input.nextInt());
-//        input.nextLine();
         ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas?", "Quantidade invalida", Verifica::isNatural)));
+
         //Unidade
-//        System.out.println("Quantos kg por unidade:");
-//        texto = input.nextLine();
-//        ingrediente.setUnidade(Float.parseFloat(texto));
         ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade?", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
+
         //Preco
-//        System.out.println("Digite o preco da compra:");
-//        texto = input.nextLine();
-//        ingrediente.setPreco(Float.parseFloat(texto));
         ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
+
         //Data Compra e Validade
-        System.out.println("Digite a data da compra (dd/mm/yyyy)");
-        ingrediente.setDataCompra(escolheData(input));
-        System.out.println("Digite a data de validade: (dd/mm/yyyy)");
-        ingrediente.setValidade(escolheData(input));
+        ingrediente.setDataCompra(escolheData(input, "Digite a data da compra: (dd/mm/yyyy)",
+                "Formato de data inválido. Por favor, insira a data no formato dd/mm/yyyy."));
+        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)",
+                "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy."));
+
         //Fornecedor
         System.out.println("Fornecedores atuais:");
         System.out.println("Nao Implementado.");
