@@ -1,5 +1,9 @@
 package chocostock.interfaces;
 
+import chocostock.auxiliar.Verifica;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -9,7 +13,7 @@ import java.util.Scanner;
 * Seu intuito é ser usada para facilitar pegar o input do usuário, sendo que ele deve escolher algo de uma
 * lista de opções.
 * */
-public interface Escolhivel {
+public interface Escolhivel extends ValidadorInput {
     /**
      * Escolhe um objeto da lista com base nas entradas fornecidas.
      *
@@ -139,5 +143,13 @@ public interface Escolhivel {
         }
 
         return objeto.get(0);
+    }
+
+    default LocalDate escolheDataFutura(Scanner scanner, String prompt, String mensagemErro) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
+        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    default LocalDate escolheData(Scanner scanner, String prompt, String mensagemErro) {
+        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
