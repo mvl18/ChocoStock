@@ -4,6 +4,7 @@ import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
+import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.colaboradores.Cliente;
@@ -11,7 +12,7 @@ import chocostock.auxiliar.Verifica;
 import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Escolhivel;
-import chocostock.itens.Item;
+import chocostock.itens.materiais.Embalagem;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.enums.TiposIngredientes;
 import chocostock.itens.produtos.Produto;
@@ -245,19 +246,14 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return cliente;
     }
 
-    /*
-    BUGS:
-    -Digita uma string quando pede INT ou FLOAT
-    -Digita ID de ingrediente invalido (1-17)
-     */
-     public Ingrediente novoIngrediente(Scanner input) {
+    public Ingrediente novoIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
         int opcao;
         String texto;
 
         //Tipo
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
-        estoque.imprimirIngredientes();
+        estoque.imprimirTiposIngredientes();
         ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
                 "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
         ingrediente.setNome(ingrediente.getTipo().getNome());
@@ -281,5 +277,28 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         System.out.println("Fornecedores atuais:");
         System.out.println("Nao Implementado.");
         return ingrediente;
+    }
+
+    public Embalagem novaEmbalagem(Scanner input) {
+        Embalagem embalagem = new Embalagem();
+        int opcao = -1;
+        String texto = "";
+        //Tipo
+        System.out.println("Escolha um tipo de embalagem para adicionar:");
+        estoque.imprimirTiposEmbalagens();
+        embalagem.setTipo(escolheObjeto(input, TiposEmbalagens.values(),
+                "Numero ou nome invalido. Escolha um numero de (1-14) ou digite um nome valido.", "obrigatorio"));
+        //Fornecedor
+        System.out.println("FOrnecedor:\nNão implementado.");
+        //Preco_por_pacote
+        embalagem.setPreco_pacote(Float.parseFloat(getInput(input, "Qual o valor do pacote?",
+                "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
+        //Unidades_por_pacote
+        embalagem.setQuantidade_por_pacote(Integer.parseInt(getInput(input, "Quantas embalagens por pacote?", "Quantidade invalida", Verifica::isNatural)));
+        //Numero de Pacotes
+        embalagem.setQuantidade_em_estoque(Integer.parseInt(getInput(input, "Quantos pacotes foram comprados?",
+                "Quantidade invalida", Verifica::isNatural)) * embalagem.getQuantidade_por_pacote());
+
+        return embalagem;
     }
 }

@@ -51,7 +51,7 @@ public class CriarTeste implements Escolhivel {
 
         for (TiposEmbalagens embalagem : TiposEmbalagens.values()) {
             loja.getEstoque().addEmbalagem(new Embalagem(embalagem, loja.getFornecedores().get(0),
-                    valores.remove(0), quantidades.remove(0), 0));
+                    valores.remove(0), quantidades.get(0), quantidades.remove(0)));
         }
 
         System.out.println(loja.getEstoque().listaEmbalagens());

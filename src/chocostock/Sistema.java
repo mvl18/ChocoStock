@@ -35,8 +35,7 @@ public class Sistema implements ValidadorInput {
                 (1) - Menu Pedidos.
                 (2) - Menu Estoque.
                 (3) - Menu Colaboradores.
-                (0) - Encerrar Sistema.
-                """;
+                (0) - Encerrar Sistema.""";
 //        System.out.println(msg);
 //        opcao = input.nextInt();
 //        input.nextLine();
@@ -91,20 +90,27 @@ public class Sistema implements ValidadorInput {
                 --- MENU ESTOQUE ---
                 (X) - Adicionar Produto
                 (2) - Adicionar Ingrediente
-                (X) - Adicionar Embalagem
+                (3) - Adicionar Embalagem
                 (X) - Status Produto
                 (5) - Status Ingredientes
-                (X) - Status Embalagens
-                """;
+                (6) - Status Embalagens
+                (0) - Voltar para o menu inicial.""";
 //        System.out.println(msg);
 //        opcao = input.nextInt();
 //        input.nextLine();
-        opcao = verificaOpcao(input, msg, 1, 6);
+        opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
-            case 2: loja.getEstoque().addMaterial(loja.novoIngrediente(input));
+            case 0: menuInicial();
+                    break;
+            case 2: loja.getEstoque().addIngrediente(loja.novoIngrediente(input));
                     menuEstoque();
                     break;
+            case 3: loja.getEstoque().addEmbalagem(loja.novaEmbalagem(input));
+                    menuEstoque();
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
+                    menuEstoque();
+                    break;
+            case 6: System.out.println(loja.getEstoque().statusEmbalagens());
                     menuEstoque();
                     break;
             default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");

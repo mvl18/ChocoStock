@@ -1,5 +1,6 @@
 package chocostock.loja;
 
+import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Iteravel;
 import chocostock.itens.Equipamento;
@@ -15,13 +16,13 @@ import java.util.ArrayList;
 
 public class Estoque implements AddRemovivel, Iteravel {
     private ArrayList<Item> produtos;
-    private ArrayList<Item> materiais;
+    private ArrayList<Item> ingredientes;
     private ArrayList<Item> equipamentos;
     private ArrayList<Embalagem> embalagens;
 
     public Estoque() {
         this.produtos = new ArrayList<Item>();
-        this.materiais = new ArrayList<Item>();
+        this.ingredientes = new ArrayList<Item>();
         this.equipamentos = new ArrayList<Item>();
         this.embalagens = new ArrayList<Embalagem>();
     }
@@ -34,12 +35,12 @@ public class Estoque implements AddRemovivel, Iteravel {
         this.produtos = produtos;
     }
 
-    public ArrayList<Item> getMateriais() {
-        return materiais;
+    public ArrayList<Item> getIngredientes() {
+        return ingredientes;
     }
 
-    public void setMateriais(ArrayList<Item> materiais) {
-        this.materiais = materiais;
+    public void setIngredientes(ArrayList<Item> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
     public ArrayList<Item> getEquipamentos() {
@@ -74,17 +75,23 @@ public class Estoque implements AddRemovivel, Iteravel {
         return removeObjeto(equipamentos, equipamento);
     }
 
-    public boolean addMaterial(Suprimento suprimento) {
-        return addObjeto(materiais, suprimento);
+    public boolean addIngrediente(Suprimento suprimento) {
+        return addObjeto(ingredientes, suprimento);
     }
 
     public boolean removeMaterial(Suprimento suprimento) {
-            return removeObjeto(materiais, suprimento);
+            return removeObjeto(ingredientes, suprimento);
     }
 
-    public void imprimirIngredientes(){
+    public void imprimirTiposIngredientes(){
         for(TiposIngredientes tipo : TiposIngredientes.values()){
             System.out.println(tipo.getId() + " - " + tipo.getNome());
+        }
+    }
+
+    public void imprimirTiposEmbalagens(){
+        for(TiposEmbalagens tipo : TiposEmbalagens.values()){
+            System.out.println(tipo.getId() + " - " + tipo.getNome() + " - " + tipo.getTamanho());
         }
     }
 
@@ -95,7 +102,7 @@ public class Estoque implements AddRemovivel, Iteravel {
             float quantidade = 0.0f;
             LocalDate validade = null;
 
-            for(Item item : materiais){
+            for(Item item : ingredientes){
                 if(item instanceof Ingrediente && ((Ingrediente) item).getTipo() == tipo){
                     quantidade += item.getQuantidade() * ((Ingrediente)item).getUnidade();
                     if(validade == null){
@@ -119,5 +126,19 @@ public class Estoque implements AddRemovivel, Iteravel {
         return msg;
     }
 
-
+    public String statusEmbalagens(){
+        String msg = "";
+        for(TiposEmbalagens tipo : TiposEmbalagens.values()){
+            msg += tipo.toString() + "\n";
+            int quantidadeEmEstoque = 0, numeroDePacotes = 0;
+            for(Embalagem embalagem : embalagens){
+                if(embalagem.getTipo_embalagem().equals(tipo)){
+                    numeroDePacotes++;
+                    quantidadeEmEstoque += embalagem.getQuantidade_em_estoque();
+                }
+            }
+            msg += "\t-Pacotes: " + numeroDePacotes + "\n\t-Unidades em estoque: " + quantidadeEmEstoque + "\n";
+        }
+        return msg;
+    }
 }

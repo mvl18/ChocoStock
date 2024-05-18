@@ -17,4 +17,57 @@ public class Embalagem {
         this.quantidade_por_pacote = quantidade_por_pacote;
         this.quantidade_em_estoque = quantidade_em_estoque;
     }
+
+    public Embalagem() {
+        this.fornecedor = new Fornecedor();
+        this.preco_pacote = 0.0f;
+        this.quantidade_por_pacote = 0;
+        this.quantidade_em_estoque = 0;
+    }
+
+    public void setTipo(TiposEmbalagens tipo){
+        tipo_embalagem = tipo;
+    }
+
+    public void setPreco_pacote(float preco){
+        preco_pacote = preco;
+    }
+
+    public void setQuantidade_por_pacote(int quantidade){
+        quantidade_por_pacote = quantidade;
+    }
+
+    public void setQuantidade_em_estoque(int quantidade){
+        quantidade_em_estoque = quantidade;
+    }
+
+    public TiposEmbalagens getTipo_embalagem() {
+        return tipo_embalagem;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public double getPreco_pacote() {
+        return preco_pacote;
+    }
+
+    public int getQuantidade_por_pacote() {
+        return quantidade_por_pacote;
+    }
+
+    public int getQuantidade_em_estoque(){
+        return quantidade_em_estoque;
+    }
+
+    @Override
+    public String toString(){
+        String out = "";
+        out += tipo_embalagem.toString() + "\n" +
+                "Fornecedor: " + fornecedor + "\n" +
+                "Quantidade por pacote: " + quantidade_por_pacote + "\n" +
+                "Quantidade em estoque: " + quantidade_em_estoque;
+        return out;
+    }
 }
