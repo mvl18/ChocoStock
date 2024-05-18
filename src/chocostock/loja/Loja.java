@@ -137,7 +137,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     }
 
     private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
-        ArrayList<Pendente> produtosEscolhidos = new ArrayList<Pendente>();
+        ArrayList<Pendente> produtos_escolhidos = new ArrayList<Pendente>();
         while (true) {
             switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
                 case 1: produtos_escolhidos.add(selecionaProduto(scanner));
@@ -220,10 +220,8 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
         //Data Compra e Validade
-        ingrediente.setDataCompra(escolheData(input
-        ));
-        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)"
-        ));
+        ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy)", "Digite uma data válida."));
+        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)", "Digite uma data futura válida."));
 
         //Fornecedor
         System.out.println("Fornecedores atuais:");
