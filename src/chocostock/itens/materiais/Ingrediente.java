@@ -1,7 +1,5 @@
 package chocostock.itens.materiais;
 
-import chocostock.colaboradores.Colaborador;
-import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposIngredientes;
 
 import java.time.LocalDate;
@@ -16,14 +14,14 @@ public class Ingrediente extends Suprimento {
     private float unidade; // Em kg
     private LocalDate dataCompra;
     private LocalDate validade;
-    private Colaborador fornecedor;
+    private String cnpj_fornecedor;
 
-    public Ingrediente(String nome, int quantidade, float preco, Fornecedor fornecedor) {
-        super(nome, quantidade, preco, fornecedor);
+    public Ingrediente(String nome, int quantidade, float preco, String cnpj_fornecedor) {
+        super(nome, quantidade, preco, cnpj_fornecedor);
     }
 
     public Ingrediente() {
-        this("", 0, 0.0f, new Fornecedor());
+        this("", 0, 0.0f, "");
     }
 
     public TiposIngredientes getTipo() {
@@ -38,8 +36,8 @@ public class Ingrediente extends Suprimento {
         return validade;
     }
 
-    public Colaborador getFornecedor() {
-        return fornecedor;
+    public String getCnpj_fornecedor() {
+        return cnpj_fornecedor;
     }
 
     public float getUnidade() {
@@ -62,7 +60,7 @@ public class Ingrediente extends Suprimento {
         this.validade = validade;
     }
 
-    public void setFornecedor(Colaborador fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setCnpj_fornecedor(String cnpj_fornecedor) {
+        this.cnpj_fornecedor = cnpj_fornecedor;
     }
 }

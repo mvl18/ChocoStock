@@ -66,7 +66,7 @@ public class Sistema implements ValidadorInput {
         switch(opcao) {
             case 0: menuInicial();
                     break;
-            case 1: loja.addPedido(loja.novoPedido(input, loja));
+            case 1: loja.addPedido(loja.novoPedido(input));
                     menuPedidos();
                     break;
             case 2: System.out.println("Pedidos Atuais:\n" + loja.listaPedidos());
