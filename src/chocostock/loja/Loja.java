@@ -140,7 +140,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return listaObjetos(pedidos);
     }
 
-    private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
+    public ArrayList<Pendente> escolheProdutos(Scanner scanner) {
         ArrayList<Pendente> produtosEscolhidos = new ArrayList<Pendente>();
         while (true) {
             switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
