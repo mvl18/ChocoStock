@@ -1,13 +1,14 @@
 package chocostock.loja;
 
 import chocostock.enums.Status;
+import chocostock.interfaces.AddRemovivel;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.produtos.Pendente;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Pedido {
+public class Pedido implements AddRemovivel {
     private static int id_pedidos = 100000;
     private int id;
     private int id_cliente;
@@ -15,7 +16,7 @@ public class Pedido {
     private LocalDate data_entrega;
     private boolean pago;
     private Status status;
-    private ArrayList<Pendente> produtos;
+    private ArrayList<Integer> produtos;
     private ArrayList<Pendente> produtos_pendentes; //talvez seja bom ter uma quantidade junto, mas ai precisa fazer algo diferente de ArrayList<E>
     private float preco_total;
 
@@ -27,7 +28,7 @@ public class Pedido {
         this.pago = pago;
         this.status = status;
         this.produtos_pendentes = produtos_pendentes;
-        this.produtos = new ArrayList<Pendente>();
+        this.produtos = new ArrayList<Integer>();
         this.preco_total = preco_total;
     }
 
@@ -85,11 +86,11 @@ public class Pedido {
         this.status = status;
     }
 
-    public ArrayList<Pendente> getProdutos() {
+    public ArrayList<Integer> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(ArrayList<Pendente> produtos) {
+    public void setProdutos(ArrayList<Integer> produtos) {
         this.produtos = produtos;
     }
 
@@ -107,6 +108,24 @@ public class Pedido {
 
     public void setPreco_total(float preco_total) {
         this.preco_total = preco_total;
+    }
+
+    public boolean addProduto(int posicao, int id_produto) {
+        return addObjeto(posicao, produtos, id_produto);
+    }
+
+    public boolean addProduto(int id_produto) {
+        return addObjeto(produtos, id_produto);
+    }
+    public boolean removeProduto(int id_produto) {
+        return removeObjeto(produtos, id_produto);
+    }
+
+    public boolean addProduto_pendente(Pendente pendente) {
+        return addObjeto(produtos_pendentes, pendente);
+    }
+    public boolean removeProduto_pendente(Pendente pendente) {
+        return removeObjeto(produtos_pendentes, pendente);
     }
 
     @Override

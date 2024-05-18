@@ -5,7 +5,7 @@ import chocostock.itens.materiais.Embalagem;
 
 import java.util.Date;
 
-public abstract class Produto extends Item {
+public class Produto extends Item {
     private static int id_produtos = 100000;
     private int id_pedido;
     private Date validade;
@@ -15,9 +15,14 @@ public abstract class Produto extends Item {
     public Produto(String nome, int quantidade, float preco, Date validade, int peso, Embalagem embalagem) {
         super(nome, quantidade, preco);
         this.setId(id_produtos++);
+        this.id_pedido = -1;
         this.validade = validade;
         this.peso = peso;
         this.embalagem = embalagem;
+    }
+
+    public Produto() {
+        this(null, 0, 0, null, 0, null);
     }
 
     public int getId_pedido() {

@@ -1,10 +1,15 @@
 package chocostock;
 
 import chocostock.interfaces.ValidadorInput;
+import chocostock.itens.produtos.Chocolate;
+import chocostock.itens.produtos.Produto;
 import chocostock.loja.Loja;
 import chocostock.interfaces.Criavel;
 
 import java.util.Scanner;
+
+import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO;
+import static chocostock.enums.TiposChocolates.CHOCOLATE_INTENSO;
 
 public class Sistema implements ValidadorInput {
 
@@ -92,6 +97,12 @@ public class Sistema implements ValidadorInput {
                 (X) - Status Embalagens
                 (0) - Voltar para o menu inicial.
                 """;
+
+        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().imprimirProdutos();
+
         opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 0: menuInicial();
