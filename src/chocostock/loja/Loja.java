@@ -8,8 +8,10 @@ import chocostock.enums.*;
 import chocostock.interfaces.*;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
+import chocostock.itens.Item;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.itens.produtos.Pendente;
+import chocostock.itens.produtos.Produto;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -165,7 +167,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
             System.out.println(tipo.getId() + "-" + tipo.getNome());
         }
         produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
-
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
@@ -183,12 +184,10 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         }
         System.out.println("0-Sair");
         System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
-        ArrayList<TiposComplementos> complementos = escolheObjeto(scanner, TiposComplementos.values(),
+        produtoPendente.setComplementos(escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
-                "0", TiposComplementos.values().length);
-        for (TiposComplementos complemento : complementos) {
-            produtoPendente.addComplemento(complemento.getNome());
-        }
+                "0", TiposComplementos.values().length));
+
 
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
@@ -199,27 +198,27 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     public Ingrediente estocarIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
-        //Tipo
+        //TIPO
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
         getEstoque().imprimirIngredientes();
         ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
                 "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
         ingrediente.setNome(ingrediente.getTipo().getNome());
 
-        //Quantidade
+        //QUANTIDADE
         ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas?", "Quantidade invalida", Verifica::isNatural)));
 
-        //Unidade
+        //UNIDADE
         ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade?", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
 
-        //Preco
+        //PRECO
         ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
-        //Data Compra e Validade
+        //DATA DE COMPRA E VALIDADE
         ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy)", "Digite uma data válida."));
         ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)", "Digite uma data futura válida."));
 
-        //Fornecedor
+        //FORNECEDOR
         Fornecedor fornecedor;
         switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
             case 1:
@@ -315,8 +314,12 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // PRODUTOS_PENDENTES
         System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-        pedido.setProdutos(escolheProdutos(scanner));
-        // pega_produtos_do_estoque() para tirar de pendentes
+        pedido.setProdutos_pendentes(escolheProdutos(scanner));
+
+        // PRODUTOS
+        pedido = estoque.retiraProdutosEstoque(pedido);
+        System.out.println(estoque);
+        System.out.println(pedido);
 
         // STATUS
         for (Status status : Status.values()) {
@@ -337,6 +340,8 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         return pedido;
     }
+
+
 
 
 }
