@@ -1,11 +1,14 @@
 package chocostock.colaboradores;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
+import chocostock.interfaces.Iteravel;
+import chocostock.loja.Pedido;
 
 import java.util.ArrayList;
 
-public class Cliente extends Colaborador implements Identificavel {
+public class Cliente extends Colaborador implements AddRemovivel, Identificavel, Iteravel {
     private static int id_clientes = 100000;
     private final int id; // final, pois nao pode ser modificado apos criado
     private ArrayList<Integer> pedidos;
@@ -24,6 +27,14 @@ public class Cliente extends Colaborador implements Identificavel {
         return pedidos;
     }
 
+    public boolean addPedido(Integer idPedido) {
+        return addObjeto(pedidos, idPedido);
+    }
+
+    public String listaPedidos() {
+        return listaObjetos(pedidos);
+    }
+
     public int getId() {
         return id;
     }
@@ -33,9 +44,10 @@ public class Cliente extends Colaborador implements Identificavel {
     }
 
     @Override
-    public String toString() { // teste de como fazer um toString() decente
-        return "Cliente{id=" + id + ", " + super.toString() +
-                ", pedidos=" + pedidos +
-                '}';
+    public String toString() {
+        String out = id + ". " + super.toString() + "Pedidos: ";
+        for (int i = 0; i < pedidos.size(); i++)
+            out += pedidos.get(i).toString() + (i == pedidos.size()-1 ? "\n" : ", ");
+        return out + "\n";
     }
 }

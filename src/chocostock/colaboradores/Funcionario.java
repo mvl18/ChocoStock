@@ -53,4 +53,10 @@ public class Funcionario extends Colaborador implements Identificavel {
     public void setSalario(float salario) {
         this.salario = salario;
     }
+
+    public String toString() {
+        return id + ". " + super.toString() +
+                "\nCargo: " + cargo + " - R$" + salario +
+                "\n";
+    }
 }

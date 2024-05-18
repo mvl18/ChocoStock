@@ -268,24 +268,27 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 //                """;
 
         // CLIENTE
+        Cliente cliente;
         switch (verificaOpcao(scanner, new String[]{"NOVO PEDIDO", "Mostrar lista de clientes já cadastrados.", "Adicionar novo cliente."}, 1)) {
             case 1:
                 System.out.println(loja.listaClientes());
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
                 System.out.println("Insira o ID ou nome do seu cliente");
-                Cliente cliente = loja.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
+                cliente = loja.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
-                    Cliente cliente2 = novoCliente(scanner);
-                    loja.addCliente(cliente2);
-                    pedido.setId_cliente(cliente2.getId());
+                    cliente = novoCliente(scanner);
+                    loja.addCliente(cliente);
+                    pedido.setId_cliente(cliente.getId());
                     break;
                 }
                 pedido.setId_cliente(cliente.getId());
+                cliente.addPedido(pedido.getId());
                 break;
             case 2:
-                Cliente cliente2 = novoCliente(scanner);
-                loja.addCliente(cliente2);
-                pedido.setId_cliente(cliente2.getId());
+                cliente = novoCliente(scanner);
+                loja.addCliente(cliente);
+                pedido.setId_cliente(cliente.getId());
+                cliente.addPedido(pedido.getId());
                 break;
             default:
                 System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
