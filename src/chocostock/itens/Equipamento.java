@@ -9,11 +9,11 @@ import java.time.LocalDate;
 public class Equipamento extends Suprimento implements Nomeavel {
     private static int id_equipamentos = 100000;
     private String marca;
-    private Fornecedor fornecedor;
+    private String cnpj_fornecedor;
     private LocalDate garantia;
 
-    public Equipamento(String nome, int quantidade, float preco, String marca, Fornecedor fornecedor, LocalDate garantia) {
-        super(nome, quantidade, preco, fornecedor);
+    public Equipamento(String nome, int quantidade, float preco, String marca, String cnpj_fornecedor, LocalDate garantia) {
+        super(nome, quantidade, preco, cnpj_fornecedor);
         this.setId(id_equipamentos++);
         this.marca = marca;
         this.garantia = garantia;
@@ -27,12 +27,12 @@ public class Equipamento extends Suprimento implements Nomeavel {
         this.marca = marca;
     }
 
-    public Fornecedor getFornecedor() {
-        return fornecedor;
+    public String getCnpj_fornecedor() {
+        return cnpj_fornecedor;
     }
 
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setCnpj_fornecedor(String cnpj_fornecedor) {
+        this.cnpj_fornecedor = cnpj_fornecedor;
     }
 
 }

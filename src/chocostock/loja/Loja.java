@@ -11,7 +11,6 @@ import chocostock.auxiliar.Verifica;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.itens.produtos.Pendente;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -200,9 +199,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     public Ingrediente estocarIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
-        int opcao;
-        String texto;
-
         //Tipo
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
         getEstoque().imprimirIngredientes();
@@ -224,8 +220,31 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)", "Digite uma data futura válida."));
 
         //Fornecedor
-        System.out.println("Fornecedores atuais:");
-        System.out.println("Nao Implementado.");
+        Fornecedor fornecedor;
+        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
+            case 1:
+                System.out.println(listaFornecedores());
+                System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
+                System.out.println("Insira o CNPJ ou nome do seu fornecedor");
+                fornecedor = escolheObjeto(input, getFornecedores(), "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
+                if (fornecedor == null) {
+                    fornecedor = novoFornecedor(input);
+                    addFornecedor(fornecedor);
+                    ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                    break;
+                }
+                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                break;
+            case 2:
+                fornecedor = novoFornecedor(input);
+                addFornecedor(fornecedor);
+                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                break;
+            default:
+                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
+                break;
+        }
+
         return ingrediente;
     }
 
@@ -242,6 +261,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         // ENDERECO
         System.out.println("Criando endereço: ");
         cliente.setEndereco(criaEndereco(scanner));
+        System.out.println("Novo cliente adicionado: " + cliente.toString());
 
         return cliente;
     }
@@ -257,31 +277,20 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return fornecedor;
     }
 
-    /*
-    BUGS:
-    -Digita uma string quando pede INT ou FLOAT
-    -Digita ID de ingrediente invalido (1-17)
-     */
-    public Pedido novoPedido(Scanner scanner, Loja loja)  {
+    public Pedido novoPedido(Scanner scanner)  {
         Pedido pedido = new Pedido();
-//        String msg =   """
-//                --- NOVO PEDIDO ---
-//                Selecione uma das opções:
-//                (1) - Mostrar lista de clientes já cadastrados.
-//                (2) - Adicionar novo cliente.
-//                """;
 
         // CLIENTE
         Cliente cliente;
         switch (verificaOpcao(scanner, new String[]{"NOVO PEDIDO", "Mostrar lista de clientes já cadastrados.", "Adicionar novo cliente."}, 1)) {
             case 1:
-                System.out.println(loja.listaClientes());
+                System.out.println(listaClientes());
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
                 System.out.println("Insira o ID ou nome do seu cliente");
-                cliente = loja.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
+                cliente = escolheObjeto(scanner, getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
                     cliente = novoCliente(scanner);
-                    loja.addCliente(cliente);
+                    addCliente(cliente);
                     pedido.setId_cliente(cliente.getId());
                     break;
                 }
@@ -290,7 +299,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 break;
             case 2:
                 cliente = novoCliente(scanner);
-                loja.addCliente(cliente);
+                addCliente(cliente);
                 pedido.setId_cliente(cliente.getId());
                 cliente.addPedido(pedido.getId());
                 break;
@@ -300,15 +309,14 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         }
 
         // DATA_ENTREGA
-        System.out.println("Qual a data de entrega do pedido? ");
-        pedido.setData_entrega(escolheDataFutura(scanner, "Digite a data futura no formato DD/MM/YYYY: ",
+        pedido.setData_entrega(escolheDataFutura(scanner, "Qual a data de entrega do pedido? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
-        // PAGO OU N
-        pedido.setPago(Processa.normalizaString(loja.getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
-                input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
-        System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
+        // PRODUTOS_PENDENTES
+        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
+        pedido.setProdutos(escolheProdutos(scanner));
+        // pega_produtos_do_estoque() para tirar de pendentes
 
         // STATUS
         for (Status status : Status.values()) {
@@ -318,14 +326,14 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
-        // PRODUTOS_PENDENTES
-        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-        pedido.setProdutos(loja.escolheProdutos(scanner));
-        // pega_produtos_do_estoque() para tirar de pendentes
+        // PAGO OU N
+        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
+                input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
+        System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
         // PRECO TOTAL
         pedido.calculaPrecoTotal();
-        System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + ".");
+        System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + "."); // implementar
 
         return pedido;
     }

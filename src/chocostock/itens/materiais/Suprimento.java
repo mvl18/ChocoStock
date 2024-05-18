@@ -4,9 +4,9 @@ import chocostock.colaboradores.Fornecedor;
 import chocostock.itens.Item;
 
 public class Suprimento extends Item {
-    private Fornecedor fornecedor;
-    public Suprimento(String nome, int quantidade, float preco, Fornecedor fornecedor) {
+    private String cpnj_fornecedor;
+    public Suprimento(String nome, int quantidade, float preco, String cpnj_fornecedor) {
         super(nome, quantidade, preco);
-        this.fornecedor = fornecedor;
+        this.cpnj_fornecedor = cpnj_fornecedor;
     }
 }
