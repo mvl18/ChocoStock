@@ -53,7 +53,5 @@ public class CriarTeste implements Escolhivel {
             loja.getEstoque().addEmbalagem(new Embalagem(embalagem, loja.getFornecedores().get(0),
                     valores.remove(0), quantidades.remove(0), 0));
         }
-
-        System.out.println(loja.getEstoque().listaEmbalagens());
     }
 }

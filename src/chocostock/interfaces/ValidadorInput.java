@@ -27,7 +27,7 @@ public interface ValidadorInput {
         do {
             System.out.println(prompt);
             input = scanner.nextLine();
-            inputnorm = Processa.normaliza(input);
+            inputnorm = Processa.normalizaString(input);
 
             if (!validador.isValid(inputnorm)) {
                 System.out.println(mensagemErro);
@@ -92,7 +92,6 @@ public interface ValidadorInput {
                 scanner.next();
             }
         }
-        scanner.nextLine();
 
         return resposta;
     }
