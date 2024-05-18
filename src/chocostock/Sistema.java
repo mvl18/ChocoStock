@@ -37,9 +37,6 @@ public class Sistema implements ValidadorInput {
                 (3) - Menu Colaboradores.
                 (0) - Encerrar Sistema.
                 """;
-//        System.out.println(msg);
-//        opcao = input.nextInt();
-//        input.nextLine();
         opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: finalizarSistema();
@@ -64,9 +61,6 @@ public class Sistema implements ValidadorInput {
                 (2) - Listar pedidos.
                 (x) - Atualizar pedido.
                 (0) - Voltar para o menu inicial.""";
-//        System.out.println(msg);
-//        opcao = input.nextInt();
-//        input.nextLine();
         opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: menuInicial();
@@ -95,12 +89,12 @@ public class Sistema implements ValidadorInput {
                 (X) - Status Produto
                 (5) - Status Ingredientes
                 (X) - Status Embalagens
+                (0) - Voltar para o menu inicial.
                 """;
-//        System.out.println(msg);
-//        opcao = input.nextInt();
-//        input.nextLine();
-        opcao = verificaOpcao(input, msg, 1, 6);
+        opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
+            case 0: menuInicial();
+                    break;
             case 2: loja.getEstoque().addMaterial(loja.novoIngrediente(input));
                     menuEstoque();
                     break;
@@ -123,9 +117,6 @@ public class Sistema implements ValidadorInput {
                 (5) - Listar Fornecedores
                 (x) - Listar Funcionario
                 (0) - Voltar para o menu inicial.""";
-//        System.out.println(msg);
-//        opcao = input.nextInt();
-//        input.nextLine();
         opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 1: loja.addCliente(loja.novoCliente(input));

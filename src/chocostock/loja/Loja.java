@@ -13,11 +13,11 @@ import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Escolhivel;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.itens.produtos.Pendente;
-import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput {
@@ -25,7 +25,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
     private Estoque estoque;
-    private ArrayList<Cliente> clientes;
+    private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Fornecedor> fornecedores;
 
@@ -34,7 +34,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         this.endereco = endereco;
         this.pedidos = new ArrayList<Pedido>();
         this.estoque =  new Estoque();
-        this.clientes = new ArrayList<Cliente>();
         this.funcionarios = new ArrayList<Funcionario>();
         this.fornecedores = new ArrayList<Fornecedor>();
     }
@@ -174,8 +173,8 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
         // DATA_ENTREGA
         System.out.println("Qual a data de entrega do pedido? ");
-        pedido.setData_entrega(escolheDataFutura(scanner, "Digite a data futura no formato dd/MM/yyyy: ",
-                "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy."));
+        pedido.setData_entrega(escolheDataFutura(scanner, "Digite a data futura no formato dd/MM/yyyy: "
+        ));
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
         // PAGO OU N
@@ -199,16 +198,17 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
     }
 
     private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
-        ArrayList<Pendente> produtosEscolhidos = new ArrayList<Pendente>();
+        ArrayList<Pendente> produtos_escolhidos = new ArrayList<Pendente>();
         while (true) {
             switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
-                case 1: produtosEscolhidos.add(selecionaProduto(scanner));
+                case 1: produtos_escolhidos.add(selecionaProduto(scanner));
                     break;
                 case 2:
-                    // imprime produtosEscolhidos
+                    System.out.println(produtos_escolhidos);
                     break;
                 default:
-                    return produtosEscolhidos;
+                    produtos_escolhidos.removeIf(Objects::isNull);
+                    return produtos_escolhidos;
             }
         }
     }
@@ -216,16 +216,22 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
     private Pendente selecionaProduto(Scanner scanner) {
         Pendente produtoPendente = new Pendente();
         return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
-            case 1 -> {
-                yield selecionaBarra(scanner, produtoPendente);
-            }
-            case 2 -> {
-                //selecionaCaixa(scanner);
-                yield produtoPendente;
-            }
-            default -> // se o usuario digitar 0
-                    null;
+            case 1 -> selecionaBarra(scanner, produtoPendente);
+            case 2 -> selecionaCaixa(scanner, produtoPendente);
+            default -> null; // se o usuario digitar 0
         };
+    }
+
+    private Pendente selecionaCaixa(Scanner scanner, Pendente produtoPendente) {
+        for (TiposCaixas tipo : TiposCaixas.values()) {
+            System.out.println(tipo.getId() + "-" + tipo.getNome());
+        }
+        produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+
+        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
+                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
+
+        return produtoPendente;
     }
 
     private Pendente selecionaBarra(Scanner scanner, Pendente produtoPendente) {
@@ -237,15 +243,14 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         for (TiposComplementos complemento : TiposComplementos.values()) {
             System.out.println(complemento.getId() + "-" + complemento.getNome());
         }
-        System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.\nDigite 'sair' para finalizar escolha.");
+        System.out.println("0-Sair");
+        System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
         ArrayList<TiposComplementos> complementos = escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
-                "sair", TiposComplementos.values().length);
-        ArrayList<String> nomes_complementos = new ArrayList<String>();
+                "0", TiposComplementos.values().length);
         for (TiposComplementos complemento : complementos) {
             produtoPendente.addComplemento(complemento.getNome());
         }
-
 
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
@@ -254,12 +259,12 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
     }
 
-    private LocalDate escolheDataFutura(Scanner scanner, String prompt, String mensagemErro) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
-        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    private LocalDate escolheDataFutura(Scanner scanner, String prompt) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
+        return LocalDate.parse((getInput(scanner, prompt, "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy.", Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
-    private LocalDate escolheData(Scanner scanner, String prompt, String mensagemErro) {
-        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    private LocalDate escolheData(Scanner scanner) {
+        return LocalDate.parse((getInput(scanner, "Digite a data da compra: (dd/mm/yyyy)", "Formato de data inválido. Por favor, insira a data no formato dd/mm/yyyy.", Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
 
@@ -282,9 +287,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
 
      public Ingrediente novoIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
-        int opcao;
-        String texto;
-
         //Tipo
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
         estoque.imprimirIngredientes();
@@ -302,10 +304,10 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
         //Data Compra e Validade
-        ingrediente.setDataCompra(escolheData(input, "Digite a data da compra: (dd/mm/yyyy)",
-                "Formato de data inválido. Por favor, insira a data no formato dd/mm/yyyy."));
-        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)",
-                "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy."));
+        ingrediente.setDataCompra(escolheData(input
+        ));
+        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)"
+        ));
 
         //Fornecedor
         System.out.println("Fornecedores atuais:");

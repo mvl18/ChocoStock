@@ -41,31 +41,52 @@ public interface Escolhivel {
                 if (escolha.matches("\\d+")) {  // verifica se a string escolha é um inteiro
                     if (objeto instanceof Identificavel) {
                         if (((Identificavel) objeto).getId() == Integer.parseInt(escolha)) {
+                            input_valido = true;
+                            if (escolhidos.contains(objeto)) {
+                                System.out.println("Já escolhido. Escolha outra opção.");
+                                break;
+                            }
                             escolhidos.add(objeto);
                             i++;
-                            input_valido = true;
                             break;
                         }
                     }
                 } else {
                     if (objeto instanceof Nomeavel) {
                         if (((Nomeavel) objeto).getNome().equals(escolha)) {
+                            input_valido = true;
+                            if (escolhidos.contains(objeto)) {
+                                System.out.println("Já escolhido. Escolha outra opção.");
+                                break;
+                            }
                             escolhidos.add(objeto);
                             i++;
-                            input_valido = true;
                             break;
                         }
                     }
                     if (objeto instanceof Codificavel) {
                         if (((Codificavel) objeto).getCodigo().equals(escolha)) {
+                            input_valido = true;
+                            if (escolhidos.contains(objeto)) {
+                                System.out.println("Já escolhido. Escolha outra opção.");
+                                break;
+                            }
                             escolhidos.add(objeto);
                             i++;
-                            input_valido = true;
                             break;
                         }
                     }
                 }
             }
+            System.out.print(escolhidos.size() > 1 ? "Escolhidos: " : "Escolhido: ");
+            for (T escolhido : escolhidos) {
+                if (escolhido instanceof Nomeavel) {
+                    System.out.println(((Nomeavel) escolhido).getNome());
+                } else {
+                    System.out.println(escolhido);
+                }
+            }
+
             if (!input_valido) {
                 System.out.println(mensagemErro);
             }
