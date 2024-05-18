@@ -10,11 +10,11 @@ import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.itens.produtos.Pendente;
-import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput {
@@ -22,7 +22,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
     private Estoque estoque;
-    static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Fornecedor> fornecedores;
 
@@ -136,17 +136,18 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return listaObjetos(pedidos);
     }
 
-    public ArrayList<Pendente> escolheProdutos(Scanner scanner) {
-        ArrayList<Pendente> produtosEscolhidos = new ArrayList<Pendente>();
+    private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
+        ArrayList<Pendente> produtos_escolhidos = new ArrayList<Pendente>();
         while (true) {
             switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
-                case 1: produtosEscolhidos.add(selecionaProduto(scanner));
+                case 1: produtos_escolhidos.add(selecionaProduto(scanner));
                     break;
                 case 2:
-                    // imprime produtosEscolhidos
+                    System.out.println(produtos_escolhidos);
                     break;
                 default:
-                    return produtosEscolhidos;
+                    produtos_escolhidos.removeIf(Objects::isNull);
+                    return produtos_escolhidos;
             }
         }
     }
@@ -154,16 +155,22 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     private Pendente selecionaProduto(Scanner scanner) {
         Pendente produtoPendente = new Pendente();
         return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
-            case 1 -> {
-                yield selecionaBarra(scanner, produtoPendente);
-            }
-            case 2 -> {
-                //selecionaCaixa(scanner);
-                yield produtoPendente;
-            }
-            default -> // se o usuario digitar 0
-                    null;
+            case 1 -> selecionaBarra(scanner, produtoPendente);
+            case 2 -> selecionaCaixa(scanner, produtoPendente);
+            default -> null; // se o usuario digitar 0
         };
+    }
+
+    private Pendente selecionaCaixa(Scanner scanner, Pendente produtoPendente) {
+        for (TiposCaixas tipo : TiposCaixas.values()) {
+            System.out.println(tipo.getId() + "-" + tipo.getNome());
+        }
+        produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+
+        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
+                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
+
+        return produtoPendente;
     }
 
     private Pendente selecionaBarra(Scanner scanner, Pendente produtoPendente) {
@@ -175,15 +182,14 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         for (TiposComplementos complemento : TiposComplementos.values()) {
             System.out.println(complemento.getId() + "-" + complemento.getNome());
         }
-        System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.\nDigite 'sair' para finalizar escolha.");
+        System.out.println("0-Sair");
+        System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
         ArrayList<TiposComplementos> complementos = escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
-                "sair", TiposComplementos.values().length);
-        ArrayList<String> nomes_complementos = new ArrayList<String>();
+                "0", TiposComplementos.values().length);
         for (TiposComplementos complemento : complementos) {
             produtoPendente.addComplemento(complemento.getNome());
         }
-
 
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
@@ -214,10 +220,8 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
         //Data Compra e Validade
-        ingrediente.setDataCompra(escolheData(input, "Digite a data da compra: (dd/mm/yyyy)",
-                "Formato de data inválido. Por favor, insira a data no formato dd/mm/yyyy."));
-        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)",
-                "Formato de data inválido. Por favor, insira uma data futura no formato dd/mm/yyyy."));
+        ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy)", "Digite uma data válida."));
+        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)", "Digite uma data futura válida."));
 
         //Fornecedor
         System.out.println("Fornecedores atuais:");
