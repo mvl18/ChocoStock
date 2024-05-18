@@ -67,34 +67,4 @@ public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
     public String toString(boolean titulo) {
         return "Colaborador{" + this.toString();
     }
-
-    public Endereco criaEndereco(Scanner scanner) {
-        //Endereco(int numero, String cep, String rua, String bairro, String cidade, Estados estado)
-        Endereco endereco = new Endereco();
-        // CEP
-        endereco.setCep(getInput(scanner, "CEP: ", "Insira um CEP válido!",
-                                 Verifica::isCep).replaceAll("\\D", ""));
-        // ESTADO
-        endereco.achaEstado(endereco.getCep());
-        if((Normalizer.normalize(getInput(scanner, endereco.getEstado().getNome() + " é o estado do endereço? (Sim ou Não)", "Por favor, insira uma resposta valida. ",
-                input -> input.matches("sim|nao")).toLowerCase().replaceAll("\\s", ""),
-                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
-                .equals("nao"))) {
-            System.out.println("Estado: ");
-            endereco.setEstado(escolheObjeto(scanner, Estados.values(),
-                    "Estado invalido. Por favor, digite a sigla ou nome de um dos estados validos.",
-                    "obrigatorio"));
-        }
-        // CIDADE
-        endereco.setCidade(getInput(scanner, "Cidade: ", "Cidade invalida. Coloque um nome valido.", Verifica::isNome));
-        // BAIRRO
-        endereco.setCidade(getInput(scanner, "Bairro: ", "Bairro invalida. Coloque um nome valido.", Verifica::isNome));
-        // RUA
-        endereco.setCidade(getInput(scanner, "Rua: ", "Rua invalida. Coloque um nome valido.", Verifica::isNome));
-        // NUMERO
-        endereco.setNumero(Integer.parseInt(getInput(scanner, "Numero do endereco", "Numero invalido. Coloque um inteiro.", Verifica::isNatural)));
-
-        return endereco;
-    }
-
 }

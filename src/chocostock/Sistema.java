@@ -2,10 +2,11 @@ package chocostock;
 
 import chocostock.interfaces.ValidadorInput;
 import chocostock.loja.Loja;
+import chocostock.interfaces.Criavel;
 
 import java.util.Scanner;
 
-public class Sistema implements ValidadorInput {
+public class Sistema implements Criavel, ValidadorInput {
 
     private Scanner input;
     private String msg;
@@ -65,7 +66,7 @@ public class Sistema implements ValidadorInput {
         switch(opcao) {
             case 0: menuInicial();
                     break;
-            case 1: loja.addPedido(loja.novoPedido(input, loja));
+            case 1: loja.addPedido(criarPedido(input, loja));
                     menuPedidos();
                     break;
             case 2: System.out.println("Pedidos Atuais:\n" + loja.listaPedidos());
@@ -95,7 +96,7 @@ public class Sistema implements ValidadorInput {
         switch(opcao){
             case 0: menuInicial();
                     break;
-            case 2: loja.getEstoque().addMaterial(loja.novoIngrediente(input));
+            case 2: loja.getEstoque().addMaterial(loja.estocarIngrediente(input));
                     menuEstoque();
                     break;
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
@@ -111,7 +112,7 @@ public class Sistema implements ValidadorInput {
         msg = """
                 --- MENU COLABORADORES ---
                 (1) - Adicionar Cliente
-                (x) - Adicionar Fornecedor
+                (2) - Adicionar Fornecedor
                 (x) - Adicionar Funcionário
                 (4) - Listar Clientes
                 (5) - Listar Fornecedores
@@ -119,7 +120,10 @@ public class Sistema implements ValidadorInput {
                 (0) - Voltar para o menu inicial.""";
         opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
-            case 1: loja.addCliente(loja.novoCliente(input));
+            case 1: loja.addCliente(criarCliente(input));
+                    menuColaboradores();
+                    break;
+            case 2: loja.addFornecedor(criarFornecedor(input));
                     menuColaboradores();
                     break;
             case 4: System.out.println(loja.listaClientes());

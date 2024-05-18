@@ -5,12 +5,9 @@ import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
 import chocostock.enums.*;
-import chocostock.interfaces.Iteravel;
-import chocostock.interfaces.ValidadorInput;
+import chocostock.interfaces.*;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
-import chocostock.interfaces.AddRemovivel;
-import chocostock.interfaces.Escolhivel;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.itens.produtos.Pendente;
 
@@ -20,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput {
+public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput, Criavel {
     private String descricao;
     private Endereco endereco;
     private ArrayList<Pedido> pedidos;
@@ -285,11 +282,14 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         return cliente;
     }
 
-     public Ingrediente novoIngrediente(Scanner input) {
+    public Ingrediente estocarIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
+        int opcao;
+        String texto;
+
         //Tipo
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
-        estoque.imprimirIngredientes();
+        getEstoque().imprimirIngredientes();
         ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
                 "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
         ingrediente.setNome(ingrediente.getTipo().getNome());
@@ -314,4 +314,5 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput 
         System.out.println("Nao Implementado.");
         return ingrediente;
     }
+
 }

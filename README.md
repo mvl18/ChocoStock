@@ -15,7 +15,7 @@
 ## Aplicação Cotidiana
 Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para realizar as seguintes tarefas:
 - Registro dos clientes da loja da fábrica.
-- Registro de matéria prima no estoque, assim como os dados do fornecedor daquele material.
+- Registro de matéria prima no estoque, assim como os dados do fornecedor daquele suprimento.
 - Registro de todos os produtos finalizados e que agora fazem parte do estoque de vendas.
 - Registro de novos pedidos de clientes, assim como todo o controle para saber se o pedido já foi pago ou enviado ao cliente.
 - Verificar a disponibilidade de produtos no estoque.
