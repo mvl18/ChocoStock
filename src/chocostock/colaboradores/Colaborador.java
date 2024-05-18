@@ -57,10 +57,11 @@ public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
 
     @Override
     public String toString() {
-        return "nome='" + nome + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", email='" + email + '\'' +
-                ", endereco=" + endereco;
+        return nome +
+                "\nTelefone: " + telefone +
+                "\nEmail: " + email +
+                "\nEndereço: " + email +
+                "\n";
     }
 
 

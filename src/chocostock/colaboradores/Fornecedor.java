@@ -41,11 +41,9 @@ public class Fornecedor extends Colaborador {
 
     @Override
     public String toString() {
-        return "Fornecedor{" +
-                "id=" + id + " " +
-                super.toString() +
-                ", cnpj='" + cnpj + '\'' +
-                ", site='" + site + '\'' +
-                '}';
+        return id + ". " + super.toString() +
+                "CNPJ: " + cnpj +
+                "\nSite: " + site +
+                "\n";
     }
 }
