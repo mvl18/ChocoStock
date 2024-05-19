@@ -2,11 +2,12 @@ package chocostock.itens.produtos;
 
 import chocostock.enums.TiposComplementos;
 import chocostock.interfaces.AddRemovivel;
+import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.Nomeavel;
 
 import java.util.ArrayList;
 
-public class Pendente  implements Nomeavel, AddRemovivel {
+public class Pendente implements Nomeavel, AddRemovivel, Iteravel {
     private String nome;
     private ArrayList<TiposComplementos> complementos;
     private int quantidade;
@@ -56,10 +57,7 @@ public class Pendente  implements Nomeavel, AddRemovivel {
 
     @Override
     public String toString() {
-        return "Pendente{" +
-                "nome='" + nome + '\'' +
-                ", complementos=" + complementos +
-                ", quantidade=" + quantidade +
-                '}';
+        return nome + " (" + quantidade + " unidade" + (quantidade > 1 ? "s" : "") + ")" +
+                "\nComplementos: " + listaHorizontalQuebraLinha(complementos);
     }
 }

@@ -118,7 +118,7 @@ public class Endereco implements Escolhivel {
     }
 
     public String toString() {
-        return " Rua " + rua +
+        return "Rua " + rua +
                 ", n° " + numero +
                 " - Bairro " + bairro +
                 ". CEP: " + cep +

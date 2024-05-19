@@ -43,7 +43,7 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
      * Retorna uma string com a lista de pedidos do cliente.
      */
     public String listaPedidos() {
-        return listaObjetos(pedidos);
+        return listaVertical(pedidos);
     }
 
     public int getId() {
@@ -57,8 +57,7 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
     @Override
     public String toString() {
         String out = id + ". " + super.toString() + "Pedidos: ";
-        for (int i = 0; i < pedidos.size(); i++)
-            out += pedidos.get(i).toString() + (i == pedidos.size()-1 ? "\n" : ", ");
-        return out + "\n";
+        out += listaHorizontalQuebraLinha(pedidos);
+        return out;
     }
 }

@@ -7,6 +7,8 @@ import chocostock.itens.Equipamento;
 import chocostock.itens.Item;
 import chocostock.itens.materiais.Embalagem;
 import chocostock.itens.materiais.Suprimento;
+import chocostock.itens.produtos.Caixa;
+import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;
@@ -70,7 +72,7 @@ public class Estoque implements AddRemovivel, Iteravel {
      * Retorna uma string com a lista de embalagens do estoque.
      */
     public String listaEmbalagens() {
-        return listaObjetos(embalagens);
+        return listaHorizontalQuebraLinha(embalagens);
     }
 
     /**
@@ -139,12 +141,11 @@ public class Estoque implements AddRemovivel, Iteravel {
 
     @Override
     public String toString() {
-        return "Estoque{" +
-                "produtos=" + produtos +
-                ", materiais=" + materiais +
-                ", equipamentos=" + equipamentos +
-                ", embalagens=" + embalagens +
-                '}';
+        return "--- ESTOQUE ---" +
+                "\nProdutos: " + listaHorizontalQuebraLinha(produtos) +
+                "\nMateriais: " + listaHorizontalQuebraLinha(materiais) +
+                "\nEquipamentos: " + listaHorizontalQuebraLinha(equipamentos) +
+                "\nEmbalagens: " + listaHorizontalQuebraLinha(embalagens);
     }
 
     /**
@@ -190,7 +191,7 @@ public class Estoque implements AddRemovivel, Iteravel {
     }
 
 
-    public Pedido retiraProdutosEstoque(Pedido pedido) { // nao funciona, podem ter 2 ou mais lotes do msm produto e a soma da quantidade deles pode ser o suficiente
+    public Pedido retiraProdutosEstoque(Pedido pedido) {
 
         ArrayList<Pendente> produtos_concluidos= new ArrayList<Pendente>();
         for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
@@ -207,8 +208,29 @@ public class Estoque implements AddRemovivel, Iteravel {
                                     for (int j = 0; j < posicoes.size(); j++) {
                                         boolean ultimo = j == posicoes.size() - 1;
                                         if (ultimo && quantidade != produto_pendente.getQuantidade()) {
-                                            Produto produto_pedido = meioseProduto(getProdutos().get(posicoes.get(j)),
-                                                                    quantidade - produto_pendente.getQuantidade(),  i+1);
+                                            Chocolate produto_pedido = (Chocolate) meioseProduto(getProdutos().get(posicoes.get(j)),
+                                                            getProdutos().get(posicoes.get(j)).getQuantidade() + produto_pendente.getQuantidade() - quantidade,  i+1);
+                                            produto_pedido.setId_pedido(pedido.getId());
+                                            pedido.addProduto(((Produto) getProdutos().get(i+1)).getId());
+                                        } else {
+                                            getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());  //Pega tudo
+                                            pedido.addProduto(((Produto) getProdutos().get(i)).getId());
+                                        }
+                                        produtos_concluidos.add(produto_pendente);
+                                    }
+                                }
+                            }
+                        } else { // eh uma caixa
+                            // se existe uma caixa ja pronta adicionada no estoque
+                            if (produto_pendente.getNome().contains("Caixa")) { // talvez redundante
+                                posicoes.add(i);
+                                quantidade += getProdutos().get(i).getQuantidade();
+                                if (quantidade >= produto_pendente.getQuantidade()) {
+                                    for (int j = 0; j < posicoes.size(); j++) {
+                                        boolean ultimo = j == posicoes.size() - 1;
+                                        if (ultimo && quantidade != produto_pendente.getQuantidade()) {
+                                            Caixa produto_pedido = (Caixa) meioseProduto(getProdutos().get(posicoes.get(j)),
+                                                    getProdutos().get(posicoes.get(j)).getQuantidade() + produto_pendente.getQuantidade() - quantidade,  i+1); // quantidade - produto_pendente.getQuantidade() que sobra
                                             produto_pedido.setId_pedido(pedido.getId());
                                             pedido.addProduto(((Produto) getProdutos().get(i+1)).getId());
                                         } else {
@@ -232,15 +254,48 @@ public class Estoque implements AddRemovivel, Iteravel {
     }
 
     private Produto meioseProduto(Produto produto, int quantidade, int posicao) {
-        Produto produto_pedido = new Produto();
-        produto_pedido.setNome(produto.getNome());
-        produto_pedido.setEmbalagem(produto.getEmbalagem());
-        produto_pedido.setPeso(produto.getPeso());
-        produto_pedido.setValidade(produto.getValidade());
+        Produto produto_pedido;
 
+        // CHOCOLATE
+        if (produto.getClass().equals(Chocolate.class)) {
+            Chocolate chocolate_pedido = new Chocolate();
+            chocolate_pedido.setNome(produto.getNome());
+            chocolate_pedido.setEmbalagem(produto.getEmbalagem());
+            chocolate_pedido.setPeso(produto.getPeso());
+            chocolate_pedido.setValidade(produto.getValidade());
+            chocolate_pedido.setQuantidade(quantidade);
+            chocolate_pedido.setLote(((Chocolate) produto).getLote());
+            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
+            chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
+            produto_pedido = chocolate_pedido;
+
+            // CAIXA
+        } else if (produto.getClass().equals(Caixa.class)) {
+            Caixa caixa_pedido = new Caixa();
+            caixa_pedido.setTipo(((Caixa) produto).getTipo());
+            caixa_pedido.setNome(produto.getNome());
+            caixa_pedido.setEmbalagem(produto.getEmbalagem());
+            caixa_pedido.setPeso(produto.getPeso());
+            caixa_pedido.setValidade(produto.getValidade());
+            caixa_pedido.setQuantidade(quantidade);
+            produto_pedido = caixa_pedido;
+
+        } else {
+            // caso contrário, trata como Produto genérico (nao usado em tese)
+            produto_pedido = new Produto();
+            produto_pedido.setNome(produto.getNome());
+            produto_pedido.setEmbalagem(produto.getEmbalagem());
+            produto_pedido.setPeso(produto.getPeso());
+            produto_pedido.setValidade(produto.getValidade());
+            produto_pedido.setQuantidade(quantidade);
+        }
+
+        // ajusta a quantidade do produto original
         produto.setQuantidade(produto.getQuantidade() - quantidade);
-        produto_pedido.setQuantidade(quantidade);
+
+        // adiciona o produto pedido à lista de produtos na posição especificada
         addProduto(posicao, produto_pedido);
+
         return produto_pedido;
     }
 

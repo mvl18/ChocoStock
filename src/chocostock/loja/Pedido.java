@@ -2,7 +2,9 @@ package chocostock.loja;
 
 import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
+import chocostock.interfaces.Iteravel;
 import chocostock.itens.produtos.Pendente;
+import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
  * Implementa os métodos "isPago", "addProduto", "removeProduto",
  * "addProduto_pendente", "removeProduto_pendente" e "calculaPrecoTotal".
  */
-public class Pedido implements AddRemovivel{
+public class Pedido implements AddRemovivel, Iteravel {
     private static int id_pedidos = 100000;
     private int id;
     private int id_cliente;
@@ -154,23 +156,28 @@ public class Pedido implements AddRemovivel{
 
     @Override
     public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", id_cliente=" + id_cliente +
-                ", data=" + data +
-                ", data_entrega=" + data_entrega +
-                ", pago=" + pago +
-                ", status=" + status +
-                ", produtos=" + produtos +
-                ", produtos_pendentes=" + produtos_pendentes +
-                ", preco_total=" + preco_total +
-                '}';
+        String out = "Pedido " + id +
+                "\nID cliente: " + id_cliente +
+                "\nRealizado em " + data +
+                "\nPrazo de entrega: " + data_entrega +
+                "\n" + (pago ? "Pago" : "Não pago") +
+                "\nStatus: " + status.getNome() +
+                "\nProdutos: ";
+        out += listaHorizontal(produtos);
+        out += "\nProdutos pendentes: " + listaHorizontal(produtos_pendentes) +
+        "\nPreco total: R$" + String.format("%.2f", preco_total);
+        return out + "\n";
     }
-
+  
     /**
      * Calcula o preço total do pedido com base nos produtos adicionados e seus preços.
      */
-    public float calculaPrecoTotal() {
-        return 0.0F; // fazer
+    public float calculaPrecoTotal(Estoque estoque) {
+        float soma_preco = 0;
+        for (Produto produto_estoque : estoque.getProdutos()) {
+            if (produto_estoque.getId_pedido() == id)
+                soma_preco += produto_estoque.getPreco() * produto_estoque.getQuantidade();
+        }
+        return soma_preco > 0 ? soma_preco : -1;
     }
 }
