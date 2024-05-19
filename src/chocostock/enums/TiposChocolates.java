@@ -3,6 +3,9 @@ package chocostock.enums;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * Enumera todos os tipos de chocolate que a fábrica produz.
+ */
 public enum TiposChocolates implements Identificavel, Nomeavel {
     CHOCOLATE_AO_LEITE_CARAMELIZADO(1, "Chocolate ao leite caramelizado", 40, 50),
     CHOCOLATE_AO_LEITE_INTENSO(2, "Chocolate ao leite intenso", 50, 50),

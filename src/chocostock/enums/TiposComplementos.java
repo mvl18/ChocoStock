@@ -3,6 +3,9 @@ package chocostock.enums;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * Enumera todos os complementos para os chocolates.
+ */
 public enum TiposComplementos implements Identificavel, Nomeavel {
     NIBS_CACAU(1, "Nibs de cacau"),
     CAJU(2, "Caju"),

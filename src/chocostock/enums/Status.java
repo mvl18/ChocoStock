@@ -3,6 +3,9 @@ package chocostock.enums;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * Seta o status do pedido.
+ */
 public enum Status implements Identificavel, Nomeavel {
     CANCELADO("Cancelado", 1),
     PENDENTE("Pendente", 2),

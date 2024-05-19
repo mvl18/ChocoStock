@@ -3,6 +3,9 @@ package chocostock.enums;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * - `TiposIngredientes`: Enumera os tipos de ingredientes que a fábrica precisa comprar.
+ */
 public enum TiposIngredientes implements Identificavel, Nomeavel {
     CACAU("Cacau", 1),
     MANTEIGA_DE_CACAU("Manteiga de cacau", 2),
