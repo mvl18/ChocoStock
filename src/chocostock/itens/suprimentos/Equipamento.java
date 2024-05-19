@@ -5,6 +5,10 @@ import chocostock.interfaces.Nomeavel;
 
 import java.time.LocalDate;
 
+/**
+ * A classe Equipamento representa um tipo específico de suprimento
+ * que é utilizado como equipamento para a fábrica de chocolates.
+ */
 public class Equipamento extends Suprimento implements Nomeavel {
     private static int id_equipamentos = 100000;
     private String marca;

@@ -10,6 +10,11 @@ import chocostock.itens.suprimentos.Embalagem;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * A classe Chocolate representa um tipo específico de produto
+ * com base na classe Produto. Possuindo seu tipo, seu lote,
+ * complementos do chocolate e a origem do cacau.
+ */
 public class Chocolate extends Produto implements AddRemovivel, Iteravel, Complementavel {
     private int lote;
     private TiposChocolates tipo;

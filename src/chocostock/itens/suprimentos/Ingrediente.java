@@ -5,11 +5,11 @@ import chocostock.enums.TiposIngredientes;
 
 import java.time.LocalDate;
 
+/**
+ * A classe Ingrediente representa um tipo específico de suprimento
+ * que é utilizado na produção de produtos. No caso, os chocolates.
+ */
 public class Ingrediente extends Suprimento {
-
-    //Propriedades Herdadas:
-    //ITEM: id, nome, quantidade, preco
-    //SUPRIMENTO: fornecedor
 
     private TiposIngredientes tipo;
     private float unidade; // Em kg
