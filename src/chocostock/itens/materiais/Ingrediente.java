@@ -1,5 +1,6 @@
 package chocostock.itens.materiais;
 
+import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposIngredientes;
 
 import java.time.LocalDate;
@@ -16,12 +17,12 @@ public class Ingrediente extends Suprimento {
     private LocalDate validade;
     private String cnpj_fornecedor;
 
-    public Ingrediente(String nome, int quantidade, float preco, String cnpj_fornecedor) {
-        super(nome, quantidade, preco, cnpj_fornecedor);
+    public Ingrediente(String nome, int quantidade, float preco, Fornecedor fornecedor) {
+        super(nome, quantidade, preco, fornecedor);
     }
 
     public Ingrediente() {
-        this("", 0, 0.0f, "");
+        this("", 0, 0.0f, new Fornecedor());
     }
 
     public TiposIngredientes getTipo() {

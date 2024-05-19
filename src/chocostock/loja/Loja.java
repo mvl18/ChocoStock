@@ -142,7 +142,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 case 1: produtos_escolhidos.add(selecionaProduto(scanner));
                     break;
                 case 2:
-                    System.out.println(produtos_escolhidos);
+                    System.out.print(listaVertical(produtos_escolhidos));
                     break;
                 default:
                     produtos_escolhidos.removeIf(Objects::isNull);

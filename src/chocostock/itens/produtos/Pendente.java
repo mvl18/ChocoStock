@@ -57,7 +57,7 @@ public class Pendente implements Nomeavel, AddRemovivel, Iteravel {
 
     @Override
     public String toString() {
-        return nome + "(" + quantidade + "unidade" + (quantidade > 1 ? "s" : "") + ")" +
-                "\nComplementos: " + listaHorizontalQuebraLinha(complementos) + "\n";
+        return nome + " (" + quantidade + " unidade" + (quantidade > 1 ? "s" : "") + ")" +
+                "\nComplementos: " + listaHorizontalQuebraLinha(complementos);
     }
 }
