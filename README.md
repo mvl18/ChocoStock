@@ -26,22 +26,30 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 ![Diagrama UML](imagens/ChocoStock_UML.png)
 
 ### Classes
-- `Loja`:
-- `Endereço`:
-- `Pedido`:
-- `Colaborador`:
-- `Cliente`:
-- `Fornecedor`:
-- `Funcionario`:
-- `Estoque`:
-- `Item`:
-- `Equipamento`:
-- `Material`:
-- `Ingrediente`:
-- `Embalagem`:
-- `Produto`:
-- `Caixa`:
-- `Chocolate`:
+- `Sistema`: A classe Sistema é responsável por: 
+	- Inicializar o sistema e exibir a mensagem de boas-vindas.
+	- Gerenciar e navegar entre os diferentes menus do sistema: menu inicial, menu de pedidos, menu de estoque e menu de colaboradores.
+	- Delegar tarefas específicas aos métodos correspondentes em resposta às opções selecionadas pelo usuário em cada menu. 
+	- Fornecer métodos de interação com a loja (instância da classe Loja) para adicionar pedidos, clientes, fornecedores e ingredientes, e para listar os pedidos, clientes e fornecedores existentes. 
+- `Loja`: A classe Loja representa uma loja que gerencia clientes, funcionários, fornecedores, pedidos e estoque de produtos.
+- `Pedido`: A classe Pedido representa uma ordem de compra realizada por um loja para um cliente. Cada pedido contém informações sobre o cliente, datas relevantes, status de pagamento, produtos incluídos no pedido, produtos pendentes e o preço total.
+- `Estoque`: A classe Estoque gerencia os produtos, materiais, equipamentos e embalagens disponíveis no estoque da loja.
+- `Endereço`: A classe Endereco representa um endereço físico, incluindo informações detalhadas como número, CEP, rua, bairro, cidade e estado.
+- `Processa`: A classe Processa fornece métodos utilitários para normalizar strings e números.
+- `Verifica`: A classe Verifica fornece métodos estáticos para validar diferentes tipos de entradas de dados comuns, como números de telefone, endereços de email, CEPs, CNPJs, URLs de sites, números, nomes e datas.
+- `Colaborador`: A classe abstrata Colaborador serve como classe base para representar um colaborador (cliente, fornecedor e funcionário) com informações básicas como nome, telefone, email e endereço.
+- `Cliente`: A classe Cliente representa um cliente que herda de Colaborador. Esta classe gerencia informações específicas do cliente, como um identificador único e uma lista de pedidos.
+- `Fornecedor`: A classe Fornecedor representa um fornecedor que herda de Colaborador. Esta classe gerencia informações específicas do fornecedor, como um identificador único, CNPJ e site.
+- `Funcionario`: A classe Funcionario representa um funcionário que herda de Colaborador. Esta classe gerencia informações específicas do funcionário, como um identificador único, cargo e salário.
+- `Item`: A classe abstrata Item representa um item genérico que pode ser tanto um Produto quanto um Suprimento. Esta classe serve como base para itens específicos, fornecendo funcionalidades comuns como identificação, nome, quantidade e preço.
+- `Suprimento`: A classe abstrata Suprimento representa um tipo de item fornecido por um fornecedor específico. Podendo esse item ser um ingrediente, uma embalagem ou um equipamento.
+- `Equipamento`: A classe Equipamento representa um tipo específico de suprimento que é utilizado como equipamento para a fábrica de chocolates.
+- `Ingrediente`: A classe Ingrediente representa um tipo específico de suprimento que é utilizado na produção de produtos. No caso, os chocolates.
+- `Embalagem`: A classe Embalagem é uma subclasse de Suprimento que representa um tipo específico de suprimento usado para embalar produtos e formar as caixas.
+- `Produto`: A classe Produto é uma subclasse de Item que representa um produto vendido pela loja.
+- `Caixa`: A classe Caixa representa um tipo específico de produto com base na classe Produto. Possuindo seu tipo e seu lote.
+- `Chocolate`: A classe Chocolate representa um tipo específico de produto com base na classe Produto. Possuindo seu tipo, seu lote, complementos do chocolate e a origem do cacau.
+- `Pendente`: A classe Pendente representa um produto pendente a ser adicionado a um pedido na loja.
 
 ### Enums
 - `Estados`: Lista as unidades federativas possíveis para os endereços.
@@ -53,11 +61,15 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - `TiposCaixas`: Enumera todos os tipos de caixa que a fábrica vende.
 
 ### Interfaces
-- `AddRemove`: Interface para adicionar ou remover objetos de uma lista de objetos.
-- `Escolhivel`: Interface para escolher um objeto de uma lista de objetos.
-- `Codificavel`: Verifica se o objeto possui código.
-- `Identificavel`: Verifica se o objeto possui ID.
-- `Nomeavel`: Verifica se o objeto possui nome.
+- `AddRemovivel`: A interface AddRemovivel define métodos padrão para adicionar e remover objetos de uma lista.
+- `Codificavel`: A interface Codificavel define o contrato para classes que possuem um método para obter um código.
+- `Complementavel`: A interface Complementavel define o contrato para classes que possuem  um método para obter um complemento.
+- `Criavel`: A interface Criavel define métodos para criar instâncias de objetos, utilizando a entrada do usuário para preencher os detalhes.
+- `Escolhivel`: Essa interface cria um método pardrão com diversas sobrecargas com diferentes utilidades. Seu intuito é ser usada para facilitar pegar o input do usuário, sendo que ele deve escolher algo de uma lista de opções.
+- `Identificavel`: A interface Identificavel define o contrato para classes que possuem um método para obter um ID.
+- `Iteravel`: A interface Iteravel define métodos para criar representações de listas em formato de texto. (listaVertical, listaHorizontal e listaHorizontalQuebraLinha)
+- `Nomeavel`: A interface Nomeavel define o contrato para classes que possuem um método para obter um nome.
+- `ValidadorInput`: Interface que define um método padrão para obter entrada do usuário com validação. Também define uma interface interna para validadores de entrada.
 
 ## Heranças e Relações
 O projeto utiliza herança e relações entre as classes para organizar e facilitar o desenvolvimento do sistema:
@@ -84,3 +96,4 @@ Contribuições são bem-vindas! Se você identificar algum problema ou tiver su
 ## Futuro do projeto
 - [ ] Implementar interface gráfica.
 - [ ] Implementar a classe Insumos, que abrangerá os gastos da fábrica com toda a matéria prima, pessoal, energia, água...
+- [ ] Implementar a atualização de pedidos, para, por exemplo, ser possível cancelar um pedido.

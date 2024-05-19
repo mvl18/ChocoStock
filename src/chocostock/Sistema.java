@@ -118,7 +118,7 @@ public class Sistema implements Criavel, ValidadorInput {
         switch(opcao){
             case 0: menuInicial();
                     break;
-            case 2: loja.getEstoque().addMaterial(loja.estocarIngrediente(input));
+            case 2: loja.getEstoque().addIngrediente(loja.estocarIngrediente(input));
                     menuEstoque();
                     break;
             case 4: loja.getEstoque().imprimirProdutos();

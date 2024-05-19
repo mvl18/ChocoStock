@@ -6,7 +6,7 @@ import chocostock.itens.Item;
 /**
  * A classe abstrata Suprimento representa um tipo de item
  * fornecido por um fornecedor específico. Podendo esse item
- * ser um ingrediente, uma embalagem ou um equipmento.
+ * ser um ingrediente, uma embalagem ou um equipamento.
  */
 public abstract class Suprimento extends Item {
     private Fornecedor fornecedor;

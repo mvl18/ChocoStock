@@ -3,6 +3,9 @@ package chocostock.enums;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * - `TiposCaixas`: Enumera todos os tipos de caixa que a fábrica vende.
+ */
 public enum TiposCaixas implements Identificavel, Nomeavel {
     CAIXA_MINI_TABLETES_70(1, "Caixa mini tabletes", 70, 4),
     CAIXA_BARRAS_AO_LEITE_CARAMELIZADO_40(2, "Caixa barras ao leite caramelizado", 40, 4),

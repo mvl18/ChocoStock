@@ -1,5 +1,8 @@
 package chocostock.enums;
 
+/**
+ * Enumera os tipos de embalagem que a fábrica precisa comprar.
+ */
 public enum TiposEmbalagens {
     CAIXA_PP("Caixa PP", "4cm x 12cm x 4cm"),
     CAIXA_P("Caixa borda premium P", "4 doces"),
