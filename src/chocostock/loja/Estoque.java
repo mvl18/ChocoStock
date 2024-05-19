@@ -259,13 +259,14 @@ public class Estoque implements AddRemovivel, Iteravel {
         // CHOCOLATE
         if (produto.getClass().equals(Chocolate.class)) {
             Chocolate chocolate_pedido = new Chocolate();
+            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
             chocolate_pedido.setNome(produto.getNome());
+            chocolate_pedido.setPreco(produto.getPreco());
             chocolate_pedido.setEmbalagem(produto.getEmbalagem());
             chocolate_pedido.setPeso(produto.getPeso());
             chocolate_pedido.setValidade(produto.getValidade());
             chocolate_pedido.setQuantidade(quantidade);
             chocolate_pedido.setLote(((Chocolate) produto).getLote());
-            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
             chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
             produto_pedido = chocolate_pedido;
 
@@ -274,6 +275,7 @@ public class Estoque implements AddRemovivel, Iteravel {
             Caixa caixa_pedido = new Caixa();
             caixa_pedido.setTipo(((Caixa) produto).getTipo());
             caixa_pedido.setNome(produto.getNome());
+            caixa_pedido.setPreco(produto.getPreco());
             caixa_pedido.setEmbalagem(produto.getEmbalagem());
             caixa_pedido.setPeso(produto.getPeso());
             caixa_pedido.setValidade(produto.getValidade());

@@ -313,7 +313,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // PRODUTOS_PENDENTES
         pedido.setProdutos_pendentes(escolheProdutos(scanner));
-//
+//        // queria printar os produtos pendentes que foram
 //        for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
 //            if ()
 //            System.out.println("" + produto_pendente.getNome() + produto_pendente.getQuantidade());
@@ -342,8 +342,8 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         }
 
         // STATUS
-        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE, deseja modificar? 'Sim' ou 'não'.", "Por favor, digite 'sim' ou 'não'.",
-                input -> input.matches("sim|nao|s|n"))).equals("sim|s")) {
+        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE. Está correto? Digite 'Sim' ou 'não'. ", "Por favor, digite 'sim' ou 'não'.",
+                input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
             pedido.setStatus(Status.PENDENTE);
         } else {
             System.out.println("Escolha um status dentre os abaixo:");
@@ -356,7 +356,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // PAGO OU NÃO
         pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta valida. ",
-                input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
+                input -> input.matches("sim|nao|s|n"))).matches("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
         return pedido;
