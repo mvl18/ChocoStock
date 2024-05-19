@@ -3,16 +3,28 @@ package chocostock;
 import chocostock.enums.TiposComplementos;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.produtos.Chocolate;
-import chocostock.itens.produtos.Produto;
 import chocostock.loja.Loja;
 import chocostock.interfaces.Criavel;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static chocostock.enums.TiposChocolates.*;
+import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_CARAMELIZADO;
+import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO;
+import static chocostock.enums.TiposChocolates.CHOCOLATE_INTENSO;
+import static chocostock.enums.TiposChocolates.CHOCOLATE_BRANCO_ACAI_BETERRABA;
 
-public class Sistema implements ValidadorInput {
+/**
+* A classe Sistema é responsável por: <br>
+* - Inicializar o sistema e exibir a mensagem de boas-vindas. <br>
+* - Gerenciar e navegar entre os diferentes menus do sistema: menu inicial, menu de pedidos,
+* menu de estoque e menu de colaboradores. <br>
+* - Delegar tarefas específicas aos métodos correspondentes em resposta às opções selecionadas
+* pelo usuário em cada menu. <br>
+* - Fornecer métodos de interação com a loja (instância da classe Loja) para adicionar pedidos,
+* clientes, fornecedores e ingredientes, e para listar os pedidos, clientes e fornecedores existentes. <br>
+**/
+public class Sistema implements Criavel, ValidadorInput {
 
     private Scanner input;
     private String msg;
@@ -31,6 +43,7 @@ public class Sistema implements ValidadorInput {
                 --- Bem-vindo ao ChocoStock! ---
                 O doce controle de vendas e estoque!
                 """;
+
         System.out.println(msg);
         menuInicial();
     }
@@ -42,8 +55,8 @@ public class Sistema implements ValidadorInput {
                 (1) - Menu Pedidos.
                 (2) - Menu Estoque.
                 (3) - Menu Colaboradores.
-                (0) - Encerrar Sistema.
-                """;
+                (0) - Encerrar Sistema.""";
+
         opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: finalizarSistema();
@@ -68,6 +81,7 @@ public class Sistema implements ValidadorInput {
                 (2) - Listar pedidos.
                 (x) - Atualizar pedido.
                 (0) - Voltar para o menu inicial.""";
+
         opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: menuInicial();
@@ -75,7 +89,7 @@ public class Sistema implements ValidadorInput {
             case 1: loja.addPedido(loja.novoPedido(input));
                     menuPedidos();
                     break;
-            case 2: System.out.println("Pedidos Atuais:\n" + loja.listaPedidos());
+            case 2: System.out.println("--- PEDIDOS ATUAIS ---\n" + loja.listaPedidos());
                     menuPedidos();
                     break;
             case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
@@ -93,7 +107,7 @@ public class Sistema implements ValidadorInput {
                 (X) - Adicionar Produto
                 (2) - Adicionar Ingrediente
                 (X) - Adicionar Embalagem
-                (X) - Status Produto
+                (4) - Status Produtos
                 (5) - Status Ingredientes
                 (X) - Status Embalagens
                 (0) - Voltar para o menu inicial.
@@ -104,6 +118,9 @@ public class Sistema implements ValidadorInput {
             case 0: menuInicial();
                     break;
             case 2: loja.getEstoque().addMaterial(loja.estocarIngrediente(input));
+                    menuEstoque();
+                    break;
+            case 4: loja.getEstoque().imprimirProdutos();
                     menuEstoque();
                     break;
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
@@ -125,6 +142,7 @@ public class Sistema implements ValidadorInput {
                 (5) - Listar Fornecedores
                 (x) - Listar Funcionario
                 (0) - Voltar para o menu inicial.""";
+
         opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 1: loja.addCliente(loja.novoCliente(input));
@@ -150,5 +168,4 @@ public class Sistema implements ValidadorInput {
     public void finalizarSistema() {
         System.out.println("--- Sistema Desligado ---");
     }
-
 }

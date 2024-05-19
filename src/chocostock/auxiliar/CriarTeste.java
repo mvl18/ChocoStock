@@ -11,7 +11,6 @@ import chocostock.loja.Loja;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Queue;
 import java.util.Random;
 
 public class CriarTeste implements Escolhivel {
@@ -46,12 +45,12 @@ public class CriarTeste implements Escolhivel {
         loja.addFornecedor(new Fornecedor("Sorvemix"));
         loja.addFornecedor(new Fornecedor("Kalunga"));
 
-        ArrayList<Double> valores = new ArrayList<>(Arrays.asList(1.80, 3.40, 3.85, 4.40, 6.50, 4.50, 12.80, 9.90, 5.20, 4.25, 4.15, 7.35, 9.90, 18.90));
+        ArrayList<Float> valores = new ArrayList<>(Arrays.asList(1.80f, 3.40f, 3.85f, 4.40f, 6.50f, 4.50f, 12.80f, 9.90f, 5.20f, 4.25f, 4.15f, 7.35f, 9.90f, 18.90f));
         ArrayList<Integer> quantidades = new ArrayList<>(Arrays.asList(1, 1, 1, 1, 1, 50, 300, 300, 50, 100, 1, 1, 10, 50));
 
         for (TiposEmbalagens embalagem : TiposEmbalagens.values()) {
-            loja.getEstoque().addEmbalagem(new Embalagem(embalagem, loja.getFornecedores().get(0),
-                    valores.remove(0), quantidades.remove(0), 0));
+            loja.getEstoque().addEmbalagem(new Embalagem(embalagem.getNome(), loja.getFornecedores().get(0),
+                    embalagem, valores.remove(0), quantidades.remove(0)));
         }
     }
 }
