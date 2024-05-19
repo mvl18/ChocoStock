@@ -156,16 +156,15 @@ public class Pedido implements AddRemovivel, Iteravel {
 
     @Override
     public String toString() {
-        String out = "Pedido " + id +
+        String out = "PEDIDO " + id +
                 "\nID cliente: " + id_cliente +
                 "\nRealizado em " + data +
                 "\nPrazo de entrega: " + data_entrega +
-                "\n" + (pago ? "Pago" : "Não pago") +
                 "\nStatus: " + status.getNome() +
                 "\nProdutos: ";
         out += listaHorizontal(produtos);
         out += "\nProdutos pendentes: " + listaHorizontal(produtos_pendentes) +
-        "\nPreco total: R$" + String.format("%.2f", preco_total);
+        "\nPreco total: R$" + String.format("%.2f", preco_total) + " (" + (pago ? "Pago" : "Não pago") + ")";
         return out + "\n";
     }
   

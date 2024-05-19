@@ -105,12 +105,12 @@ public class Sistema implements Criavel, ValidadorInput {
     public void menuEstoque() {
         msg = """
                 --- MENU ESTOQUE ---
-                (X) - Adicionar Produto
-                (2) - Adicionar Ingrediente
-                (X) - Adicionar Embalagem
-                (4) - Status Produtos
-                (5) - Status Ingredientes
-                (X) - Status Embalagens
+                (X) - Adicionar Produto.
+                (2) - Adicionar Ingrediente.
+                (X) - Adicionar Embalagem.
+                (4) - Status Produtos.
+                (5) - Status Ingredientes.
+                (X) - Status Embalagens.
                 (0) - Voltar para o menu inicial.
                 """;
 
@@ -136,12 +136,12 @@ public class Sistema implements Criavel, ValidadorInput {
     public void menuColaboradores(){
         msg = """
                 --- MENU COLABORADORES ---
-                (1) - Adicionar Cliente
-                (2) - Adicionar Fornecedor
-                (x) - Adicionar Funcionário
-                (4) - Listar Clientes
-                (5) - Listar Fornecedores
-                (x) - Listar Funcionario
+                (1) - Adicionar Cliente.
+                (2) - Adicionar Fornecedor.
+                (x) - Adicionar Funcionário.
+                (4) - Listar Clientes.
+                (5) - Listar Fornecedores.
+                (x) - Listar Funcionários.
                 (0) - Voltar para o menu inicial.""";
 
         opcao = verificaOpcao(input, msg, 0, 6);
