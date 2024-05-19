@@ -82,6 +82,9 @@ public class Verifica {
         return nome.matches("[A-Za-zÀ-ÿ'-]+( [A-Za-zÀ-ÿ'-]+)*");
     }
 
+    public static boolean alwaysTrue(String nome) {
+        return true;
+    }
 
     public static boolean isData(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
