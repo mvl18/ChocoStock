@@ -1,8 +1,6 @@
 package chocostock.interfaces;
 
 import chocostock.auxiliar.Processa;
-
-import java.text.Normalizer;
 import java.util.Scanner;
 
 /**

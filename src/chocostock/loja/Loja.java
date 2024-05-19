@@ -8,10 +8,8 @@ import chocostock.enums.*;
 import chocostock.interfaces.*;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
-import chocostock.itens.Item;
 import chocostock.itens.materiais.Ingrediente;
 import chocostock.itens.produtos.Pendente;
-import chocostock.itens.produtos.Produto;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

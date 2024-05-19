@@ -1,6 +1,5 @@
 package chocostock.auxiliar;
 
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -20,7 +19,7 @@ public class Verifica {
 
     public static boolean isCep(String cep) {
         String teste_cep = cep.replaceAll("\\D", "");
-        return teste_cep.length() >= 7 && teste_cep.length() <= 8;
+        return teste_cep.length() >= 7 && teste_cep.length() <= 8 && teste_cep.charAt(0) != '0';
     }
 
     public static boolean isCnpj(String cnpj) {

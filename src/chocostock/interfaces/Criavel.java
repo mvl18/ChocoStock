@@ -1,18 +1,10 @@
 package chocostock.interfaces;
 
 import chocostock.auxiliar.Endereco;
-import chocostock.auxiliar.Escolhe;
-import chocostock.auxiliar.Processa;
 import chocostock.auxiliar.Verifica;
-import chocostock.colaboradores.Cliente;
-import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.Estados;
-import chocostock.enums.Status;
-import chocostock.loja.Loja;
-import chocostock.loja.Pedido;
 
 import java.text.Normalizer;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public interface Criavel extends ValidadorInput, Escolhivel {

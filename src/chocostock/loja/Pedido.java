@@ -2,13 +2,17 @@ package chocostock.loja;
 
 import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
-import chocostock.itens.produtos.Produto;
 import chocostock.itens.produtos.Pendente;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Pedido implements AddRemovivel {
+/**
+ * A classe Pedido representa uma ordem de compra realizada por um loja para um cliente.
+ * Cada pedido contém informações sobre o cliente, datas relevantes, status de pagamento,
+ * produtos incluídos no pedido, produtos pendentes e o preço total.
+ */
+public class Pedido implements AddRemovivel{
     private static int id_pedidos = 100000;
     private int id;
     private int id_cliente;

@@ -1,7 +1,6 @@
 package chocostock.enums;
 
 import chocostock.interfaces.Codificavel;
-import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 public enum Estados implements Nomeavel, Codificavel {
