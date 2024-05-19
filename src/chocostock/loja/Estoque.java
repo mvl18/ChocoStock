@@ -15,6 +15,13 @@ import chocostock.enums.TiposIngredientes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * A classe Estoque gerencia os produtos, materiais, equipamentos
+ * e embalagens disponíveis no estoque da loja. <br>
+ * Implementa os métodos "addEmbalagem", "addProduto", "addMaterial",
+ * "imprimirIngredientes", "imprimirProdutos", "statusIngredientes",
+ * "retiraProdutoEstoque" e o método privado "meioseProduto".
+ */
 public class Estoque implements AddRemovivel, Iteravel {
     private ArrayList<Produto> produtos;
     private ArrayList<Item> materiais;
@@ -52,14 +59,23 @@ public class Estoque implements AddRemovivel, Iteravel {
         this.equipamentos = equipamentos;
     }
 
+    /**
+     * Adiciona uma embalagem ao estoque.
+     */
     public boolean addEmbalagem(Embalagem embalagem) {
         return addObjeto(embalagens, embalagem);
     }
 
+    /**
+     * Retorna uma string com a lista de embalagens do estoque.
+     */
     public String listaEmbalagens() {
         return listaObjetos(embalagens);
     }
 
+    /**
+     * Adiciona um produto na lista de produtos do estoque.
+     */
     public boolean addProduto(int posicao, Produto produto) {
         return addObjeto(posicao, produtos, produto);
     }
@@ -68,32 +84,53 @@ public class Estoque implements AddRemovivel, Iteravel {
         return addObjeto(produtos, produto);
     }
 
+    /**
+     * Remove um produto da lista de produtos.
+     */
     public boolean removeProduto(Produto produto) {
         return removeObjeto(produtos, produto);
     }
 
+    /**
+     * Adiciona um equipamento à lista de equipamentos.
+     */
     public boolean addEquipamento(Equipamento equipamento) {
         return addObjeto(equipamentos, equipamento);
     }
 
+    /**
+     * Remove um equipamento da lista de equipamentos.
+     */
     public boolean removeEquipamento(Equipamento equipamento) {
         return removeObjeto(equipamentos, equipamento);
     }
 
+    /**
+     * Adiciona um material à lista de materiais.
+     */
     public boolean addMaterial(Suprimento suprimento) {
         return addObjeto(materiais, suprimento);
     }
 
+    /**
+     * Remove um material da lista de materiais.
+     */
     public boolean removeMaterial(Suprimento suprimento) {
             return removeObjeto(materiais, suprimento);
     }
 
+    /**
+     * Imprime na saída padrão os tipos de ingredientes disponíveis no estoque.
+     */
     public void imprimirIngredientes(){
         for(TiposIngredientes tipo : TiposIngredientes.values()){
             System.out.println(tipo.getId() + " - " + tipo.getNome());
         }
     }
 
+    /**
+     * Imprime na saída padrão os produtos disponíveis no estoque.
+     */
     public void imprimirProdutos(){
         for(Produto produto : produtos){
             System.out.println(produto.getId() + " - " + produto.getNome());
@@ -110,16 +147,26 @@ public class Estoque implements AddRemovivel, Iteravel {
                 '}';
     }
 
+    /**
+     * Retorna uma mensagem com o status dos ingredientes disponíveis no estoque,
+     * incluindo a quantidade e a validade de cada tipo de ingrediente.
+     */
     public String statusIngredientes(){
         String msg = "";
-        for(TiposIngredientes tipo : TiposIngredientes.values()){
 
+        // Itera sobre os tipos de ingredientes definidos no enum TiposIngredientes
+        for(TiposIngredientes tipo : TiposIngredientes.values()){
+            // Inicializa a quantidade total e a validade do ingrediente como nulo
             float quantidade = 0.0f;
             LocalDate validade = null;
 
+            // Itera sobre os materiais no estoque
             for(Item item : materiais){
+                // Verifica se o item é um ingrediente do tipo atual
                 if(item instanceof Ingrediente && ((Ingrediente) item).getTipo() == tipo){
+                    // Atualiza a quantidade total do ingrediente
                     quantidade += item.getQuantidade() * ((Ingrediente)item).getUnidade();
+                    // Atualiza a validade do ingrediente, considerando a data de validade mais próxima
                     if(validade == null){
                         validade = ((Ingrediente) item).getValidade();
                     }
@@ -129,6 +176,7 @@ public class Estoque implements AddRemovivel, Iteravel {
                 }
             }
 
+            // Adiciona as informações do ingrediente à mensagem
             if(quantidade == 0){
                 msg += tipo.getId() + " - " + tipo.getNome() + ":\n\t" +
                     "Quantidade(kg): " + quantidade + "\n";

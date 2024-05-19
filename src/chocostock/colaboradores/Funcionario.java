@@ -3,6 +3,12 @@ package chocostock.colaboradores;
 import chocostock.auxiliar.Endereco;
 import chocostock.interfaces.Identificavel;
 
+/**
+ * A classe Funcionario representa um funcionário que herda de Colaborador.
+ * Esta classe gerencia informações específicas do funcionário, como um
+ * identificador único, cargo e salário. <br>
+ * Implementa o método "defineSalario".
+ */
 public class Funcionario extends Colaborador implements Identificavel {
     private static int id_funcionarios = 100000;
     private final int id;

@@ -2,11 +2,17 @@ package chocostock.colaboradores;
 
 import chocostock.auxiliar.Endereco;
 
+/**
+ * A classe Fornecedor representa um fornecedor que herda de Colaborador.
+ * Esta classe gerencia informações específicas do fornecedor, como um
+ * identificador único, CNPJ e site.
+ */
 public class Fornecedor extends Colaborador {
     private static int id_fornecedores = 100000;
     private final int id;
     private String cnpj;
     private String site;
+
     public Fornecedor(String nome, String telefone, String email, Endereco endereco, String cnpj, String site) {
         super(nome, telefone, email, endereco);
         this.id = id_fornecedores++;
