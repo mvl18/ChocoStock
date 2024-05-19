@@ -3,6 +3,12 @@ package chocostock.itens;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * A classe abstrata Item representa um item genérico que pode ser
+ * tanto um Produto quanto um Suprimento. Esta classe serve como
+ * base para itens específicos, fornecendo funcionalidades comuns
+ * como identificação, nome, quantidade e preço.
+ */
 public abstract class Item implements Identificavel, Nomeavel {
     private static int idItem = 100000;
     private int id;

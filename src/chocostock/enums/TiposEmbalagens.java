@@ -4,6 +4,9 @@ import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 public enum TiposEmbalagens implements Nomeavel, Identificavel {
+    /**
+    * Enumera os tipos de embalagem que a fábrica precisa comprar.
+    */
     CAIXA_PP("Caixa PP", "4cm x 12cm x 4cm", 1),
     CAIXA_P("Caixa borda premium P", "4 doces", 2),
     CAIXA_M("Caixa borda premium M", "6 doces", 3),
@@ -18,6 +21,8 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
     PAPEL_KRAFT("Papel kraft","69cm x 89cm", 12),
     SACOLA_KRAFT("Sacola papel kraft", "14cm x 8cm x 16cm", 13),
     PAPEL_RECICLADO("Papel reciclado 180g", "210mm x 297mm", 14);
+
+
 
     private final String nome;
     private final String tamanho;

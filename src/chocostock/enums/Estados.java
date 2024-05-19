@@ -3,6 +3,9 @@ package chocostock.enums;
 import chocostock.interfaces.Codificavel;
 import chocostock.interfaces.Nomeavel;
 
+/**
+ * Lista as unidades federativas possíveis para os endereços.
+ */
 public enum Estados implements Nomeavel, Codificavel {
     XX("XX", "", -1),
     AC("AC", "Acre", 699),

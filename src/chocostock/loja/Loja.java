@@ -17,6 +17,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * A classe Loja representa uma loja que gerencia clientes,
+ * funcionários,fornecedores, pedidos e estoque de produtos. <br>
+ * Implementa os métodos "escolheProdutos", "selecionaProduto",
+ * "selecionaCaixa", "selecionaBarra", "estocarIngrediente",
+ * "novoCliente", "novoPedido".
+ */
 public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput {
     private String descricao;
     private Endereco endereco;
@@ -114,6 +121,9 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return listaVertical(pedidos);
     }
 
+    /**
+     *  Método privado para escolher produtos para um pedido, usando um scanner para entrada do usuário.
+     */
     private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
         ArrayList<Pendente> produtos_escolhidos = new ArrayList<Pendente>();
         while (true) {
@@ -130,42 +140,59 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         }
     }
 
+    /**
+     * Método privado para selecionar um tipo de produto, usando um scanner para entrada do usuário.
+     */
     private Pendente selecionaProduto(Scanner scanner) {
         Pendente produtoPendente = new Pendente();
         return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
             case 1 -> selecionaBarra(scanner, produtoPendente);
             case 2 -> selecionaCaixa(scanner, produtoPendente);
-            default -> null; // se o usuario digitar 0
+            default -> null; // Se o usuario digitar 0
         };
     }
 
+    /**
+     * Permite ao usuário selecionar um tipo de caixa e a quantidade desejada.
+     */
     private Pendente selecionaCaixa(Scanner scanner, Pendente produtoPendente) {
+        // Lista todos os tipos de caixas disponíveis
         for (TiposCaixas tipo : TiposCaixas.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
+        // Solicita ao usuário que selecione um tipo de caixa
         produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+        // Solicita ao usuário a quantidade desejada da caixa selecionada
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;
     }
 
+    /**
+     * Permite ao usuário selecionar um tipo de barra de chocolate e complementos,
+     * além da quantidade desejada.
+     */
     private Pendente selecionaBarra(Scanner scanner, Pendente produtoPendente) {
+        // Lista todos os tipos de chocolates disponíveis
         for (TiposChocolates tipo : TiposChocolates.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
+        // Solicita ao usuário que selecione um tipo de chocolate
         produtoPendente.setNome(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
 
+        // Lista todos os tipos de complementos disponíveis
         for (TiposComplementos complemento : TiposComplementos.values()) {
             System.out.println("(" + complemento.getId() + ") - " + complemento.getNome());
         }
+        // Opção para sair da seleção de complementos
         System.out.println("(0) - Sair");
         System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
+        // Solicita ao usuário que selecione complementos para a barra de chocolate
         produtoPendente.setComplementos(escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
                 "0", TiposComplementos.values().length));
-
-
+        // Solicita ao usuário a quantidade desejada da barra de chocolate selecionada
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
@@ -173,35 +200,30 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     }
 
+
+    /**
+     * Permite ao usuário cadastrar um novo cliente.
+     */
     public Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
-        // NOME
+        // Solicitação do nome do cliente
         cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome inválido.", Verifica::isNome));
-        // TELEFONE
+        // Solicitação do telefone do cliente
         cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
                 Verifica::isTelefone).replaceAll("\\D", ""));
-        // EMAIL
+        // Solicitação do email do cliente
         cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!", Verifica::isEmail));
-        // ENDERECO
+        // Solicitação do endereço do cliente
         System.out.println("Criando endereço: ");
         cliente.setEndereco(criaEndereco(scanner));
         System.out.println("Novo cliente adicionado: " + cliente.toString());
 
         return cliente;
     }
-
-    public Fornecedor novoFornecedor(Scanner scanner) {
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
-        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
-        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
-        fornecedor.setEndereco(criaEndereco(scanner));
-        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
-        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
-        return fornecedor;
-    }
-
+    /**
+     * Cria um novo pedido com as informações fornecidas pelo usuário.
+     */
     public Pedido novoPedido(Scanner scanner)  {
         Pedido pedido = new Pedido();
 
@@ -213,6 +235,8 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 (1) - Mostrar lista de clientes já cadastrados.
                 (2) - Adicionar novo cliente.
                 """;
+
+        // Solicita ao usuário que escolha entre mostrar clientes cadastrados ou adicionar um novo cliente
         switch (verificaOpcao(scanner, msg, 1, 2)) {
             case 1:
                 System.out.println(listaClientes());
@@ -241,22 +265,18 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // PRODUTOS_PENDENTES
         pedido.setProdutos_pendentes(escolheProdutos(scanner));
-//
-//        for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
-//            if ()
-//            System.out.println("" + produto_pendente.getNome() + produto_pendente.getQuantidade());
-//        }
-//        pedido.getProdutos_pendentes();
+        System.out.println("Produtos adicionados ao pedido: ");
+        System.out.println(listaVertical(pedido.getProdutos_pendentes()));
 
-        // PRODUTOS
+        // Retira os produtos do estoque e atualiza o pedido
         pedido = estoque.retiraProdutosEstoque(pedido);
 
-        // DATA_ENTREGA
+        // Solicita ao usuário a data de entrega do pedido
         pedido.setData_entrega(escolheDataFutura(scanner, "Qual a data de entrega do pedido? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()) + "\n");
 
-        // PRECO TOTAL
+        // Calcula o preço total do pedido
         float preco_total = pedido.calculaPrecoTotal(estoque);
         if (preco_total == -1) {
             System.out.println("Preço total do pedido Indeterminado, nenhum dos produtos pedidos está no estoque.");
@@ -269,9 +289,9 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
             }
         }
 
-        // STATUS
-        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE, deseja modificar? 'Sim' ou 'não'.", "Por favor, digite 'sim' ou 'não'.",
-                input -> input.matches("sim|nao|s|n"))).equals("sim|s")) {
+        // Pergunta ao usuário se deseja modificar o status do pedido, inicialmente definido como PENDENTE
+        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE. Está correto? Digite 'Sim' ou 'não'. ", "Por favor, digite 'sim' ou 'não'.",
+                input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
             pedido.setStatus(Status.PENDENTE);
         } else {
             System.out.println("Escolha um status dentre os abaixo:");
@@ -282,9 +302,9 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         }
         System.out.println("O status do pedido " + pedido.getId() + " foi definido como " + pedido.getStatus() + ".");
 
-        // PAGO OU NÃO
+        // Pergunta ao usuário se o pedido já foi pago
         pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta valida. ",
-                input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
+                input -> input.matches("sim|nao|s|n"))).matches("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
         return pedido;

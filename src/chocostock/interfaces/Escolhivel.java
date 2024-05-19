@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/*
-* Essa interface cria um método pardrão com diversas sobrecargas com diferentes utilidades.
-* Seu intuito é ser usada para facilitar pegar o input do usuário, sendo que ele deve escolher algo de uma
-* lista de opções.
-* */
+/**
+ * Essa interface cria um método pardrão com diversas sobrecargas com diferentes
+ * utilidades. Seu intuito é ser usada para facilitar pegar o input do usuário,
+ * sendo que ele deve escolher algo de uma lista de opções.
+ */
 public interface Escolhivel extends Iteravel, ValidadorInput {
     /**
      * Escolhe um objeto da lista com base nas entradas fornecidas.

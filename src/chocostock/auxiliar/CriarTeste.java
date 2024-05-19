@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * A classe CriarTeste fornece métodos estáticos para criar instâncias
+ * de objetos utilizados nos testes.
+ */
 public class CriarTeste implements Escolhivel {
     public static Cliente Cliente() {
         return new Cliente("Michelangelo", "11964729106", "mike@gmail.com", CriarTeste.Endereco());
