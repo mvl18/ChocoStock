@@ -8,6 +8,7 @@ import chocostock.enums.*;
 import chocostock.interfaces.*;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
+import chocostock.itens.suprimentos.Embalagem;
 import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.itens.produtos.Pendente;
 
@@ -38,7 +39,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         this.pedidos = new ArrayList<Pedido>();
         this.estoque =  new Estoque();
         this.funcionarios = new ArrayList<Funcionario>();
-        this.fornecedores = new ArrayList<Fornecedor>();
     }
 
     // DESCRIÇÃO
@@ -95,16 +95,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         this.funcionarios = funcionarios;
     }
 
-    // FORNECEDORES
-    public ArrayList<Fornecedor> getFornecedores() {
-        return fornecedores;
-    }
-
-    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
-        this.fornecedores = fornecedores;
-    }
-
-    // METODOS
     public boolean addPedido(Pedido pedido) {
         return addObjeto(pedidos, pedido);
     }
@@ -121,22 +111,10 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return removeObjeto(clientes, cliente);
     }
 
-    public boolean addFornecedor(Fornecedor fornecedor) {
-        return addObjeto(fornecedores, fornecedor);
-    }
-
-    public boolean removeFornecedor(Fornecedor fornecedor) {
-        return removeObjeto(fornecedores, fornecedor);
-    }
-
     public int getNumeroPedidos() {return this.pedidos.size();}
 
     public String listaClientes() {
         return listaVertical(clientes);
-    }
-
-    public String listaFornecedores() {
-        return listaHorizontalQuebraLinha(fornecedores);
     }
 
     public String listaPedidos() {
@@ -222,56 +200,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     }
 
-    /**
-     * Permite ao usuário adicionar um novo ingrediente ao estoque.
-     */
-    public Ingrediente estocarIngrediente(Scanner input) {
-        Ingrediente ingrediente = new Ingrediente();
-        // Seleção do tipo de ingrediente
-        System.out.println("Escolha um tipo de ingrediente para adicionar:");
-        getEstoque().imprimirIngredientes();
-        ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
-                "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
-        ingrediente.setNome(ingrediente.getTipo().getNome());
-
-        // Solicitação da quantidade comprada
-        ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas?", "Quantidade invalida", Verifica::isNatural)));
-        // Solicitação da quantidade por unidade em kg
-        ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade?", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
-        // Solicitação do preço da compra
-        ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
-        // Solicitação da data de compra e validade
-        ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy)", "Digite uma data válida."));
-        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)", "Digite uma data futura válida."));
-
-        // Seleção ou adição de fornecedor
-        Fornecedor fornecedor;
-        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
-            case 1:
-                System.out.println(listaFornecedores());
-                System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
-                System.out.println("Insira o CNPJ ou nome do seu fornecedor");
-                fornecedor = escolheObjeto(input, getFornecedores(), "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
-                if (fornecedor == null) {
-                    fornecedor = novoFornecedor(input);
-                    addFornecedor(fornecedor);
-                    ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
-                    break;
-                }
-                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
-                break;
-            case 2:
-                fornecedor = novoFornecedor(input);
-                addFornecedor(fornecedor);
-                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
-                break;
-            default:
-                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
-                break;
-        }
-
-        return ingrediente;
-    }
 
     /**
      * Permite ao usuário cadastrar um novo cliente.
@@ -293,21 +221,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         return cliente;
     }
-
-    /**
-     * Permite ao usuário cadastrar um novo fornecedor.
-     */
-    public Fornecedor novoFornecedor(Scanner scanner) {
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
-        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
-        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
-        fornecedor.setEndereco(criaEndereco(scanner));
-        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
-        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
-        return fornecedor;
-    }
-
     /**
      * Cria um novo pedido com as informações fornecidas pelo usuário.
      */

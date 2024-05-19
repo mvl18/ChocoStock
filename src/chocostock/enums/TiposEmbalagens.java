@@ -1,30 +1,37 @@
 package chocostock.enums;
 
-/**
- * Enumera os tipos de embalagem que a fábrica precisa comprar.
- */
-public enum TiposEmbalagens {
-    CAIXA_PP("Caixa PP", "4cm x 12cm x 4cm"),
-    CAIXA_P("Caixa borda premium P", "4 doces"),
-    CAIXA_M("Caixa borda premium M", "6 doces"),
-    CAIXA_G("Caixa borda premium G", "9 doces"),
-    CAIXA_ISOPOR("Caixa Isopor", "1L"),
-    SAQUINHO("Saquinho", "8cm x 20cm"),
-    PAPEL_CHUMBO_P("Papel Chumbo P", "8cm x 7.8cm"),
-    PAPEL_CHUMBO_M("Papel Chumbo M", "10cm x 9.8cm"),
-    FORMINHAS_KRAFT("Forminhas Kraft", ""),
-    FORMINHAS_N4("Forminhas gourmet marrom", "N4"),
-    FITA_CETIM("Fita cetim", "10mm x 10m"),
-    PAPEL_KRAFT("Papel kraft","69cm x 89cm"),
-    SACOLA_KRAFT("Sacola papel kraft", "14cm x 8cm x 16cm"),
-    PAPEL_RECICLADO("Papel reciclado 180g", "210mm x 297mm");
+import chocostock.interfaces.Identificavel;
+import chocostock.interfaces.Nomeavel;
+
+public enum TiposEmbalagens implements Nomeavel, Identificavel {
+    /**
+    * Enumera os tipos de embalagem que a fábrica precisa comprar.
+    */
+    CAIXA_PP("Caixa PP", "4cm x 12cm x 4cm", 1),
+    CAIXA_P("Caixa borda premium P", "4 doces", 2),
+    CAIXA_M("Caixa borda premium M", "6 doces", 3),
+    CAIXA_G("Caixa borda premium G", "9 doces", 4),
+    CAIXA_ISOPOR("Caixa Isopor", "1L", 5),
+    SAQUINHO("Saquinho", "8cm x 20cm", 6),
+    PAPEL_CHUMBO_P("Papel Chumbo P", "8cm x 7.8cm", 7),
+    PAPEL_CHUMBO_M("Papel Chumbo M", "10cm x 9.8cm", 8),
+    FORMINHAS_KRAFT("Forminhas Kraft", "", 9),
+    FORMINHAS_N4("Forminhas gourmet marrom", "N4", 10),
+    FITA_CETIM("Fita cetim", "10mm x 10m", 11),
+    PAPEL_KRAFT("Papel kraft","69cm x 89cm", 12),
+    SACOLA_KRAFT("Sacola papel kraft", "14cm x 8cm x 16cm", 13),
+    PAPEL_RECICLADO("Papel reciclado 180g", "210mm x 297mm", 14);
+
+
 
     private final String nome;
     private final String tamanho;
+    private final int id;
 
-    TiposEmbalagens(String nome, String tamanho) {
+    TiposEmbalagens(String nome, String tamanho, int id) {
         this.nome = nome;
         this.tamanho = tamanho;
+        this.id = id;
     }
 
     public String getNome() {
@@ -33,5 +40,23 @@ public enum TiposEmbalagens {
 
     public String getTamanho() {
         return tamanho;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String toString(){
+        String msg = "";
+        msg += "Modelo: " + getNome() + ", " + getTamanho();
+        return msg;
+    }
+
+    public static String imprimirTiposEmbalagens(){
+        String msg = "";
+        for(TiposEmbalagens tipo : TiposEmbalagens.values()){
+            msg += tipo.getId() +" - " + tipo.getNome() + " - " + tipo.getTamanho() + "\n";
+        }
+        return msg;
     }
 }

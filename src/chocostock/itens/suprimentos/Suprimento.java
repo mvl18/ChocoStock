@@ -14,4 +14,6 @@ public abstract class Suprimento extends Item {
         super(nome, quantidade, preco);
         this.fornecedor = fornecedor;
     }
+
+
 }
