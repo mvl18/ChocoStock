@@ -5,6 +5,10 @@ import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 
+/**
+ * A classe Produto é uma subclasse de Item que representa
+ * um produto vendido pela loja.
+ */
 public class Produto extends Item {
     private static int id_produtos = 100000;
     private int id_pedido;

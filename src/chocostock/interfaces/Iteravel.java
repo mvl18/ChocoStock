@@ -2,10 +2,18 @@ package chocostock.interfaces;
 
 import java.util.ArrayList;
 
+/**
+ * A interface Iteravel define métodos para criar representações de listas
+ * em formato de texto. (listaVertical, listaHorizontal e listaHorizontalQuebraLinha)
+ */
 public interface Iteravel {
     /**
-     * Imprime uma lista com um item em cada linha.
-     * @param lista A lista de objetos que serão impressos.*/
+     * Cria uma representação vertical de uma lista, cada item em uma nova linha.
+     *
+     * @param lista A lista de objetos a ser iterada.
+     * @param <T>   O tipo de objeto na lista.
+     * @return Uma string contendo a representação vertical da lista.
+     */
     default <T> String listaVertical(ArrayList<T> lista) {
         String texto = "";
         for (T objeto : lista) {
@@ -15,8 +23,12 @@ public interface Iteravel {
     }
 
     /**
-     * Imprime uma lista no formato: item1, item2, item3
-     * @param lista A lista de objetos que serão impressos.*/
+     * Cria uma representação horizontal de uma lista, cada item separado por vírgula.
+     *
+     * @param lista A lista de objetos a ser iterada.
+     * @param <T>   O tipo de objeto na lista.
+     * @return Uma string contendo a representação horizontal da lista.
+     */
     default <T> String listaHorizontal(ArrayList<T> lista) {
         String out = "";
         for (int i = 0; i < lista.size(); i++)
@@ -25,7 +37,12 @@ public interface Iteravel {
     }
 
     /**
-     *Sobrecarga do método listHorizontal com quebra de linha ao final.*/
+     * Cria uma representação horizontal de uma lista, cada item separado por vírgula e finalizado com uma quebra de linha.
+     *
+     * @param lista A lista de objetos a ser iterada.
+     * @param <T>   O tipo de objeto na lista.
+     * @return Uma string contendo a representação horizontal da lista seguida por uma quebra de linha.
+     */
     default <T> String listaHorizontalQuebraLinha(ArrayList<T> lista) {
         return listaHorizontal(lista) + "\n";
     }

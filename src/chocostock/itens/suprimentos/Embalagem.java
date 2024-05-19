@@ -3,6 +3,11 @@ package chocostock.itens.suprimentos;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposEmbalagens;
 
+/**
+ * A classe Embalagem é uma subclasse de Suprimento
+ * que representa um tipo específico de suprimento
+ * usado para embalar produtos e formar as caixas.
+ */
 public class Embalagem extends Suprimento {
     private TiposEmbalagens tipo_embalagem;
     private float preco_pacote;

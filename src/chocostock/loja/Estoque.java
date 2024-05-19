@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * A classe Estoque gerencia os produtos, materiais, equipamentos
  * e embalagens disponíveis no estoque da loja. <br>
- * Implementa os métodos "addEmbalagem", "addProduto", "addMaterial",
+ * Implementa os métodos "addEmbalagem", "addProduto", "addMaterial" ...,
  * "imprimirIngredientes", "imprimirProdutos", "statusIngredientes",
  * "retiraProdutoEstoque" e o método privado "meioseProduto".
  */
@@ -198,41 +198,56 @@ public class Estoque implements AddRemovivel, Iteravel {
         return msg;
     }
 
-
+    /**
+     * Processa a retirada de produtos do estoque para atender a um pedido.
+     */
     public Pedido retiraProdutosEstoque(Pedido pedido) {
-
         ArrayList<Pendente> produtos_concluidos= new ArrayList<Pendente>();
+
+        // Itera sobre os produtos pendentes do pedido
         for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
-            int quantidade = 0;
-            ArrayList<Integer> posicoes = new ArrayList<Integer>();
+            int quantidade = 0;  // Armazena a quantidade acumulada encontrada no estoque
+            ArrayList<Integer> posicoes = new ArrayList<Integer>();  // Armazena as posições dos produtos correspondentes no estoque
+
+            // Itera sobre os produtos disponíveis no estoque
             for (int i = 0; i < getProdutos().size(); i++) {
-                if (getProdutos().get(i).getId_pedido() == -1) { //Se o produto ainda não tem dono (reservado)
+                // Verifica se o produto ainda não foi reservado para um pedido
+                if (getProdutos().get(i).getId_pedido() == -1) {
+                    // Verifica se o nome do produto no estoque corresponde ao nome do produto pendente
                     if (produto_pendente.getNome().equals(getProdutos().get(i).getNome())) {
-                        if (getProdutos().get(i) instanceof Complementavel) { // caixa n tem complemento ent nunca vai passar
+                        // Verifica se o produto é complementável (Chocolate)
+                        if (getProdutos().get(i) instanceof Complementavel) {
+                            // Verifica se os complementos do produto no estoque correspondem aos complementos do produto pendente
                             if (produto_pendente.getComplementos().equals(((Complementavel) getProdutos().get(i)).getComplementos())) {
                                 posicoes.add(i);
                                 quantidade += getProdutos().get(i).getQuantidade();
+                                // Verifica se a quantidade acumulada é suficiente para atender ao produto pendente
                                 if (quantidade >= produto_pendente.getQuantidade()) {
+                                    // Itera sobre as posições dos produtos encontrados no estoque
                                     for (int j = 0; j < posicoes.size(); j++) {
                                         boolean ultimo = j == posicoes.size() - 1;
                                         if (ultimo && quantidade != produto_pendente.getQuantidade()) {
+                                            // Se é o último produto e a quantidade acumulada é diferente da quantidade pendente, divide o produto
                                             Chocolate produto_pedido = (Chocolate) meioseProduto(getProdutos().get(posicoes.get(j)),
                                                             getProdutos().get(posicoes.get(j)).getQuantidade() + produto_pendente.getQuantidade() - quantidade,  i+1);
-                                            produto_pedido.setId_pedido(pedido.getId());
+                                            produto_pedido.setId_pedido(pedido.getId()); // Reserva o produto dividido para o pedido
                                             pedido.addProduto(((Produto) getProdutos().get(i+1)).getId());
                                         } else {
+                                            // Reserva o produto inteiro para o pedido
                                             getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());  //Pega tudo
                                             pedido.addProduto(((Produto) getProdutos().get(i)).getId());
                                         }
+                                        // Adiciona o produto pendente à lista de produtos concluídos
                                         produtos_concluidos.add(produto_pendente);
                                     }
                                 }
                             }
-                        } else { // eh uma caixa
-                            // se existe uma caixa ja pronta adicionada no estoque
-                            if (produto_pendente.getNome().contains("Caixa")) { // talvez redundante
+                        } else { // Produto não é complementavel (Caixa)
+                            // Verifica se o nome do produto pendente contém "Caixa"
+                            if (produto_pendente.getNome().contains("Caixa")) {
                                 posicoes.add(i);
                                 quantidade += getProdutos().get(i).getQuantidade();
+                                // Passos semlehantes aos do Chocolate
                                 if (quantidade >= produto_pendente.getQuantidade()) {
                                     for (int j = 0; j < posicoes.size(); j++) {
                                         boolean ultimo = j == posicoes.size() - 1;
@@ -242,7 +257,7 @@ public class Estoque implements AddRemovivel, Iteravel {
                                             produto_pedido.setId_pedido(pedido.getId());
                                             pedido.addProduto(((Produto) getProdutos().get(i+1)).getId());
                                         } else {
-                                            getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());  //Pega tudo
+                                            getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());
                                             pedido.addProduto(((Produto) getProdutos().get(i)).getId());
                                         }
                                         produtos_concluidos.add(produto_pendente);
@@ -254,42 +269,51 @@ public class Estoque implements AddRemovivel, Iteravel {
                 }
             }
         }
+        // Remove os produtos pendentes que foram concluídos da lista de produtos pendentes do pedido
         for (Pendente concluido : produtos_concluidos) {
             pedido.getProdutos_pendentes().remove(concluido);
         }
-
+        // Retorna o pedido atualizado
         return pedido;
     }
 
+    /**
+     * Cria uma nova instância de um produto a partir de um produto existente,
+     * ajustando a quantidade do produto original e adicionando o novo produto
+     * (que fará parte do pedido) à lista de produtos em uma posição à direita
+     * do anterior.
+     */
     private Produto meioseProduto(Produto produto, int quantidade, int posicao) {
         Produto produto_pedido;
 
         // CHOCOLATE
         if (produto.getClass().equals(Chocolate.class)) {
             Chocolate chocolate_pedido = new Chocolate();
+            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
             chocolate_pedido.setNome(produto.getNome());
+            chocolate_pedido.setPreco(produto.getPreco());
             chocolate_pedido.setEmbalagem(produto.getEmbalagem());
             chocolate_pedido.setPeso(produto.getPeso());
             chocolate_pedido.setValidade(produto.getValidade());
             chocolate_pedido.setQuantidade(quantidade);
             chocolate_pedido.setLote(((Chocolate) produto).getLote());
-            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
             chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
             produto_pedido = chocolate_pedido;
 
-            // CAIXA
+        // CAIXA
         } else if (produto.getClass().equals(Caixa.class)) {
             Caixa caixa_pedido = new Caixa();
             caixa_pedido.setTipo(((Caixa) produto).getTipo());
             caixa_pedido.setNome(produto.getNome());
+            caixa_pedido.setPreco(produto.getPreco());
             caixa_pedido.setEmbalagem(produto.getEmbalagem());
             caixa_pedido.setPeso(produto.getPeso());
             caixa_pedido.setValidade(produto.getValidade());
             caixa_pedido.setQuantidade(quantidade);
             produto_pedido = caixa_pedido;
 
+        // Caso contrário, trata como Produto genérico (nao usado em tese)
         } else {
-            // caso contrário, trata como Produto genérico (nao usado em tese)
             produto_pedido = new Produto();
             produto_pedido.setNome(produto.getNome());
             produto_pedido.setEmbalagem(produto.getEmbalagem());
@@ -298,10 +322,10 @@ public class Estoque implements AddRemovivel, Iteravel {
             produto_pedido.setQuantidade(quantidade);
         }
 
-        // ajusta a quantidade do produto original
+        // Ajusta a quantidade do produto original
         produto.setQuantidade(produto.getQuantidade() - quantidade);
 
-        // adiciona o produto pedido à lista de produtos na posição especificada
+        // Adiciona o produto pedido à lista de produtos na posição especificada
         addProduto(posicao, produto_pedido);
 
         return produto_pedido;
