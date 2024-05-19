@@ -14,8 +14,6 @@ import chocostock.loja.Loja;
 
 import java.util.Scanner;
 
-import static chocostock.enums.TiposChocolates.*;
-
 public class Main {
     public static void main(String[] args) {
     /*
@@ -35,11 +33,11 @@ public class Main {
 
         Sistema sistema = new Sistema(scanner, loja);
 
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_BRANCO_ACAI_BETERRABA, 5, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(TiposChocolates.CHOCOLATE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(TiposChocolates.CHOCOLATE_BRANCO_ACAI_BETERRABA, 5, 5.50F, null, 1, null, 1, "Bahia"));
+        loja.getEstoque().addProduto(new Chocolate(TiposChocolates.CHOCOLATE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
         loja.getEstoque().addProduto(new Caixa(TiposCaixas.CAIXA_ASORTI_G, 6, 101010, 22.25F, null, 1, null));
         loja.getEstoque().addProduto(new Caixa(TiposCaixas.CAIXA_ASORTI_M, 10, 101010, 16.25F, null, 1, null));
         loja.getEstoque().addProduto(new Caixa(TiposCaixas.CAIXA_ASORTI_P, 20, 101010, 12.85F, null, 1, null));
