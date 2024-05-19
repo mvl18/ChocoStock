@@ -107,7 +107,7 @@ public class Sistema implements Criavel, ValidadorInput {
                 --- MENU ESTOQUE ---
                 (X) - Adicionar Produto.
                 (2) - Adicionar Ingrediente.
-                (X) - Adicionar Embalagem.
+                (3) - Adicionar Embalagem.
                 (4) - Status Produtos.
                 (5) - Status Ingredientes.
                 (X) - Status Embalagens.
@@ -118,7 +118,10 @@ public class Sistema implements Criavel, ValidadorInput {
         switch(opcao){
             case 0: menuInicial();
                     break;
-            case 2: loja.getEstoque().addMaterial(loja.estocarIngrediente(input));
+            case 2: loja.getEstoque().addIngrediente(loja.getEstoque().estocarIngrediente(input));
+                    menuEstoque();
+                    break;
+            case 3: loja.getEstoque().addEmbalagem(loja.getEstoque().estocarEmbalagem(input));
                     menuEstoque();
                     break;
             case 4: loja.getEstoque().imprimirProdutos();
@@ -149,13 +152,13 @@ public class Sistema implements Criavel, ValidadorInput {
             case 1: loja.addCliente(loja.novoCliente(input));
                     menuColaboradores();
                     break;
-            case 2: loja.addFornecedor(loja.novoFornecedor(input));
+            case 2: loja.getEstoque().addFornecedor(loja.getEstoque().novoFornecedor(input));
                     menuColaboradores();
                     break;
             case 4: System.out.println(loja.listaClientes());
                     menuColaboradores();
                     break;
-            case 5: System.out.println(loja.listaFornecedores());
+            case 5: System.out.println(loja.getEstoque().listaFornecedores());
                     menuColaboradores();
                     break;
             case 0: menuInicial();

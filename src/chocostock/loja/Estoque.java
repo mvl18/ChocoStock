@@ -1,8 +1,10 @@
 package chocostock.loja;
 
-import chocostock.interfaces.AddRemovivel;
-import chocostock.interfaces.Complementavel;
-import chocostock.interfaces.Iteravel;
+import chocostock.auxiliar.Processa;
+import chocostock.auxiliar.Verifica;
+import chocostock.colaboradores.Fornecedor;
+import chocostock.enums.TiposEmbalagens;
+import chocostock.interfaces.*;
 import chocostock.itens.suprimentos.Equipamento;
 import chocostock.itens.Item;
 import chocostock.itens.suprimentos.Embalagem;
@@ -16,6 +18,7 @@ import chocostock.enums.TiposIngredientes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A classe Estoque gerencia os produtos, materiais, equipamentos
@@ -24,17 +27,20 @@ import java.util.ArrayList;
  * "imprimirIngredientes", "imprimirProdutos", "statusIngredientes",
  * "retiraProdutoEstoque" e o método privado "meioseProduto".
  */
-public class Estoque implements AddRemovivel, Iteravel {
+public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     private ArrayList<Produto> produtos;
-    private ArrayList<Item> materiais;
+    private ArrayList<Item> ingredientes;
     private ArrayList<Item> equipamentos;
     private ArrayList<Embalagem> embalagens;
+    private ArrayList<Fornecedor> fornecedores;
+
 
     public Estoque() {
         this.produtos = new ArrayList<Produto>();
-        this.materiais = new ArrayList<Item>();
+        this.ingredientes = new ArrayList<Item>();
         this.equipamentos = new ArrayList<Item>();
         this.embalagens = new ArrayList<Embalagem>();
+        this.fornecedores = new ArrayList<Fornecedor>();
     }
 
     public ArrayList<Produto> getProdutos() {
@@ -45,20 +51,35 @@ public class Estoque implements AddRemovivel, Iteravel {
         this.produtos = produtos;
     }
 
-    public ArrayList<Item> getMateriais() {
-        return materiais;
-    }
-
-    public void setMateriais(ArrayList<Item> materiais) {
-        this.materiais = materiais;
-    }
-
     public ArrayList<Item> getEquipamentos() {
         return equipamentos;
     }
 
     public void setEquipamentos(ArrayList<Item> equipamentos) {
         this.equipamentos = equipamentos;
+    }
+
+    public ArrayList<Fornecedor> getFornecedores(){
+        return fornecedores;
+    }
+
+    public boolean addFornecedor(Fornecedor fornecedor) {
+        return addObjeto(fornecedores, fornecedor);
+    }
+
+    public String listaFornecedores() {
+        return listaHorizontalQuebraLinha(fornecedores);
+    }
+
+    public Fornecedor novoFornecedor(Scanner scanner) {
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
+        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
+        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
+        fornecedor.setEndereco(criaEndereco(scanner));
+        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
+        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
+        return fornecedor;
     }
 
     /**
@@ -110,15 +131,15 @@ public class Estoque implements AddRemovivel, Iteravel {
     /**
      * Adiciona um material à lista de materiais.
      */
-    public boolean addMaterial(Suprimento suprimento) {
-        return addObjeto(materiais, suprimento);
+    public boolean addIngrediente(Suprimento suprimento) {
+        return addObjeto(ingredientes, suprimento);
     }
 
     /**
      * Remove um material da lista de materiais.
      */
-    public boolean removeMaterial(Suprimento suprimento) {
-            return removeObjeto(materiais, suprimento);
+    public boolean removeIngrediente(Suprimento suprimento) {
+            return removeObjeto(ingredientes, suprimento);
     }
 
     /**
@@ -143,7 +164,7 @@ public class Estoque implements AddRemovivel, Iteravel {
     public String toString() {
         return "--- ESTOQUE ---" +
                 "\nProdutos: " + listaHorizontalQuebraLinha(produtos) +
-                "\nMateriais: " + listaHorizontalQuebraLinha(materiais) +
+                "\nMateriais: " + listaHorizontalQuebraLinha(ingredientes) +
                 "\nEquipamentos: " + listaHorizontalQuebraLinha(equipamentos) +
                 "\nEmbalagens: " + listaHorizontalQuebraLinha(embalagens);
     }
@@ -162,7 +183,7 @@ public class Estoque implements AddRemovivel, Iteravel {
             LocalDate validade = null;
 
             // Itera sobre os materiais no estoque
-            for(Item item : materiais){
+            for(Item item : ingredientes){
                 // Verifica se o item é um ingrediente do tipo atual
                 if(item instanceof Ingrediente && ((Ingrediente) item).getTipo() == tipo){
                     // Atualiza a quantidade total do ingrediente
@@ -299,4 +320,99 @@ public class Estoque implements AddRemovivel, Iteravel {
         return produto_pedido;
     }
 
+    public Ingrediente estocarIngrediente(Scanner input) {
+        Ingrediente ingrediente = new Ingrediente();
+        //TIPO
+        System.out.println("Escolha um tipo de ingrediente para adicionar:");
+        imprimirIngredientes();
+        ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
+                "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido.", "obrigatorio"));
+        ingrediente.setNome(ingrediente.getTipo().getNome());
+
+        //QUANTIDADE
+        ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas?", "Quantidade invalida", Verifica::isNatural)));
+
+        //UNIDADE
+        ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade?", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
+
+        //PRECO
+        ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra:", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
+
+        //DATA DE COMPRA E VALIDADE
+        ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy)", "Digite uma data válida."));
+        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy)", "Digite uma data futura válida."));
+
+        //FORNECEDOR
+        Fornecedor fornecedor;
+        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
+            case 1:
+                System.out.println(listaFornecedores());
+                System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
+                System.out.println("Insira o CNPJ ou nome do seu fornecedor");
+                fornecedor = escolheObjeto(input, fornecedores, "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
+                if (fornecedor == null) {
+                    fornecedor = novoFornecedor(input);
+                    addFornecedor(fornecedor);
+                    ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                    break;
+                }
+                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                break;
+            case 2:
+                fornecedor = novoFornecedor(input);
+                addFornecedor(fornecedor);
+                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                break;
+            default:
+                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
+                break;
+        }
+
+        return ingrediente;
+    }
+
+    public Embalagem estocarEmbalagem(Scanner input){
+        Embalagem embalagem = new Embalagem();
+        //TIPO
+        System.out.println("Escolha um tipo de embalagem para adicionar:");
+        System.out.println(TiposEmbalagens.imprimirTiposEmbalagens());
+        embalagem.setTipo_embalagem(escolheObjeto(input, TiposEmbalagens.values(),
+                "Numero ou nome invalido. Escolha um numero de (1-14) ou digite um nome valido.", "obrigatorio"));
+        //NOME
+        embalagem.setNome(embalagem.getTipo_embalagem().getNome());
+        //QUANTIDADE
+        embalagem.setQuantidade(Integer.parseInt(getInput(input, "Quantas pacotes foram compradas?", "Quantidade invalida", Verifica::isNatural)));
+        //PRECO_PACOTE
+        embalagem.setPreco_pacote(Float.parseFloat(getInput(input, "Qual o preco de 1 pacote?", "Preco invalido, coloque um numero valido.", Verifica::isFloat)));
+        //QUANTIDADE_POR_PACOTE
+        embalagem.setQuantidade_por_pacote(Integer.parseInt(getInput(input, "Quantas unidades por pacote?", "Quantidade invalida", Verifica::isNatural)));
+        //PRECO
+        embalagem.setPreco(embalagem.getPreco_pacote() / embalagem.getQuantidade_por_pacote());
+        //FORNECEDOR
+        Fornecedor fornecedor;
+        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
+            case 1:
+                System.out.println(listaFornecedores());
+                System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
+                System.out.println("Insira o CNPJ ou nome do seu fornecedor");
+                fornecedor = escolheObjeto(input, fornecedores, "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
+                if (fornecedor == null) {
+                    fornecedor = novoFornecedor(input);
+                    addFornecedor(fornecedor);
+                    embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
+                    break;
+                }
+                embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
+                break;
+            case 2:
+                fornecedor = novoFornecedor(input);
+                addFornecedor(fornecedor);
+                embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
+                break;
+            default:
+                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
+                break;
+        }
+       return embalagem;
+    }
 }
