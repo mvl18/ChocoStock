@@ -314,7 +314,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         // DATA_ENTREGA
         pedido.setData_entrega(escolheDataFutura(scanner, "Qual a data de entrega do pedido? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
-        System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
+        System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()) + "\n");
 
         // PRODUTOS_PENDENTES
         pedido.setProdutos_pendentes(escolheProdutos(scanner));
