@@ -143,7 +143,12 @@ public class Pedido implements AddRemovivel {
                 '}';
     }
 
-    public float calculaPrecoTotal() {
-        return 0.0F; // fazer
+    public float calculaPrecoTotal(Estoque estoque) {
+        float soma_preco = 0;
+        for (Produto produto_estoque : estoque.getProdutos()) {
+            if (produto_estoque.getId_pedido() == id)
+                soma_preco += produto_estoque.getPreco() * produto_estoque.getQuantidade();
+        }
+        return soma_preco > 0 ? soma_preco : -1;
     }
 }

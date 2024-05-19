@@ -7,6 +7,7 @@ import chocostock.interfaces.Complementavel;
 import chocostock.interfaces.Iteravel;
 import chocostock.itens.materiais.Embalagem;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,16 +17,20 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
     private ArrayList<TiposComplementos> complementos;
     private String origem_cacau;
 
-    public Chocolate(TiposChocolates tipo, int quantidade, float preco, Date validade, int peso, Embalagem embalagem, int lote, String origem_cacau) {
+    public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso, Embalagem embalagem, int lote, String origem_cacau) {
         super(tipo.getNome(), quantidade, preco, validade, peso, embalagem);
         this.lote = lote;
         this.complementos = new ArrayList<TiposComplementos>();
         this.origem_cacau = origem_cacau;
     }
 
-    public Chocolate(TiposChocolates tipo, int quantidade, float preco, Date validade, int peso, Embalagem embalagem, int lote, ArrayList<TiposComplementos> complementos, String origem_cacau) {
+    public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso, Embalagem embalagem, int lote, ArrayList<TiposComplementos> complementos, String origem_cacau) {
         this(tipo, quantidade, preco, validade, peso, embalagem, lote, origem_cacau);
         this.complementos = complementos;
+    }
+
+    public Chocolate() {
+        this(TiposChocolates.CHOCOLATE_INTENSO, -1, -1F, null, -1, null, -1, null, null);
     }
 
     public int getLote() {

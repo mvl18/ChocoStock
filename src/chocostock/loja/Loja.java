@@ -307,41 +307,57 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 break;
         }
 
+        // PRODUTOS_PENDENTES
+        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
+        pedido.setProdutos_pendentes(escolheProdutos(scanner));
+//
+//        for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
+//            if ()
+//            System.out.println("" + produto_pendente.getNome() + produto_pendente.getQuantidade());
+//        }
+//        pedido.getProdutos_pendentes();
+
+        // PRODUTOS
+        pedido = estoque.retiraProdutosEstoque(pedido);
+
         // DATA_ENTREGA
         pedido.setData_entrega(escolheDataFutura(scanner, "Qual a data de entrega do pedido? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
-        // PRODUTOS_PENDENTES
-        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
-        pedido.setProdutos_pendentes(escolheProdutos(scanner));
-
-        // PRODUTOS
-        pedido = estoque.retiraProdutosEstoque(pedido);
-        System.out.println(estoque);
-        System.out.println(pedido);
+        // PRECO TOTAL
+        float preco_total = pedido.calculaPrecoTotal(estoque);
+        if (preco_total == -1) {
+            System.out.println("Preço total do pedido Indeterminado, nenhum dos produtos pedidos está no estoque.");
+        } else {
+            pedido.setPreco_total(preco_total);
+            System.out.println("Preço total dos produtos do pedido que estão no estoque ficou: R$" + pedido.getPreco_total() + ".");
+            System.out.println("Os seguintes produtos ainda estão pendentes e não foram contabilizados no preço total: "); // implementar melhor futuramente
+            for (Pendente produtos_pendente : pedido.getProdutos_pendentes()) {
+                System.out.println(produtos_pendente.getNome() + " (quantidade: " + produtos_pendente.getQuantidade() + ")");
+            }
+        }
 
         // STATUS
-        for (Status status : Status.values()) {
-            System.out.println(status.getId() + "-" + status.getNome());
+        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE, deseja modificar? 'Sim' ou 'não'.", "Por favor, digite 'sim' ou 'não'.",
+                input -> input.matches("sim|nao|s|n"))).equals("sim|s")) {
+            pedido.setStatus(Status.PENDENTE);
+        } else {
+            System.out.println("Escolha um status dentre os abaixo:");
+            for (Status status : Status.values()) {
+                System.out.println(status.getId() + "-" + status.getNome());
+            }
+            pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
+            System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
         }
-        System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
-        System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
+        System.out.println("O status do pedido " + pedido.getId() + " foi definido como " + pedido.getStatus() + ".");
+
 
         // PAGO OU N
         pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
                 input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
-        // PRECO TOTAL
-        pedido.calculaPrecoTotal();
-        System.out.println("Preco total do pedido ficou: R$" + pedido.getPreco_total() + "."); // implementar
-
         return pedido;
     }
-
-
-
-
 }
