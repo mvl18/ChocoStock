@@ -3,18 +3,20 @@ package chocostock.itens.materiais;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposEmbalagens;
 
-public class Embalagem {
+public class Embalagem extends Suprimento {
     private TiposEmbalagens tipo_embalagem;
-    private Fornecedor fornecedor;
-    private double preco_pacote;
+    private float preco_pacote;
     private int quantidade_por_pacote;
-    private int quantidade_em_estoque;
 
-    public Embalagem(TiposEmbalagens tipo_embalagem, Fornecedor fornecedor, double preco_pacote, int quantidade_por_pacote, int quantidade_em_estoque) {
+    public Embalagem(String nome, Fornecedor fornecedor, TiposEmbalagens tipo_embalagem, float preco_pacote, int quantidade_por_pacote) {
+        super(nome, 0, preco_pacote / quantidade_por_pacote, fornecedor);
         this.tipo_embalagem = tipo_embalagem;
-        this.fornecedor = fornecedor;
         this.preco_pacote = preco_pacote;
         this.quantidade_por_pacote = quantidade_por_pacote;
-        this.quantidade_em_estoque = quantidade_em_estoque;
+    }
+
+    public Embalagem(String nome, int quantidade, Fornecedor fornecedor, TiposEmbalagens tipo_embalagem, float preco_pacote, int quantidade_por_pacote) {
+        this(nome, fornecedor, tipo_embalagem, preco_pacote, quantidade_por_pacote);
+        super.setQuantidade(quantidade);
     }
 }

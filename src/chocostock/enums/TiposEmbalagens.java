@@ -24,7 +24,7 @@ public enum TiposEmbalagens {
         this.tamanho = tamanho;
     }
 
-    public String getTipo() {
+    public String getNome() {
         return nome;
     }
 
