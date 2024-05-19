@@ -173,10 +173,14 @@ public class Pedido implements AddRemovivel, Iteravel {
      */
     public float calculaPrecoTotal(Estoque estoque) {
         float soma_preco = 0;
+
+        // Itera sobre todos os produtos no estoque
         for (Produto produto_estoque : estoque.getProdutos()) {
+            // Verifica se o produto no estoque pertence a este pedido
             if (produto_estoque.getId_pedido() == id)
                 soma_preco += produto_estoque.getPreco() * produto_estoque.getQuantidade();
         }
+        // Retorna o preço total acumulado, ou -1 se nenhum produto for encontrado
         return soma_preco > 0 ? soma_preco : -1;
     }
 }
