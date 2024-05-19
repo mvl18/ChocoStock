@@ -313,12 +313,8 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // PRODUTOS_PENDENTES
         pedido.setProdutos_pendentes(escolheProdutos(scanner));
-//        // queria printar os produtos pendentes que foram
-//        for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
-//            if ()
-//            System.out.println("" + produto_pendente.getNome() + produto_pendente.getQuantidade());
-//        }
-//        pedido.getProdutos_pendentes();
+        System.out.println("Produtos adicionados ao pedido: ");
+        System.out.println(listaVertical(pedido.getProdutos_pendentes()));
 
         // PRODUTOS
         pedido = estoque.retiraProdutosEstoque(pedido);
