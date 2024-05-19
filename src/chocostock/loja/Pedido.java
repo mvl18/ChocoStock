@@ -10,9 +10,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * A classe Pedido representa uma ordem de compra realizada por um loja para um cliente.
- * Cada pedido contém informações sobre o cliente, datas relevantes, status de pagamento,
- * produtos incluídos no pedido, produtos pendentes e o preço total.
+ * A classe Pedido representa uma ordem de compra realizada por
+ * um loja para um cliente.Cada pedido contém informações sobre
+ * o cliente, datas relevantes, status de pagamento, produtos
+ * incluídos no pedido, produtos pendentes e o preço total. <br>
+ * Implementa os métodos "isPago", "addProduto", "removeProduto",
+ * "addProduto_pendente", "removeProduto_pendente" e "calculaPrecoTotal".
  */
 public class Pedido implements AddRemovivel, Iteravel {
     private static int id_pedidos = 100000;
@@ -76,6 +79,9 @@ public class Pedido implements AddRemovivel, Iteravel {
         this.data_entrega = data_entrega;
     }
 
+    /**
+     * Retorna verdadeiro se o pedido foi pago, falso caso contrário.
+     */
     public boolean isPago() {
         return pago;
     }
@@ -116,6 +122,9 @@ public class Pedido implements AddRemovivel, Iteravel {
         this.preco_total = preco_total;
     }
 
+    /**
+     * Adiciona um produto na lista de produtos do pedido.
+     */
     public boolean addProduto(int posicao, int id_produto) {
         return addObjeto(posicao, produtos, id_produto);
     }
@@ -123,13 +132,24 @@ public class Pedido implements AddRemovivel, Iteravel {
     public boolean addProduto(int id_produto) {
         return addObjeto(produtos, id_produto);
     }
+
+    /**
+     * Remove um produto da lista de produtos do pedido.
+     */
     public boolean removeProduto(int id_produto) {
         return removeObjeto(produtos, id_produto);
     }
 
+    /**
+     * Adiciona um produto pendente à lista de produtos pendentes do pedido.
+     */
     public boolean addProduto_pendente(Pendente pendente) {
         return addObjeto(produtos_pendentes, pendente);
     }
+
+    /**
+     * Remove um produto pendente da lista de produtos pendentes do pedido.
+     */
     public boolean removeProduto_pendente(Pendente pendente) {
         return removeObjeto(produtos_pendentes, pendente);
     }
@@ -148,7 +168,10 @@ public class Pedido implements AddRemovivel, Iteravel {
         "\nPreco total: R$" + String.format("%.2f", preco_total);
         return out + "\n";
     }
-
+  
+    /**
+     * Calcula o preço total do pedido com base nos produtos adicionados e seus preços.
+     */
     public float calculaPrecoTotal(Estoque estoque) {
         float soma_preco = 0;
         for (Produto produto_estoque : estoque.getProdutos()) {

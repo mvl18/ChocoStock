@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A classe Endereco representa um endereço físico, incluindo informações detalhadas
+ * como número, CEP, rua, bairro, cidade e estado. <br>
+ * Implementa o método "achaEstado".
+**/
 public class Endereco implements Escolhivel {
     private int numero;
     private String cep;
@@ -83,21 +88,29 @@ public class Endereco implements Escolhivel {
                 "\n" + cidade + " (" + estado.getCodigo() + ")";
     }
 
+    /**
+     * Determina e define o Estado correspondente a um CEP fornecido.
+     */
     public void achaEstado(String CEP) {
+        // Converte o CEP para um número inteiro e calcula o identificador do estado
         int id = Integer.parseInt(CEP)/100000;
 
+        // Cria uma lista de IDs dos estados
         List<Integer> idsEstados = new ArrayList<Integer>();
         for (Estados estado : Estados.values()) {
             idsEstados.add(estado.getId());
         }
-
+        // Ordena a lista de IDs dos estados
         Collections.sort(idsEstados);
+
+        // Encontra o índice apropriado na lista de IDs dos estados
         int i = 0;
         for (;i < idsEstados.size(); i++) {
             if (idsEstados.get(i) > id)
                 break;
-            continue;
         }
+
+        // Define o estado do objeto Endereco com base no ID encontrado
         for (Estados estado : Estados.values()) {
             if (estado.getId() == idsEstados.get(i-1))
                 setEstado(estado);

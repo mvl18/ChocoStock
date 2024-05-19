@@ -4,8 +4,6 @@ import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 public enum TiposIngredientes implements Identificavel, Nomeavel {
-    //Produtos e Codigos retirados da planilha
-    //Produtos estao com letras minusculas sem acento
     CACAU("Cacau", 1),
     MANTEIGA_DE_CACAU("Manteiga de cacau", 2),
     ACUCAR_DEMERARA("Acucar demerara", 3),

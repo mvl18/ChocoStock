@@ -14,16 +14,17 @@ import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO;
 import static chocostock.enums.TiposChocolates.CHOCOLATE_INTENSO;
 import static chocostock.enums.TiposChocolates.CHOCOLATE_BRANCO_ACAI_BETERRABA;
 
+
 /**
-* A classe Sistema é responsável por: <br>
-* - Inicializar o sistema e exibir a mensagem de boas-vindas. <br>
-* - Gerenciar e navegar entre os diferentes menus do sistema: menu inicial, menu de pedidos,
-* menu de estoque e menu de colaboradores. <br>
-* - Delegar tarefas específicas aos métodos correspondentes em resposta às opções selecionadas
-* pelo usuário em cada menu. <br>
-* - Fornecer métodos de interação com a loja (instância da classe Loja) para adicionar pedidos,
-* clientes, fornecedores e ingredientes, e para listar os pedidos, clientes e fornecedores existentes. <br>
-**/
+ * A classe Sistema é responsável por: <br>
+ * - Inicializar o sistema e exibir a mensagem de boas-vindas. <br>
+ * - Gerenciar e navegar entre os diferentes menus do sistema: menu inicial, menu de pedidos,
+ * menu de estoque e menu de colaboradores. <br>
+ * - Delegar tarefas específicas aos métodos correspondentes em resposta às opções selecionadas
+ * pelo usuário em cada menu. <br>
+ * - Fornecer métodos de interação com a loja (instância da classe Loja) para adicionar pedidos,
+ * clientes, fornecedores e ingredientes, e para listar os pedidos, clientes e fornecedores existentes.
+ */
 public class Sistema implements Criavel, ValidadorInput {
 
     private Scanner input;
