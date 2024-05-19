@@ -348,19 +348,11 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         } else {
             System.out.println("Escolha um status dentre os abaixo:");
             for (Status status : Status.values()) {
-                System.out.println(status.getId() + "-" + status.getNome());
+                System.out.println("(" + status.getId() + ") - " + status.getNome());
             }
             pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
-            System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
         }
         System.out.println("O status do pedido " + pedido.getId() + " foi definido como " + pedido.getStatus() + ".");
-
-        for (Status status : Status.values()) {
-            System.out.println("(" + status.getId() + ") - " + status.getNome());
-        }
-        System.out.println("Qual o status do pedido dentre os acima? ");
-        pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
-        System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
         // PAGO OU NÃO
         pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta valida. ",

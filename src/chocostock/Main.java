@@ -7,14 +7,14 @@ import chocostock.colaboradores.Colaborador;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.Estados;
 import chocostock.enums.TiposCaixas;
+import chocostock.enums.TiposChocolates;
 import chocostock.itens.produtos.Caixa;
 import chocostock.itens.produtos.Chocolate;
 import chocostock.loja.Loja;
 
 import java.util.Scanner;
 
-import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO;
-import static chocostock.enums.TiposChocolates.CHOCOLATE_INTENSO;
+import static chocostock.enums.TiposChocolates.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,12 +32,6 @@ public class Main {
         Loja loja = new Loja("Primeira e única loja!", endereco);  //Cria loja
 
         CriarTeste.addTudo(loja);  //RETIRAR
-
-        // Adiciona itens ao estoque (não sei onde colocar)
-//        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
-//        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
-//        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
-
 
         Sistema sistema = new Sistema(scanner, loja);
 

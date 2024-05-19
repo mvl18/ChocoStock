@@ -5,7 +5,7 @@ import chocostock.itens.materiais.Embalagem;
 
 import java.time.LocalDate;
 
-public abstract class Produto extends Item {
+public class Produto extends Item {
     private static int id_produtos = 100000;
     private int id_pedido;
     private LocalDate validade;

@@ -4,6 +4,7 @@ import chocostock.enums.Status;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Iteravel;
 import chocostock.itens.produtos.Pendente;
+import chocostock.itens.produtos.Produto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
