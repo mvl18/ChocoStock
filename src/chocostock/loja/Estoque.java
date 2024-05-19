@@ -26,13 +26,13 @@ import java.util.ArrayList;
  */
 public class Estoque implements AddRemovivel, Iteravel {
     private ArrayList<Produto> produtos;
-    private ArrayList<Item> materiais;
+    private ArrayList<Ingrediente> ingredientes;
     private ArrayList<Item> equipamentos;
     private ArrayList<Embalagem> embalagens;
 
     public Estoque() {
         this.produtos = new ArrayList<Produto>();
-        this.materiais = new ArrayList<Item>();
+        this.ingredientes = new ArrayList<Ingrediente>();
         this.equipamentos = new ArrayList<Item>();
         this.embalagens = new ArrayList<Embalagem>();
     }
@@ -45,12 +45,34 @@ public class Estoque implements AddRemovivel, Iteravel {
         this.produtos = produtos;
     }
 
-    public ArrayList<Item> getMateriais() {
-        return materiais;
+    public ArrayList<Ingrediente> getIngredientes() {
+        return ingredientes;
     }
 
-    public void setMateriais(ArrayList<Item> materiais) {
-        this.materiais = materiais;
+    public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+
+    /**
+     * Adiciona um ingrediente na lista de ingredientes do estoque.
+     */
+    public boolean addIngrediente(Ingrediente ingrediente) {
+        return addObjeto(ingredientes, ingrediente);
+    }
+
+    /**
+     * Remove um ingrediente da lista de ingredientes.
+     */
+    public boolean removeIngrediente(Ingrediente ingrediente) {
+        return removeObjeto(ingredientes, ingrediente);
+    }
+
+    public ArrayList<Embalagem> getEmbalagens() {
+        return embalagens;
+    }
+
+    public void setEmbalagens(ArrayList<Embalagem> embalagens) {
+        this.embalagens = embalagens;
     }
 
     public ArrayList<Item> getEquipamentos() {
@@ -62,7 +84,7 @@ public class Estoque implements AddRemovivel, Iteravel {
     }
 
     /**
-     * Adiciona uma embalagem ao estoque.
+     * Adiciona uma embalagem na lista de embalagens do estoque.
      */
     public boolean addEmbalagem(Embalagem embalagem) {
         return addObjeto(embalagens, embalagem);
@@ -108,20 +130,6 @@ public class Estoque implements AddRemovivel, Iteravel {
     }
 
     /**
-     * Adiciona um material à lista de materiais.
-     */
-    public boolean addMaterial(Suprimento suprimento) {
-        return addObjeto(materiais, suprimento);
-    }
-
-    /**
-     * Remove um material da lista de materiais.
-     */
-    public boolean removeMaterial(Suprimento suprimento) {
-            return removeObjeto(materiais, suprimento);
-    }
-
-    /**
      * Imprime na saída padrão os tipos de ingredientes disponíveis no estoque.
      */
     public void imprimirIngredientes(){
@@ -143,7 +151,7 @@ public class Estoque implements AddRemovivel, Iteravel {
     public String toString() {
         return "--- ESTOQUE ---" +
                 "\nProdutos: " + listaHorizontalQuebraLinha(produtos) +
-                "\nMateriais: " + listaHorizontalQuebraLinha(materiais) +
+                "\nIngredientes: " + listaHorizontalQuebraLinha(ingredientes) +
                 "\nEquipamentos: " + listaHorizontalQuebraLinha(equipamentos) +
                 "\nEmbalagens: " + listaHorizontalQuebraLinha(embalagens);
     }
@@ -162,17 +170,17 @@ public class Estoque implements AddRemovivel, Iteravel {
             LocalDate validade = null;
 
             // Itera sobre os materiais no estoque
-            for(Item item : materiais){
+            for(Ingrediente ingrediente : ingredientes){
                 // Verifica se o item é um ingrediente do tipo atual
-                if(item instanceof Ingrediente && ((Ingrediente) item).getTipo() == tipo){
+                if(ingrediente.getTipo() == tipo){
                     // Atualiza a quantidade total do ingrediente
-                    quantidade += item.getQuantidade() * ((Ingrediente)item).getUnidade();
+                    quantidade += ingrediente.getQuantidade() * ingrediente.getUnidade();
                     // Atualiza a validade do ingrediente, considerando a data de validade mais próxima
                     if(validade == null){
-                        validade = ((Ingrediente) item).getValidade();
+                        validade = ingrediente.getValidade();
                     }
                     else{
-                        validade = (validade.isBefore(((Ingrediente) item).getValidade())) ? validade : ((Ingrediente) item).getValidade();
+                        validade = (validade.isBefore((ingrediente.getValidade())) ? validade : ingrediente.getValidade());
                     }
                 }
             }
