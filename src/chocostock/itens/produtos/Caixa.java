@@ -5,6 +5,10 @@ import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 
+/**
+ * A classe Caixa representa um tipo específico de produto com base
+ * na classe Produto. Possuindo seu tipo e seu lote.
+ */
 public class Caixa extends Produto {
     private TiposCaixas tipo;
     private int lote;

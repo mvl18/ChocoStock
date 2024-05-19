@@ -7,8 +7,17 @@ import chocostock.enums.Estados;
 import java.text.Normalizer;
 import java.util.Scanner;
 
+/**
+ * A interface Criavel define métodos para criar instâncias de objetos,
+ * utilizando a entrada do usuário para preencher os detalhes.
+ */
 public interface Criavel extends ValidadorInput, Escolhivel {
-
+    /**
+     * Cria um novo objeto de Endereco com base nas entradas do usuário.
+     *
+     * @param scanner O scanner usado para ler as entradas do usuário.
+     * @return Um novo objeto de Endereco preenchido com os detalhes fornecidos pelo usuário.
+     */
     default Endereco criaEndereco(Scanner scanner) {
         Endereco endereco = new Endereco();
         // CEP
