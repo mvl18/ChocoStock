@@ -1,4 +1,4 @@
-package chocostock.itens.materiais;
+package chocostock.itens.suprimentos;
 
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposIngredientes;

@@ -1,7 +1,7 @@
 package chocostock.itens.produtos;
 
 import chocostock.itens.Item;
-import chocostock.itens.materiais.Embalagem;
+import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 
