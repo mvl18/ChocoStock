@@ -5,11 +5,10 @@ import chocostock.enums.TiposChocolates;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Complementavel;
 import chocostock.interfaces.Iteravel;
-import chocostock.itens.materiais.Embalagem;
+import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Chocolate extends Produto implements AddRemovivel, Iteravel, Complementavel {
     private int lote;

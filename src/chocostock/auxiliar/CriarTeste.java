@@ -6,7 +6,7 @@ import chocostock.enums.Estados;
 import chocostock.colaboradores.Cliente;
 import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.Escolhivel;
-import chocostock.itens.materiais.Embalagem;
+import chocostock.itens.suprimentos.Embalagem;
 import chocostock.loja.Loja;
 
 import java.util.ArrayList;

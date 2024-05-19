@@ -1,8 +1,7 @@
-package chocostock.itens;
+package chocostock.itens.suprimentos;
 
 import chocostock.colaboradores.Fornecedor;
 import chocostock.interfaces.Nomeavel;
-import chocostock.itens.materiais.Suprimento;
 
 import java.time.LocalDate;
 

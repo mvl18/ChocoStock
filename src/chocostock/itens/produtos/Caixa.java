@@ -1,8 +1,7 @@
 package chocostock.itens.produtos;
 
 import chocostock.enums.TiposCaixas;
-import chocostock.interfaces.AddRemovivel;
-import chocostock.itens.materiais.Embalagem;
+import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 
