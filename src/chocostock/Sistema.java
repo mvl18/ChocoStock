@@ -1,10 +1,12 @@
 package chocostock;
 
+import chocostock.enums.TiposComplementos;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.produtos.Chocolate;
 import chocostock.loja.Loja;
 import chocostock.interfaces.Criavel;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_CARAMELIZADO;

@@ -3,16 +3,16 @@ package chocostock.itens.produtos;
 import chocostock.itens.Item;
 import chocostock.itens.materiais.Embalagem;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public abstract class Produto extends Item {
+public class Produto extends Item {
     private static int id_produtos = 100000;
     private int id_pedido;
-    private Date validade;
+    private LocalDate validade;
     private int peso;
     private Embalagem embalagem;
 
-    public Produto(String nome, int quantidade, float preco, Date validade, int peso, Embalagem embalagem) {
+    public Produto(String nome, int quantidade, float preco, LocalDate validade, int peso, Embalagem embalagem) {
         super(nome, quantidade, preco);
         this.setId(id_produtos++);
         this.id_pedido = -1;
@@ -33,11 +33,11 @@ public abstract class Produto extends Item {
         this.id_pedido = id_pedido;
     }
 
-    public Date getValidade() {
+    public LocalDate getValidade() {
         return validade;
     }
 
-    public void setValidade(Date validade) {
+    public void setValidade(LocalDate validade) {
         this.validade = validade;
     }
 

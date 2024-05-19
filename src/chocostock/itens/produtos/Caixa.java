@@ -1,27 +1,23 @@
 package chocostock.itens.produtos;
 
 import chocostock.enums.TiposCaixas;
+import chocostock.interfaces.AddRemovivel;
 import chocostock.itens.materiais.Embalagem;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Caixa extends Produto {
-    private ArrayList<Chocolate> chocolates;
     private TiposCaixas tipo;
+    private int lote;
 
-    public Caixa(String nome, int quantidade, float preco, Date validade, int peso, Embalagem embalagem, ArrayList<Chocolate> chocolates, TiposCaixas tipo) {
-        super(nome, quantidade, preco, validade, peso, embalagem);
-        this.chocolates = chocolates;
+    public Caixa(TiposCaixas tipo, int quantidade, int lote, float preco, LocalDate validade, int peso, Embalagem embalagem) {
+        super(tipo.getNome(), quantidade, preco, validade, peso, embalagem);
         this.tipo = tipo;
+        this.lote = lote;
     }
 
-    public ArrayList<Chocolate> getChocolates() {
-        return chocolates;
-    }
-
-    public void setChocolates(ArrayList<Chocolate> chocolates) {
-        this.chocolates = chocolates;
+    public Caixa() {
+        this(TiposCaixas.CAIXA_ASORTI_P, -1, -1, -1.0F, null, -1, null);
     }
 
     public TiposCaixas getTipo() {
@@ -30,24 +26,5 @@ public class Caixa extends Produto {
 
     public void setTipo(TiposCaixas tipo) {
         this.tipo = tipo;
-    }
-
-    public boolean addChocolate(Chocolate chocolate) {
-        if (!this.chocolates.contains(chocolate)) {
-            this.getChocolates().add(chocolate);
-            return true;
-        }
-
-        return false;
-
-    }
-
-    public boolean removeChocolate(Chocolate chocolate) {
-        if (this.chocolates.contains(chocolate)) {
-            this.getChocolates().remove(chocolate);
-            return true;
-        }
-
-        return false;
     }
 }

@@ -6,7 +6,7 @@ import chocostock.interfaces.Nomeavel;
 import chocostock.interfaces.ValidadorInput;
 
 
-public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
+public abstract class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
     private String nome;
     private String telefone;
     private String email;
