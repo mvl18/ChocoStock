@@ -118,6 +118,6 @@ public interface ValidadorInput {
             mensagemOpcoes += "(0) - " + opcoes[opcoes.length - 1];
         }
 
-        return verificaOpcao(scanner, mensagemOpcoes, opcaoMin, opcaoMin + opcoes.length);
+        return verificaOpcao(scanner, mensagemOpcoes, opcaoMin, opcaoMin + opcoes.length - 1);
     }
 }
