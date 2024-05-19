@@ -1,11 +1,12 @@
 package chocostock.itens.materiais;
 
+import chocostock.colaboradores.Fornecedor;
 import chocostock.itens.Item;
 
-public class Suprimento extends Item {
-    private String cpnj_fornecedor;
-    public Suprimento(String nome, int quantidade, float preco, String cpnj_fornecedor) {
+public abstract class Suprimento extends Item {
+    private Fornecedor fornecedor;
+    public Suprimento(String nome, int quantidade, float preco, Fornecedor fornecedor) {
         super(nome, quantidade, preco);
-        this.cpnj_fornecedor = cpnj_fornecedor;
+        this.fornecedor = fornecedor;
     }
 }

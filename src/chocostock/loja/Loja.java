@@ -124,15 +124,15 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     public int getNumeroPedidos() {return this.pedidos.size();}
 
     public String listaClientes() {
-        return listaObjetos(clientes);
+        return listaVertical(clientes);
     }
 
     public String listaFornecedores() {
-        return listaObjetos(fornecedores);
+        return listaHorizontalQuebraLinha(fornecedores);
     }
 
     public String listaPedidos() {
-        return listaObjetos(pedidos);
+        return listaVertical(pedidos);
     }
 
     private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
@@ -142,7 +142,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 case 1: produtos_escolhidos.add(selecionaProduto(scanner));
                     break;
                 case 2:
-                    System.out.println(produtos_escolhidos);
+                    System.out.print(listaVertical(produtos_escolhidos));
                     break;
                 default:
                     produtos_escolhidos.removeIf(Objects::isNull);
@@ -162,10 +162,10 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     private Pendente selecionaCaixa(Scanner scanner, Pendente produtoPendente) {
         for (TiposCaixas tipo : TiposCaixas.values()) {
-            System.out.println(tipo.getId() + "-" + tipo.getNome());
+            System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
-        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
+        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;
@@ -173,21 +173,21 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     private Pendente selecionaBarra(Scanner scanner, Pendente produtoPendente) {
         for (TiposChocolates tipo : TiposChocolates.values()) {
-            System.out.println(tipo.getId() + "-" + tipo.getNome());
+            System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         produtoPendente.setNome(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
 
         for (TiposComplementos complemento : TiposComplementos.values()) {
-            System.out.println(complemento.getId() + "-" + complemento.getNome());
+            System.out.println("(" + complemento.getId() + ") - " + complemento.getNome());
         }
-        System.out.println("0-Sair");
+        System.out.println("(0) - Sair");
         System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
         produtoPendente.setComplementos(escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
                 "0", TiposComplementos.values().length));
 
 
-        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ":",
+        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;
@@ -279,7 +279,13 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // CLIENTE
         Cliente cliente;
-        switch (verificaOpcao(scanner, new String[]{"NOVO PEDIDO", "Mostrar lista de clientes já cadastrados.", "Adicionar novo cliente."}, 1)) {
+        String msg =   """
+                --- NOVO PEDIDO ---
+                Selecione uma das opções:
+                (1) - Mostrar lista de clientes já cadastrados.
+                (2) - Adicionar novo cliente.
+                """;
+        switch (verificaOpcao(scanner, msg, 1, 2)) {
             case 1:
                 System.out.println(listaClientes());
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
@@ -311,7 +317,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         System.out.println("Data inserida: " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(pedido.getData_entrega()));
 
         // PRODUTOS_PENDENTES
-        System.out.println("Selecione qual produto precisa ser adicionado ao pedido. ");
         pedido.setProdutos_pendentes(escolheProdutos(scanner));
 
         // PRODUTOS
@@ -321,14 +326,14 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
         // STATUS
         for (Status status : Status.values()) {
-            System.out.println(status.getId() + "-" + status.getNome());
+            System.out.println("(" + status.getId() + ") - " + status.getNome());
         }
         System.out.println("Qual o status do pedido dentre os acima? ");
         pedido.setStatus(escolheObjeto(scanner, Status.values(), "Status inválido. Digite um número válido ou o nome do status.", "obrigatorio"));
         System.out.println("O status do seu pedido foi definido para " + pedido.getStatus().getNome() + ".");
 
-        // PAGO OU N
-        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não", "Por favor, insira uma resposta valida. ",
+        // PAGO OU NÃO
+        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta valida. ",
                 input -> input.matches("sim|nao|s|n"))).equals("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 

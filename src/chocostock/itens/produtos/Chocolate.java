@@ -53,7 +53,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
     }
 
     public String listaComplementos() {
-        return listaObjetos(complementos);
+        return listaHorizontalQuebraLinha(complementos);
     }
 
     public String getOrigem_cacau() {

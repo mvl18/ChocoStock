@@ -23,7 +23,7 @@ public interface ValidadorInput {
         boolean entradaValida = false;
 
         do {
-            System.out.println(prompt);
+            System.out.print(prompt);
             input = scanner.nextLine();
             inputnorm = Processa.normalizaString(input);
 
