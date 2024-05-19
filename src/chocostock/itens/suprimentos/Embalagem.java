@@ -30,6 +30,7 @@ public class Embalagem extends Suprimento {
     public Embalagem() {
         this("", 0, null, null, 0, 10);
     }
+
     public TiposEmbalagens getTipo_embalagem() {
         return tipo_embalagem;
     }
