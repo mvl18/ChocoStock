@@ -1,6 +1,5 @@
 package chocostock.itens.materiais;
 
-import chocostock.colaboradores.Fornecedor;
 import chocostock.itens.Item;
 
 public class Suprimento extends Item {

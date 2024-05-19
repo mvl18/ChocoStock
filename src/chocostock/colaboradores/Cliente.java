@@ -4,7 +4,6 @@ import chocostock.auxiliar.Endereco;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Iteravel;
-import chocostock.loja.Pedido;
 
 import java.util.ArrayList;
 

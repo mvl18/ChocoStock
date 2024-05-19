@@ -7,7 +7,6 @@ import chocostock.itens.Equipamento;
 import chocostock.itens.Item;
 import chocostock.itens.materiais.Embalagem;
 import chocostock.itens.materiais.Suprimento;
-import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.materiais.Ingrediente;

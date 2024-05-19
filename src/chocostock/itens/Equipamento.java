@@ -1,6 +1,5 @@
 package chocostock.itens;
 
-import chocostock.colaboradores.Fornecedor;
 import chocostock.interfaces.Nomeavel;
 import chocostock.itens.materiais.Suprimento;
 

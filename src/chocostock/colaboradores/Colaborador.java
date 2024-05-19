@@ -1,14 +1,10 @@
 package chocostock.colaboradores;
 
 import chocostock.auxiliar.Endereco;
-import chocostock.auxiliar.Verifica;
-import chocostock.enums.Estados;
 import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.Nomeavel;
 import chocostock.interfaces.ValidadorInput;
 
-import java.text.Normalizer;
-import java.util.Scanner;
 
 public class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
     private String nome;
