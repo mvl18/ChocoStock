@@ -53,8 +53,7 @@ public class Sistema implements Criavel, ValidadorInput {
                 (1) - Menu Pedidos.
                 (2) - Menu Estoque.
                 (3) - Menu Colaboradores.
-                (0) - Encerrar Sistema.
-                """;
+                (0) - Encerrar Sistema.""";
 
         opcao = verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
@@ -88,7 +87,7 @@ public class Sistema implements Criavel, ValidadorInput {
             case 1: loja.addPedido(loja.novoPedido(input));
                     menuPedidos();
                     break;
-            case 2: System.out.println("Pedidos Atuais:\n" + loja.listaPedidos());
+            case 2: System.out.println("--- PEDIDOS ATUAIS ---\n" + loja.listaPedidos());
                     menuPedidos();
                     break;
             case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
@@ -106,22 +105,20 @@ public class Sistema implements Criavel, ValidadorInput {
                 (X) - Adicionar Produto
                 (2) - Adicionar Ingrediente
                 (X) - Adicionar Embalagem
-                (X) - Status Produto
+                (4) - Status Produtos
                 (5) - Status Ingredientes
                 (X) - Status Embalagens
                 (0) - Voltar para o menu inicial.
                 """;
-
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().addProduto(new Chocolate(CHOCOLATE_AO_LEITE_INTENSO, 5, 5.50F, null, 1, null, 1, "Bahia"));
-        loja.getEstoque().imprimirProdutos();
 
         opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 0: menuInicial();
                     break;
             case 2: loja.getEstoque().addMaterial(loja.estocarIngrediente(input));
+                    menuEstoque();
+                    break;
+            case 4: loja.getEstoque().imprimirProdutos();
                     menuEstoque();
                     break;
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
