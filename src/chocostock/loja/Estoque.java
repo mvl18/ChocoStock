@@ -57,7 +57,7 @@ public class Estoque implements AddRemovivel, Iteravel {
     }
 
     public String listaEmbalagens() {
-        return listaHorizontal(embalagens);
+        return listaHorizontalQuebraLinha(embalagens);
     }
 
     public boolean addProduto(int posicao, Produto produto) {
@@ -103,10 +103,10 @@ public class Estoque implements AddRemovivel, Iteravel {
     @Override
     public String toString() {
         return "--- ESTOQUE ---" +
-                "\nProdutos: " + listaHorizontal(produtos) +
-                "\nMateriais: " + listaHorizontal(materiais) +
-                "\nEquipamentos: " + listaHorizontal(equipamentos) +
-                "\nEmbalagens: " + listaHorizontal(embalagens);
+                "\nProdutos: " + listaHorizontalQuebraLinha(produtos) +
+                "\nMateriais: " + listaHorizontalQuebraLinha(materiais) +
+                "\nEquipamentos: " + listaHorizontalQuebraLinha(equipamentos) +
+                "\nEmbalagens: " + listaHorizontalQuebraLinha(embalagens);
     }
 
     public String statusIngredientes(){

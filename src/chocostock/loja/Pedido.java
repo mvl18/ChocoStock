@@ -143,7 +143,7 @@ public class Pedido implements AddRemovivel, Iteravel {
                 "\nStatus: " + status.getNome() +
                 "\nProdutos: ";
         out += listaHorizontal(produtos);
-        out += "\nProdutos pendentes: " + listaHorizontal(produtos) +
+        out += "\nProdutos pendentes: " + listaHorizontal(produtos_pendentes) +
         "\nPreco total: R$" + String.format("%.2f", preco_total);
         return out + "\n";
     }

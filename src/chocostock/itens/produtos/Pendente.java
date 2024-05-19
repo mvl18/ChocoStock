@@ -7,7 +7,7 @@ import chocostock.interfaces.Nomeavel;
 
 import java.util.ArrayList;
 
-public class Pendente  implements Nomeavel, AddRemovivel, Iteravel {
+public class Pendente implements Nomeavel, AddRemovivel, Iteravel {
     private String nome;
     private ArrayList<TiposComplementos> complementos;
     private int quantidade;
@@ -58,6 +58,6 @@ public class Pendente  implements Nomeavel, AddRemovivel, Iteravel {
     @Override
     public String toString() {
         return nome + "(" + quantidade + "unidade" + (quantidade > 1 ? "s" : "") + ")" +
-                "\nComplementos: " + listaHorizontal(complementos) + "\n";
+                "\nComplementos: " + listaHorizontalQuebraLinha(complementos) + "\n";
     }
 }

@@ -45,7 +45,7 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
     @Override
     public String toString() {
         String out = id + ". " + super.toString() + "Pedidos: ";
-        out += listaHorizontal(pedidos);
+        out += listaHorizontalQuebraLinha(pedidos);
         return out;
     }
 }

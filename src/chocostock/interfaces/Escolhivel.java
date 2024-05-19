@@ -13,7 +13,7 @@ import java.util.Scanner;
 * Seu intuito é ser usada para facilitar pegar o input do usuário, sendo que ele deve escolher algo de uma
 * lista de opções.
 * */
-public interface Escolhivel extends ValidadorInput {
+public interface Escolhivel extends Iteravel, ValidadorInput {
     /**
      * Escolhe um objeto da lista com base nas entradas fornecidas.
      *
@@ -83,13 +83,7 @@ public interface Escolhivel extends ValidadorInput {
                 }
             }
             System.out.print(escolhidos.size() > 1 ? "Escolhidos: " : "Escolhido: ");
-            for (T escolhido : escolhidos) {
-                if (escolhido instanceof Nomeavel) {
-                    System.out.println(((Nomeavel) escolhido).getNome());
-                } else {
-                    System.out.println(escolhido);
-                }
-            }
+            System.out.println(listaHorizontal(escolhidos));
 
             if (!input_valido) {
                 System.out.println(mensagemErro);

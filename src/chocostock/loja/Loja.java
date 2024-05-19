@@ -128,11 +128,11 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     }
 
     public String listaFornecedores() {
-        return listaHorizontal(fornecedores);
+        return listaHorizontalQuebraLinha(fornecedores);
     }
 
     public String listaPedidos() {
-        return listaHorizontal(pedidos);
+        return listaVertical(pedidos);
     }
 
     private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
