@@ -23,8 +23,9 @@ import java.util.Scanner;
  * A classe Estoque gerencia os produtos, materiais, equipamentos
  * e embalagens disponíveis no estoque da loja. <br>
  * Implementa os métodos "addEmbalagem", "addProduto", "addMaterial" ...,
- * "imprimirIngredientes", "imprimirProdutos", "statusIngredientes",
- * "retiraProdutoEstoque" e o método privado "meioseProduto".
+ * "novoFornecedor", "imprimirIngredientes", "imprimirProdutos",
+ * "statusIngredientes", "retiraProdutoEstoque", "estocarCliente",
+ * "estocarEmbalagem" e o método privado "meioseProduto".
  */
 public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     private ArrayList<Produto> produtos;
@@ -70,6 +71,10 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         return listaHorizontalQuebraLinha(fornecedores);
     }
 
+    /**
+     * Método para criar um novo fornecedor com dados fornecidos pelo usuário.
+     * Solicita ao usuário que insira as informações do fornecedor via console.
+     */
     public Fornecedor novoFornecedor(Scanner scanner) {
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
@@ -340,6 +345,10 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         return chocolate_pedido;
     }
 
+    /**
+     * Método para adicionar um novo ingrediente ao estoque com dados fornecidos pelo usuário.
+     * Solicita ao usuário que insira as informações do ingrediente via console.
+     */
     public Ingrediente estocarIngrediente(Scanner input) {
         Ingrediente ingrediente = new Ingrediente();
         //TIPO
@@ -391,6 +400,10 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         return ingrediente;
     }
 
+    /**
+     * Método para adicionar uma nova embalagem ao estoque com dados fornecidos pelo usuário.
+     * Solicita ao usuário que insira as informações da embalagem via console.
+     */
     public Embalagem estocarEmbalagem(Scanner input){
         Embalagem embalagem = new Embalagem();
         //TIPO
