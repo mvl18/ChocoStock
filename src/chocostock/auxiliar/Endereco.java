@@ -34,10 +34,6 @@ public class Endereco implements Escolhivel {
         this(0, "", "", "", "", Estados.XX);
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
     public void setNumero(int numero) {
         this.numero = numero;
     }
@@ -50,24 +46,12 @@ public class Endereco implements Escolhivel {
         this.cep = cep;
     }
 
-    public String getRua() {
-        return rua;
-    }
-
     public void setRua(String rua) {
         this.rua = rua;
     }
 
-    public String getBairro() {
-        return bairro;
-    }
-
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
     }
 
     public void setCidade(String cidade) {
@@ -82,12 +66,6 @@ public class Endereco implements Escolhivel {
         this.estado = estado;
     }
 
-    public String toString(boolean bool) {
-        return "CEP: " + cep +
-                "\nRua " + rua + ", " + numero + " - Bairro " + bairro +
-                "\n" + cidade + " (" + estado.getCodigo() + ")";
-    }
-
     /**
      * Determina e define o Estado correspondente a um CEP fornecido.
      */
@@ -96,7 +74,7 @@ public class Endereco implements Escolhivel {
         int id = Integer.parseInt(CEP)/100000;
 
         // Cria uma lista de IDs dos estados
-        List<Integer> idsEstados = new ArrayList<Integer>();
+        List<Integer> idsEstados = new ArrayList<>();
         for (Estados estado : Estados.values()) {
             idsEstados.add(estado.getId());
         }

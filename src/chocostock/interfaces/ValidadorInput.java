@@ -104,20 +104,20 @@ public interface ValidadorInput {
      * @return O int digitado pelo usuário.
      * Exemplo de input: verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados", "Finalizar escolhas."}, 0)
      */
-    default int verificaOpcao(Scanner scanner, String opcoes[], int opcaoMin) {
-        String mensagemOpcoes = "";
+    default int verificaOpcao(Scanner scanner, String[] opcoes, int opcaoMin) {
+        StringBuilder mensagemOpcoes = new StringBuilder();
         boolean inicioZero = opcaoMin == 0;
         int inicial = inicioZero ? 1 : opcaoMin;
         int fim = inicioZero ? (opcoes.length-1) : (opcoes.length);
 
-        mensagemOpcoes += "--- " + opcoes[0] + " ---\nSelecione uma das opções:\n";
+        mensagemOpcoes.append("--- ").append(opcoes[0]).append(" ---\nSelecione uma das opções:\n");
         for (int i = inicial; i < fim; i++) {
-            mensagemOpcoes += "(" + (i) + ") - " + opcoes[i - inicial + 1] + "\n";
+            mensagemOpcoes.append("(").append(i).append(") - ").append(opcoes[i - inicial + 1]).append("\n");
         }
         if (inicioZero) {
-            mensagemOpcoes += "(0) - " + opcoes[opcoes.length - 1];
+            mensagemOpcoes.append("(0) - ").append(opcoes[opcoes.length - 1]);
         }
 
-        return verificaOpcao(scanner, mensagemOpcoes, opcaoMin, opcaoMin + opcoes.length - 1);
+        return verificaOpcao(scanner, mensagemOpcoes.toString(), opcaoMin, opcaoMin + opcoes.length - 1);
     }
 }

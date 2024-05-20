@@ -26,7 +26,7 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
      * @return Uma lista de objetos escolhidos pelo usuário ou o objeto escolhido pelo usuario.
      */
     default <T> ArrayList<T> escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro, String mensagemSaida, int n_escolhas) { // posso criar uma String mensagemSaida para voce poder definir o que vc quiser
-        ArrayList<T> escolhidos = new ArrayList<T>();
+        ArrayList<T> escolhidos = new ArrayList<>();
 
         if (mensagemErro.isEmpty()) {
             mensagemErro = "Input inválido.";
@@ -105,25 +105,6 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
         return objeto.get(0);
     }
 
-    /**
-     * Sobrecarga do método escolheObjeto sem a mensagem de saída.
-     */
-    default <T> ArrayList<T> escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro, int n_escolhas) {
-        return escolheObjeto(scanner, lista, mensagemErro, "", n_escolhas);
-    }
-
-    /**
-     * Sobrecarga do método escolheObjeto sem o número máximo de escolhas e sem a mensagem de saída.
-     */
-    default <T> T escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro) {
-        ArrayList<T> objeto = escolheObjeto(scanner, lista, mensagemErro, "", 1);
-        if (objeto.isEmpty()) {
-            return null;
-        }
-
-        return objeto.get(0);
-    }
-
     // Sobrecargas adicionais para arrays do C
     default <T> ArrayList<T> escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, String mensagemSaida, int n_escolhas) {
         return escolheObjeto(scanner, new ArrayList<>(Arrays.asList(lista)), mensagemErro, mensagemSaida, n_escolhas);
@@ -134,25 +115,6 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
      */
     default <T> T escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, String mensagemSaida) {
         ArrayList<T> objeto = escolheObjeto(scanner, lista, mensagemErro, mensagemSaida, 1);
-        if (objeto.isEmpty()) {
-            return null;
-        }
-
-        return objeto.get(0);
-    }
-
-    /**
-     * Sobrecarga do método escolheObjeto sem a mensagem de saída.
-     */
-    default <T> ArrayList<T> escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, int n_escolhas) {
-        return escolheObjeto(scanner, new ArrayList<>(Arrays.asList(lista)), mensagemErro, "", n_escolhas);
-    }
-
-    /**
-     * Sobrecarga do método escolheObjeto sem o número máximo de escolhas e sem a mensagem de saída.
-     */
-    default <T> T escolheObjeto(Scanner scanner, T[] lista, String mensagemErro) {
-        ArrayList<T> objeto = escolheObjeto(scanner, lista, mensagemErro, "", 1);
         if (objeto.isEmpty()) {
             return null;
         }

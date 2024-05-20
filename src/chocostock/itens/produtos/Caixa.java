@@ -2,7 +2,6 @@ package chocostock.itens.produtos;
 
 import chocostock.enums.TiposCaixas;
 import chocostock.enums.TiposEmbalagens;
-import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 
@@ -30,10 +29,6 @@ public class Caixa extends Produto {
 
     public void setTipo(TiposCaixas tipo) {
         this.tipo = tipo;
-    }
-
-    public int getLote() {
-        return lote;
     }
 
     public void setLote(int lote) {

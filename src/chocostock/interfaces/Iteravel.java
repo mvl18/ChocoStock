@@ -15,11 +15,11 @@ public interface Iteravel {
      * @return Uma string contendo a representação vertical da lista.
      */
     default <T> String listaVertical(ArrayList<T> lista) {
-        String texto = "";
+        StringBuilder texto = new StringBuilder();
         for (T objeto : lista) {
-            texto += objeto + "\n";
+            texto.append(objeto).append("\n");
         }
-        return texto;
+        return texto.toString();
     }
 
     /**
@@ -30,10 +30,10 @@ public interface Iteravel {
      * @return Uma string contendo a representação horizontal da lista.
      */
     default <T> String listaHorizontal(ArrayList<T> lista) {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         for (int i = 0; i < lista.size(); i++)
-            out += (lista.get(i) instanceof Nomeavel ? ((Nomeavel) lista.get(i)).getNome() : lista.get(i)) + (i == lista.size()-1 ? "" : ", ");
-        return out;
+            out.append(lista.get(i) instanceof Nomeavel ? ((Nomeavel) lista.get(i)).getNome() : lista.get(i)).append(i == lista.size() - 1 ? "" : ", ");
+        return out.toString();
     }
 
     /**

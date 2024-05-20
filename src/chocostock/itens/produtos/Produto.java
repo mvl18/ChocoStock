@@ -2,7 +2,6 @@ package chocostock.itens.produtos;
 
 import chocostock.enums.TiposEmbalagens;
 import chocostock.itens.Item;
-import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 

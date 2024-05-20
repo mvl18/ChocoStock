@@ -29,18 +29,18 @@ import java.util.Scanner;
  */
 public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     private ArrayList<Produto> produtos;
-    private ArrayList<Ingrediente> ingredientes;
-    private ArrayList<Item> equipamentos;
-    private ArrayList<Embalagem> embalagens;
-    private ArrayList<Fornecedor> fornecedores;
+    private final ArrayList<Ingrediente> ingredientes;
+    private final ArrayList<Item> equipamentos;
+    private final ArrayList<Embalagem> embalagens;
+    private final ArrayList<Fornecedor> fornecedores;
 
 
     public Estoque() {
-        this.produtos = new ArrayList<Produto>();
-        this.ingredientes = new ArrayList<Ingrediente>();
-        this.equipamentos = new ArrayList<Item>();
-        this.embalagens = new ArrayList<Embalagem>();
-        this.fornecedores = new ArrayList<Fornecedor>();
+        this.produtos = new ArrayList<>();
+        this.ingredientes = new ArrayList<>();
+        this.equipamentos = new ArrayList<>();
+        this.embalagens = new ArrayList<>();
+        this.fornecedores = new ArrayList<>();
     }
 
     public ArrayList<Produto> getProdutos() {
@@ -51,50 +51,20 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         this.produtos = produtos;
     }
 
-    public ArrayList<Ingrediente> getIngredientes() {
-        return ingredientes;
-    }
-
-    public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
-        this.ingredientes = ingredientes;
-    }
 
     /**
      * Adiciona um ingrediente na lista de ingredientes do estoque.
      */
-    public boolean addIngrediente(Ingrediente ingrediente) {
-        return addObjeto(ingredientes, ingrediente);
-    }
-
-    /**
-     * Remove um ingrediente da lista de ingredientes.
-     */
-    public boolean removeIngrediente(Ingrediente ingrediente) {
-        return removeObjeto(ingredientes, ingrediente);
-    }
-
-    public ArrayList<Embalagem> getEmbalagens() {
-        return embalagens;
-    }
-
-    public void setEmbalagens(ArrayList<Embalagem> embalagens) {
-        this.embalagens = embalagens;
-    }
-  
-    public ArrayList<Item> getEquipamentos() {
-        return equipamentos;
-    }
-
-    public void setEquipamentos(ArrayList<Item> equipamentos) {
-        this.equipamentos = equipamentos;
+    public void addIngrediente(Ingrediente ingrediente) {
+        addObjeto(ingredientes, ingrediente);
     }
 
     public ArrayList<Fornecedor> getFornecedores(){
         return fornecedores;
     }
 
-    public boolean addFornecedor(Fornecedor fornecedor) {
-        return addObjeto(fornecedores, fornecedor);
+    public void addFornecedor(Fornecedor fornecedor) {
+        addObjeto(fornecedores, fornecedor);
     }
 
     public String listaFornecedores() {
@@ -119,47 +89,26 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     /**
      * Adiciona uma embalagem na lista de embalagens do estoque.
      */
-    public boolean addEmbalagem(Embalagem embalagem) {
-        return addObjeto(embalagens, embalagem);
-    }
-
-    /**
-     * Retorna uma string com a lista de embalagens do estoque.
-     */
-    public String listaEmbalagens() {
-        return listaHorizontalQuebraLinha(embalagens);
+    public void addEmbalagem(Embalagem embalagem) {
+        addObjeto(embalagens, embalagem);
     }
 
     /**
      * Adiciona um produto na lista de produtos do estoque.
      */
-    public boolean addProduto(int posicao, Produto produto) {
-        return addObjeto(posicao, produtos, produto);
+    public void addProduto(int posicao, Produto produto) {
+        addObjeto(posicao, produtos, produto);
     }
 
-    public boolean addProduto(Produto produto) {
-        return addObjeto(produtos, produto);
-    }
-
-    /**
-     * Remove um produto da lista de produtos.
-     */
-    public boolean removeProduto(Produto produto) {
-        return removeObjeto(produtos, produto);
+    public void addProduto(Produto produto) {
+        addObjeto(produtos, produto);
     }
 
     /**
      * Adiciona um equipamento à lista de equipamentos.
      */
-    public boolean addEquipamento(Equipamento equipamento) {
-        return addObjeto(equipamentos, equipamento);
-    }
-
-    /**
-     * Remove um equipamento da lista de equipamentos.
-     */
-    public boolean removeEquipamento(Equipamento equipamento) {
-        return removeObjeto(equipamentos, equipamento);
+    public void addEquipamento(Equipamento equipamento) {
+        addObjeto(equipamentos, equipamento);
     }
 
     /**
@@ -200,7 +149,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
      * incluindo a quantidade e a validade de cada tipo de ingrediente.
      */
     public String statusIngredientes(){
-        String msg = "";
+        StringBuilder msg = new StringBuilder();
 
         // Itera sobre os tipos de ingredientes definidos no enum TiposIngredientes
         for(TiposIngredientes tipo : TiposIngredientes.values()){
@@ -226,22 +175,20 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
 
             // Adiciona as informações do ingrediente à mensagem
             if(quantidade == 0){
-                msg += tipo.getId() + " - " + tipo.getNome() + ":\n\t" +
-                    "Quantidade(kg): " + quantidade + "\n";
+                msg.append(tipo.getId()).append(" - ").append(tipo.getNome()).append(":\n\t").append("Quantidade(kg): ").append(quantidade).append("\n");
             }
             else{
-                msg += tipo.getId() + " - " + tipo.getNome() + ":\n\t" +
-                    "Quantidade(kg): " + quantidade + " Validade: " + validade + "\n";
+                msg.append(tipo.getId()).append(" - ").append(tipo.getNome()).append(":\n\t").append("Quantidade(kg): ").append(quantidade).append(" Validade: ").append(validade).append("\n");
             }
         }
-        return msg;
+        return msg.toString();
     }
     /**
      * Retorna uma mensagem com o status das embalagens disponíveis no estoque,
      * incluindo a quantidade de cada tipo de embalagem.
      */
     public String statusEmbalagens(){
-        String msg = "";
+        StringBuilder msg = new StringBuilder();
         //Itera sobre os tipos de embalagens
         for(TiposEmbalagens tipo : TiposEmbalagens.values()){
             //Contador de unidades para o tipo atual
@@ -254,9 +201,9 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
                 }
             }
             //Adicionar as informações na string msg
-            msg += tipo.toString() + "\n\tUnidades: " + unidades + "\n";
+            msg.append(tipo.toString()).append("\n\tUnidades: ").append(unidades).append("\n");
         }
-        return msg;
+        return msg.toString();
     }
 
 
@@ -264,13 +211,13 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     /**
      * Processa a retirada de produtos do estoque para atender a um pedido.
      */
-    public Pedido retiraProdpoutosEstoque(Pedido pedido) {
-        ArrayList<Pendente> produtos_concluidos= new ArrayList<Pendente>();
+    public Pedido retiraProdutosEstoque(Pedido pedido) {
+        ArrayList<Pendente> produtos_concluidos= new ArrayList<>();
 
         // Itera sobre os produtos pendentes do pedido
         for (Pendente produto_pendente : pedido.getProdutos_pendentes()) {
             int quantidade = 0;  // Armazena a quantidade acumulada encontrada no estoque
-            ArrayList<Integer> posicoes = new ArrayList<Integer>();  // Armazena as posições dos produtos correspondentes no estoque
+            ArrayList<Integer> posicoes = new ArrayList<>();  // Armazena as posições dos produtos correspondentes no estoque
 
             // Itera sobre os produtos disponíveis no estoque
             for (int i = 0; i < getProdutos().size(); i++) {
@@ -294,11 +241,11 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
                                             Chocolate produto_pedido = (Chocolate) meioseProduto(getProdutos().get(posicoes.get(j)),
                                                             getProdutos().get(posicoes.get(j)).getQuantidade() + produto_pendente.getQuantidade() - quantidade,  i+1);
                                             produto_pedido.setId_pedido(pedido.getId()); // Reserva o produto dividido para o pedido
-                                            pedido.addProduto(((Produto) getProdutos().get(i+1)).getId());
+                                            pedido.addProduto(getProdutos().get(i+1).getId());
                                         } else {
                                             // Reserva o produto inteiro para o pedido
                                             getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());  //Pega tudo
-                                            pedido.addProduto(((Produto) getProdutos().get(i)).getId());
+                                            pedido.addProduto(getProdutos().get(i).getId());
                                         }
                                         // Adiciona o produto pendente à lista de produtos concluídos
                                         produtos_concluidos.add(produto_pendente);
@@ -318,10 +265,10 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
                                             Caixa produto_pedido = (Caixa) meioseProduto(getProdutos().get(posicoes.get(j)),
                                                     getProdutos().get(posicoes.get(j)).getQuantidade() + produto_pendente.getQuantidade() - quantidade,  i+1); // quantidade - produto_pendente.getQuantidade() que sobra
                                             produto_pedido.setId_pedido(pedido.getId());
-                                            pedido.addProduto(((Produto) getProdutos().get(i+1)).getId());
+                                            pedido.addProduto(getProdutos().get(i+1).getId());
                                         } else {
                                             getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());
-                                            pedido.addProduto(((Produto) getProdutos().get(i)).getId());
+                                            pedido.addProduto(getProdutos().get(i).getId());
                                         }
                                         produtos_concluidos.add(produto_pendente);
                                     }
@@ -351,17 +298,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
 
         // CHOCOLATE
         if (produto.getClass().equals(Chocolate.class)) {
-            Chocolate chocolate_pedido = new Chocolate();
-            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
-            chocolate_pedido.setNome(produto.getNome());
-            chocolate_pedido.setPreco(produto.getPreco());
-            chocolate_pedido.setEmbalagem(produto.getEmbalagem());
-            chocolate_pedido.setPeso(produto.getPeso());
-            chocolate_pedido.setValidade(produto.getValidade());
-            chocolate_pedido.setQuantidade(quantidade);
-            chocolate_pedido.setLote(((Chocolate) produto).getLote());
-            chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
-            produto_pedido = chocolate_pedido;
+            produto_pedido = duplicaChocolate(produto, quantidade);
 
         // CAIXA
         } else if (produto.getClass().equals(Caixa.class)) {
@@ -394,6 +331,20 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         return produto_pedido;
     }
 
+    private static Chocolate duplicaChocolate(Produto produto, int quantidade) {
+        Chocolate chocolate_pedido = new Chocolate();
+        chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
+        chocolate_pedido.setNome(produto.getNome());
+        chocolate_pedido.setPreco(produto.getPreco());
+        chocolate_pedido.setEmbalagem(produto.getEmbalagem());
+        chocolate_pedido.setPeso(produto.getPeso());
+        chocolate_pedido.setValidade(produto.getValidade());
+        chocolate_pedido.setQuantidade(quantidade);
+        chocolate_pedido.setLote(((Chocolate) produto).getLote());
+        chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
+        return chocolate_pedido;
+    }
+
     /**
      * Método para adicionar um novo ingrediente ao estoque com dados fornecidos pelo usuário.
      * Solicita ao usuário que insira as informações do ingrediente via console.
@@ -424,7 +375,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         Fornecedor fornecedor;
         switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
             case 1:
-                System.out.println(getFornecedores());
+                listaVertical(fornecedores);
                 System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
                 System.out.println("Insira o CNPJ ou nome do seu fornecedor");
                 fornecedor = escolheObjeto(input, fornecedores, "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
@@ -499,7 +450,6 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     }
 
     public Produto estocarProduto(Scanner scanner){
-        Produto produto = new Produto();
         System.out.println("Escolha um tipo de produto para adicionar:");
         return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa."}, 1)) {
             case 1 -> selecionaBarra(scanner);

@@ -29,16 +29,8 @@ public class Ingrediente extends Suprimento {
         return tipo;
     }
 
-    public LocalDate getDataCompra() {
-        return dataCompra;
-    }
-
     public LocalDate getValidade() {
         return validade;
-    }
-
-    public String getCnpj_fornecedor() {
-        return cnpj_fornecedor;
     }
 
     public float getUnidade() {

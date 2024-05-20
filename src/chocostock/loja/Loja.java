@@ -2,14 +2,11 @@ package chocostock.loja;
 
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
-import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
 import chocostock.enums.*;
 import chocostock.interfaces.*;
 import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
-import chocostock.itens.suprimentos.Embalagem;
-import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.itens.produtos.Pendente;
 
 import java.time.format.DateTimeFormatter;
@@ -25,20 +22,19 @@ import java.util.Scanner;
  * "novoCliente", "novoPedido".
  */
 public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput {
-    private String descricao;
-    private Endereco endereco;
-    private ArrayList<Pedido> pedidos;
-    private Estoque estoque;
-    private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-    private ArrayList<Funcionario> funcionarios;
-    private ArrayList<Fornecedor> fornecedores;
+    private final String descricao;
+    private final Endereco endereco;
+    private final ArrayList<Pedido> pedidos;
+    private final Estoque estoque;
+    private static final ArrayList<Cliente> clientes = new ArrayList<>();
+    private final ArrayList<Funcionario> funcionarios;
 
     public Loja(String descricao, Endereco endereco) {
         this.descricao = descricao;
         this.endereco = endereco;
-        this.pedidos = new ArrayList<Pedido>();
+        this.pedidos = new ArrayList<>();
         this.estoque =  new Estoque();
-        this.funcionarios = new ArrayList<Funcionario>();
+        this.funcionarios = new ArrayList<>();
     }
 
     // DESCRIÇÃO
@@ -46,26 +42,9 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     // ENDEREÇO
     public Endereco getEndereco() {
         return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    // PEDIDOS
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(ArrayList<Pedido> pedidos) {
-        this.pedidos = pedidos;
     }
 
     // ESTOQUE
@@ -73,45 +52,18 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return estoque;
     }
 
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
-    }
-
     // CLIENTES
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
 
-    public void setClientes(ArrayList<Cliente> clientes) {
-        this.clientes = clientes;
+    public void addPedido(Pedido pedido) {
+        addObjeto(pedidos, pedido);
     }
 
-    // FUNCIONÁRIOS
-    public ArrayList<Funcionario> getFuncionarios() {
-        return funcionarios;
+    public void addCliente(Cliente cliente) {
+        addObjeto(clientes, cliente);
     }
-
-    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
-    }
-
-    public boolean addPedido(Pedido pedido) {
-        return addObjeto(pedidos, pedido);
-    }
-
-    public boolean removePedido(Pedido pedido) {
-        return removeObjeto(pedidos, pedido);
-    }
-
-    public boolean addCliente(Cliente cliente) {
-        return addObjeto(clientes, cliente);
-    }
-
-    public boolean removeCliente(Cliente cliente) {
-        return removeObjeto(clientes, cliente);
-    }
-
-    public int getNumeroPedidos() {return this.pedidos.size();}
 
     public String listaClientes() {
         return listaVertical(clientes);
@@ -125,7 +77,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
      *  Método privado para escolher produtos para um pedido, usando um scanner para entrada do usuário.
      */
     private ArrayList<Pendente> escolheProdutos(Scanner scanner) {
-        ArrayList<Pendente> produtos_escolhidos = new ArrayList<Pendente>();
+        ArrayList<Pendente> produtos_escolhidos = new ArrayList<>();
         while (true) {
             switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
                 case 1: produtos_escolhidos.add(selecionaProduto(scanner));
@@ -218,7 +170,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         // Solicitação do endereço do cliente
         System.out.println("Criando endereço: ");
         cliente.setEndereco(criaEndereco(scanner));
-        System.out.println("Novo cliente adicionado: " + cliente.toString());
+        System.out.println("Novo cliente adicionado: " + cliente);
 
         return cliente;
     }
