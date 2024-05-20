@@ -81,8 +81,8 @@ O projeto utiliza herança e relações entre as classes para organizar e facili
 	- **Agregação:** linha verde com um losango vazio no lado do "todo".
 	- **Composição:** linha verde com um losango preenchido no lado do "todo".
 	- **Dependência:** linha verde tracejada com uma seta.
-	- **Interface:** linha laranja com uma circunferência.
 	- **Enumeração:** linha laranja simples.
+ 	- **Interface:** não foram ligadas para diminuir a poluição visual.  
 
 ## Como Usar
 Para utilizar este sistema, siga os passos abaixo:
