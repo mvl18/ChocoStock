@@ -71,7 +71,7 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - `Nomeavel`: A interface Nomeavel define o contrato para classes que possuem um método para obter um nome.
 - `ValidadorInput`: Interface que define um método padrão para obter entrada do usuário com validação. Também define uma interface interna para validadores de entrada.
 
-![Diagrama UML](imagens/ChocoStock_UML.png){#figura1}
+![Diagrama UML](imagens/ChocoStock_UML_Transparent.png){#figura1}
 
 ## Heranças e Relações
 O projeto utiliza herança e relações entre as classes para organizar e facilitar o desenvolvimento do sistema:
