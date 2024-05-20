@@ -39,7 +39,7 @@ public interface Criavel extends ValidadorInput, Escolhivel {
         // BAIRRO
         endereco.setBairro(getInput(scanner, "Bairro: ", "Bairro invalida. Coloque um nome valido.", Verifica::isNome));
         // RUA
-        endereco.setRua(getInput(scanner, "Rua: ", "Rua invalida. Coloque um nome valido.", Verifica::alwaysTrue));
+        endereco.setRua(getInput(scanner, "Rua: ", "Rua invalida. Coloque um nome valido.", input -> true));
         // NUMERO
         endereco.setNumero(Integer.parseInt(getInput(scanner, "Número do endereço: ", "Número inválido. Coloque um inteiro.", Verifica::isNatural)));
 

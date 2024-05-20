@@ -22,7 +22,7 @@ public class Pendente implements Nomeavel, AddRemovivel, Iteravel {
     }
 
     public Pendente() {
-        this("", new ArrayList<TiposComplementos>(), 0);
+        this("", new ArrayList<>(), 0);
     }
 
     @Override
@@ -40,14 +40,6 @@ public class Pendente implements Nomeavel, AddRemovivel, Iteravel {
 
     public void setComplementos(ArrayList<TiposComplementos> complementos) {
         this.complementos = complementos;
-    }
-
-    public boolean addComplemento(TiposComplementos complemento) {
-        return addObjeto(complementos, complemento);
-    }
-
-    public boolean removeComplemento(TiposComplementos complemento) {
-        return removeObjeto(complementos, complemento);
     }
 
     public int getQuantidade() {

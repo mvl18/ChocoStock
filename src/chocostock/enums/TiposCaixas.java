@@ -34,12 +34,4 @@ public enum TiposCaixas implements Identificavel, Nomeavel {
     public String getNome() {
         return nome;
     }
-
-    public int getPorcentagem_cacau() {
-        return porcentagem_cacau;
-    }
-
-    public int getQuantidade_chocolates() {
-        return quantidade_chocolates;
-    }
 }

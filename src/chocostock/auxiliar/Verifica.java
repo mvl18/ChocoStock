@@ -119,10 +119,6 @@ public class Verifica {
         return nome.matches("[A-Za-zÀ-ÿ'-]+( [A-Za-zÀ-ÿ'-]+)*");
     }
 
-    public static boolean alwaysTrue(String nome) {
-        return true;
-    }
-
     /**
      * Verifica se a string fornecida é uma data válida no formato "dd/MM/yyyy".
      */

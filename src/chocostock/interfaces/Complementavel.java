@@ -9,5 +9,5 @@ import java.util.ArrayList;
  * um método para obter um complemento.
  */
 public interface Complementavel {
-    public ArrayList<TiposComplementos> getComplementos();
+    ArrayList<TiposComplementos> getComplementos();
 }

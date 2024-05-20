@@ -27,7 +27,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     private final ArrayList<Pedido> pedidos;
     private final Estoque estoque;
     private static final ArrayList<Cliente> clientes = new ArrayList<>();
-    private ArrayList<Funcionario> funcionarios;
+    private final ArrayList<Funcionario> funcionarios;
 
     public Loja(String descricao, Endereco endereco) {
         this.descricao = descricao;

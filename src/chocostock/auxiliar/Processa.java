@@ -12,11 +12,10 @@ public class Processa {
      * para minúsculas e removendo todos os espaços em branco.
      */
     public static String normalizaString(String entrada) {
-        String entradaNormalizada = Normalizer.normalize(entrada, Normalizer.Form.NFD)
+        return Normalizer.normalize(entrada, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                 .toLowerCase()
                 .replaceAll("\\s", "");
-        return entradaNormalizada;
     }
 
     /**

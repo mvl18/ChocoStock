@@ -34,13 +34,4 @@ public enum TiposIngredientes implements Identificavel, Nomeavel {
 
     public int getId() {return id;}
 
-    public static TiposIngredientes getTipoPorId(int id) {
-        for(TiposIngredientes tipo : values()){
-            if(tipo.getId() == id){
-                return tipo;
-            }
-        }
-        return null;
-    }
-
 }

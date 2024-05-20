@@ -104,7 +104,7 @@ public class Main implements Escolhivel {
 
         Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
         System.out.println(loja.getDescricao() + " criada!");
-        System.out.println("Venha para o endereço\n" + loja.getEndereco());
+        System.out.println("Venha para o endereço: " + loja.getEndereco());
         instancia(loja);
 
         Sistema sistema = new Sistema(scanner, loja);

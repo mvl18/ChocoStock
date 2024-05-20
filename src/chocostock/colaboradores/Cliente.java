@@ -16,12 +16,12 @@ import java.util.ArrayList;
 public class Cliente extends Colaborador implements AddRemovivel, Identificavel, Iteravel {
     private static int id_clientes = 100000;
     private final int id; // final, pois nao pode ser modificado apos criado
-    private ArrayList<Integer> pedidos;
+    private final ArrayList<Integer> pedidos;
 
     public Cliente(String nome, String telefone, String email, Endereco endereco) {
         super(nome, telefone, email, endereco);
         this.id = id_clientes++;
-        this.pedidos = new ArrayList<Integer>();
+        this.pedidos = new ArrayList<>();
     }
 
     public Cliente() {
@@ -31,8 +31,8 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
     /**
      * Adiciona um ID de pedido à lista de pedidos do cliente.
      */
-    public boolean addPedido(Integer idPedido) {
-        return addObjeto(pedidos, idPedido);
+    public void addPedido(Integer idPedido) {
+        addObjeto(pedidos, idPedido);
     }
 
     /**

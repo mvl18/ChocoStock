@@ -293,17 +293,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
 
         // CHOCOLATE
         if (produto.getClass().equals(Chocolate.class)) {
-            Chocolate chocolate_pedido = new Chocolate();
-            chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
-            chocolate_pedido.setNome(produto.getNome());
-            chocolate_pedido.setPreco(produto.getPreco());
-            chocolate_pedido.setEmbalagem(produto.getEmbalagem());
-            chocolate_pedido.setPeso(produto.getPeso());
-            chocolate_pedido.setValidade(produto.getValidade());
-            chocolate_pedido.setQuantidade(quantidade);
-            chocolate_pedido.setLote(((Chocolate) produto).getLote());
-            chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
-            produto_pedido = chocolate_pedido;
+            produto_pedido = duplicaChocolate(produto, quantidade);
 
         // CAIXA
         } else if (produto.getClass().equals(Caixa.class)) {
@@ -334,6 +324,20 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         addProduto(posicao, produto_pedido);
 
         return produto_pedido;
+    }
+
+    private static Chocolate duplicaChocolate(Produto produto, int quantidade) {
+        Chocolate chocolate_pedido = new Chocolate();
+        chocolate_pedido.setTipo(((Chocolate) produto).getTipo());
+        chocolate_pedido.setNome(produto.getNome());
+        chocolate_pedido.setPreco(produto.getPreco());
+        chocolate_pedido.setEmbalagem(produto.getEmbalagem());
+        chocolate_pedido.setPeso(produto.getPeso());
+        chocolate_pedido.setValidade(produto.getValidade());
+        chocolate_pedido.setQuantidade(quantidade);
+        chocolate_pedido.setLote(((Chocolate) produto).getLote());
+        chocolate_pedido.setOrigem_cacau(((Chocolate) produto).getOrigem_cacau());
+        return chocolate_pedido;
     }
 
     public Ingrediente estocarIngrediente(Scanner input) {

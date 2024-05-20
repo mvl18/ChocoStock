@@ -5,5 +5,5 @@ package chocostock.interfaces;
  * um método para obter um nome.
  */
 public interface Nomeavel {
-    public String getNome();
+    String getNome();
 }

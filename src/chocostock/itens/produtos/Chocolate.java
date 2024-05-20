@@ -6,7 +6,6 @@ import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Complementavel;
 import chocostock.interfaces.Iteravel;
-import chocostock.itens.suprimentos.Embalagem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
     public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem, int lote, String origem_cacau) {
         super(tipo.getNome(), quantidade, preco, validade, peso, embalagem);
         this.lote = lote;
-        this.complementos = new ArrayList<TiposComplementos>();
+        this.complementos = new ArrayList<>();
         this.origem_cacau = origem_cacau;
     }
 
@@ -52,18 +51,6 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
 
     public void setTipo(TiposChocolates tipo) {
         this.tipo = tipo;
-    }
-
-    public boolean addComplemento(TiposComplementos complemento) {
-        return addObjeto(complementos, complemento);
-    }
-
-    public boolean removeComplemento(TiposComplementos complemento) {
-        return removeObjeto(complementos, complemento);
-    }
-
-    public String listaComplementos() {
-        return listaHorizontalQuebraLinha(complementos);
     }
 
     public String getOrigem_cacau() {

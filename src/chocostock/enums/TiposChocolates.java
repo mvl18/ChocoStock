@@ -29,14 +29,6 @@ public enum TiposChocolates implements Identificavel, Nomeavel {
         return nome;
     }
 
-    public int getPorcentagem_cacau() {
-        return porcentagem_cacau;
-    }
-
-    public int getPeso() {
-        return peso;
-    }
-
     @Override
     public int getId() {
         return id;

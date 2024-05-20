@@ -34,10 +34,6 @@ public class Endereco implements Escolhivel {
         this(0, "", "", "", "", Estados.XX);
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
     public void setNumero(int numero) {
         this.numero = numero;
     }
@@ -78,7 +74,7 @@ public class Endereco implements Escolhivel {
         int id = Integer.parseInt(CEP)/100000;
 
         // Cria uma lista de IDs dos estados
-        List<Integer> idsEstados = new ArrayList<Integer>();
+        List<Integer> idsEstados = new ArrayList<>();
         for (Estados estado : Estados.values()) {
             idsEstados.add(estado.getId());
         }

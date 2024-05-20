@@ -53,10 +53,10 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
     }
 
     public static String imprimirTiposEmbalagens(){
-        String msg = "";
+        StringBuilder msg = new StringBuilder();
         for(TiposEmbalagens tipo : TiposEmbalagens.values()){
-            msg += tipo.getId() +" - " + tipo.getNome() + " - " + tipo.getTamanho() + "\n";
+            msg.append(tipo.getId()).append(" - ").append(tipo.getNome()).append(" - ").append(tipo.getTamanho()).append("\n");
         }
-        return msg;
+        return msg.toString();
     }
 }

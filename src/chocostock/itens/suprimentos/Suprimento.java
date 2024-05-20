@@ -9,7 +9,7 @@ import chocostock.itens.Item;
  * ser um ingrediente, uma embalagem ou um equipamento.
  */
 public abstract class Suprimento extends Item {
-    private Fornecedor fornecedor;
+    private final Fornecedor fornecedor;
     public Suprimento(String nome, int quantidade, float preco, Fornecedor fornecedor) {
         super(nome, quantidade, preco);
         this.fornecedor = fornecedor;
