@@ -97,7 +97,7 @@ public class Main implements Escolhivel {
     *
     * Esta linha foi a primeira linha de código do nosso programa, escrita com carinho.
     * Embora não seja mais necessária para a execução do código, decidimos manter uma
-    * recordação dela aqui. Obrigado por fazer parte da nossa jornada!
+    * recordação dela aqui. Obrigado por fazer parte da nossa jornada!!!
     */
 
         Scanner scanner = new Scanner(System.in);
