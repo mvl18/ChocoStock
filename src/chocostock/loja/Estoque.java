@@ -226,11 +226,35 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         }
         return msg;
     }
+    /**
+     * Retorna uma mensagem com o status das embalagens disponíveis no estoque,
+     * incluindo a quantidade de cada tipo de embalagem.
+     */
+    public String statusEmbalagens(){
+        String msg = "";
+        //Itera sobre os tipos de embalagens
+        for(TiposEmbalagens tipo : TiposEmbalagens.values()){
+            //Contador de unidades para o tipo atual
+            int unidades = 0;
+            //Itera sobre as embalagens no estoque
+            for(Embalagem embalagem : embalagens){
+                //Se a embalagem for do tipo atual
+                if(embalagem.getTipo_embalagem() == tipo){
+                    unidades += embalagem.getQuantidade() * embalagem.getQuantidade_por_pacote();
+                }
+            }
+            //Adicionar as informações na string msg
+            msg += tipo.toString() + "\n\tUnidades: " + unidades + "\n";
+        }
+        return msg;
+    }
+
+
 
     /**
      * Processa a retirada de produtos do estoque para atender a um pedido.
      */
-    public Pedido retiraProdutosEstoque(Pedido pedido) {
+    public Pedido retiraProdpoutosEstoque(Pedido pedido) {
         ArrayList<Pendente> produtos_concluidos= new ArrayList<Pendente>();
 
         // Itera sobre os produtos pendentes do pedido
@@ -421,7 +445,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         //NOME
         embalagem.setNome(embalagem.getTipo_embalagem().getNome());
         //QUANTIDADE
-        embalagem.setQuantidade(Integer.parseInt(getInput(input, "Quantas pacotes foram compradas?", "Quantidade invalida", Verifica::isNatural)));
+        embalagem.setQuantidade(Integer.parseInt(getInput(input, "Quantas pacotes foram comprados?", "Quantidade invalida", Verifica::isNatural)));
         //PRECO_PACOTE
         embalagem.setPreco_pacote(Float.parseFloat(getInput(input, "Qual o preco de 1 pacote?", "Preco invalido, coloque um numero valido.", Verifica::isFloat)));
         //QUANTIDADE_POR_PACOTE

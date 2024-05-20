@@ -110,7 +110,7 @@ public class Sistema implements Criavel, ValidadorInput {
                 (3) - Adicionar Embalagem.
                 (4) - Status Produtos.
                 (5) - Status Ingredientes.
-                (X) - Status Embalagens.
+                (6) - Status Embalagens.
                 (0) - Voltar para o menu inicial.
                 """;
 
@@ -128,6 +128,9 @@ public class Sistema implements Criavel, ValidadorInput {
                     menuEstoque();
                     break;
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
+                    menuEstoque();
+                    break;
+            case 6: System.out.println(loja.getEstoque().statusEmbalagens());
                     menuEstoque();
                     break;
             default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
