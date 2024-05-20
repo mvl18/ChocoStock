@@ -23,7 +23,6 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - Histórico de todos os pedidos, bem como a capacidade de gerar relatórios de venda e estoque.
 
 ## [Diagrama UML do Projeto](https://app.diagrams.net/#G1ob392-avmraMdT-HdXfV2x8NyNQ4EVuE#%7B%22pageId%22%3A%22X-9vTq_ojHjCq0rzShb6%22%7D)
-![Diagrama UML](imagens/ChocoStock_UML.png)
 
 ### Classes
 - `Main`: A classe main é responsável por instanciar um Scanner, a Loja, e alguns objetos para que o sistema possa ser testado.
@@ -71,6 +70,8 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - `Iteravel`: A interface Iteravel define métodos para criar representações de listas em formato de texto. (listaVertical, listaHorizontal e listaHorizontalQuebraLinha)
 - `Nomeavel`: A interface Nomeavel define o contrato para classes que possuem um método para obter um nome.
 - `ValidadorInput`: Interface que define um método padrão para obter entrada do usuário com validação. Também define uma interface interna para validadores de entrada.
+
+![Diagrama UML](imagens/ChocoStock_UML.png){#figura1}
 
 ## Heranças e Relações
 O projeto utiliza herança e relações entre as classes para organizar e facilitar o desenvolvimento do sistema:

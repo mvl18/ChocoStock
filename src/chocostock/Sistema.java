@@ -26,7 +26,6 @@ import static chocostock.enums.TiposChocolates.CHOCOLATE_BRANCO_ACAI_BETERRABA;
  * clientes, fornecedores e ingredientes, e para listar os pedidos, clientes e fornecedores existentes.
  */
 public class Sistema implements Criavel, ValidadorInput {
-
     private Scanner input;
     private String msg;
     private int opcao;
