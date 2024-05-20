@@ -192,6 +192,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         produtoPendente.setComplementos(escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
                 "0", TiposComplementos.values().length));
+        produtoPendente.getComplementos().removeIf(Objects::isNull);
         // Solicita ao usuário a quantidade desejada da barra de chocolate selecionada
         produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
@@ -303,7 +304,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         System.out.println("O status do pedido " + pedido.getId() + " foi definido como " + pedido.getStatus() + ".");
 
         // Pergunta ao usuário se o pedido já foi pago
-        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta valida. ",
+        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta válida. ",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 

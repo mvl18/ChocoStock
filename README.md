@@ -26,6 +26,7 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 ![Diagrama UML](imagens/ChocoStock_UML.png)
 
 ### Classes
+- `Main`: A classe main é responsável por instanciar um Scanner, a Loja, e alguns objetos para que o sistema possa ser testado.
 - `Sistema`: A classe Sistema é responsável por: 
 	- Inicializar o sistema e exibir a mensagem de boas-vindas.
 	- Gerenciar e navegar entre os diferentes menus do sistema: menu inicial, menu de pedidos, menu de estoque e menu de colaboradores.
@@ -80,8 +81,8 @@ O projeto utiliza herança e relações entre as classes para organizar e facili
 	- **Agregação:** linha verde com um losango vazio no lado do "todo".
 	- **Composição:** linha verde com um losango preenchido no lado do "todo".
 	- **Dependência:** linha verde tracejada com uma seta.
-	- **Interface:** linha laranja com uma circunferência.
 	- **Enumeração:** linha laranja simples.
+ 	- **Interface:** não foram ligadas para diminuir a poluição visual.  
 
 ## Como Usar
 Para utilizar este sistema, siga os passos abaixo:

@@ -78,4 +78,8 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
     public ArrayList<TiposComplementos> getComplementos() {
         return complementos;
     }
+
+    public void setComplementos(ArrayList<TiposComplementos> complementos) {
+        this.complementos = complementos;
+    }
 }
