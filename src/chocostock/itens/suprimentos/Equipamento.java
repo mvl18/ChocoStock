@@ -20,12 +20,4 @@ public class Equipamento extends Suprimento implements Nomeavel {
         this.marca = marca;
         this.garantia = garantia;
     }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
 }

@@ -37,10 +37,6 @@ public class Fornecedor extends Colaborador {
         this.cnpj = cnpj;
     }
 
-    public String getSite() {
-        return site;
-    }
-
     public void setSite(String site) {
         this.site = site;
     }

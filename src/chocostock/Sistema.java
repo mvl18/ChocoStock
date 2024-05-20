@@ -1,18 +1,10 @@
 package chocostock;
 
-import chocostock.enums.TiposComplementos;
 import chocostock.interfaces.ValidadorInput;
-import chocostock.itens.produtos.Chocolate;
 import chocostock.loja.Loja;
 import chocostock.interfaces.Criavel;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-
-import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_CARAMELIZADO;
-import static chocostock.enums.TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO;
-import static chocostock.enums.TiposChocolates.CHOCOLATE_INTENSO;
-import static chocostock.enums.TiposChocolates.CHOCOLATE_BRANCO_ACAI_BETERRABA;
 
 
 /**
@@ -27,10 +19,10 @@ import static chocostock.enums.TiposChocolates.CHOCOLATE_BRANCO_ACAI_BETERRABA;
  */
 public class Sistema implements Criavel, ValidadorInput {
 
-    private Scanner input;
+    private final Scanner input;
     private String msg;
     private int opcao;
-    private Loja loja;
+    private final Loja loja;
 
     Sistema(Scanner input, Loja loja){
         this.input = input;

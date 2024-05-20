@@ -22,7 +22,7 @@ public class Main implements Escolhivel {
     /**
      * Instancia objetos de diversas classes dentro de loja assim que o sistema é inicializado.
      */
-    public static void instancia(Scanner scanner, Loja loja) {
+    public static void instancia(Loja loja) {
         // MELHORES CLIENTES DE TODOS
         Endereco endereco = new Endereco(2023, "13083898", "Alan Turing", "Cidade Universitária", "Javalândia", Estados.SP);
         loja.addCliente(new Cliente("Ainaras", "182338", "a182338@dac.unicamp.br", endereco));
@@ -102,9 +102,10 @@ public class Main implements Escolhivel {
 
         Scanner scanner = new Scanner(System.in);
 
-        Loja loja = new Loja("Primeira e única loja!", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
-
-        instancia(scanner, loja);
+        Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
+        System.out.println(loja.getDescricao() + " criada!");
+        System.out.println("Venha para o endereço\n" + loja.getEndereco());
+        instancia(loja);
 
         Sistema sistema = new Sistema(scanner, loja);
         sistema.iniciarSistema();  //Inicia o Sistema (Interface de terminal)

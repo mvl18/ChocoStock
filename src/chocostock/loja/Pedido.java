@@ -19,9 +19,9 @@ import java.util.ArrayList;
  */
 public class Pedido implements AddRemovivel, Iteravel {
     private static int id_pedidos = 100000;
-    private int id;
+    private final int id;
     private int id_cliente;
-    private LocalDate data;
+    private final LocalDate data;
     private LocalDate data_entrega;
     private boolean pago;
     private Status status;
@@ -37,12 +37,12 @@ public class Pedido implements AddRemovivel, Iteravel {
         this.pago = pago;
         this.status = status;
         this.produtos_pendentes = produtos_pendentes;
-        this.produtos = new ArrayList<Integer>();
+        this.produtos = new ArrayList<>();
         this.preco_total = preco_total;
     }
 
     public Pedido(int id_cliente, LocalDate data_entrega, boolean pago, Status status, float preco_total) {
-        this(id_cliente, LocalDate.now(), data_entrega, pago, status, new ArrayList<Pendente>(), preco_total);
+        this(id_cliente, LocalDate.now(), data_entrega, pago, status, new ArrayList<>(), preco_total);
     }
 
     public Pedido() {
@@ -55,20 +55,8 @@ public class Pedido implements AddRemovivel, Iteravel {
         return id;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
-    }
-
     public void setId_cliente(int id_cliente) {
         this.id_cliente = id_cliente;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
     }
 
     public LocalDate getData_entrega() {
@@ -125,33 +113,8 @@ public class Pedido implements AddRemovivel, Iteravel {
     /**
      * Adiciona um produto na lista de produtos do pedido.
      */
-    public boolean addProduto(int posicao, int id_produto) {
-        return addObjeto(posicao, produtos, id_produto);
-    }
-
-    public boolean addProduto(int id_produto) {
-        return addObjeto(produtos, id_produto);
-    }
-
-    /**
-     * Remove um produto da lista de produtos do pedido.
-     */
-    public boolean removeProduto(int id_produto) {
-        return removeObjeto(produtos, id_produto);
-    }
-
-    /**
-     * Adiciona um produto pendente à lista de produtos pendentes do pedido.
-     */
-    public boolean addProduto_pendente(Pendente pendente) {
-        return addObjeto(produtos_pendentes, pendente);
-    }
-
-    /**
-     * Remove um produto pendente da lista de produtos pendentes do pedido.
-     */
-    public boolean removeProduto_pendente(Pendente pendente) {
-        return removeObjeto(produtos_pendentes, pendente);
+    public void addProduto(int id_produto) {
+        addObjeto(produtos, id_produto);
     }
 
     @Override

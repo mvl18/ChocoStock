@@ -50,24 +50,12 @@ public class Endereco implements Escolhivel {
         this.cep = cep;
     }
 
-    public String getRua() {
-        return rua;
-    }
-
     public void setRua(String rua) {
         this.rua = rua;
     }
 
-    public String getBairro() {
-        return bairro;
-    }
-
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
     }
 
     public void setCidade(String cidade) {
@@ -80,12 +68,6 @@ public class Endereco implements Escolhivel {
 
     public void setEstado(Estados estado) {
         this.estado = estado;
-    }
-
-    public String toString(boolean bool) {
-        return "CEP: " + cep +
-                "\nRua " + rua + ", " + numero + " - Bairro " + bairro +
-                "\n" + cidade + " (" + estado.getCodigo() + ")";
     }
 
     /**
