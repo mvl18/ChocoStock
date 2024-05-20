@@ -366,7 +366,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         Fornecedor fornecedor;
         switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
             case 1:
-                System.out.println(getFornecedores());
+                listaVertical(fornecedores);
                 System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
                 System.out.println("Insira o CNPJ ou nome do seu fornecedor");
                 fornecedor = escolheObjeto(input, fornecedores, "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
