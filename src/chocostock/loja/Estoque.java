@@ -254,7 +254,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
     /**
      * Processa a retirada de produtos do estoque para atender a um pedido.
      */
-    public Pedido retiraProdutosEstoque(Pedido pedido) {
+    public Pedido retiraProdpoutosEstoque(Pedido pedido) {
         ArrayList<Pendente> produtos_concluidos= new ArrayList<Pendente>();
 
         // Itera sobre os produtos pendentes do pedido
