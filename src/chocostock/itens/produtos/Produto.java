@@ -1,5 +1,6 @@
 package chocostock.itens.produtos;
 
+import chocostock.enums.TiposEmbalagens;
 import chocostock.itens.Item;
 import chocostock.itens.suprimentos.Embalagem;
 
@@ -14,9 +15,9 @@ public class Produto extends Item {
     private int id_pedido;
     private LocalDate validade;
     private int peso;
-    private Embalagem embalagem;
+    private TiposEmbalagens embalagem;
 
-    public Produto(String nome, int quantidade, float preco, LocalDate validade, int peso, Embalagem embalagem) {
+    public Produto(String nome, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem) {
         super(nome, quantidade, preco);
         this.setId(id_produtos++);
         this.id_pedido = -1;
@@ -53,11 +54,11 @@ public class Produto extends Item {
         this.peso = peso;
     }
 
-    public Embalagem getEmbalagem() {
+    public TiposEmbalagens getEmbalagem() {
         return embalagem;
     }
 
-    public void setEmbalagem(Embalagem embalagem) {
+    public void setEmbalagem(TiposEmbalagens embalagem) {
         this.embalagem = embalagem;
     }
 }
