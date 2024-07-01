@@ -4,6 +4,7 @@ import chocostock.auxiliar.Endereco;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.*;
+import chocostock.interfaceGrafica.InterfaceGrafica;
 import chocostock.itens.produtos.Caixa;
 import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.suprimentos.Embalagem;
@@ -100,13 +101,14 @@ public class Main implements Escolhivel {
     * recordação dela aqui. Obrigado por fazer parte da nossa jornada!!!
     */
 
+
         Scanner scanner = new Scanner(System.in);
 
         Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
         System.out.println(loja.getDescricao() + " criada!");
         System.out.println("Venha para o endereço: " + loja.getEndereco());
         instancia(loja);
-
+        new InterfaceGrafica();
         Sistema sistema = new Sistema(scanner, loja);
         sistema.iniciarSistema();  //Inicia o Sistema (Interface de terminal)
 
