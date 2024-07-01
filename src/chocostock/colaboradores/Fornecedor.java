@@ -1,6 +1,10 @@
 package chocostock.colaboradores;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Processa;
+import chocostock.auxiliar.Verifica;
+
+import java.util.Scanner;
 
 /**
  * A classe Fornecedor representa um fornecedor que herda de Colaborador.
@@ -47,5 +51,20 @@ public class Fornecedor extends Colaborador {
                 "CNPJ: " + cnpj +
                 "\nSite: " + site +
                 "\n";
+    }
+
+    /**
+     * Método para criar um novo fornecedor com dados fornecidos pelo usuário.
+     * Solicita ao usuário que insira as informações do fornecedor via console.
+     */
+    public Fornecedor novoFornecedor(Scanner scanner) {
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
+        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
+        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
+        fornecedor.setEndereco(new Endereco().criaEndereco(scanner));
+        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
+        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
+        return fornecedor;
     }
 }

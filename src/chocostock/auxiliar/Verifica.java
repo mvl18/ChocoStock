@@ -100,7 +100,7 @@ public class Verifica {
      * Verifica se a string fornecida é um número natural (inteiro positivo).
      */
     public static boolean isNatural(String numero) {
-        return numero.matches("[1-9]\\d*");
+        return numero.replaceAll(" ", "").matches("[1-9]\\d*");
     }
 
     /**

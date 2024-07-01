@@ -64,7 +64,6 @@ public class Main implements Escolhivel {
         loja.getEstoque().addProduto(new Caixa(TiposCaixas.CAIXA_MINI_TABLETES_70, 3, 11.75F, null, 1, null, 101010));
         loja.getEstoque().addProduto(new Caixa(TiposCaixas.CAIXA_BARRAS_AO_LEITE_CARAMELIZADO_40, 2, 19.15F, null, 1, null, 101010));
 
-
         // EQUIPAMENTO
         loja.getEstoque().addEquipamento(new Equipamento("Batedeira", 1, 500.0F, "Philco",
                 loja.getEstoque().getFornecedores().get(0), LocalDate.parse("19/05/2034", DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
@@ -104,6 +103,7 @@ public class Main implements Escolhivel {
 
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("\n");
         Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
         System.out.println(loja.getDescricao() + " criada!");
         System.out.println("Venha para o endereço: " + loja.getEndereco());
