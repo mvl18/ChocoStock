@@ -1,5 +1,6 @@
 package chocostock.loja;
 
+import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Fornecedor;
@@ -71,20 +72,20 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         return listaHorizontalQuebraLinha(fornecedores);
     }
 
-    /**
-     * Método para criar um novo fornecedor com dados fornecidos pelo usuário.
-     * Solicita ao usuário que insira as informações do fornecedor via console.
-     */
-    public Fornecedor novoFornecedor(Scanner scanner) {
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
-        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
-        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
-        fornecedor.setEndereco(criaEndereco(scanner));
-        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
-        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
-        return fornecedor;
-    }
+//    /**
+//     * Método para criar um novo fornecedor com dados fornecidos pelo usuário.
+//     * Solicita ao usuário que insira as informações do fornecedor via console.
+//     */
+//    public Fornecedor novoFornecedor(Scanner scanner) {
+//        Fornecedor fornecedor = new Fornecedor();
+//        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
+//        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
+//        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
+//        fornecedor.setEndereco(new Endereco().criaEndereco(scanner));
+//        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
+//        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
+//        return fornecedor;
+//    }
 
     /**
      * Adiciona uma embalagem na lista de embalagens do estoque.
@@ -183,6 +184,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         }
         return msg.toString();
     }
+
     /**
      * Retorna uma mensagem com o status das embalagens disponíveis no estoque,
      * incluindo a quantidade de cada tipo de embalagem.
@@ -205,8 +207,6 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         }
         return msg.toString();
     }
-
-
 
     /**
      * Processa a retirada de produtos do estoque para atender a um pedido.
@@ -345,197 +345,12 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         return chocolate_pedido;
     }
 
-    /**
-     * Método para adicionar um novo ingrediente ao estoque com dados fornecidos pelo usuário.
-     * Solicita ao usuário que insira as informações do ingrediente via console.
-     */
-    public Ingrediente estocarIngrediente(Scanner input) {
-        Ingrediente ingrediente = new Ingrediente();
-        //TIPO
-        System.out.println("Escolha um tipo de ingrediente para adicionar:");
-        imprimirIngredientes();
-        ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
-                "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido. ", "obrigatorio"));
-        ingrediente.setNome(ingrediente.getTipo().getNome());
-
-        //QUANTIDADE
-        ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas? ", "Quantidade invalida", Verifica::isNatural)));
-
-        //UNIDADE
-        ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade? ", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
-
-        //PRECO
-        ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra: ", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
-
-        //DATA DE COMPRA E VALIDADE
-        ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy) ", "Digite uma data válida."));
-        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy) ", "Digite uma data futura válida."));
-
-        //FORNECEDOR
-        Fornecedor fornecedor;
-        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
-            case 1:
-                listaVertical(fornecedores);
-                System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
-                System.out.println("Insira o CNPJ ou nome do seu fornecedor");
-                fornecedor = escolheObjeto(input, fornecedores, "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
-                if (fornecedor == null) {
-                    fornecedor = novoFornecedor(input);
-                    addFornecedor(fornecedor);
-                    ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
-                    break;
-                }
-                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
-                break;
-            case 2:
-                fornecedor = novoFornecedor(input);
-                addFornecedor(fornecedor);
-                ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
-                break;
-            default:
-                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
-                break;
-        }
-
-        return ingrediente;
-    }
-
-    /**
-     * Método para adicionar uma nova embalagem ao estoque com dados fornecidos pelo usuário.
-     * Solicita ao usuário que insira as informações da embalagem via console.
-     */
-    public Embalagem estocarEmbalagem(Scanner input){
-        Embalagem embalagem = new Embalagem();
-        //TIPO
-        System.out.println("Escolha um tipo de embalagem para adicionar:");
-        System.out.println(TiposEmbalagens.imprimirTiposEmbalagens());
-        embalagem.setTipo_embalagem(escolheObjeto(input, TiposEmbalagens.values(),
-                "Numero ou nome invalido. Escolha um numero de (1-14) ou digite um nome valido.", "obrigatorio"));
-        //NOME
-        embalagem.setNome(embalagem.getTipo_embalagem().getNome());
-        //QUANTIDADE
-        embalagem.setQuantidade(Integer.parseInt(getInput(input, "Quantas pacotes foram comprados?", "Quantidade invalida", Verifica::isNatural)));
-        //PRECO_PACOTE
-        embalagem.setPreco_pacote(Float.parseFloat(getInput(input, "Qual o preco de 1 pacote?", "Preco invalido, coloque um numero valido.", Verifica::isFloat)));
-        //QUANTIDADE_POR_PACOTE
-        embalagem.setQuantidade_por_pacote(Integer.parseInt(getInput(input, "Quantas unidades por pacote?", "Quantidade invalida", Verifica::isNatural)));
-        //PRECO
-        embalagem.setPreco(embalagem.getPreco_pacote() / embalagem.getQuantidade_por_pacote());
-        //FORNECEDOR
-        Fornecedor fornecedor;
-        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
-            case 1:
-                System.out.println(listaFornecedores());
-                System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
-                System.out.println("Insira o CNPJ ou nome do seu fornecedor");
-                fornecedor = escolheObjeto(input, fornecedores, "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
-                if (fornecedor == null) {
-                    fornecedor = novoFornecedor(input);
-                    addFornecedor(fornecedor);
-                    embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
-                    break;
-                }
-                embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
-                break;
-            case 2:
-                fornecedor = novoFornecedor(input);
-                addFornecedor(fornecedor);
-                embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
-                break;
-            default:
-                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
-                break;
-        }
-       return embalagem;
-    }
-
     public Produto estocarProduto(Scanner scanner){
         System.out.println("Escolha um tipo de produto para adicionar:");
         return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa."}, 1)) {
-            case 1 -> selecionaBarra(scanner);
-            case 2 -> selecionaCaixa(scanner);
+            case 1 -> new Chocolate().selecionaBarra(scanner);
+            case 2 -> new Caixa().selecionaCaixa(scanner);
             default -> null;
         };
-    }
-
-    private Caixa selecionaCaixa(Scanner scanner) {
-        Caixa caixa = new Caixa();
-        for (TiposCaixas tipo : TiposCaixas.values()) {
-            System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
-        }
-        // TIPO
-        caixa.setTipo(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
-        // NOME
-        caixa.setNome(caixa.getTipo().getNome());
-        // QUANTIDADE
-        caixa.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + caixa.getNome() + ": ",
-                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
-        // PRECO
-        caixa.setPreco(Float.parseFloat(getInput(scanner, "Valor da unidade de " + caixa.getNome() + ": ",
-                "Coloque um valor válido", Verifica::isFloat)));
-        // VALIDADE
-        caixa.setValidade(escolheDataFutura(scanner, "Qual a data de validade do caixa? Digite uma data futura no formato DD/MM/YYYY: ",
-                "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
-        // PESO UNITARIO
-        caixa.setPeso(Integer.parseInt(getInput(scanner, "Peso da unidade de " + caixa.getNome() + " em quilos: ",
-                "Coloque um valor decimal válido", Verifica::isNatural)));
-        // EMBALAGEM
-        System.out.println("Escolha um dos tipos de embalagem abaixo:");
-        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
-            System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
-        }
-        caixa.setEmbalagem(escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
-        // LOTE
-        caixa.setLote(Integer.parseInt(getInput(scanner, "Digite o lote de " + caixa.getNome() + ": ",
-                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
-
-        return caixa;
-    }
-
-    private Chocolate selecionaBarra(Scanner scanner) {
-        Chocolate produto = new Chocolate();
-        for (TiposChocolates tipo : TiposChocolates.values()) {
-            System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
-        }
-        // TIPO
-        produto.setTipo(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
-        // NOME
-        produto.setNome(produto.getTipo().getNome());
-        // COMPLEMENTO
-        if (Processa.normalizaString(getInput(scanner, "O produto tem algum adicional? Sim OU Não ", "Por favor, insira uma resposta válida. ",
-                input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
-
-            for (TiposComplementos complemento : TiposComplementos.values()) {
-                System.out.println("(" + complemento.getId() + ") - " + complemento.getNome());
-            }
-
-            // Opção para sair da seleção de complementos
-            System.out.println("(0) - Sair");
-            System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
-            produto.setComplementos(escolheObjeto(scanner, TiposComplementos.values(), "Por favor, selecione um complemento válido.", "0",
-                    TiposComplementos.values().length));
-            produto.getComplementos().removeIf(Objects::isNull);
-        }
-        // ORIGEM CACAU
-        produto.setOrigem_cacau(getInput(scanner, "Digite a origem do cacau: ", "Origem inválida, digite uma origem válida.", Verifica::isNome));
-        // QUANTIDADE
-        produto.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produto.getNome() + ": ",
-                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
-        // PRECO
-        produto.setPreco(Float.parseFloat(getInput(scanner, "Valor da unidade de " + produto.getNome() + ": ",
-                "Coloque um valor válido", Verifica::isFloat)));
-        // VALIDADE
-        produto.setValidade(escolheDataFutura(scanner, "Qual a data de validade do produto? Digite uma data futura no formato DD/MM/YYYY: ",
-                "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
-        // PESO
-        produto.setPeso(Integer.parseInt(getInput(scanner, "Peso da unidade de " + produto.getNome() + " em quilos: ",
-                "Coloque um valor decimal válido", Verifica::isNatural)));
-        // EMBALAGEM
-        System.out.println("Escolha um dos tipos de embalagem abaixo:");
-        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
-            System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
-        }
-        produto.setEmbalagem(escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
-        return produto;
     }
 }
