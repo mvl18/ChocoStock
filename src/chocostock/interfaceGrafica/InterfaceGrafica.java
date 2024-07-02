@@ -2,17 +2,29 @@ package chocostock.interfaceGrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InterfaceGrafica extends JFrame {
+    private JPanel painelPrincipal;
+    private CardLayout cardLayout;
 
     public InterfaceGrafica(){
         JMenuBar menuBar = gerarMenu();
 
         setJMenuBar(menuBar);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400, 400);
+        setSize(600, 600);
         setTitle("ChocoStock");
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
+
+        cardLayout = new CardLayout();
+        painelPrincipal = new JPanel(cardLayout);
+        add(painelPrincipal, BorderLayout.CENTER);
+
+        painelPrincipal.add(new JPanel(), "Inicio");
+        painelPrincipal.add(new Registrar(), "RegistrarCliente");
+
         setVisible(true);
     }
 
@@ -73,6 +85,13 @@ public class InterfaceGrafica extends JFrame {
         menuColaboradores.add(subMenuListarColaborador);
 
         m.add(menuColaboradores);
+
+        itemAddCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(painelPrincipal, "RegistrarCliente");
+            }
+        });
 
         return m;
     }
