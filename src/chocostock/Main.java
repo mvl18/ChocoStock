@@ -108,7 +108,7 @@ public class Main implements Escolhivel {
         System.out.println(loja.getDescricao() + " criada!");
         System.out.println("Venha para o endereço: " + loja.getEndereco());
         instancia(loja);
-        new InterfaceGrafica();
+        new InterfaceGrafica(loja);
         Sistema sistema = new Sistema(scanner, loja);
         sistema.iniciarSistema();  //Inicia o Sistema (Interface de terminal)
 

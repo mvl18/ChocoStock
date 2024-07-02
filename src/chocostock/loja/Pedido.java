@@ -159,41 +159,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
     public Pedido novoPedido(Scanner scanner, Loja loja)  {
         Pedido pedido = new Pedido();
 
-        // CLIENTE
-        Cliente cliente;
-        String msg =   """
-                --- NOVO PEDIDO ---
-                Selecione uma das opções:
-                (1) - Mostrar lista de clientes já cadastrados.
-                (2) - Adicionar novo cliente.
-                """;
-
-        // Solicita ao usuário que escolha entre mostrar clientes cadastrados ou adicionar um novo cliente
-        switch (verificaOpcao(scanner, msg, 1, 2)) {
-            case 1:
-                System.out.println(loja.listaClientes());
-                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
-                System.out.println("Insira o ID ou nome do seu cliente");
-                cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
-                if (cliente == null) {
-                    cliente = new Cliente().novoCliente(scanner);
-                    loja.addCliente(cliente);
-                    pedido.setId_cliente(cliente.getId());
-                    break;
-                }
-                pedido.setId_cliente(cliente.getId());
-                cliente.addPedido(pedido.getId());
-                break;
-            case 2:
-                cliente = new Cliente().novoCliente(scanner);
-                loja.addCliente(cliente);
-                pedido.setId_cliente(cliente.getId());
-                cliente.addPedido(pedido.getId());
-                break;
-            default:
-                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
-                break;
-        }
+        Cliente cliente = escolheCliente(scanner, pedido, loja);
 
         // PRODUTOS_PENDENTES
         pedido.setProdutos_pendentes(loja.escolheProdutos(scanner));
@@ -241,4 +207,83 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
 
         return pedido;
     }
+
+    public Cliente escolheCliente(Scanner scanner, Pedido pedido, Loja loja) {
+        // CLIENTE
+        Cliente cliente = null;
+        String msg =   """
+                --- NOVO PEDIDO ---
+                Selecione uma das opções:
+                (1) - Mostrar lista de clientes já cadastrados.
+                (2) - Adicionar novo cliente.
+                """;
+
+        // Solicita ao usuário que escolha entre mostrar clientes cadastrados ou adicionar um novo cliente
+        switch (verificaOpcao(scanner, msg, 1, 2)) {
+            case 1:
+                System.out.println(loja.listaClientes());
+                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
+                System.out.println("Insira o ID ou nome do seu cliente");
+                cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
+                if (cliente == null) {
+                    cliente = new Cliente().novoCliente(scanner);
+                    loja.addCliente(cliente);
+                    pedido.setId_cliente(cliente.getId());
+                    break;
+                }
+                pedido.setId_cliente(cliente.getId());
+                cliente.addPedido(pedido.getId());
+                break;
+            case 2:
+                cliente = new Cliente().novoCliente(scanner);
+                loja.addCliente(cliente);
+                pedido.setId_cliente(cliente.getId());
+                cliente.addPedido(pedido.getId());
+                break;
+            default:
+                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
+                break;
+        }
+
+        return cliente;
+    }
+
+    public void atualiza(Scanner scanner, Loja loja) {
+        System.out.println(this.toString());
+
+        String msg = """
+                --- ATUALIZA PEDIDO ---
+                Escolha o que quer atualizar:
+                (1) - Cliente.
+                (2) - Produtos.
+                (3) - Status.
+                (4) - Pago ou não.
+                (0) - Voltar para o menu inicial.
+                """;
+
+//        switch(verificaOpcao(scanner, msg, 0, 4)) {
+//            case 0: return;
+//                break;
+//            case 1: ;
+//                menuPedidos();
+//                break;
+//            case 2: System.out.println("Qual dos seguintes pedidos deseja atualizar? Para voltar digite 'sair'.");
+//                System.out.println("Insira o ID ou nome do seu cliente");
+//                Pedido pedido = escolheObjeto(input, loja.getPedidos(), "Pedido inexistente. Digite o ID" +
+//                        " ou nome de algum pedido listado.", "sair");
+//                if (pedido != null) {
+//                    pedido.atualiza();
+//                }
+//                menuPedidos();
+//                break;
+//            case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
+//                menuPedidos();
+//                break;
+//            case 4: System.out.println("Não implementado\n");//loja.cancelaPedido();
+//                menuPedidos();
+//                break;
+//            default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
+//                menuInicial();
+//                break;
+                }
 }

@@ -18,12 +18,24 @@ import java.util.Scanner;
 public class Cliente extends Colaborador implements AddRemovivel, Identificavel, Iteravel {
     private static int id_clientes = 100000;
     private final int id; // final, pois nao pode ser modificado apos criado
-    private final ArrayList<Integer> pedidos;
+    private ArrayList<Integer> pedidos;
 
     public Cliente(String nome, String telefone, String email, Endereco endereco) {
         super(nome, telefone, email, endereco);
         this.id = id_clientes++;
         this.pedidos = new ArrayList<>();
+    }
+
+    public static int getId_clientes() {
+        return id_clientes;
+    }
+
+    public ArrayList<Integer> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Integer> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public Cliente() {

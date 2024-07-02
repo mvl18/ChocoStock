@@ -57,12 +57,31 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return clientes;
     }
 
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
     public void addPedido(Pedido pedido) {
         addObjeto(pedidos, pedido);
     }
 
     public void addCliente(Cliente cliente) {
         addObjeto(clientes, cliente);
+    }
+
+    public void removeCliente(Cliente cliente) { removeObjeto(clientes, cliente);}
+
+    public void removeClientePorId(int id) {
+        clientes.removeIf(cliente -> cliente.getId() == id);
+    }
+
+    public Cliente getClientePorId(int id) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == id) {
+                return cliente;
+            }
+        }
+        return null;
     }
 
     public String listaClientes() {
