@@ -105,11 +105,11 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     }
 
     public String listaClientes() {
-        return listaVertical(clientes);
+        return Iteravel.listaVertical(clientes);
     }
 
     public String listaPedidos() {
-        return listaVertical(pedidos);
+        return Iteravel.listaVertical(pedidos);
     }
 
     /**
@@ -118,11 +118,11 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     public ArrayList<Pendente> escolheProdutos(Scanner scanner) {
         ArrayList<Pendente> produtos_escolhidos = new ArrayList<>();
         while (true) {
-            switch (verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
+            switch (ValidadorInput.verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto ao pedido.", "Listar produtos adicionados.", "Finalizar escolhas."}, 0)) {
                 case 1: produtos_escolhidos.add(selecionaProduto(scanner));
                     break;
                 case 2:
-                    System.out.print(listaVertical(produtos_escolhidos));
+                    System.out.print(Iteravel.listaVertical(produtos_escolhidos));
                     break;
                 default:
                     produtos_escolhidos.removeIf(Objects::isNull);
@@ -136,7 +136,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
      */
     private Pendente selecionaProduto(Scanner scanner) {
         Pendente produtoPendente = new Pendente();
-        return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
+        return switch (ValidadorInput.verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa.", "Voltar."}, 0)) {
             case 1 -> selecionaBarra(scanner, produtoPendente);
             case 2 -> selecionaCaixa(scanner, produtoPendente);
             default -> null; // Se o usuario digitar 0
@@ -152,7 +152,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // Solicita ao usuário que selecione um tipo de caixa
-        produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+        produtoPendente.setNome(Escolhivel.escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
         // Solicita ao usuário a quantidade desejada da caixa selecionada
         produtoPendente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
@@ -170,7 +170,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // Solicita ao usuário que selecione um tipo de chocolate
-        produtoPendente.setNome(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+        produtoPendente.setNome(Escolhivel.escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
 
         // Lista todos os tipos de complementos disponíveis
         for (TiposComplementos complemento : TiposComplementos.values()) {
@@ -180,7 +180,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         System.out.println("(0) - Sair");
         System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
         // Solicita ao usuário que selecione complementos para a barra de chocolate
-        produtoPendente.setComplementos(escolheObjeto(scanner, TiposComplementos.values(),
+        produtoPendente.setComplementos(Escolhivel.escolheObjeto(scanner, TiposComplementos.values(),
                 "Por favor selecione um complemento válido.",
                 "0", TiposComplementos.values().length));
         produtoPendente.getComplementos().removeIf(Objects::isNull);

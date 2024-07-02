@@ -129,7 +129,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
         for(Produto produto : produtos){
             System.out.print(produto.getId() + " - " + produto.getNome());
             if (produto instanceof Complementavel) {
-                System.out.println(" com " + listaHorizontal(((Complementavel) produto).getComplementos()) +
+                System.out.println(" com " + Iteravel.listaHorizontal(((Complementavel) produto).getComplementos()) +
                         " (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
             } else {
                 System.out.println(" (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
@@ -348,7 +348,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
 
     public Produto estocarProduto(Scanner scanner){
         System.out.println("Escolha um tipo de produto para adicionar:");
-        return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa."}, 1)) {
+        return switch (ValidadorInput.verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa."}, 1)) {
             case 1 -> new Chocolate().selecionaBarra(scanner);
             case 2 -> new Caixa().selecionaCaixa(scanner);
             default -> null;

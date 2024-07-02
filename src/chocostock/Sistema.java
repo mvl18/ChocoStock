@@ -56,7 +56,7 @@ public class Sistema implements Criavel, ValidadorInput {
                 (0) - Encerrar Sistema.
                 """;
 
-        opcao = verificaOpcao(input, msg, 0, 3);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: finalizarSistema();
                 break;
@@ -82,11 +82,12 @@ public class Sistema implements Criavel, ValidadorInput {
                 (0) - Voltar para o menu inicial.
                 """;
 
-        opcao = verificaOpcao(input, msg, 0, 3);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: menuInicial();
                 break;
-            case 1: loja.addPedido(new Pedido().novoPedido(input, loja));
+            case 1: Pedido novoPedido = Pedido.novoPedido(input, loja);
+                loja.addPedido(novoPedido);
                 menuPedidos();
                 break;
             case 2: System.out.println("--- PEDIDOS ATUAIS ---\n" + loja.listaPedidos());
@@ -113,17 +114,19 @@ public class Sistema implements Criavel, ValidadorInput {
                 (0) - Voltar para o menu inicial.
                 """;
 
-        opcao = verificaOpcao(input, msg, 0, 6);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 0: menuInicial();
                 break;
             case 1: loja.getEstoque().addProduto(loja.getEstoque().estocarProduto(input));
                 menuEstoque();
                 break;
-            case 2: loja.getEstoque().addIngrediente(new Ingrediente().estocarIngrediente(input, loja.getEstoque()));
+            case 2: Ingrediente novoIngrediente = Ingrediente.estocarIngrediente(input, loja.getEstoque());
+                loja.getEstoque().addIngrediente(novoIngrediente);
                 menuEstoque();
                 break;
-            case 3: loja.getEstoque().addEmbalagem(new Embalagem().estocarEmbalagem(input, loja.getEstoque()));
+            case 3: Embalagem novaEmbalagem = Embalagem.estocarEmbalagem(input, loja.getEstoque());
+                loja.getEstoque().addEmbalagem(novaEmbalagem);
                 menuEstoque();
                 break;
             case 4: loja.getEstoque().imprimirProdutos();
@@ -152,7 +155,7 @@ public class Sistema implements Criavel, ValidadorInput {
                 (x) - Listar Funcionários.
                 (0) - Voltar para o menu inicial.""";
 
-        opcao = verificaOpcao(input, msg, 0, 6);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 1: Cliente novoCliente = Cliente.novoCliente(input);
                 loja.addCliente(novoCliente);

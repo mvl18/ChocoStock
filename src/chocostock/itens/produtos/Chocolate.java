@@ -78,7 +78,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // TIPO
-        produto.setTipo(escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
+        produto.setTipo(Escolhivel.escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
         // NOME
         produto.setNome(produto.getTipo().getNome());
         // COMPLEMENTO
@@ -92,7 +92,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
             // Opção para sair da seleção de complementos
             System.out.println("(0) - Sair");
             System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
-            produto.setComplementos(escolheObjeto(scanner, TiposComplementos.values(), "Por favor, selecione um complemento válido.", "0",
+            produto.setComplementos(Escolhivel.escolheObjeto(scanner, TiposComplementos.values(), "Por favor, selecione um complemento válido.", "0",
                     TiposComplementos.values().length));
             produto.getComplementos().removeIf(Objects::isNull);
         }
@@ -105,7 +105,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
         produto.setPreco(Float.parseFloat(ValidadorInput.getInput(scanner, "Valor da unidade de " + produto.getNome() + ": ",
                 "Coloque um valor válido", Verifica::isFloat)));
         // VALIDADE
-        produto.setValidade(escolheDataFutura(scanner, "Qual a data de validade do produto? Digite uma data futura no formato DD/MM/YYYY: ",
+        produto.setValidade(Escolhivel.escolheDataFutura(scanner, "Qual a data de validade do produto? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         // PESO
         produto.setPeso(Integer.parseInt(ValidadorInput.getInput(scanner, "Peso da unidade de " + produto.getNome() + " em quilos: ",
@@ -115,7 +115,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
         for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
-        produto.setEmbalagem(escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
+        produto.setEmbalagem(Escolhivel.escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
         return produto;
     }
 }

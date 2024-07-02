@@ -127,7 +127,7 @@ public class Endereco implements Escolhivel, Serializable {
                         Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                 .equals("nao"))) {
             System.out.print("Estado: ");
-            endereco.setEstado(escolheObjeto(scanner, Estados.values(),
+            endereco.setEstado(Escolhivel.escolheObjeto(scanner, Estados.values(),
                     "Estado inválido. Por favor, digite a sigla ou nome de um dos estados válidos.",
                     "obrigatório"));
         }
