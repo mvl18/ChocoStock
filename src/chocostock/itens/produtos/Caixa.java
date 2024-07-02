@@ -45,29 +45,29 @@ public class Caixa extends Produto implements ValidadorInput, Escolhivel {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // TIPO
-        caixa.setTipo(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
+        caixa.setTipo(Escolhivel.escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
         // NOME
         caixa.setNome(caixa.getTipo().getNome());
         // QUANTIDADE
-        caixa.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + caixa.getNome() + ": ",
+        caixa.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + caixa.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
         // PRECO
-        caixa.setPreco(Float.parseFloat(getInput(scanner, "Valor da unidade de " + caixa.getNome() + ": ",
+        caixa.setPreco(Float.parseFloat(ValidadorInput.getInput(scanner, "Valor da unidade de " + caixa.getNome() + ": ",
                 "Coloque um valor válido", Verifica::isFloat)));
         // VALIDADE
-        caixa.setValidade(escolheDataFutura(scanner, "Qual a data de validade do caixa? Digite uma data futura no formato DD/MM/YYYY: ",
+        caixa.setValidade(Escolhivel.escolheDataFutura(scanner, "Qual a data de validade do caixa? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         // PESO UNITARIO
-        caixa.setPeso(Integer.parseInt(getInput(scanner, "Peso da unidade de " + caixa.getNome() + " em quilos: ",
+        caixa.setPeso(Integer.parseInt(ValidadorInput.getInput(scanner, "Peso da unidade de " + caixa.getNome() + " em quilos: ",
                 "Coloque um valor decimal válido", Verifica::isNatural)));
         // EMBALAGEM
         System.out.println("Escolha um dos tipos de embalagem abaixo:");
         for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
-        caixa.setEmbalagem(escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
+        caixa.setEmbalagem(Escolhivel.escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
         // LOTE
-        caixa.setLote(Integer.parseInt(getInput(scanner, "Digite o lote de " + caixa.getNome() + ": ",
+        caixa.setLote(Integer.parseInt(ValidadorInput.getInput(scanner, "Digite o lote de " + caixa.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return caixa;
