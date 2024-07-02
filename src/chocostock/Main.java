@@ -114,7 +114,7 @@ public class Main implements Escolhivel {
 
         Loja lojaCarregada = Persistencia.carregarLoja(scanner);
 
-        new InterfaceGrafica();
+        new InterfaceGrafica(lojaCarregada);
         Sistema sistema = new Sistema(scanner, lojaCarregada);
 
         sistema.iniciarSistema();  //Inicia o Sistema (Interface de terminal)

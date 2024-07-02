@@ -260,12 +260,12 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 """;
 
         // Solicita ao usuário que escolha entre mostrar clientes cadastrados ou adicionar um novo cliente
-        switch (verificaOpcao(scanner, msg, 1, 2)) {
+        switch (ValidadorInput.verificaOpcao(scanner, msg, 1, 2)) {
             case 1:
                 System.out.println(loja.listaClientes());
                 System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
                 System.out.println("Insira o ID ou nome do seu cliente");
-                cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
+                cliente = Escolhivel.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
                     cliente = new Cliente().novoCliente(scanner);
                     loja.addCliente(cliente);

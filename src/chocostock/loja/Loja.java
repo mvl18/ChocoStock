@@ -1,7 +1,6 @@
 package chocostock.loja;
 
 import chocostock.auxiliar.Endereco;
-import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Funcionario;
 import chocostock.enums.*;
 import chocostock.interfaces.*;
@@ -10,7 +9,6 @@ import chocostock.auxiliar.Verifica;
 import chocostock.itens.produtos.Pendente;
 
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -23,6 +21,7 @@ import java.util.Scanner;
  * "novoCliente", "novoPedido".
  */
 public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput, Serializable {
+    private static final long serialVersionUID = 1l;
     private String nome;
     private String telefone;
     private String descricao;
