@@ -2,6 +2,7 @@ package chocostock;
 
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
+import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.suprimentos.Embalagem;
 import chocostock.itens.suprimentos.Ingrediente;
@@ -83,16 +84,17 @@ public class Sistema implements Criavel, ValidadorInput {
                 (0) - Voltar para o menu inicial.
                 """;
 
-        opcao = verificaOpcao(input, msg, 0, 4);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 4);
         switch(opcao) {
             case 0: menuInicial();
                     break;
-            case 1: loja.addPedido(new Pedido().novoPedido(input, loja));
+            case 1: Pedido novoPedido = Pedido.novoPedido(input,loja);
+                    loja.addPedido(novoPedido);
                     menuPedidos();
                     break;
             case 2: System.out.println("Qual dos seguintes pedidos deseja atualizar? Para voltar digite 'sair'.");
                     System.out.println("Insira o ID ou nome do seu cliente");
-                    Pedido pedido = escolheObjeto(input, loja.getPedidos(), "Pedido inexistente. Digite o ID" +
+                    Pedido pedido = Escolhivel.escolheObjeto(input, loja.getPedidos(), "Pedido inexistente. Digite o ID" +
                             " ou nome de algum pedido listado.", "sair");
                     if (pedido != null) {
                         pedido.atualiza(input, loja);
