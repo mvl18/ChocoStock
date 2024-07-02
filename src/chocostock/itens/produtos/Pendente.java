@@ -5,12 +5,13 @@ import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.Nomeavel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * A classe Pendente representa um produto pendente a ser adicionado a um pedido na loja.
  */
-public class Pendente implements Nomeavel, AddRemovivel, Iteravel {
+public class Pendente implements Nomeavel, AddRemovivel, Iteravel, Serializable {
     private String nome;
     private ArrayList<TiposComplementos> complementos;
     private int quantidade;

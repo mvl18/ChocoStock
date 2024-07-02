@@ -56,19 +56,19 @@ public class Sistema implements Criavel, ValidadorInput {
                 (0) - Encerrar Sistema.
                 """;
 
-        opcao = verificaOpcao(input, msg, 0, 3);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 3);
         switch(opcao) {
             case 0: finalizarSistema();
-                    break;
+                break;
             case 1: menuPedidos();
-                    break;
+                break;
             case 2: menuEstoque();
-                    break;
+                break;
             case 3: menuColaboradores();
-                    break;
+                break;
             default: System.out.println("Opção inválida.");
-                     menuInicial();
-                     break;
+                menuInicial();
+                break;
         }
     }
 
@@ -106,8 +106,8 @@ public class Sistema implements Criavel, ValidadorInput {
                     menuPedidos();
                     break;
             default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
-                     menuInicial();
-                     break;
+                menuInicial();
+                break;
         }
     }
 
@@ -123,31 +123,33 @@ public class Sistema implements Criavel, ValidadorInput {
                 (0) - Voltar para o menu inicial.
                 """;
 
-        opcao = verificaOpcao(input, msg, 0, 6);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 6);
         switch(opcao){
             case 0: menuInicial();
-                    break;
+                break;
             case 1: loja.getEstoque().addProduto(loja.getEstoque().estocarProduto(input));
-                    menuEstoque();
-                    break;
-            case 2: loja.getEstoque().addIngrediente(new Ingrediente().estocarIngrediente(input, loja.getEstoque()));
-                    menuEstoque();
-                    break;
-            case 3: loja.getEstoque().addEmbalagem(new Embalagem().estocarEmbalagem(input, loja.getEstoque()));
-                    menuEstoque();
-                    break;
+                menuEstoque();
+                break;
+            case 2: Ingrediente novoIngrediente = Ingrediente.estocarIngrediente(input, loja.getEstoque());
+                loja.getEstoque().addIngrediente(novoIngrediente);
+                menuEstoque();
+                break;
+            case 3: Embalagem novaEmbalagem = Embalagem.estocarEmbalagem(input, loja.getEstoque());
+                loja.getEstoque().addEmbalagem(novaEmbalagem);
+                menuEstoque();
+                break;
             case 4: loja.getEstoque().imprimirProdutos();
-                    menuEstoque();
-                    break;
+                menuEstoque();
+                break;
             case 5: System.out.println(loja.getEstoque().statusIngredientes());
-                    menuEstoque();
-                    break;
+                menuEstoque();
+                break;
             case 6: System.out.println(loja.getEstoque().statusEmbalagens());
-                    menuEstoque();
-                    break;
+                menuEstoque();
+                break;
             default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
-                     menuInicial();
-                     break;
+                menuInicial();
+                break;
         }
     }
 
@@ -162,25 +164,27 @@ public class Sistema implements Criavel, ValidadorInput {
                 (x) - Listar Funcionários.
                 (0) - Voltar para o menu inicial.""";
 
-        opcao = verificaOpcao(input, msg, 0, 6);
+        opcao = ValidadorInput.verificaOpcao(input, msg, 0, 6);
         switch(opcao){
-            case 1: loja.addCliente(new Cliente().novoCliente(input));
-                    menuColaboradores();
-                    break;
-            case 2: loja.getEstoque().addFornecedor(new Fornecedor().novoFornecedor(input));
-                    menuColaboradores();
-                    break;
+            case 1: Cliente novoCliente = Cliente.novoCliente(input);
+                loja.addCliente(novoCliente);
+                menuColaboradores();
+                break;
+            case 2: Fornecedor novoFornecedor = Fornecedor.novoFornecedor(input);
+                loja.getEstoque().addFornecedor(novoFornecedor);
+                menuColaboradores();
+                break;
             case 4: System.out.println(loja.listaClientes());
-                    menuColaboradores();
-                    break;
+                menuColaboradores();
+                break;
             case 5: System.out.println(loja.getEstoque().listaFornecedores());
-                    menuColaboradores();
-                    break;
+                menuColaboradores();
+                break;
             case 0: menuInicial();
-                    break;
+                break;
             default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
-                     menuInicial();
-                     break;
+                menuInicial();
+                break;
         }
     }
 

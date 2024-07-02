@@ -25,7 +25,7 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
      * @param n_escolhas O número máximo de escolhas que o usuário pode fazer.
      * @return Uma lista de objetos escolhidos pelo usuário ou o objeto escolhido pelo usuario.
      */
-    default <T> ArrayList<T> escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro, String mensagemSaida, int n_escolhas) { // posso criar uma String mensagemSaida para voce poder definir o que vc quiser
+    static <T> ArrayList<T> escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro, String mensagemSaida, int n_escolhas) { // posso criar uma String mensagemSaida para voce poder definir o que vc quiser
         ArrayList<T> escolhidos = new ArrayList<>();
 
         if (mensagemErro.isEmpty()) {
@@ -83,7 +83,7 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
                 }
             }
             System.out.print(escolhidos.size() > 1 ? "Escolhidos: " : "Escolhido: ");
-            System.out.println(listaHorizontal(escolhidos));
+            System.out.println(Iteravel.listaHorizontal(escolhidos));
 
             if (!input_valido) {
                 System.out.println(mensagemErro);
@@ -96,7 +96,7 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
     /**
      * Sobrecarga do método escolheObjeto sem o parâmetro de número de escolhas.
      */
-    default <T> T escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro, String mensagemSaida) {
+    static <T> T escolheObjeto(Scanner scanner, ArrayList<T> lista, String mensagemErro, String mensagemSaida) {
         ArrayList<T> objeto = escolheObjeto(scanner, lista, mensagemErro, mensagemSaida, 1);
         if (objeto.isEmpty()) {
             return null;
@@ -106,14 +106,14 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
     }
 
     // Sobrecargas adicionais para arrays do C
-    default <T> ArrayList<T> escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, String mensagemSaida, int n_escolhas) {
+    static <T> ArrayList<T> escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, String mensagemSaida, int n_escolhas) {
         return escolheObjeto(scanner, new ArrayList<>(Arrays.asList(lista)), mensagemErro, mensagemSaida, n_escolhas);
     }
 
     /**
      * Sobrecarga do método escolheObjeto sem o parâmetro de número de escolhas.
      */
-    default <T> T escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, String mensagemSaida) {
+    static <T> T escolheObjeto(Scanner scanner, T[] lista, String mensagemErro, String mensagemSaida) {
         ArrayList<T> objeto = escolheObjeto(scanner, lista, mensagemErro, mensagemSaida, 1);
         if (objeto.isEmpty()) {
             return null;
@@ -122,11 +122,11 @@ public interface Escolhivel extends Iteravel, ValidadorInput {
         return objeto.get(0);
     }
 
-    default LocalDate escolheDataFutura(Scanner scanner, String prompt, String mensagemErro) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
-        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    static LocalDate escolheDataFutura(Scanner scanner, String prompt, String mensagemErro) { // colocar para outro lugar, pq aqui n faz sentido sendo q usa essa funcao até no ingrediente
+        return LocalDate.parse((ValidadorInput.getInput(scanner, prompt, mensagemErro, Verifica::isDataFutura)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
-    default LocalDate escolheData(Scanner scanner, String prompt, String mensagemErro) {
-        return LocalDate.parse((getInput(scanner, prompt, mensagemErro, Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    static LocalDate escolheData(Scanner scanner, String prompt, String mensagemErro) {
+        return LocalDate.parse((ValidadorInput.getInput(scanner, prompt, mensagemErro, Verifica::isData)), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
