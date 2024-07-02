@@ -81,11 +81,11 @@ public class Embalagem extends Suprimento implements ValidadorInput, Escolhivel 
         //NOME
         embalagem.setNome(embalagem.getTipo_embalagem().getNome());
         //QUANTIDADE
-        embalagem.setQuantidade(Integer.parseInt(getInput(input, "Quantas pacotes foram comprados? ", "Quantidade invalida", Verifica::isNatural)));
+        embalagem.setQuantidade(Integer.parseInt(ValidadorInput.getInput(input, "Quantas pacotes foram comprados? ", "Quantidade invalida", Verifica::isNatural)));
         //PRECO_PACOTE
-        embalagem.setPreco_pacote(Float.parseFloat(getInput(input, "Qual o preco de 1 pacote? ", "Preco invalido, coloque um numero valido.", Verifica::isFloat)));
+        embalagem.setPreco_pacote(Float.parseFloat(ValidadorInput.getInput(input, "Qual o preco de 1 pacote? ", "Preco invalido, coloque um numero valido.", Verifica::isFloat)));
         //QUANTIDADE_POR_PACOTE
-        embalagem.setQuantidade_por_pacote(Integer.parseInt(getInput(input, "Quantas unidades por pacote? ", "Quantidade invalida", Verifica::isNatural)));
+        embalagem.setQuantidade_por_pacote(Integer.parseInt(ValidadorInput.getInput(input, "Quantas unidades por pacote? ", "Quantidade invalida", Verifica::isNatural)));
         //PRECO
         embalagem.setPreco(embalagem.getPreco_pacote() / embalagem.getQuantidade_por_pacote());
         //FORNECEDOR

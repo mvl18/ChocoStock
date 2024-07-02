@@ -82,7 +82,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
         // NOME
         produto.setNome(produto.getTipo().getNome());
         // COMPLEMENTO
-        if (Processa.normalizaString(getInput(scanner, "O produto tem algum adicional? Sim OU Não ", "Por favor, insira uma resposta válida. ",
+        if (Processa.normalizaString(ValidadorInput.getInput(scanner, "O produto tem algum adicional? Sim OU Não ", "Por favor, insira uma resposta válida. ",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
 
             for (TiposComplementos complemento : TiposComplementos.values()) {
@@ -97,18 +97,18 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
             produto.getComplementos().removeIf(Objects::isNull);
         }
         // ORIGEM CACAU
-        produto.setOrigem_cacau(getInput(scanner, "Digite a origem do cacau: ", "Origem inválida, digite uma origem válida.", Verifica::isNome));
+        produto.setOrigem_cacau(ValidadorInput.getInput(scanner, "Digite a origem do cacau: ", "Origem inválida, digite uma origem válida.", Verifica::isNome));
         // QUANTIDADE
-        produto.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produto.getNome() + ": ",
+        produto.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produto.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
         // PRECO
-        produto.setPreco(Float.parseFloat(getInput(scanner, "Valor da unidade de " + produto.getNome() + ": ",
+        produto.setPreco(Float.parseFloat(ValidadorInput.getInput(scanner, "Valor da unidade de " + produto.getNome() + ": ",
                 "Coloque um valor válido", Verifica::isFloat)));
         // VALIDADE
         produto.setValidade(escolheDataFutura(scanner, "Qual a data de validade do produto? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         // PESO
-        produto.setPeso(Integer.parseInt(getInput(scanner, "Peso da unidade de " + produto.getNome() + " em quilos: ",
+        produto.setPeso(Integer.parseInt(ValidadorInput.getInput(scanner, "Peso da unidade de " + produto.getNome() + " em quilos: ",
                 "Coloque um valor decimal válido", Verifica::isNatural)));
         // EMBALAGEM
         System.out.println("Escolha um dos tipos de embalagem abaixo:");

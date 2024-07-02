@@ -15,6 +15,7 @@ import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.suprimentos.Ingrediente;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +29,7 @@ import java.util.Scanner;
  * "statusIngredientes", "retiraProdutoEstoque", "estocarCliente",
  * "estocarEmbalagem" e o método privado "meioseProduto".
  */
-public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
+public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Serializable {
     private ArrayList<Produto> produtos;
     private final ArrayList<Ingrediente> ingredientes;
     private final ArrayList<Item> equipamentos;

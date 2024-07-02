@@ -10,6 +10,7 @@ import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.Scanner;
  * Implementa os métodos "isPago", "addProduto", "removeProduto",
  * "addProduto_pendente", "removeProduto_pendente" e "calculaPrecoTotal".
  */
-public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhivel {
+public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhivel, Serializable {
     private static int id_pedidos = 100000;
     private final int id;
     private int id_cliente;
@@ -55,10 +56,16 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         this(-1, null, false, Status.PENDENTE, 0.0F);
     }
 
-
-
     public int getId() {
         return id;
+    }
+
+    public static int getIdPedido() {
+        return id_pedidos;
+    }
+
+    public static void setIdPedido(int id) {
+        id_pedidos = id;
     }
 
     public void setId_cliente(int id_cliente) {
@@ -133,10 +140,10 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 "\nProdutos: ";
         out += listaHorizontal(produtos);
         out += "\nProdutos pendentes: " + listaHorizontal(produtos_pendentes) +
-        "\nPreco total: R$" + String.format("%.2f", preco_total) + " (" + (pago ? "Pago" : "Não pago") + ")";
+                "\nPreco total: R$" + String.format("%.2f", preco_total) + " (" + (pago ? "Pago" : "Não pago") + ")";
         return out + "\n";
     }
-  
+
     /**
      * Calcula o preço total do pedido com base nos produtos adicionados e seus preços.
      */
@@ -222,7 +229,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         }
 
         // Pergunta ao usuário se deseja modificar o status do pedido, inicialmente definido como PENDENTE
-        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE. Está correto? Digite 'Sim' ou 'não'. ", "Por favor, digite 'sim' ou 'não'.",
+        if (Processa.normalizaString(ValidadorInput.getInput(scanner, "Status do pedido foi definido para PENDENTE. Está correto? Digite 'Sim' ou 'não'. ", "Por favor, digite 'sim' ou 'não'.",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
             pedido.setStatus(Status.PENDENTE);
         } else {
@@ -235,7 +242,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         System.out.println("O status do pedido " + pedido.getId() + " foi definido como " + pedido.getStatus() + ".");
 
         // Pergunta ao usuário se o pedido já foi pago
-        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta válida. ",
+        pedido.setPago(Processa.normalizaString(ValidadorInput.getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta válida. ",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 

@@ -18,7 +18,7 @@ public interface ValidadorInput {
      * @param validador O validador de entrada para verificar se a entrada do usuário é válida.
      * @return A entrada do usuário válida na forma de String().
      */
-    default String getInput(Scanner scanner, String prompt, String mensagemErro, Validador validador) {
+    static String getInput(Scanner scanner, String prompt, String mensagemErro, Validador validador) {
         String input, inputnorm;
         boolean entradaValida = false;
 

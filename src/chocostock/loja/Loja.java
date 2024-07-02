@@ -9,6 +9,7 @@ import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
 import chocostock.itens.produtos.Pendente;
 
+import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -21,20 +22,41 @@ import java.util.Scanner;
  * "selecionaCaixa", "selecionaBarra", "estocarIngrediente",
  * "novoCliente", "novoPedido".
  */
-public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput {
-    private final String descricao;
-    private final Endereco endereco;
+public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput, Serializable {
+    private String nome;
+    private String telefone;
+    private String descricao;
+    private Endereco endereco;
     private final ArrayList<Pedido> pedidos;
     private final Estoque estoque;
-    private static final ArrayList<Cliente> clientes = new ArrayList<>();
+    private final ArrayList<Cliente> clientes;
     private final ArrayList<Funcionario> funcionarios;
 
-    public Loja(String descricao, Endereco endereco) {
+    public Loja(String nome, String descricao, String telefone, Endereco endereco) {
+        this.nome = nome;
         this.descricao = descricao;
+        this.telefone = telefone;
         this.endereco = endereco;
         this.pedidos = new ArrayList<>();
         this.estoque =  new Estoque();
+        this.clientes = new ArrayList<>();
         this.funcionarios = new ArrayList<>();
+    }
+
+    public Loja() {
+        this.pedidos = new ArrayList<>();
+        this.estoque =  new Estoque();
+        this.clientes = new ArrayList<>();
+        this.funcionarios = new ArrayList<>();
+    }
+
+    // NOME
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     // DESCRIÇÃO
@@ -42,9 +64,26 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return descricao;
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    // TELEFONE
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     // ENDEREÇO
     public Endereco getEndereco() {
         return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     // ESTOQUE
@@ -115,7 +154,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         // Solicita ao usuário que selecione um tipo de caixa
         produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
         // Solicita ao usuário a quantidade desejada da caixa selecionada
-        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
+        produtoPendente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;
@@ -146,9 +185,27 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 "0", TiposComplementos.values().length));
         produtoPendente.getComplementos().removeIf(Objects::isNull);
         // Solicita ao usuário a quantidade desejada da barra de chocolate selecionada
-        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
+        produtoPendente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;
+    }
+
+    public Loja criarNovaLoja(Scanner scanner) {
+        Loja novaLoja = new Loja();
+        // Solicitação do nome da loja
+        novaLoja.setNome(ValidadorInput.getInput(scanner, "Nome do loja: ", "Nome inválido.", Verifica::isNome));
+        // Solicitação da descrição da loja
+        novaLoja.setDescricao(ValidadorInput.getInput(scanner, "Descrição da loja: ", "Nome inválido.", input -> true));
+        // Solicitação do telefone da loja
+        novaLoja.setTelefone(ValidadorInput.getInput(scanner, "Telefone da loja: ", "Insira um número válido, não esqueça o DDD!",
+                Verifica::isTelefone).replaceAll("\\D", ""));
+        // Solicitação do endereço da loja
+        Endereco endereco = new Endereco();
+        novaLoja.setEndereco(endereco.criaEndereco(scanner));
+        System.out.println("Loja " + novaLoja.getNome() + " criada com sucesso!");
+        System.out.println("\n");
+
+        return novaLoja;
     }
 }

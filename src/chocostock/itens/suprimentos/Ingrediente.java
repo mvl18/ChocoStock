@@ -76,13 +76,13 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
         ingrediente.setNome(ingrediente.getTipo().getNome());
 
         //QUANTIDADE
-        ingrediente.setQuantidade(Integer.parseInt(getInput(input, "Quantas unidades foram compradas? ", "Quantidade invalida", Verifica::isNatural)));
+        ingrediente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(input, "Quantas unidades foram compradas? ", "Quantidade invalida", Verifica::isNatural)));
 
         //UNIDADE
-        ingrediente.setUnidade(Float.parseFloat(getInput(input, "Quantos kg por unidade? ", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
+        ingrediente.setUnidade(Float.parseFloat(ValidadorInput.getInput(input, "Quantos kg por unidade? ", "Quantidade invalida, coloque um numero valido.", Verifica::isFloat)));
 
         //PRECO
-        ingrediente.setPreco(Float.parseFloat(getInput(input, "Digite o preco da compra: ", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
+        ingrediente.setPreco(Float.parseFloat(ValidadorInput.getInput(input, "Digite o preco da compra: ", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
         //DATA DE COMPRA E VALIDADE
         ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy) ", "Digite uma data válida."));
