@@ -105,6 +105,7 @@ public class Main implements Escolhivel {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n");
+
         //Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
         //System.out.println(loja.getDescricao() + " criada!");
         //System.out.println("Venha para o endereço: " + loja.getEndereco());
@@ -115,6 +116,7 @@ public class Main implements Escolhivel {
 
         new InterfaceGrafica();
         Sistema sistema = new Sistema(scanner, lojaCarregada);
+
         sistema.iniciarSistema();  //Inicia o Sistema (Interface de terminal)
 
         Persistencia.salvarLoja(lojaCarregada);

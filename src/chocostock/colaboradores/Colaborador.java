@@ -33,6 +33,18 @@ public abstract class Colaborador implements Nomeavel, Escolhivel, ValidadorInpu
         this.nome = nome;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
