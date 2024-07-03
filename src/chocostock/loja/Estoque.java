@@ -134,17 +134,21 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
     /**
      * Imprime na saída padrão os produtos disponíveis no estoque.
      */
-    public void imprimirProdutos(){
-        for(Produto produto : produtos){
+    public void imprimirProdutos() {
+        for (Produto produto : produtos) {
             System.out.print(produto.getId() + " - " + produto.getNome());
             if (produto instanceof Complementavel) {
-                System.out.println(" com " + Iteravel.listaHorizontal(((Complementavel) produto).getComplementos()) +
+                ArrayList<?> complementos = ((Complementavel) produto).getComplementos();
+                String complementosStr = complementos != null ? Iteravel.listaHorizontal(complementos) : "sem complementos";
+                System.out.println(" com " + complementosStr +
                         " (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
             } else {
                 System.out.println(" (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
             }
         }
+        System.out.println();
     }
+
 
     @Override
     public String toString() {
