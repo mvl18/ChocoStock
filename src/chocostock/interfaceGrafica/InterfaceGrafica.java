@@ -5,10 +5,7 @@ import chocostock.loja.Loja;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Arrays;
 
 public class InterfaceGrafica extends JFrame {
@@ -29,7 +26,6 @@ public class InterfaceGrafica extends JFrame {
         add(painelPrincipal, BorderLayout.CENTER);
 
         adicionarPaginas();
-        // painelPrincipal.add(new Listar(), "Listar");
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -55,6 +51,10 @@ public class InterfaceGrafica extends JFrame {
     public void adicionarPaginas(){
         painelPrincipal.add(new Inicio(loja), "Inicio");
         painelPrincipal.add(new Listar(loja), "ListarCliente");
+
+        painelPrincipal.add(new PaginaNovoIngrediente(loja), "AdicionarIngrediente");
+        painelPrincipal.add(new PaginaNovaEmbalagem(loja), "AdicionarEmbalagem");
+
         //Novo Cliente
         String[] atributosCliente = new String[]{"Nome", "Telefone", "Email", "Endereço"};
         FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Novo Cliente");
@@ -63,7 +63,7 @@ public class InterfaceGrafica extends JFrame {
         }
         fNovoCliente.addBotoes();
         fNovoCliente.atualizarLayout();
-        painelPrincipal.add(fNovoCliente, "RegistrarCliente");
+        painelPrincipal.add(fNovoCliente, "AdicionarCliente");
 
         //Novo Fornecedor
         String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email", "Endereço", "CNPJ", "Site"};
@@ -73,7 +73,7 @@ public class InterfaceGrafica extends JFrame {
         }
         fNovoFornecedor.addBotoes();
         fNovoFornecedor.atualizarLayout();
-        painelPrincipal.add(fNovoFornecedor, "RegistrarFornecedor");
+        painelPrincipal.add(fNovoFornecedor, "AdicionarFornecedor");
 
         //Novo Funcionário
         String[] atributosFuncionario = {"Nome", "Telefone", "Email", "Endereço", "Cargo", "Salario"};
@@ -90,20 +90,39 @@ public class InterfaceGrafica extends JFrame {
         }
         fNovoFuncionario.addBotoes();
         fNovoFuncionario.atualizarLayout();
-        painelPrincipal.add(fNovoFuncionario, "RegistrarFuncionario");
+        painelPrincipal.add(fNovoFuncionario, "AdicionarFuncionario");
         System.out.println(Arrays.toString(TiposIngredientes.values()));
     }
 
+
     private JMenuBar criarMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+//        menuBar.add(criarMenuComAcao("Início", "Inicio"));
+
+        // Adicionar o botão "Início"
+        JButton inicioButton = new JButton("Início");
+        inicioButton.addActionListener(e -> alterarPagina("Inicio"));
+        menuBar.add(inicioButton);
+
         menuBar.add(criarMenu("Menu Pedidos", new String[]{"Novo Pedido", "Listar Pedidos", "Atualizar Pedido"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
-                new String[]{"Adicionar", "Status"},
-                new String[][]{{"Produto", "Ingrediente", "Embalagem"}, {"Produto", "Ingrediente", "Embalagem"}}));
+                new String[]{"Produto", "Ingrediente", "Embalagem"},
+                new String[][]{{"Adicionar", "Status"}, {"Adicionar", "Status"}, {"Adicionar", "Status"}}));
         menuBar.add(criarMenuComSubMenus("Menu Colaboradores",
-                new String[]{"Adicionar", "Listar"},
-                new String[][]{{"Cliente", "Fornecedor", "Funcionario"}, {"Cliente", "Fornecedor", "Funcionario"}}));
+                new String[]{"Cliente", "Fornecedor", "Funcionario"},
+                new String[][]{{"Adicionar", "Listar"}, {"Adicionar", "Listar"}, {"Adicionar", "Listar"}}));
         return menuBar;
+    }
+
+    private JMenu criarMenuComAcao(String nome, String acao) {
+        JMenu menu = new JMenu(nome);
+        menu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                alterarPagina(acao);
+            }
+        });
+        return menu;
     }
 
     private JMenu criarMenu(String menuName, String[] itemNames) {
@@ -122,36 +141,8 @@ public class InterfaceGrafica extends JFrame {
             for (String itemName : itemNames[i]) {
                 JMenuItem menuItem = new JMenuItem(itemName);
                 subMenu.add(menuItem);
-                if("Adicionar".equals(subMenuNames[i])){
-                    if ("Cliente".equals(itemName)) {
-                        menuItem.addActionListener(e -> alterarPagina("RegistrarCliente"));
-                    }
-                    if ("Fornecedor".equals(itemName)) {
-                        menuItem.addActionListener(e -> alterarPagina("RegistrarFornecedor"));
-                    }
-                    if ("Funcionario".equals(itemName)) {
-                        menuItem.addActionListener(e -> alterarPagina("RegistrarFuncionario"));
-                    }
-                    if ("Ingrediente".equals(itemName)) {
-                        menuItem.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                painelPrincipal.add(new PaginaNovoIngrediente(loja), "RegistrarIngrediente");
-                                alterarPagina("RegistrarIngrediente");
-                            }
-                        });
-                    }
-                    if ("Embalagem".equals(itemName)) {
-                        menuItem.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                painelPrincipal.add(new PaginaNovaEmbalagem(loja), "RegistrarEmbalagem");
-                                alterarPagina("RegistrarEmbalagem");
-                            }
-                        });
-                    }
-                }
-
+                int finalI = i;
+                menuItem.addActionListener(e -> alterarPagina(itemName + subMenuNames[finalI]));
             }
             menu.add(subMenu);
         }
