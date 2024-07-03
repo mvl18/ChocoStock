@@ -167,7 +167,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         Pedido pedido = new Pedido();
 
         // CLIENTE
-        Cliente cliente;
+        Cliente cliente = null;
         String msg =   """
                 --- NOVO PEDIDO ---
                 Selecione uma das opções:
@@ -183,7 +183,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 System.out.println("Insira o ID ou nome do seu cliente");
                 cliente = Escolhivel.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
-                    cliente = new Cliente().novoCliente(scanner);
+                    cliente = cliente.novoCliente(scanner);
                     loja.addCliente(cliente);
                     pedido.setId_cliente(cliente.getId());
                     break;
@@ -192,7 +192,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 cliente.addPedido(pedido.getId());
                 break;
             case 2:
-                cliente = new Cliente().novoCliente(scanner);
+                cliente = cliente.novoCliente(scanner);
                 loja.addCliente(cliente);
                 pedido.setId_cliente(cliente.getId());
                 cliente.addPedido(pedido.getId());

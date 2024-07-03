@@ -73,6 +73,15 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
         return listaHorizontalQuebraLinha(fornecedores);
     }
 
+    public String[] getArrayFornecedores(){
+        int num_fornecedores = getFornecedores().size();
+        String[] arrFornecedores = new String[num_fornecedores];
+        for(int i = 0; i < num_fornecedores; i++){
+            arrFornecedores[i] = getFornecedores().get(i).getNome();
+        }
+        return arrFornecedores;
+    }
+
 //    /**
 //     * Método para criar um novo fornecedor com dados fornecidos pelo usuário.
 //     * Solicita ao usuário que insira as informações do fornecedor via console.

@@ -59,4 +59,15 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
         }
         return msg.toString();
     }
+
+    public static String[] getTipos(){
+        int num_tipos = TiposEmbalagens.values().length;
+        int i = 0;
+        String[] tipos = new String[num_tipos];
+        for(TiposEmbalagens t : TiposEmbalagens.values()){
+            tipos[i] = t.getNome() + " - " + t.getTamanho();
+            i++;
+        }
+        return tipos;
+    }
 }
