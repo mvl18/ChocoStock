@@ -2,6 +2,8 @@ package chocostock.interfaceGrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import chocostock.loja.Loja;
 
@@ -20,16 +22,23 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal = new JPanel(cardLayout);
         add(painelPrincipal, BorderLayout.CENTER);
 
-        painelPrincipal.add(new JPanel(), "Inicio");
+        painelPrincipal.add(new Inicio(loja), "Inicio");
         painelPrincipal.add(new Registrar(), "RegistrarCliente");
         painelPrincipal.add(new Listar(loja), "ListarCliente");
-
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                ajustarLarguraMenuItens();
+            }
+        });
         setVisible(true);
     }
 
     private JMenuBar criarMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
+        JMenuItem inicio = new JMenuItem("Inicio");
+        inicio.addActionListener(e -> cardLayout.show(painelPrincipal, "Inicio"));
+        menuBar.add(inicio);
         menuBar.add(criarMenu("Menu Pedidos", new String[]{"Novo Pedido", "Listar Pedidos", "Atualizar Pedido"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
                 new String[]{"Produto", "Ingrediente", "Embalagem"},
@@ -37,8 +46,15 @@ public class InterfaceGrafica extends JFrame {
         menuBar.add(criarMenuComSubMenus("Menu Colaboradores",
                 new String[]{"Cliente", "Fornecedor", "Funcionario"},
                 new String[][]{{"Adicionar", "Listar"}, {"Adicionar", "Listar"}, {"Adicionar", "Listar"}}));
-
         return menuBar;
+    }
+
+    private void ajustarLarguraMenuItens() {
+        JMenuBar menuBar = getJMenuBar();
+        for (int i = 0; i < menuBar.getComponentCount(); i++)
+            menuBar.getComponent(i).setPreferredSize(new Dimension(this.getWidth()/menuBar.getComponentCount(), 30));
+        menuBar.revalidate();
+        menuBar.repaint();
     }
 
     private JMenu criarMenu(String menuName, String[] itemNames) {

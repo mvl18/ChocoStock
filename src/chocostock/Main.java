@@ -71,7 +71,7 @@ public class Main implements Escolhivel {
 
         // PEDIDOS
         Pedido pedido = new Pedido(100003, LocalDate.parse("11/01/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                true, Status.FINALIZADO, 65.0F);
+                true, Status.PENDENTE, 65.0F);
         loja.addPedido(pedido);
         loja.getClientes().get(3).addPedido(pedido.getId());
 
@@ -81,7 +81,7 @@ public class Main implements Escolhivel {
         loja.getClientes().get(1).addPedido(pedido.getId());
 
         pedido = new Pedido(100000, LocalDate.parse("03/08/2024", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                false, Status.FINALIZADO, 103.0F);
+                false, Status.PENDENTE, 103.0F);
         loja.addPedido(pedido);
         loja.getClientes().get(0).addPedido(pedido.getId());
 
