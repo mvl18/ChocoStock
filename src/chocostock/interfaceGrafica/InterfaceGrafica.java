@@ -24,15 +24,13 @@ public class InterfaceGrafica extends JFrame {
 
         painelPrincipal.add(new Inicio(loja), "Inicio");
         painelPrincipal.add(new Registrar(), "RegistrarCliente");
-        //painelPrincipal.add(new Listar(loja), "ListarCliente");
-
+        painelPrincipal.add(new Listar(loja), "ListarCliente");
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 ajustarLarguraMenuItens();
             }
         });
-
         setVisible(true);
     }
 

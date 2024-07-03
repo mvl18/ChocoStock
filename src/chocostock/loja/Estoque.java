@@ -15,6 +15,7 @@ import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.suprimentos.Ingrediente;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +29,7 @@ import java.util.Scanner;
  * "statusIngredientes", "retiraProdutoEstoque", "estocarCliente",
  * "estocarEmbalagem" e o método privado "meioseProduto".
  */
-public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
+public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Serializable {
     private ArrayList<Produto> produtos;
     private final ArrayList<Ingrediente> ingredientes;
     private final ArrayList<Item> equipamentos;
@@ -128,7 +129,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
         for(Produto produto : produtos){
             System.out.print(produto.getId() + " - " + produto.getNome());
             if (produto instanceof Complementavel) {
-                System.out.println(" com " + listaHorizontal(((Complementavel) produto).getComplementos()) +
+                System.out.println(" com " + Iteravel.listaHorizontal(((Complementavel) produto).getComplementos()) +
                         " (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
             } else {
                 System.out.println(" (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
@@ -347,7 +348,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel{
 
     public Produto estocarProduto(Scanner scanner){
         System.out.println("Escolha um tipo de produto para adicionar:");
-        return switch (verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa."}, 1)) {
+        return switch (ValidadorInput.verificaOpcao(scanner, new String[]{"TIPOS DE PRODUTO", "Barra.", "Caixa."}, 1)) {
             case 1 -> new Chocolate().selecionaBarra(scanner);
             case 2 -> new Caixa().selecionaCaixa(scanner);
             default -> null;
