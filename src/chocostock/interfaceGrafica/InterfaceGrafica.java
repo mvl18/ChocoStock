@@ -7,14 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class InterfaceGrafica extends JFrame {
-    private Loja loja;
-    private JPanel painelPrincipal;
-    private CardLayout cardLayout;
+    private final Loja loja;
+    private final JPanel painelPrincipal;
+    private final CardLayout cardLayout;
 
     public InterfaceGrafica(Loja loja) {
         this.loja = loja;
@@ -82,7 +80,7 @@ public class InterfaceGrafica extends JFrame {
 
         for(String atributo : atributosFuncionario){
             if(atributo.equals("Cargo")){
-                fNovoFuncionario.addInputComponent(new JComboBox<String>(cargos), atributo);
+                fNovoFuncionario.addInputComponent(new JComboBox<>(cargos), atributo);
             }
             else{
                 fNovoFuncionario.addInputComponent(new JTextField(), atributo);
@@ -91,7 +89,6 @@ public class InterfaceGrafica extends JFrame {
         fNovoFuncionario.addBotoes();
         fNovoFuncionario.atualizarLayout();
         painelPrincipal.add(fNovoFuncionario, "RegistrarFuncionario");
-        System.out.println(Arrays.toString(TiposIngredientes.values()));
     }
 
     private JMenuBar criarMenuBar() {
@@ -126,32 +123,31 @@ public class InterfaceGrafica extends JFrame {
                     if ("Cliente".equals(itemName)) {
                         menuItem.addActionListener(e -> alterarPagina("RegistrarCliente"));
                     }
-                    if ("Fornecedor".equals(itemName)) {
+                    else if ("Fornecedor".equals(itemName)) {
                         menuItem.addActionListener(e -> alterarPagina("RegistrarFornecedor"));
                     }
                     if ("Funcionario".equals(itemName)) {
                         menuItem.addActionListener(e -> alterarPagina("RegistrarFuncionario"));
                     }
                     if ("Ingrediente".equals(itemName)) {
-                        menuItem.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                painelPrincipal.add(new PaginaNovoIngrediente(loja), "RegistrarIngrediente");
-                                alterarPagina("RegistrarIngrediente");
-                            }
+                        menuItem.addActionListener(e -> {
+                            painelPrincipal.add(new PaginaNovoIngrediente(loja), "RegistrarIngrediente");
+                            alterarPagina("RegistrarIngrediente");
                         });
                     }
                     if ("Embalagem".equals(itemName)) {
-                        menuItem.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                painelPrincipal.add(new PaginaNovaEmbalagem(loja), "RegistrarEmbalagem");
-                                alterarPagina("RegistrarEmbalagem");
-                            }
+                        menuItem.addActionListener(e -> {
+                            painelPrincipal.add(new PaginaNovaEmbalagem(loja), "RegistrarEmbalagem");
+                            alterarPagina("RegistrarEmbalagem");
+                        });
+                    }
+                    if ("Produto".equals(itemName)) {
+                        menuItem.addActionListener(e -> {
+                            painelPrincipal.add(new PaginaNovoProduto(loja), "RegistrarProduto");
+                            alterarPagina("RegistrarProduto");
                         });
                     }
                 }
-
             }
             menu.add(subMenu);
         }

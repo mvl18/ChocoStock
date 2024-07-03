@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class FormularioDeCadastro extends JPanel {
 
-    private static Font fonteTitulo = new Font("Tahoma", Font.BOLD, 48);
-    private static Font fontePequena = new Font("Tahome", Font.PLAIN, 26);
+    private Font fonteTitulo = new Font("Tahoma", Font.BOLD, 48);
+    private Font fontePequena = new Font("Tahome", Font.PLAIN, 26);
     //Componentes
     private JLabel titulo;
     private JPanel painelRegistro;
@@ -33,6 +33,22 @@ public class FormularioDeCadastro extends JPanel {
     public FormularioDeCadastro(String tituloForms) {
         this();
         titulo.setText(tituloForms);
+    }
+
+    public JPanel getPainelRegistro() {
+        return painelRegistro;
+    }
+
+    public Font getFontePequena() {
+        return fontePequena;
+    }
+
+    public ArrayList<JComponent> getInputs() {
+        return inputs;
+    }
+
+    public ArrayList<String> getLabelsDosInputs() {
+        return labelsDosInputs;
     }
 
     public void atualizarLayout(){
