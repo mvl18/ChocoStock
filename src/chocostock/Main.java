@@ -110,9 +110,11 @@ public class Main implements Escolhivel {
         //System.out.println(loja.getDescricao() + " criada!");
         //System.out.println("Venha para o endereço: " + loja.getEndereco());
 
-        //instancia(loja);
 
         Loja lojaCarregada = Persistencia.carregarLoja(scanner);
+
+        //COMENTAR APÓS PRIMEIRA VEZ
+        instancia(lojaCarregada);
 
         new InterfaceGrafica(lojaCarregada);
         Sistema sistema = new Sistema(scanner, lojaCarregada);

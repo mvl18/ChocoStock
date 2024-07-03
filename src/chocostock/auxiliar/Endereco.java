@@ -122,10 +122,11 @@ public class Endereco implements Escolhivel, Serializable {
                 Verifica::isCep).replaceAll("\\D", ""));
         // ESTADO
         endereco.achaEstado(endereco.getCep());
-        if((Normalizer.normalize(ValidadorInput.getInput(scanner, endereco.getEstado().getNome() + " é o estado do endereço? (Sim ou Não) ", "Por favor, insira uma resposta valida. ",
-                                input -> input.matches("sim|nao|s|n")).toLowerCase().replaceAll("\\s", ""),
-                        Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
-                .equals("nao"))) {
+        String resposta = Normalizer.normalize(ValidadorInput.getInput(scanner, endereco.getEstado().getNome() + " é o estado do endereço? (Sim ou Não) ", "Por favor, insira uma resposta valida. ",
+                   input -> input.matches("sim|nao|s|n")).toLowerCase().replaceAll("\\s", ""),
+                        Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+
+        if (resposta.equals("nao") || resposta.equals("n")) {
             System.out.print("Estado: ");
             endereco.setEstado(Escolhivel.escolheObjeto(scanner, Estados.values(),
                     "Estado inválido. Por favor, digite a sigla ou nome de um dos estados válidos.",
