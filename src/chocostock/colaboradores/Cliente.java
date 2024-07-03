@@ -27,32 +27,9 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
         this.pedidos = new ArrayList<>();
     }
 
-    public static int getId_clientes() {
-        return id_clientes;
-    }
-
-    public ArrayList<Integer> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(ArrayList<Integer> pedidos) {
-        this.pedidos = pedidos;
-    }
-
     public Cliente() {
         this("", "", "", new Endereco());
     }
-
-    /**
-     * Adiciona um ID de pedido à lista de pedidos do cliente.
-     */
-    public void addPedido(Integer idPedido) {
-        addObjeto(pedidos, idPedido);
-    }
-
-    /**
-     * Retorna uma string com a lista de pedidos do cliente.
-     */
 
     public int getId() {
         return id;
@@ -65,6 +42,20 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
     public static void setIdCliente(int id) {
         id_clientes = id;
     }
+
+    public ArrayList<Integer> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Integer> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+     public void addPedido(Integer idPedido) {
+        addObjeto(pedidos, idPedido);
+    }
+
+
 
     @Override
     public String toString() {

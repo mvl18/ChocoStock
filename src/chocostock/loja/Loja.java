@@ -103,6 +103,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         addObjeto(pedidos, pedido);
     }
 
+    //CLIENTE
     public void addCliente(Cliente cliente) {
         addObjeto(clientes, cliente);
     }
@@ -128,6 +129,15 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
 
     public String listaPedidos() {
         return Iteravel.listaVertical(pedidos);
+    }
+
+    //FUNCIONARIO
+    public void addFuncionario(Funcionario funcionario) {
+        addObjeto(funcionarios, funcionario);
+    }
+
+    public String listaFuncionario() {
+        return Iteravel.listaVertical(funcionarios);
     }
 
     /**
