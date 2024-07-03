@@ -1,5 +1,6 @@
 package chocostock.interfaceGrafica;
 
+import chocostock.bancodeDados.Persistencia;
 import chocostock.enums.TiposIngredientes;
 import chocostock.loja.Loja;
 
@@ -16,7 +17,19 @@ public class InterfaceGrafica extends JFrame {
     public InterfaceGrafica(Loja loja) {
         this.loja = loja;
         setJMenuBar(criarMenuBar());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        // Adiciona um WindowListener para capturar o evento de fechamento
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Executa a função personalizada
+                Persistencia.salvarLoja(loja);
+
+                // Fecha a aplicação
+                System.exit(0);
+            }
+        });
         setSize(600, 600);
         setTitle("ChocoStock");
         setLayout(new BorderLayout());
