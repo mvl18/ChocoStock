@@ -3,6 +3,7 @@ package chocostock.colaboradores;
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.auxiliar.Verifica;
+import chocostock.interfaces.ValidadorInput;
 
 import java.util.Scanner;
 
@@ -59,12 +60,12 @@ public class Fornecedor extends Colaborador {
      */
     public Fornecedor novoFornecedor(Scanner scanner) {
         Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
-        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
-        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
+        fornecedor.setNome(ValidadorInput.getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
+        fornecedor.setTelefone(ValidadorInput.getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
+        fornecedor.setEmail(ValidadorInput.getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
         fornecedor.setEndereco(new Endereco().criaEndereco(scanner));
-        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
-        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
+        fornecedor.setCnpj(Processa.normalizaNumero(ValidadorInput.getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
+        fornecedor.setSite(ValidadorInput.getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
         return fornecedor;
     }
 }

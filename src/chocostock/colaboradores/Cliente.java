@@ -5,6 +5,7 @@ import chocostock.auxiliar.Verifica;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Iteravel;
+import chocostock.interfaces.ValidadorInput;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -55,16 +56,16 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
     /**
      * Permite ao usuário cadastrar um novo cliente.
      */
-    public Cliente novoCliente(Scanner scanner) {
+    public static Cliente novoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
         System.out.println("Cadastrando novo cliente: ");
         // Solicitação do nome do cliente
-        cliente.setNome(getInput(scanner, "Nome do cliente: ", "Nome inválido.", Verifica::isNome));
+        cliente.setNome(ValidadorInput.getInput(scanner, "Nome do cliente: ", "Nome inválido.", Verifica::isNome));
         // Solicitação do telefone do cliente
-        cliente.setTelefone(getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
+        cliente.setTelefone(ValidadorInput.getInput(scanner, "Telefone do cliente: ", "Insira um número válido, não esqueça o DDD!",
                 Verifica::isTelefone).replaceAll("\\D", ""));
         // Solicitação do email do cliente
-        cliente.setEmail(getInput(scanner, "Email do cliente: ", "Insira um email válido!", Verifica::isEmail));
+        cliente.setEmail(ValidadorInput.getInput(scanner, "Email do cliente: ", "Insira um email válido!", Verifica::isEmail));
         // Solicitação do endereço do cliente
         System.out.println("Criando endereço: ");
         Endereco endereco = new Endereco();

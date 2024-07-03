@@ -3,6 +3,7 @@ package chocostock.auxiliar;
 
 import chocostock.enums.Estados;
 import chocostock.interfaces.Escolhivel;
+import chocostock.interfaces.ValidadorInput;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -116,11 +117,11 @@ public class Endereco implements Escolhivel {
     public Endereco criaEndereco(Scanner scanner) {
         Endereco endereco = new Endereco();
         // CEP
-        endereco.setCep(getInput(scanner, "CEP: ", "Insira um CEP válido!",
+        endereco.setCep(ValidadorInput.getInput(scanner, "CEP: ", "Insira um CEP válido!",
                 Verifica::isCep).replaceAll("\\D", ""));
         // ESTADO
         endereco.achaEstado(endereco.getCep());
-        if((Normalizer.normalize(getInput(scanner, endereco.getEstado().getNome() + " é o estado do endereço? (Sim ou Não) ", "Por favor, insira uma resposta valida. ",
+        if((Normalizer.normalize(ValidadorInput.getInput(scanner, endereco.getEstado().getNome() + " é o estado do endereço? (Sim ou Não) ", "Por favor, insira uma resposta valida. ",
                                 input -> input.matches("sim|nao|s|n")).toLowerCase().replaceAll("\\s", ""),
                         Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                 .equals("nao"))) {
@@ -130,13 +131,13 @@ public class Endereco implements Escolhivel {
                     "obrigatório"));
         }
         // CIDADE
-        endereco.setCidade(getInput(scanner, "Cidade: ", "Cidade invalida. Coloque um nome valido.", Verifica::isNome));
+        endereco.setCidade(ValidadorInput.getInput(scanner, "Cidade: ", "Cidade invalida. Coloque um nome valido.", Verifica::isNome));
         // BAIRRO
-        endereco.setBairro(getInput(scanner, "Bairro: ", "Bairro invalida. Coloque um nome valido.", Verifica::isNome));
+        endereco.setBairro(ValidadorInput.getInput(scanner, "Bairro: ", "Bairro invalida. Coloque um nome valido.", Verifica::isNome));
         // RUA
-        endereco.setRua(getInput(scanner, "Rua: ", "Rua invalida. Coloque um nome valido.", input -> true));
+        endereco.setRua(ValidadorInput.getInput(scanner, "Rua: ", "Rua invalida. Coloque um nome valido.", input -> true));
         // NUMERO
-        endereco.setNumero(Integer.parseInt(getInput(scanner, "Número do endereço: ", "Número inválido. Coloque um inteiro.", Verifica::isNatural)));
+        endereco.setNumero(Integer.parseInt(ValidadorInput.getInput(scanner, "Número do endereço: ", "Número inválido. Coloque um inteiro.", Verifica::isNatural)));
 
         return endereco;
     }

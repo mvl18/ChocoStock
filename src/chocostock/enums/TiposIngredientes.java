@@ -34,4 +34,15 @@ public enum TiposIngredientes implements Identificavel, Nomeavel {
 
     public int getId() {return id;}
 
+    public static String[] getTipos(){
+        int num_tipos = TiposIngredientes.values().length;
+        int i = 0;
+        String[] tipos = new String[num_tipos];
+        for(TiposIngredientes t : TiposIngredientes.values()){
+            tipos[i] = t.getNome();
+            i++;
+        }
+        return tipos;
+    }
+
 }

@@ -115,7 +115,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         // Solicita ao usuário que selecione um tipo de caixa
         produtoPendente.setNome(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
         // Solicita ao usuário a quantidade desejada da caixa selecionada
-        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
+        produtoPendente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;
@@ -146,7 +146,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
                 "0", TiposComplementos.values().length));
         produtoPendente.getComplementos().removeIf(Objects::isNull);
         // Solicita ao usuário a quantidade desejada da barra de chocolate selecionada
-        produtoPendente.setQuantidade(Integer.parseInt(getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
+        produtoPendente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
 
         return produtoPendente;

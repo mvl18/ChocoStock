@@ -154,7 +154,7 @@ public class Sistema implements Criavel, ValidadorInput {
 
         opcao = verificaOpcao(input, msg, 0, 6);
         switch(opcao){
-            case 1: loja.addCliente(new Cliente().novoCliente(input));
+            case 1: loja.addCliente(Cliente.novoCliente(input));
                     menuColaboradores();
                     break;
             case 2: loja.getEstoque().addFornecedor(new Fornecedor().novoFornecedor(input));

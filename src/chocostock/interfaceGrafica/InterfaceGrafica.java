@@ -1,14 +1,21 @@
 package chocostock.interfaceGrafica;
 
+import chocostock.enums.TiposIngredientes;
+import chocostock.loja.Loja;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class InterfaceGrafica extends JFrame {
+    private Loja loja;
     private JPanel painelPrincipal;
     private CardLayout cardLayout;
 
-    public InterfaceGrafica() {
+    public InterfaceGrafica(Loja loja) {
+        this.loja = loja;
         setJMenuBar(criarMenuBar());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600, 600);
@@ -19,16 +26,63 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal = new JPanel(cardLayout);
         add(painelPrincipal, BorderLayout.CENTER);
 
-        painelPrincipal.add(new JPanel(), "Inicio");
-        painelPrincipal.add(new Registrar(), "RegistrarCliente");
+        adicionarPaginas();
         // painelPrincipal.add(new Listar(), "Listar");
 
         setVisible(true);
     }
 
+    public void alterarPagina(String chavePagina){
+        this.cardLayout.show(painelPrincipal, chavePagina);
+    }
+
+    public void adicionarPaginas(){
+        painelPrincipal.add(new JPanel(), "Inicio");
+
+        //Novo Cliente
+        String[] atributosCliente = new String[]{"Nome", "Telefone", "Email", "Endereço"};
+        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Novo Cliente");
+        for(String atributo : atributosCliente){
+            fNovoCliente.addInputComponent(new JTextField(), atributo);
+        }
+        fNovoCliente.addBotoes();
+        fNovoCliente.atualizarLayout();
+        painelPrincipal.add(fNovoCliente, "RegistrarCliente");
+
+        //Novo Fornecedor
+        String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email", "Endereço", "CNPJ", "Site"};
+        FormularioDeCadastro fNovoFornecedor = new FormularioDeCadastro("Novo Fornecedor");
+        for(String atributo : atributosFornecedor){
+            fNovoFornecedor.addInputComponent(new JTextField(), atributo);
+        }
+        fNovoFornecedor.addBotoes();
+        fNovoFornecedor.atualizarLayout();
+        painelPrincipal.add(fNovoFornecedor, "RegistrarFornecedor");
+
+        //Novo Funcionário
+        String[] atributosFuncionario = {"Nome", "Telefone", "Email", "Endereço", "Cargo", "Salario"};
+        String[] cargos = {"Cargo1", "Cargo2", "Cargo3"};
+        FormularioDeCadastro fNovoFuncionario = new FormularioDeCadastro("Novo Funcionário");
+
+        for(String atributo : atributosFuncionario){
+            if(atributo.equals("Cargo")){
+                fNovoFuncionario.addInputComponent(new JComboBox<String>(cargos), atributo);
+            }
+            else{
+                fNovoFuncionario.addInputComponent(new JTextField(), atributo);
+            }
+        }
+        fNovoFuncionario.addBotoes();
+        fNovoFuncionario.atualizarLayout();
+        painelPrincipal.add(fNovoFuncionario, "RegistrarFuncionario");
+        //Nova Embalagem
+        String[] atributosEmbalagem = {"Tipo", "Quantidade", "Preco por pacote", "Quantidade por Pacote", "Fornecedor"};
+
+        System.out.println(Arrays.toString(TiposIngredientes.values()));
+    }
+
     private JMenuBar criarMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         menuBar.add(criarMenu("Menu Pedidos", new String[]{"Novo Pedido", "Listar Pedidos", "Atualizar Pedido"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
                 new String[]{"Adicionar", "Status"},
@@ -36,7 +90,6 @@ public class InterfaceGrafica extends JFrame {
         menuBar.add(criarMenuComSubMenus("Menu Colaboradores",
                 new String[]{"Adicionar", "Listar"},
                 new String[][]{{"Cliente", "Fornecedor", "Funcionario"}, {"Cliente", "Fornecedor", "Funcionario"}}));
-
         return menuBar;
     }
 
@@ -57,15 +110,35 @@ public class InterfaceGrafica extends JFrame {
                 JMenuItem menuItem = new JMenuItem(itemName);
                 subMenu.add(menuItem);
                 if ("Cliente".equals(itemName)) {
-                    menuItem.addActionListener(e -> cardLayout.show(painelPrincipal, "RegistrarCliente"));
+                    menuItem.addActionListener(e -> alterarPagina("RegistrarCliente"));
+                }
+                if ("Fornecedor".equals(itemName)) {
+                    menuItem.addActionListener(e -> alterarPagina("RegistrarFornecedor"));
+                }
+                if ("Funcionario".equals(itemName)) {
+                    menuItem.addActionListener(e -> alterarPagina("RegistrarFuncionario"));
+                }
+                if ("Ingrediente".equals(itemName)) {
+                    menuItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            painelPrincipal.add(new PaginaNovoIngrediente(loja), "RegistrarIngrediente");
+                            alterarPagina("RegistrarIngrediente");
+                        }
+                    });
+                }
+                if ("Embalagem".equals(itemName)) {
+                    menuItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            painelPrincipal.add(new PaginaNovaEmbalagem(loja), "RegistrarEmbalagem");
+                            alterarPagina("RegistrarEmbalagem");
+                        }
+                    });
                 }
             }
             menu.add(subMenu);
         }
         return menu;
-    }
-
-    public static void main(String[] args) {
-        new InterfaceGrafica();
     }
 }

@@ -160,7 +160,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         Pedido pedido = new Pedido();
 
         // CLIENTE
-        Cliente cliente;
+        Cliente cliente = null;
         String msg =   """
                 --- NOVO PEDIDO ---
                 Selecione uma das opções:
@@ -176,7 +176,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 System.out.println("Insira o ID ou nome do seu cliente");
                 cliente = escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
-                    cliente = new Cliente().novoCliente(scanner);
+                    cliente = cliente.novoCliente(scanner);
                     loja.addCliente(cliente);
                     pedido.setId_cliente(cliente.getId());
                     break;
@@ -185,7 +185,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 cliente.addPedido(pedido.getId());
                 break;
             case 2:
-                cliente = new Cliente().novoCliente(scanner);
+                cliente = cliente.novoCliente(scanner);
                 loja.addCliente(cliente);
                 pedido.setId_cliente(cliente.getId());
                 cliente.addPedido(pedido.getId());
@@ -222,7 +222,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         }
 
         // Pergunta ao usuário se deseja modificar o status do pedido, inicialmente definido como PENDENTE
-        if (Processa.normalizaString(getInput(scanner, "Status do pedido foi definido para PENDENTE. Está correto? Digite 'Sim' ou 'não'. ", "Por favor, digite 'sim' ou 'não'.",
+        if (Processa.normalizaString(ValidadorInput.getInput(scanner, "Status do pedido foi definido para PENDENTE. Está correto? Digite 'Sim' ou 'não'. ", "Por favor, digite 'sim' ou 'não'.",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
             pedido.setStatus(Status.PENDENTE);
         } else {
@@ -235,7 +235,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         System.out.println("O status do pedido " + pedido.getId() + " foi definido como " + pedido.getStatus() + ".");
 
         // Pergunta ao usuário se o pedido já foi pago
-        pedido.setPago(Processa.normalizaString(getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta válida. ",
+        pedido.setPago(Processa.normalizaString(ValidadorInput.getInput(scanner, "O pedido feito já foi pago? Sim OU Não ", "Por favor, insira uma resposta válida. ",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s"));
         System.out.println(pedido.isPago() ? "Pedido foi marcado como pago!" : "Pedido foi marcado como nao pago!");
 
