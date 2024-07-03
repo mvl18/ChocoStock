@@ -5,6 +5,8 @@ import chocostock.loja.Loja;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -28,7 +30,12 @@ public class InterfaceGrafica extends JFrame {
 
         adicionarPaginas();
         // painelPrincipal.add(new Listar(), "Listar");
-
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                ajustarLarguraMenuItens();
+            }
+        });
         setVisible(true);
     }
 
@@ -36,9 +43,18 @@ public class InterfaceGrafica extends JFrame {
         this.cardLayout.show(painelPrincipal, chavePagina);
     }
 
-    public void adicionarPaginas(){
-        painelPrincipal.add(new JPanel(), "Inicio");
 
+    private void ajustarLarguraMenuItens() {
+        JMenuBar menuBar = getJMenuBar();
+        for (int i = 0; i < menuBar.getComponentCount(); i++)
+            menuBar.getComponent(i).setPreferredSize(new Dimension(this.getWidth()/menuBar.getComponentCount(), 30));
+        menuBar.revalidate();
+        menuBar.repaint();
+    }
+
+    public void adicionarPaginas(){
+        painelPrincipal.add(new Inicio(loja), "Inicio");
+        painelPrincipal.add(new Listar(loja), "ListarCliente");
         //Novo Cliente
         String[] atributosCliente = new String[]{"Nome", "Telefone", "Email", "Endereço"};
         FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Novo Cliente");

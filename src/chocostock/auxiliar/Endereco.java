@@ -5,6 +5,7 @@ import chocostock.enums.Estados;
 import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.ValidadorInput;
 
+import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,8 +16,8 @@ import java.util.Scanner;
  * A classe Endereco representa um endereço físico, incluindo informações detalhadas
  * como número, CEP, rua, bairro, cidade e estado. <br>
  * Implementa o método "achaEstado".
-**/
-public class Endereco implements Escolhivel {
+ **/
+public class Endereco implements Escolhivel, Serializable {
     private int numero;
     private String cep;
     private String rua;
@@ -126,7 +127,7 @@ public class Endereco implements Escolhivel {
                         Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                 .equals("nao"))) {
             System.out.print("Estado: ");
-            endereco.setEstado(escolheObjeto(scanner, Estados.values(),
+            endereco.setEstado(Escolhivel.escolheObjeto(scanner, Estados.values(),
                     "Estado inválido. Por favor, digite a sigla ou nome de um dos estados válidos.",
                     "obrigatório"));
         }

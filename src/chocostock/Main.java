@@ -1,6 +1,7 @@
 package chocostock;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.bancodeDados.Persistencia;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.*;
@@ -70,7 +71,7 @@ public class Main implements Escolhivel {
 
         // PEDIDOS
         Pedido pedido = new Pedido(100003, LocalDate.parse("11/01/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                true, Status.FINALIZADO, 65.0F);
+                true, Status.PENDENTE, 65.0F);
         loja.addPedido(pedido);
         loja.getClientes().get(3).addPedido(pedido.getId());
 
@@ -80,7 +81,7 @@ public class Main implements Escolhivel {
         loja.getClientes().get(1).addPedido(pedido.getId());
 
         pedido = new Pedido(100000, LocalDate.parse("03/08/2024", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                false, Status.FINALIZADO, 103.0F);
+                false, Status.PENDENTE, 103.0F);
         loja.addPedido(pedido);
         loja.getClientes().get(0).addPedido(pedido.getId());
 
@@ -104,14 +105,21 @@ public class Main implements Escolhivel {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n");
-        Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
-        System.out.println(loja.getDescricao() + " criada!");
-        System.out.println("Venha para o endereço: " + loja.getEndereco());
-        instancia(loja);
-        new InterfaceGrafica(loja);
-        Sistema sistema = new Sistema(scanner, loja);
+
+        //Loja loja = new Loja("Primeira e única loja", new Endereco(2023, "13083898", "do Cacau", "Amêndoas Caramelizadas", "Willy Wonka City", Estados.SP));  //Cria loja
+        //System.out.println(loja.getDescricao() + " criada!");
+        //System.out.println("Venha para o endereço: " + loja.getEndereco());
+
+        //instancia(loja);
+
+        Loja lojaCarregada = Persistencia.carregarLoja(scanner);
+
+        new InterfaceGrafica(lojaCarregada);
+        Sistema sistema = new Sistema(scanner, lojaCarregada);
+
         sistema.iniciarSistema();  //Inicia o Sistema (Interface de terminal)
 
+        Persistencia.salvarLoja(lojaCarregada);
         scanner.close();
     }
 }

@@ -4,6 +4,7 @@ import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposIngredientes;
 import chocostock.interfaces.Escolhivel;
+import chocostock.interfaces.Iteravel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.loja.Estoque;
 
@@ -66,12 +67,12 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
      * Método para adicionar um novo ingrediente ao estoque com dados fornecidos pelo usuário.
      * Solicita ao usuário que insira as informações do ingrediente via console.
      */
-    public Ingrediente estocarIngrediente(Scanner input, Estoque estoque) {
+    public static Ingrediente estocarIngrediente(Scanner input, Estoque estoque) {
         Ingrediente ingrediente = new Ingrediente();
         //TIPO
         System.out.println("Escolha um tipo de ingrediente para adicionar:");
         estoque.imprimirIngredientes();
-        ingrediente.setTipo(escolheObjeto(input, TiposIngredientes.values(),
+        ingrediente.setTipo(Escolhivel.escolheObjeto(input, TiposIngredientes.values(),
                 "Numero ou nome invalido. Escolha um numero de (1-16) ou digite um nome valido. ", "obrigatorio"));
         ingrediente.setNome(ingrediente.getTipo().getNome());
 
@@ -85,17 +86,17 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
         ingrediente.setPreco(Float.parseFloat(ValidadorInput.getInput(input, "Digite o preco da compra: ", "Preco invalido, coloque um preco valido.", Verifica::isFloat)));
 
         //DATA DE COMPRA E VALIDADE
-        ingrediente.setDataCompra(escolheData(input, "Digite a data de compra: (dd/mm/yyyy) ", "Digite uma data válida."));
-        ingrediente.setValidade(escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy) ", "Digite uma data futura válida."));
+        ingrediente.setDataCompra(Escolhivel.escolheData(input, "Digite a data de compra: (dd/mm/yyyy) ", "Digite uma data válida."));
+        ingrediente.setValidade(Escolhivel.escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy) ", "Digite uma data futura válida."));
 
         //FORNECEDOR
         Fornecedor fornecedor;
-        switch (verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
+        switch (ValidadorInput.verificaOpcao(input, new String[]{"FORNECEDORES", "Mostrar lista de fornecedores já cadastrados.", "Adicionar novo fornecedor."}, 1)) {
             case 1:
-                listaVertical(estoque.getFornecedores());
+                Iteravel.listaVertical(estoque.getFornecedores());
                 System.out.println("Seu Fornecedor não está na lista? Para adicionar um novo fornecedor digite 'novo'.");
                 System.out.println("Insira o CNPJ ou nome do seu fornecedor");
-                fornecedor = escolheObjeto(input, estoque.getFornecedores(), "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
+                fornecedor = Escolhivel.escolheObjeto(input, estoque.getFornecedores(), "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
                 if (fornecedor == null) {
                     fornecedor = new Fornecedor().novoFornecedor(input);
                     estoque.addFornecedor(fornecedor);

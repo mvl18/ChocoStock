@@ -14,7 +14,7 @@ public interface Iteravel {
      * @param <T>   O tipo de objeto na lista.
      * @return Uma string contendo a representação vertical da lista.
      */
-    default <T> String listaVertical(ArrayList<T> lista) {
+    static <T> String listaVertical(ArrayList<T> lista) {
         StringBuilder texto = new StringBuilder();
         for (T objeto : lista) {
             texto.append(objeto).append("\n");
@@ -29,7 +29,7 @@ public interface Iteravel {
      * @param <T>   O tipo de objeto na lista.
      * @return Uma string contendo a representação horizontal da lista.
      */
-    default <T> String listaHorizontal(ArrayList<T> lista) {
+    static <T> String listaHorizontal(ArrayList<T> lista) {
         StringBuilder out = new StringBuilder();
         for (int i = 0; i < lista.size(); i++)
             out.append(lista.get(i) instanceof Nomeavel ? ((Nomeavel) lista.get(i)).getNome() : lista.get(i)).append(i == lista.size() - 1 ? "" : ", ");

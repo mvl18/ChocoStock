@@ -45,7 +45,7 @@ public class Caixa extends Produto implements ValidadorInput, Escolhivel {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // TIPO
-        caixa.setTipo(escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
+        caixa.setTipo(Escolhivel.escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
         // NOME
         caixa.setNome(caixa.getTipo().getNome());
         // QUANTIDADE
@@ -55,7 +55,7 @@ public class Caixa extends Produto implements ValidadorInput, Escolhivel {
         caixa.setPreco(Float.parseFloat(ValidadorInput.getInput(scanner, "Valor da unidade de " + caixa.getNome() + ": ",
                 "Coloque um valor válido", Verifica::isFloat)));
         // VALIDADE
-        caixa.setValidade(escolheDataFutura(scanner, "Qual a data de validade do caixa? Digite uma data futura no formato DD/MM/YYYY: ",
+        caixa.setValidade(Escolhivel.escolheDataFutura(scanner, "Qual a data de validade do caixa? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         // PESO UNITARIO
         caixa.setPeso(Integer.parseInt(ValidadorInput.getInput(scanner, "Peso da unidade de " + caixa.getNome() + " em quilos: ",
@@ -65,7 +65,7 @@ public class Caixa extends Produto implements ValidadorInput, Escolhivel {
         for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
-        caixa.setEmbalagem(escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
+        caixa.setEmbalagem(Escolhivel.escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
         // LOTE
         caixa.setLote(Integer.parseInt(ValidadorInput.getInput(scanner, "Digite o lote de " + caixa.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));

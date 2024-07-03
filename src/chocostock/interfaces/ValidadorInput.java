@@ -71,7 +71,7 @@ public interface ValidadorInput {
      * @return O int digitado pelo usuário.
      * Exemplo de input: verificaOpcao(scanner, msg, 0, 6)
      */
-    default int verificaOpcao(Scanner scanner, String mensagemOpcoes, int opcaoMin, int opcaoMax) {
+    static int verificaOpcao(Scanner scanner, String mensagemOpcoes, int opcaoMin, int opcaoMax) {
         int resposta = 0;
         boolean opcaoValida = false;
 
@@ -104,7 +104,7 @@ public interface ValidadorInput {
      * @return O int digitado pelo usuário.
      * Exemplo de input: verificaOpcao(scanner, new String[]{"PRODUTOS DO PEDIDO", "Adicionar produto.", "Listar produtos adicionados", "Finalizar escolhas."}, 0)
      */
-    default int verificaOpcao(Scanner scanner, String[] opcoes, int opcaoMin) {
+    static int verificaOpcao(Scanner scanner, String[] opcoes, int opcaoMin) {
         StringBuilder mensagemOpcoes = new StringBuilder();
         boolean inicioZero = opcaoMin == 0;
         int inicial = inicioZero ? 1 : opcaoMin;

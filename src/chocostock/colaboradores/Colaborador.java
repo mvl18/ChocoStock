@@ -5,12 +5,14 @@ import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.Nomeavel;
 import chocostock.interfaces.ValidadorInput;
 
+import java.io.Serializable;
+
 /**
  * A classe abstrata Colaborador serve como classe base para representar
  * um colaborador (cliente, fornecedor e funcionário) com informações
  * básicas como nome, telefone, email e endereço.
  */
-public abstract class Colaborador implements Nomeavel, Escolhivel, ValidadorInput {
+public abstract class Colaborador implements Nomeavel, Escolhivel, ValidadorInput, Serializable {
     private String nome;
     private String telefone;
     private String email;
@@ -29,6 +31,18 @@ public abstract class Colaborador implements Nomeavel, Escolhivel, ValidadorInpu
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
     }
 
     public void setTelefone(String telefone) {
