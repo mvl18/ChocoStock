@@ -15,7 +15,7 @@ public class Inicio extends JPanel {
         // Título e subtítulo
         JPanel painelTitulo = new JPanel();
         painelTitulo.setLayout(new BoxLayout(painelTitulo, BoxLayout.Y_AXIS));
-        ImageIcon logo = new ImageIcon("src/logoChocostock.png");
+        ImageIcon logo = new ImageIcon("imagens/logoChocostock.png");
         logo.setImage(logo.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH)) ;
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
