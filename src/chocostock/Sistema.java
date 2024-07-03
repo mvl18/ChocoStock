@@ -2,6 +2,7 @@ package chocostock;
 
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
+import chocostock.colaboradores.Funcionario;
 import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.suprimentos.Embalagem;
@@ -160,10 +161,10 @@ public class Sistema implements Criavel, ValidadorInput {
                 --- MENU COLABORADORES ---
                 (1) - Adicionar Cliente.
                 (2) - Adicionar Fornecedor.
-                (x) - Adicionar Funcionário.
+                (3) - Adicionar Funcionário.
                 (4) - Listar Clientes.
                 (5) - Listar Fornecedores.
-                (x) - Listar Funcionários.
+                (6) - Listar Funcionários.
                 (0) - Voltar para o menu inicial.""";
 
         opcao = ValidadorInput.verificaOpcao(input, msg, 0, 6);
@@ -176,10 +177,17 @@ public class Sistema implements Criavel, ValidadorInput {
                 loja.getEstoque().addFornecedor(novoFornecedor);
                 menuColaboradores();
                 break;
+            case 3: Funcionario novoFuncionario = Funcionario.novoFuncionario(input);
+                loja.addFuncionario(novoFuncionario);
+                menuColaboradores();
+                break;
             case 4: System.out.println(loja.listaClientes());
                 menuColaboradores();
                 break;
             case 5: System.out.println(loja.getEstoque().listaFornecedores());
+                menuColaboradores();
+                break;
+            case 6: System.out.println(loja.listaFuncionario());
                 menuColaboradores();
                 break;
             case 0: menuInicial();
