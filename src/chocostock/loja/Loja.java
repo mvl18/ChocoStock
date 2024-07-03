@@ -103,10 +103,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         addObjeto(pedidos, pedido);
     }
 
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
-    }
-
     public void addCliente(Cliente cliente) {
         addObjeto(clientes, cliente);
     }

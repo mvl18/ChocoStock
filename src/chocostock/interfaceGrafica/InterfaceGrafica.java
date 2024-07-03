@@ -91,9 +91,6 @@ public class InterfaceGrafica extends JFrame {
         fNovoFuncionario.addBotoes();
         fNovoFuncionario.atualizarLayout();
         painelPrincipal.add(fNovoFuncionario, "RegistrarFuncionario");
-        //Nova Embalagem
-        String[] atributosEmbalagem = {"Tipo", "Quantidade", "Preco por pacote", "Quantidade por Pacote", "Fornecedor"};
-
         System.out.println(Arrays.toString(TiposIngredientes.values()));
     }
 
@@ -125,33 +122,36 @@ public class InterfaceGrafica extends JFrame {
             for (String itemName : itemNames[i]) {
                 JMenuItem menuItem = new JMenuItem(itemName);
                 subMenu.add(menuItem);
-                if ("Cliente".equals(itemName)) {
-                    menuItem.addActionListener(e -> alterarPagina("RegistrarCliente"));
+                if("Adicionar".equals(subMenuNames[i])){
+                    if ("Cliente".equals(itemName)) {
+                        menuItem.addActionListener(e -> alterarPagina("RegistrarCliente"));
+                    }
+                    if ("Fornecedor".equals(itemName)) {
+                        menuItem.addActionListener(e -> alterarPagina("RegistrarFornecedor"));
+                    }
+                    if ("Funcionario".equals(itemName)) {
+                        menuItem.addActionListener(e -> alterarPagina("RegistrarFuncionario"));
+                    }
+                    if ("Ingrediente".equals(itemName)) {
+                        menuItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                painelPrincipal.add(new PaginaNovoIngrediente(loja), "RegistrarIngrediente");
+                                alterarPagina("RegistrarIngrediente");
+                            }
+                        });
+                    }
+                    if ("Embalagem".equals(itemName)) {
+                        menuItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                painelPrincipal.add(new PaginaNovaEmbalagem(loja), "RegistrarEmbalagem");
+                                alterarPagina("RegistrarEmbalagem");
+                            }
+                        });
+                    }
                 }
-                if ("Fornecedor".equals(itemName)) {
-                    menuItem.addActionListener(e -> alterarPagina("RegistrarFornecedor"));
-                }
-                if ("Funcionario".equals(itemName)) {
-                    menuItem.addActionListener(e -> alterarPagina("RegistrarFuncionario"));
-                }
-                if ("Ingrediente".equals(itemName)) {
-                    menuItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            painelPrincipal.add(new PaginaNovoIngrediente(loja), "RegistrarIngrediente");
-                            alterarPagina("RegistrarIngrediente");
-                        }
-                    });
-                }
-                if ("Embalagem".equals(itemName)) {
-                    menuItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            painelPrincipal.add(new PaginaNovaEmbalagem(loja), "RegistrarEmbalagem");
-                            alterarPagina("RegistrarEmbalagem");
-                        }
-                    });
-                }
+
             }
             menu.add(subMenu);
         }
