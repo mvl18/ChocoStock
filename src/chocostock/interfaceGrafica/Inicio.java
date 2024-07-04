@@ -1,5 +1,7 @@
 package chocostock.interfaceGrafica;
 
+import chocostock.itens.produtos.Produto;
+import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.loja.Loja;
 import chocostock.loja.Pedido;
 
@@ -34,8 +36,26 @@ public class Inicio extends JPanel {
         topPanel.add(painelTitulo, BorderLayout.CENTER);
 
         // Painel de avisos
-        JPanel painelMensagens = criarListaComTitulo("Avisos",
-                new String[]{"Estoque de nibs acabando!"}, Color.RED);
+        ArrayList<String> avisosIngredientes = new ArrayList<>();
+        int valorMinimo = 2;
+        for (Ingrediente ingrediente : loja.getEstoque().getIngredientes()) {
+            if (ingrediente.getQuantidade() <= valorMinimo) {
+                avisosIngredientes.add(ingrediente.getNome() + " tem somente " +
+                        ingrediente.getQuantidade() + " unidade" +
+                        (ingrediente.getQuantidade() == 1 ? "!" : "s!"));
+            }
+        }
+        ArrayList<String> avisosProdutos = new ArrayList<>();
+        valorMinimo = 4;
+        for (Produto produto : loja.getEstoque().getProdutos()) {
+            if (produto.getQuantidade() <= valorMinimo) {
+                avisosProdutos.add(produto.getNome() + " tem somente " +
+                        produto.getQuantidade() + " unidade" +
+                        (produto.getQuantidade() == 1 ? "!" : "s!"));
+            }
+        }
+        JPanel painelIngredientes = criarListaComTitulo("Ingredientes", avisosIngredientes, Color.RED);
+        JPanel painelProdutos = criarListaComTitulo("Produtos", avisosProdutos, Color.RED);
 
         JPanel informacoes = criarListaComTitulo("Informações",
                 new String[]{loja.getClientes().size() + " clientes atendidos",
@@ -43,7 +63,8 @@ public class Inicio extends JPanel {
 
         JPanel esquerda = new JPanel();
         esquerda.setLayout(new BoxLayout(esquerda, BoxLayout.Y_AXIS));
-        esquerda.add(painelMensagens);
+        esquerda.add(painelIngredientes);
+        esquerda.add(painelProdutos);
         esquerda.add(informacoes);
 
         ArrayList<String> pedidosPendentes = new ArrayList<String>();
@@ -93,6 +114,7 @@ public class Inicio extends JPanel {
         lista.setLayout(new BoxLayout(lista, BoxLayout.Y_AXIS));
         for (String item : itens) {
             JLabel aviso = new JLabel(item);
+            aviso.setAlignmentX(Component.CENTER_ALIGNMENT);
             aviso.setFont(new Font("Tahoma", Font.PLAIN, 18));
             aviso.setForeground(cor);
             lista.add(aviso);
