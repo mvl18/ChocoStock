@@ -1,13 +1,11 @@
 package chocostock.interfaceGrafica;
 
 import chocostock.bancodeDados.Persistencia;
-import chocostock.enums.TiposIngredientes;
 import chocostock.loja.Loja;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 
 public class InterfaceGrafica extends JFrame {
     private Loja loja;
@@ -49,9 +47,26 @@ public class InterfaceGrafica extends JFrame {
     }
 
     public void alterarPagina(String chavePagina){
+        atualizarPagina(chavePagina);
         this.cardLayout.show(painelPrincipal, chavePagina);
     }
-
+    public void atualizarPagina(String chavePagina){
+        if("Inicio".equals(chavePagina)){
+            painelPrincipal.add(new Inicio(loja), chavePagina);
+        }
+        else if("ListarCliente".equals(chavePagina)){
+            painelPrincipal.add(new Listar(loja), chavePagina);
+        }
+        else if("AdicionarIngrediente".equals(chavePagina)){
+            painelPrincipal.add(new PaginaNovoIngrediente(loja), chavePagina);
+        }
+        else if("AdicionarEmbalagem".equals(chavePagina)){
+            painelPrincipal.add(new PaginaNovaEmbalagem(loja), chavePagina);
+        }
+//        else if("AdicionarProduto".equals(chavePagina)){
+//            painelPrincipal.add(new PaginaNovoProduto(loja), chavePagina);
+//        }
+    }
 
     private void ajustarLarguraMenuItens() {
         JMenuBar menuBar = getJMenuBar();
@@ -64,13 +79,14 @@ public class InterfaceGrafica extends JFrame {
     public void adicionarPaginas(){
         painelPrincipal.add(new Inicio(loja), "Inicio");
         painelPrincipal.add(new Listar(loja), "ListarCliente");
-
         painelPrincipal.add(new PaginaNovoIngrediente(loja), "AdicionarIngrediente");
         painelPrincipal.add(new PaginaNovaEmbalagem(loja), "AdicionarEmbalagem");
+        //painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
 
         //Novo Cliente
         String[] atributosCliente = new String[]{"Nome", "Telefone", "Email", "Endereço"};
-        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Novo Cliente");
+        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro();
+        fNovoCliente.addTitulo("Novo Cliente");
         for(String atributo : atributosCliente){
             fNovoCliente.addInputComponent(new JTextField(), atributo);
         }
@@ -80,7 +96,8 @@ public class InterfaceGrafica extends JFrame {
 
         //Novo Fornecedor
         String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email", "Endereço", "CNPJ", "Site"};
-        FormularioDeCadastro fNovoFornecedor = new FormularioDeCadastro("Novo Fornecedor");
+        FormularioDeCadastro fNovoFornecedor = new FormularioDeCadastro();
+        fNovoFornecedor.addTitulo("Novo Fornecedor");
         for(String atributo : atributosFornecedor){
             fNovoFornecedor.addInputComponent(new JTextField(), atributo);
         }
@@ -91,8 +108,8 @@ public class InterfaceGrafica extends JFrame {
         //Novo Funcionário
         String[] atributosFuncionario = {"Nome", "Telefone", "Email", "Endereço", "Cargo", "Salario"};
         String[] cargos = {"Cargo1", "Cargo2", "Cargo3"};
-        FormularioDeCadastro fNovoFuncionario = new FormularioDeCadastro("Novo Funcionário");
-
+        FormularioDeCadastro fNovoFuncionario = new FormularioDeCadastro();
+        fNovoFuncionario.addTitulo("Novo Funcionário");
         for(String atributo : atributosFuncionario){
             if(atributo.equals("Cargo")){
                 fNovoFuncionario.addInputComponent(new JComboBox<>(cargos), atributo);

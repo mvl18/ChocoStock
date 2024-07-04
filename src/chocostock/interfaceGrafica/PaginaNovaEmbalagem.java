@@ -12,16 +12,14 @@ public class PaginaNovaEmbalagem extends FormularioDeCadastro{
             "Quantidade por Pacote", "Fornecedor"};
 
     public PaginaNovaEmbalagem(Loja loja){
-        super("Nova Embalagem");
-        addInputComponent(new JComboBox<String>(TiposEmbalagens.getTipos()), "Tipo da Embalagem");
+        super();
+        addTitulo("Nova Embalagem");
+        addInputComponent(new JComboBox<>(TiposEmbalagens.getTipos()), "Tipo da Embalagem");
         for(int i = 1; i < atributosEmbalagem.length-1; i++){
             addInputComponent(new JTextField(), atributosEmbalagem[i]);
         }
-        addInputComponent(new JComboBox<String>(loja.getEstoque().getArrayFornecedores()), "Fornecedor");
+        addInputComponent(new JComboBox<>(loja.getEstoque().getArrayFornecedores()), "Fornecedor");
         addBotoes();
         atualizarLayout();
     }
-
-
-
 }

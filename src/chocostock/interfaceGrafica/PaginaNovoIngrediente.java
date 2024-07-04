@@ -12,14 +12,15 @@ public class PaginaNovoIngrediente extends FormularioDeCadastro {
             "Preço", "Data de Compra", "Data de Validade", "Fornecedor"};
 
     public PaginaNovoIngrediente(Loja loja){
-        super("Novo Ingrediente");
-        addInputComponent(new JComboBox<String>(TiposIngredientes.getTipos()),
+        super();
+        addTitulo("Novo Ingrediente");
+        addInputComponent(new JComboBox<>(TiposIngredientes.getTipos()),
                 "Tipo do Ingrediente");
         for(int i = 1; i < atributosIngrediente.length-1; i++){
             addInputComponent(new JTextField(), atributosIngrediente[i]);
         }
         String[] fornecedores = loja.getEstoque().getArrayFornecedores();
-        addInputComponent(new JComboBox<String>(fornecedores), "Selecione o fornecedor:");
+        addInputComponent(new JComboBox<>(fornecedores), "Selecione o fornecedor:");
         addBotoes();
         atualizarLayout();
     }
