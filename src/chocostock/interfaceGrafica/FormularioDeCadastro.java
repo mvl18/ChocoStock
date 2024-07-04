@@ -8,10 +8,9 @@ import java.util.ArrayList;
 
 public class FormularioDeCadastro extends JPanel {
 
-    private static Font fonteTitulo = new Font("Tahoma", Font.BOLD, 48);
-    private static Font fontePequena = new Font("Tahome", Font.PLAIN, 26);
+    private Font fonteTitulo = new Font("Tahoma", Font.BOLD, 48);
+    private Font fontePequena = new Font("Tahome", Font.PLAIN, 26);
     //Componentes
-    private JLabel titulo;
     private JPanel painelRegistro;
     private ArrayList<String> labelsDosInputs;
     private ArrayList<JComponent> inputs;
@@ -21,56 +20,76 @@ public class FormularioDeCadastro extends JPanel {
         inputs = new ArrayList<JComponent>();
         labelsDosInputs = new ArrayList<String>();
 
-        titulo = new JLabel("", SwingConstants.CENTER);
-        titulo.setFont(fonteTitulo);
-        add(titulo, BorderLayout.NORTH);
-
         painelRegistro = new JPanel();
-        painelRegistro.setLayout(new GridLayout(0, 2, 5, 5));
+        painelRegistro.setLayout(new GridLayout(0, 1, 5, 5));
         add(painelRegistro, BorderLayout.CENTER);
     }
 
-    public FormularioDeCadastro(String tituloForms) {
-        this();
-        titulo.setText(tituloForms);
+    public Font getFonteTitulo() {
+        return fonteTitulo;
+    }
+
+    public JPanel getPainelRegistro() {
+        return painelRegistro;
+    }
+
+    public Font getFontePequena() {
+        return fontePequena;
+    }
+
+    public ArrayList<JComponent> getInputs() {
+        return inputs;
+    }
+
+    public ArrayList<String> getLabelsDosInputs() {
+        return labelsDosInputs;
+    }
+
+    public void setPainelRegistro(JPanel panel){
+        this.painelRegistro = panel;
+    }
+
+    public void addTitulo(String titulo) {
+        JLabel lTitulo = new JLabel(titulo, SwingConstants.CENTER);
+        lTitulo.setFont(getFonteTitulo());
+        add(lTitulo, BorderLayout.NORTH);
     }
 
     public void atualizarLayout(){
-        painelRegistro.setLayout(new GridLayout(inputs.size()+1, 2, 5, 5));
+        painelRegistro.setLayout(new GridLayout(inputs.size()+1, 1, 5, 5));
     }
 
     public void addInputComponent(JComponent component, String nome){
+        JPanel panel = new JPanel(new GridLayout(1, 2, 5, 5));
         component.setFont(fontePequena);
         JLabel label = new JLabel(nome);
         label.setFont(fontePequena);
-        inputs.add(component);
-        labelsDosInputs.add(nome);
-        painelRegistro.add(label);
-        painelRegistro.add(component);
+        getInputs().add(component);
+        getLabelsDosInputs().add(nome);
+        panel.add(label);
+        panel.add(component);
+        getPainelRegistro().add(panel);
     }
 
     public void addBotoes(){
+        JPanel panelBotoes = new JPanel(new GridLayout(1, 2, 5, 5));
         JButton cancelarBotao = new JButton("Cancelar");
-        cancelarBotao.setFont(fontePequena);
-        cancelarBotao.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(painelRegistro,
-                        "O registro foi cancelado.");
-            }
-        });
         JButton registrarBotao = new JButton("Registrar");
-        registrarBotao.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(getDadosDosInputs());
-                JOptionPane.showMessageDialog(painelRegistro,
-                        "O registro foi concluído.");
-            }
+
+        cancelarBotao.setFont(fontePequena);
+        cancelarBotao.addActionListener(e -> {
+            JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado.");
+        });
+
+        registrarBotao.addActionListener(e -> {
+            System.out.println(getDadosDosInputs());
+            JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi concluído.");
         });
         registrarBotao.setFont(fontePequena);
-        painelRegistro.add(cancelarBotao);
-        painelRegistro.add(registrarBotao);
+
+        panelBotoes.add(cancelarBotao);
+        panelBotoes.add(registrarBotao);
+        getPainelRegistro().add(panelBotoes);
     }
 
     public ArrayList<String> getDadosDosInputs(){
@@ -84,6 +103,10 @@ public class FormularioDeCadastro extends JPanel {
             if(comp instanceof JComboBox<?>){
                 s = ((JComboBox<?>) comp).getSelectedItem().toString();
                 dados.add(s);
+            }
+            if(comp instanceof JRadioButton){
+                boolean b = ((JRadioButton) comp).isSelected();
+                dados.add(((Boolean)b).toString());
             }
         }
         return dados;
