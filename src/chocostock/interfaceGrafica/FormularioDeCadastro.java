@@ -1,10 +1,21 @@
 package chocostock.interfaceGrafica;
 
+import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Verifica;
+import chocostock.colaboradores.Cliente;
+import chocostock.colaboradores.Fornecedor;
+import chocostock.colaboradores.Funcionario;
+import chocostock.enums.Cargos;
+import chocostock.enums.Estados;
+import chocostock.interfaces.ValidadorInput;
+import chocostock.loja.Loja;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FormularioDeCadastro extends JPanel {
 
@@ -14,8 +25,13 @@ public class FormularioDeCadastro extends JPanel {
     private JPanel painelRegistro;
     private ArrayList<String> labelsDosInputs;
     private ArrayList<JComponent> inputs;
+    private Loja loja;
+    private String tag;
+    private boolean correto = true;
 
-    public FormularioDeCadastro() {
+    public FormularioDeCadastro(String tag, Loja loja) {
+        this.tag = tag;
+        this.loja = loja;
         setLayout(new BorderLayout());
         inputs = new ArrayList<JComponent>();
         labelsDosInputs = new ArrayList<String>();
@@ -71,6 +87,41 @@ public class FormularioDeCadastro extends JPanel {
         getPainelRegistro().add(panel);
     }
 
+    public void validaCampo(int i, ValidadorInput.Validador validador) {
+        if (validador.isValid(getDadosDosInputs().get(i)))
+            getInputs().get(i).setForeground(Color.BLACK);
+        else {
+            getInputs().get(i).setForeground(Color.RED);
+            correto = false;
+        }
+    }
+
+    public void criaObjeto() {
+        if (tag.equals("Cliente"))
+            loja.addCliente(new Cliente(getDadosDosInputs().get(0),
+                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
+                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
+                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
+                            Estados.SP))); // Arrumar a recepção de estado;
+        else if (tag.equals("Fornecedor"))
+            loja.getEstoque().addFornecedor(new Fornecedor(getDadosDosInputs().get(0),
+                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
+                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
+                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
+                            Estados.SP), getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
+        else if (tag.equals("Funcionario"))
+            loja.addFuncionario(new Funcionario(getDadosDosInputs().get(0),
+                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
+                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
+                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
+                            Estados.SP), Cargos.ASSISTENTE_DE_COZINHA,
+                            Float.parseFloat(getDadosDosInputs().get(10))));
+        // Arrumar coisas com Enum
+    }
+
     public void addBotoes(){
         JPanel panelBotoes = new JPanel(new GridLayout(1, 2, 5, 5));
         JButton cancelarBotao = new JButton("Cancelar");
@@ -82,8 +133,26 @@ public class FormularioDeCadastro extends JPanel {
         });
 
         registrarBotao.addActionListener(e -> {
+            correto = true;
             System.out.println(getDadosDosInputs());
-            JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi concluído.");
+            for (int i = 0; i < getLabelsDosInputs().size(); i++) {
+                if (getLabelsDosInputs().get(i).equals("Telefone"))
+                    validaCampo(i, Verifica::isTelefone);
+                else if (getLabelsDosInputs().get(i).equals("Email"))
+                    validaCampo(i, Verifica::isEmail);
+                else if (getLabelsDosInputs().get(i).equals("CNPJ"))
+                    validaCampo(i, Verifica::isCnpj);
+                else if (getLabelsDosInputs().get(i).equals("Site"))
+                    validaCampo(i, Verifica::isSite);
+                else if (getLabelsDosInputs().get(i).equals("CEP"))
+                    validaCampo(i, Verifica::isCep);
+                else if (getLabelsDosInputs().get(i).equals("Número"))
+                    validaCampo(i, Verifica::isNatural);
+            }
+            if (correto) {
+                criaObjeto();
+                JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi concluído.");
+            }
         });
         registrarBotao.setFont(fontePequena);
 
