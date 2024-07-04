@@ -4,6 +4,7 @@ import chocostock.auxiliar.Endereco;
 import chocostock.bancodeDados.Persistencia;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
+import chocostock.colaboradores.Funcionario;
 import chocostock.enums.*;
 import chocostock.interfaceGrafica.InterfaceGrafica;
 import chocostock.itens.produtos.Caixa;
@@ -42,6 +43,11 @@ public class Main implements Escolhivel {
         loja.getEstoque().addFornecedor(new Fornecedor("Kalunga", "08007752586", "contato@kalunga.com.br",
                 new Endereco(309, "01010010", "Líbero Badaró", "Centro Histórico de São Paulo", "São Paulo", Estados.SP),
                 "43283811005976", "https://www.kalunga.com.br/"));
+
+        // FUNCIONARIO
+        loja.addFuncionario(new Funcionario("Aushra", "7658392", "aushra@gmail.com", endereco, Cargos.PROPRIETARIO, 10000.00f));
+        loja.addFuncionario(new Funcionario("Mario", "3242323", "mario@gmail.com", endereco, Cargos.VENDEDOR, 4000.50f));
+        loja.addFuncionario(new Funcionario("Stela", "93453443", "stela@yahoo.com", endereco, Cargos.CONTADOR, 6000.43f));
 
         // EMBALAGENS
         ArrayList<Float> valores = new ArrayList<>(Arrays.asList(1.80f, 3.40f, 3.85f, 4.40f, 6.50f, 4.50f, 12.80f, 9.90f, 5.20f, 4.25f, 4.15f, 7.35f, 9.90f, 18.90f));
