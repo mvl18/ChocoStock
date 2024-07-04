@@ -14,6 +14,7 @@ public class FormularioDeCadastro extends JPanel {
     private JPanel painelRegistro;
     private ArrayList<String> labelsDosInputs;
     private ArrayList<JComponent> inputs;
+    private JButton cancelarBotao, registrarBotao;
 
     public FormularioDeCadastro() {
         setLayout(new BorderLayout());
@@ -71,10 +72,18 @@ public class FormularioDeCadastro extends JPanel {
         getPainelRegistro().add(panel);
     }
 
+    public JButton getCancelarBotao() {
+        return cancelarBotao;
+    }
+
+    public JButton getRegistrarBotao() {
+        return registrarBotao;
+    }
+
     public void addBotoes(){
         JPanel panelBotoes = new JPanel(new GridLayout(1, 2, 5, 5));
-        JButton cancelarBotao = new JButton("Cancelar");
-        JButton registrarBotao = new JButton("Registrar");
+        cancelarBotao = new JButton("Cancelar");
+        registrarBotao = new JButton("Registrar");
 
         cancelarBotao.setFont(fontePequena);
         cancelarBotao.addActionListener(e -> {
@@ -82,7 +91,6 @@ public class FormularioDeCadastro extends JPanel {
         });
 
         registrarBotao.addActionListener(e -> {
-            System.out.println(getDadosDosInputs());
             JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi concluído.");
         });
         registrarBotao.setFont(fontePequena);

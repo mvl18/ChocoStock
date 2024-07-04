@@ -1,22 +1,19 @@
 package chocostock.interfaceGrafica;
 
-import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import chocostock.colaboradores.Cliente;
 import chocostock.loja.Loja;
 
-public class Listar extends JPanel {
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+
+public class ListarCliente extends JPanel {
     private JTable table;
     private DefaultTableModel model;
     private Loja loja;
 
-    public Listar(Loja loja) {
+    public ListarCliente(Loja loja) {
         this.loja = loja;
         String[] columnNames = {"ID", "Nome", "Telefone", "Email", "Pedidos", "Editar", "Remover"};
         model = new DefaultTableModel(columnNames, 0);
@@ -41,8 +38,12 @@ public class Listar extends JPanel {
         table.getColumn("Remover").setCellRenderer(new ButtonRenderer());
         table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, true));
 
+
+
+        setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(800, 600));
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public void refreshTable() {
@@ -61,7 +62,6 @@ public class Listar extends JPanel {
         }
     }
 
-
     // Renderer for the buttons
     class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
@@ -79,11 +79,11 @@ public class Listar extends JPanel {
         private JButton button;
         private boolean isPushed;
         private Loja loja;
-        private Listar listarPanel;
+        private ListarCliente listarPanel;
         private boolean isRemoveButton;
         private int row;
 
-        public ButtonEditor(JCheckBox checkBox, Loja loja, Listar listarPanel, boolean isRemoveButton) {
+        public ButtonEditor(JCheckBox checkBox, Loja loja, ListarCliente listarPanel, boolean isRemoveButton) {
             super(checkBox);
             this.loja = loja;
             this.listarPanel = listarPanel;
@@ -102,12 +102,11 @@ public class Listar extends JPanel {
         }
 
         @Override
-        public Object getCellEditorValue() {
+        public Object getCellEditorValue() { // BUG ao tirar o ultimo elemento da lista
             if (isPushed) {
-                int row = table.convertRowIndexToModel(this.row);
-                if (row >= 0 && row < listarPanel.table.getRowCount()) {
-                    int clientId = (int) listarPanel.table.getValueAt(row, 0);
-
+                int modelRow = table.convertRowIndexToModel(this.row);
+                if (modelRow >= 0 && modelRow < model.getRowCount()) {
+                    int clientId = (int) model.getValueAt(modelRow, 0);
                     if (isRemoveButton) {
                         loja.removeClientePorId(clientId);
                         listarPanel.refreshTable();
@@ -125,25 +124,19 @@ public class Listar extends JPanel {
 
                             listarPanel.refreshTable();
                             JOptionPane.showMessageDialog(button, "Cliente atualizado: " + clientId);
-                            return button.getText();
                         }
                     }
                 }
             }
             isPushed = false;
-            return new String("TESTANDO");
+            return button.getText();
         }
-
-
 
         @Override
         public boolean stopCellEditing() {
-            if (row >= 0 && row < listarPanel.table.getRowCount()) {
-                return super.stopCellEditing();
-            }
-            return false;
+            isPushed = false;
+            return super.stopCellEditing();
         }
-
 
         @Override
         protected void fireEditingStopped() {

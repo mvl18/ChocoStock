@@ -63,6 +63,9 @@ public class InterfaceGrafica extends JFrame {
         else if("AdicionarEmbalagem".equals(chavePagina)){
             painelPrincipal.add(new PaginaNovaEmbalagem(loja), chavePagina);
         }
+        else if("ListarCliente".equals(chavePagina)){
+            painelPrincipal.add(new Listar(loja), chavePagina);
+        }
 //        else if("AdicionarProduto".equals(chavePagina)){
 //            painelPrincipal.add(new PaginaNovoProduto(loja), chavePagina);
 //        }
@@ -70,8 +73,9 @@ public class InterfaceGrafica extends JFrame {
 
     private void ajustarLarguraMenuItens() {
         JMenuBar menuBar = getJMenuBar();
-        for (int i = 0; i < menuBar.getComponentCount(); i++)
-            menuBar.getComponent(i).setPreferredSize(new Dimension(this.getWidth()/menuBar.getComponentCount(), 30));
+        for (int i = 0; i < menuBar.getComponentCount(); i++) {
+            menuBar.getComponent(i).setPreferredSize(new Dimension(this.getWidth() / menuBar.getComponentCount(), 30));
+        }
         menuBar.revalidate();
         menuBar.repaint();
     }

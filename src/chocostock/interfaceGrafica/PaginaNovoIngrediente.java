@@ -11,12 +11,12 @@ public class PaginaNovoIngrediente extends FormularioDeCadastro {
             "Tipo", "Quantidade", "Quantos kg por Unidade",
             "Preço", "Data de Compra", "Data de Validade", "Fornecedor"};
 
-    public PaginaNovoIngrediente(Loja loja){
+    public PaginaNovoIngrediente(Loja loja) {
         super();
         addTitulo("Novo Ingrediente");
         addInputComponent(new JComboBox<>(TiposIngredientes.getTipos()),
                 "Tipo do Ingrediente");
-        for(int i = 1; i < atributosIngrediente.length-1; i++){
+        for (int i = 1; i < atributosIngrediente.length - 1; i++) {
             addInputComponent(new JTextField(), atributosIngrediente[i]);
         }
         String[] fornecedores = loja.getEstoque().getArrayFornecedores();
@@ -24,4 +24,7 @@ public class PaginaNovoIngrediente extends FormularioDeCadastro {
         addBotoes();
         atualizarLayout();
     }
+
+
+
 }
