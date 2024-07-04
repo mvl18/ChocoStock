@@ -53,7 +53,7 @@ public class Registrar extends JPanel {
 
         button1 = new JButton("Registrar");
         button1.setFont(textoPeq);
-        painelRegistro.add(new JLabel()); // empty label to fill the cell
+        painelRegistro.add(new JLabel()); // label vazio para preencher a célula
         painelRegistro.add(button1);
 
         add(painelRegistro, BorderLayout.CENTER);

@@ -11,8 +11,8 @@ public class PaginaNovoIngrediente extends FormularioDeCadastro {
             "Tipo", "Quantidade", "Quantos kg por Unidade",
             "Preço", "Data de Compra", "Data de Validade", "Fornecedor"};
 
-    public PaginaNovoIngrediente(Loja loja) {
-        super();
+    public PaginaNovoIngrediente(Loja loja){
+        super("Ingrediente", loja);
         addTitulo("Novo Ingrediente");
         addInputComponent(new JComboBox<>(TiposIngredientes.getTipos()),
                 "Tipo do Ingrediente");
@@ -24,7 +24,4 @@ public class PaginaNovoIngrediente extends FormularioDeCadastro {
         addBotoes();
         atualizarLayout();
     }
-
-
-
 }

@@ -49,6 +49,10 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
         return produtos;
     }
 
+    public ArrayList<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
     public void setProdutos(ArrayList<Produto> produtos) {
         this.produtos = produtos;
     }

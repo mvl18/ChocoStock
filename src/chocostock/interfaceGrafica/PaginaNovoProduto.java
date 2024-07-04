@@ -16,7 +16,7 @@ public class PaginaNovoProduto extends FormularioDeCadastro{
     private String[] tiposProduto = {"", "Barra", "Caixa"};
 
     public PaginaNovoProduto(Loja loja) {
-        super();
+        super("Embalagem", loja);
         addTitulo("Novo Produto");
 
         JComboBox tipoProduto = new JComboBox<>(tiposProduto);
