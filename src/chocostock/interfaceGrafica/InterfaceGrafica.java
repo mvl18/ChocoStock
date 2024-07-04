@@ -84,8 +84,9 @@ public class InterfaceGrafica extends JFrame {
         //painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
 
         //Novo Cliente
-        String[] atributosCliente = new String[]{"Nome", "Telefone", "Email", "Endereço"};
-        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro();
+        String[] atributosCliente = new String[]{"Nome", "Telefone", "Email",
+                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número"};
+        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Cliente", loja);
         fNovoCliente.addTitulo("Novo Cliente");
         for(String atributo : atributosCliente){
             fNovoCliente.addInputComponent(new JTextField(), atributo);
@@ -95,8 +96,9 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal.add(fNovoCliente, "AdicionarCliente");
 
         //Novo Fornecedor
-        String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email", "Endereço", "CNPJ", "Site"};
-        FormularioDeCadastro fNovoFornecedor = new FormularioDeCadastro();
+        String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email",
+                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número", "CNPJ", "Site"};
+        FormularioDeCadastro fNovoFornecedor = new FormularioDeCadastro("Fornecedor", loja);
         fNovoFornecedor.addTitulo("Novo Fornecedor");
         for(String atributo : atributosFornecedor){
             fNovoFornecedor.addInputComponent(new JTextField(), atributo);
@@ -106,9 +108,10 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal.add(fNovoFornecedor, "AdicionarFornecedor");
 
         //Novo Funcionário
-        String[] atributosFuncionario = {"Nome", "Telefone", "Email", "Endereço", "Cargo", "Salario"};
+        String[] atributosFuncionario = {"Nome", "Telefone", "Email",
+                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número", "Cargo", "Salario"};
         String[] cargos = {"Cargo1", "Cargo2", "Cargo3"};
-        FormularioDeCadastro fNovoFuncionario = new FormularioDeCadastro();
+        FormularioDeCadastro fNovoFuncionario = new FormularioDeCadastro("Funcionario", loja);
         fNovoFuncionario.addTitulo("Novo Funcionário");
         for(String atributo : atributosFuncionario){
             if(atributo.equals("Cargo")){

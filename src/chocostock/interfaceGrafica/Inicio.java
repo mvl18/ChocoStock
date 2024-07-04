@@ -27,7 +27,7 @@ public class Inicio extends JPanel {
         titulo.setFont(new Font("Tahoma", Font.BOLD, 36));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         painelTitulo.add(titulo);
-        painelTitulo.add(Box.createVerticalStrut(5));
+        painelTitulo.add(Box.createVerticalStrut(2));
 
         JLabel subtitulo = new JLabel("O doce controle de vendas! ", SwingConstants.CENTER);
         subtitulo.setFont(new Font("Tahoma", Font.ITALIC, 28));
