@@ -76,6 +76,10 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         this.telefone = telefone;
     }
 
+    public ArrayList<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
     // ENDEREÇO
     public Endereco getEndereco() {
         return endereco;
