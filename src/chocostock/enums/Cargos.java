@@ -31,4 +31,15 @@ public enum Cargos implements Identificavel, Nomeavel {
         return id;
     }
 
+    public static String[] getTipos(){
+        int num_tipos = Cargos.values().length;
+        int i = 0;
+        String[] tipos = new String[num_tipos];
+        for(Cargos t : Cargos.values()){
+            tipos[i] = t.getNome();
+            i++;
+        }
+        return tipos;
+    }
+
 }

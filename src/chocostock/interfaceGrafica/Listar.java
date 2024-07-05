@@ -125,12 +125,13 @@ public class Listar extends JPanel {
 
                             listarPanel.refreshTable();
                             JOptionPane.showMessageDialog(button, "Cliente atualizado: " + clientId);
+                            return button.getText();
                         }
                     }
                 }
             }
             isPushed = false;
-            return button.getText();
+            return new String("TESTANDO");
         }
 
 

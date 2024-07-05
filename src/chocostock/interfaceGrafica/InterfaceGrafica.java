@@ -63,15 +63,22 @@ public class InterfaceGrafica extends JFrame {
         else if("AdicionarEmbalagem".equals(chavePagina)){
             painelPrincipal.add(new PaginaNovaEmbalagem(loja), chavePagina);
         }
-//        else if("AdicionarProduto".equals(chavePagina)){
-//            painelPrincipal.add(new PaginaNovoProduto(loja), chavePagina);
-//        }
+        else if("AdicionarCliente".equals(chavePagina)){
+            painelPrincipal.add(new PaginaNovoCliente(loja), chavePagina);
+        }
+        else if("ListarCliente".equals(chavePagina)){
+            painelPrincipal.add(new Listar(loja), chavePagina);
+        }
+        else if("AdicionarProduto".equals(chavePagina)){
+            painelPrincipal.add(new PaginaNovoProduto(loja), chavePagina);
+        }
     }
 
     private void ajustarLarguraMenuItens() {
         JMenuBar menuBar = getJMenuBar();
-        for (int i = 0; i < menuBar.getComponentCount(); i++)
-            menuBar.getComponent(i).setPreferredSize(new Dimension(this.getWidth()/menuBar.getComponentCount(), 30));
+        for (int i = 0; i < menuBar.getComponentCount(); i++) {
+            menuBar.getComponent(i).setPreferredSize(new Dimension(this.getWidth() / menuBar.getComponentCount(), 30));
+        }
         menuBar.revalidate();
         menuBar.repaint();
     }
@@ -81,20 +88,10 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal.add(new Listar(loja), "ListarCliente");
         painelPrincipal.add(new PaginaNovoIngrediente(loja), "AdicionarIngrediente");
         painelPrincipal.add(new PaginaNovaEmbalagem(loja), "AdicionarEmbalagem");
-        //painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
-
-        //Novo Cliente
-        String[] atributosCliente = new String[]{"Nome", "Telefone", "Email",
-                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número"};
-        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Cliente", loja);
-        fNovoCliente.addTitulo("Novo Cliente");
-        for(String atributo : atributosCliente){
-            fNovoCliente.addInputComponent(new JTextField(), atributo);
-        }
-        fNovoCliente.addBotoes();
-        fNovoCliente.atualizarLayout();
-        painelPrincipal.add(fNovoCliente, "AdicionarCliente");
-
+        painelPrincipal.add(new PaginaNovoCliente(loja), "AdicionarCliente");
+        painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
+        painelPrincipal.add(new PaginaNovoFuncionario(loja), "AdicionarFuncionario");
+        painelPrincipal.add(new PaginaNovoFornecedor(loja), "AdicionarFornecedor");
         //Novo Fornecedor
         String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email",
                 "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número", "CNPJ", "Site"};
@@ -105,7 +102,7 @@ public class InterfaceGrafica extends JFrame {
         }
         fNovoFornecedor.addBotoes();
         fNovoFornecedor.atualizarLayout();
-        painelPrincipal.add(fNovoFornecedor, "AdicionarFornecedor");
+//        painelPrincipal.add(fNovoFornecedor, "AdicionarFornecedor");
 
         //Novo Funcionário
         String[] atributosFuncionario = {"Nome", "Telefone", "Email",
@@ -123,7 +120,7 @@ public class InterfaceGrafica extends JFrame {
         }
         fNovoFuncionario.addBotoes();
         fNovoFuncionario.atualizarLayout();
-        painelPrincipal.add(fNovoFuncionario, "AdicionarFuncionario");
+//        painelPrincipal.add(fNovoFuncionario, "AdicionarFuncionario");
     }
 
 

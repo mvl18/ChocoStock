@@ -16,7 +16,7 @@ public class PaginaNovoIngrediente extends FormularioDeCadastro {
         addTitulo("Novo Ingrediente");
         addInputComponent(new JComboBox<>(TiposIngredientes.getTipos()),
                 "Tipo do Ingrediente");
-        for(int i = 1; i < atributosIngrediente.length-1; i++){
+        for (int i = 1; i < atributosIngrediente.length - 1; i++) {
             addInputComponent(new JTextField(), atributosIngrediente[i]);
         }
         String[] fornecedores = loja.getEstoque().getArrayFornecedores();
