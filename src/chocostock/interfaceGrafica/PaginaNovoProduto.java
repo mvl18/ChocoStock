@@ -1,6 +1,7 @@
 package chocostock.interfaceGrafica;
 
 import chocostock.enums.TiposCaixas;
+import chocostock.enums.TiposComplementos;
 import chocostock.enums.TiposEmbalagens;
 import chocostock.loja.Loja;
 
@@ -11,20 +12,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PaginaNovoProduto extends FormularioDeCadastro{
+public class PaginaNovoProduto extends FormularioDeCadastro implements ActionListener {
 
     private String[] tiposProduto = {"", "Barra", "Caixa"};
+    private String[] atributosCaixa = {"Quantidade", "Preco", "Validade", "Peso", "Embalagem", "Lote"};
+    private String[] atrbutosBarra = {"Complemento", "Origem", "Quantidade", "Preço", "Validade", "Peso", "Embalagem"};
+
+    private JComboBox tipoProduto;
 
     public PaginaNovoProduto(Loja loja) {
-        super("Embalagem", loja);
+        super("Produto", loja);
         addTitulo("Novo Produto");
+        createFormsInicial();
+    }
 
-        JComboBox tipoProduto = new JComboBox<>(tiposProduto);
-        addInputComponent(tipoProduto, "Tipo do Produto");
-
-        tipoProduto.addActionListener(e -> {
-
-        });
+    private void createFormsInicial() {
+        getPainelRegistro().setLayout(new GridLayout(7, 1, 5, 5));
+        tipoProduto = new JComboBox<>(tiposProduto);
+        addInputComponent(tipoProduto, "Tipo");
+        tipoProduto.addActionListener(this);
     }
 
     public JPanel novoPanel(){
@@ -66,12 +72,89 @@ public class PaginaNovoProduto extends FormularioDeCadastro{
     }
 
     private void createFormsCaixa() {
-        getPainelRegistro().add(new JLabel("Teste"));
+        addInputComponent(tipoProduto, "Tipo");
+        addInputComponent(new JTextField(), "Quantidade");
+        addInputComponent(new JTextField(), "Preço");
+        addInputComponent(new JTextField(), "Validade");
+        addInputComponent(new JTextField(), "Peso");
+        addInputComponent(new JComboBox<>(TiposEmbalagens.getTipos()), "Embalagem");
+        addInputComponent(new JTextField(), "Lote");
+        addBotoes();
+        atualizarLayout();
     }
 
     private void createFormsBarra() {
+        addInputComponent(tipoProduto, "Tipo");
+        createInputComplemento();
+        addInputComponent(new JTextField(), "Origem");
+        addInputComponent(new JTextField(), "Quantidade");
+        addInputComponent(new JTextField(), "Preço");
+        addInputComponent(new JTextField(), "Validade");
+        addInputComponent(new JTextField(), "Peso");
+        addInputComponent(new JComboBox<>(TiposEmbalagens.getTipos()), "Embalagem");
+        addBotoes();
+        atualizarLayout();
     }
 
+    private void createInputComplemento() {
+        JPanel inputComplemento = new JPanel(new GridLayout(1, 2));
+        JMenuBar menubar = new JMenuBar();
+        JMenu menu = new JMenu("Adicionar");
+        JLabel lNome = new JLabel("Complementos");
+        menu.setPreferredSize(new Dimension(getPainelRegistro().getWidth()/2, menubar.getHeight()));
+        menubar.add(menu);
+        menu.setFont(getFontePequena());
+        menu.setHorizontalAlignment(SwingConstants.CENTER);
+        lNome.setFont(getFontePequena());
+        menu.add(new JCheckBoxMenuItem("Teste"));
+        for(int i = 0; i < TiposComplementos.values().length; i++){
+            System.out.println("Teste");
+            String tipo = TiposComplementos.values()[i].getNome();
+            JCheckBoxMenuItem check = new JCheckBoxMenuItem(tipo);
+            check.setPreferredSize(new Dimension(getPainelRegistro().getWidth()/2, check.getHeight()));
+            menu.add(new JCheckBoxMenuItem(tipo));
+        }
+        inputComplemento.add(lNome);
+        inputComplemento.add(menubar);
+        getPainelRegistro().add(inputComplemento);
+        getInputs().add(menu);
+        getLabelsDosInputs().add("Complementos");
+    }
+
+    private void limparPagina() {
+        getPainelRegistro().removeAll();
+        getInputs().clear();
+        getLabelsDosInputs().clear();
+    }
+
+    @Override
+    public void limparInputs() {
+        limparPagina();
+        createFormsInicial();
+        getPainelRegistro().revalidate();
+        getPainelRegistro().repaint();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Evento de ação");
+        if(e.getSource() == tipoProduto){
+            System.out.println(tipoProduto.getSelectedItem());
+            if(tipoProduto.getSelectedItem().equals("Barra")){
+                limparPagina();
+                createFormsBarra();
+                tipoProduto.setEnabled(false);
+                getPainelRegistro().revalidate();
+                getPainelRegistro().repaint();
+            }
+            if (tipoProduto.getSelectedItem().equals("Caixa")) {
+                limparPagina();
+                createFormsCaixa();
+                tipoProduto.setEnabled(false);
+                getPainelRegistro().revalidate();
+                getPainelRegistro().repaint();
+            }
+        }
+    }
 
     /*
     public void alterarPagina(String chave){

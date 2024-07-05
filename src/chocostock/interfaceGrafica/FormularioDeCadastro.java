@@ -129,12 +129,15 @@ public class FormularioDeCadastro extends JPanel {
 
         cancelarBotao.setFont(fontePequena);
         cancelarBotao.addActionListener(e -> {
-            JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado.");
+            int resp = JOptionPane.showConfirmDialog(getPainelRegistro(), "Realmente deseja cancelar o registro?");
+            if(resp == 0){
+                limparInputs();
+                JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado.");
+            }
         });
 
         registrarBotao.addActionListener(e -> {
             correto = true;
-            System.out.println(getDadosDosInputs());
             for (int i = 0; i < getLabelsDosInputs().size(); i++) {
                 if (getLabelsDosInputs().get(i).equals("Telefone"))
                     validaCampo(i, Verifica::isTelefone);
@@ -150,7 +153,9 @@ public class FormularioDeCadastro extends JPanel {
                     validaCampo(i, Verifica::isNatural);
             }
             if (correto) {
+                System.out.println(getDadosDosInputs());
                 criaObjeto();
+                limparInputs();
                 JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi concluído.");
             }
         });
@@ -159,6 +164,18 @@ public class FormularioDeCadastro extends JPanel {
         panelBotoes.add(cancelarBotao);
         panelBotoes.add(registrarBotao);
         getPainelRegistro().add(panelBotoes);
+    }
+
+    public void limparInputs() {
+        for(JComponent comp : inputs){
+            if(comp instanceof JTextField){
+                ((JTextField) comp).setText("");
+            }
+            if(comp instanceof JComboBox<?>){
+                ((JComboBox<?>) comp).setEnabled(true);
+                ((JComboBox<?>) comp).setSelectedIndex(0);
+            }
+        }
     }
 
     public ArrayList<String> getDadosDosInputs(){
@@ -177,8 +194,23 @@ public class FormularioDeCadastro extends JPanel {
                 boolean b = ((JRadioButton) comp).isSelected();
                 dados.add(((Boolean)b).toString());
             }
+            if(comp instanceof JMenu){
+                //EU ESTOU DEFININDO O HIFEN AQUI
+                //PEGA OS COMPONENTES DO MENU QUE TEM OS COMPLEMENTOS
+                Component[] items = ((JMenu) comp).getMenuComponents();
+                s = "";
+                //PASSA POR TODOS OS ITEMS SELECIONADOS ADICINOANDO O TEXTO COM UM HIFEN
+                for(Component c : items){
+                    System.out.println("TESTANDO");
+                    JMenuItem item = (JMenuItem)c;
+                    if(item.isSelected()){
+                        s += item.getText() + "-";
+                    }
+                }
+                //ADICIONA A STRING FINAL NO ARRAY DE INPUTS
+                dados.add(s);
+            }
         }
         return dados;
     }
-
 }
