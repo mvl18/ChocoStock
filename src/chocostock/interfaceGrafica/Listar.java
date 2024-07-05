@@ -102,10 +102,41 @@ public class Listar<T> extends JPanel {
         return values.toArray(new Object[0]);
     }
 
+//    private void setColumnOrder(String[] order) {
+//        TableColumnModel columnModel = table.getColumnModel();
+//        for (int i = 0; i < order.length; i++) {
+//            int index = columnModel.getColumnIndex(order[i]);
+//            if (index != i) {
+//                columnModel.moveColumn(index, i);
+//            }
+//        }
+//    }
+
+
+    // BUG -> verificar se esse codigo funciona
     private void setColumnOrder(String[] order) {
         TableColumnModel columnModel = table.getColumnModel();
-        for (int i = 0; i < order.length; i++) {
-            int index = columnModel.getColumnIndex(order[i]);
+        ArrayList<String> orderList = new ArrayList<>(Arrays.asList(order));
+
+        // Adiciona "Editar" e "Remover" se não estiverem presentes
+        if (!orderList.contains("Editar")) {
+            orderList.add("Editar");
+        }
+        if (!orderList.contains("Remover")) {
+            orderList.add("Remover");
+        }
+
+        // Remover colunas não desejadas
+        for (int i = columnModel.getColumnCount() - 1; i >= 0; i--) {
+            TableColumn column = columnModel.getColumn(i);
+            if (!orderList.contains(column.getHeaderValue().toString())) {
+                columnModel.removeColumn(column);
+            }
+        }
+
+        // Reordenar as colunas
+        for (int i = 0; i < orderList.size(); i++) {
+            int index = columnModel.getColumnIndex(orderList.get(i));
             if (index != i) {
                 columnModel.moveColumn(index, i);
             }
