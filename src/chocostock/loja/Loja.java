@@ -135,6 +135,25 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return Iteravel.listaVertical(pedidos);
     }
 
+    public String[] arrayClientes() {
+        String[] array = new String[clientes.size()];
+        if (clientes.isEmpty())
+            return new String[]{""};
+        for (int i = 0; i < clientes.size(); i++)
+            array[i] = clientes.get(i).getNome();
+        return array;
+    }
+
+    public Cliente getCliente(String nome) {
+        if (!clientes.isEmpty()) {
+            for (Cliente cliente : clientes) {
+                if (cliente.getNome().equals(nome))
+                    return cliente;
+            }
+        }
+        return new Cliente();
+    }
+
     //FUNCIONARIO
     public void addFuncionario(Funcionario funcionario) {
         addObjeto(funcionarios, funcionario);

@@ -48,7 +48,7 @@ public class Funcionario extends Colaborador implements Identificavel {
 
     public String toString() {
         return id + ". " + super.toString() +
-                "Cargo: " + cargo + " - R$" + salario +
+                "Cargo: " + cargo.getNome() + " - R$" + salario +
                 "\n";
     }
 

@@ -1,6 +1,9 @@
 package chocostock.interfaceGrafica;
 
 import chocostock.bancodeDados.Persistencia;
+import chocostock.enums.Cargos;
+import chocostock.enums.Estados;
+import chocostock.enums.TiposIngredientes;
 import chocostock.loja.Loja;
 
 import javax.swing.*;
@@ -51,34 +54,34 @@ public class InterfaceGrafica extends JFrame {
         this.cardLayout.show(painelPrincipal, chavePagina);
     }
     public void atualizarPagina(String chavePagina){
-        if("Inicio".equals(chavePagina)){
-            painelPrincipal.add(new Inicio(loja), chavePagina);
-        }
-        else if("ListarCliente".equals(chavePagina)){
-            painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), chavePagina);
-        }
-        else if("ListarFuncionario".equals(chavePagina)){
-            //painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), chavePagina);
-        }
-        else if("ListarFornecedor".equals(chavePagina)){
-            //painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores()), chavePagina);
-        }
-//        else if("Listar Pedidos".equals(chavePagina)){
+        switch (chavePagina) {
+            case "Inicio" -> painelPrincipal.add(new Inicio(loja), chavePagina);
+            case "AdicionarPedido" -> painelPrincipal.add(NovaPagina.novoPedido(loja), chavePagina);
+            case "AdicionarCliente" -> painelPrincipal.add(NovaPagina.novoCliente(loja), chavePagina);
+            case "AdicionarFornecedor" ->  painelPrincipal.add(NovaPagina.novoFornecedor(loja), "AdicionarFornecedor");
+            case "AdicionarFuncionario" -> painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
+            case "ListarCliente" ->
+                    painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), chavePagina);
+            case "ListarFuncionario" -> {
+                //painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), chavePagina);
+            }
+            case "ListarFornecedor" -> {
+                //painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores()), chavePagina);
+            }
+//          case "ListarPedidos" -> {
 //            painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), chavePagina);
 //        }
-        else if("AdicionarIngrediente".equals(chavePagina)){
-            painelPrincipal.add(new PaginaNovoIngrediente(loja), chavePagina);
-        }
-//        else if("StatusIngrediente".equals(chavePagina)){
+            case "AdicionarIngrediente" -> painelPrincipal.add(NovaPagina.novoIngrediente(loja), chavePagina);
+
+//        case "StatusIngrediente" -> {
 //            painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), chavePagina);
 //        }
-        else if("AdicionarEmbalagem".equals(chavePagina)){
-            painelPrincipal.add(new PaginaNovaEmbalagem(loja), chavePagina);
+            case "AdicionarEmbalagem" -> painelPrincipal.add(NovaPagina.novaEmbalagem(loja), chavePagina);
+            case "StatusEmbalagem" -> {
+                //painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens()), chavePagina);
+            }
         }
-        else if("StatusEmbalagem".equals(chavePagina)){
-            //painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens()), chavePagina);
-        }
-//        else if("AdicionarProduto".equals(chavePagina)){
+//        case "AdicionarProduto" -> {
 //            painelPrincipal.add(new PaginaNovoProduto(loja), chavePagina);
 //        }
     }
@@ -98,66 +101,26 @@ public class InterfaceGrafica extends JFrame {
         // painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), "Listar Pedidos");
 //        painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), "ListarFuncionario");
 //        painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores()), "ListarFornecedor");
-        painelPrincipal.add(new PaginaNovoIngrediente(loja), "AdicionarIngrediente");
+        painelPrincipal.add(NovaPagina.novoIngrediente(loja), "AdicionarIngrediente");
         // painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), "StatusIngrediente"); // DA ERRO PQ N TEM INGREDIENTES
-        painelPrincipal.add(new PaginaNovaEmbalagem(loja), "AdicionarEmbalagem");
+        painelPrincipal.add(NovaPagina.novaEmbalagem(loja), "AdicionarEmbalagem");
 //        painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens()), "StatusEmbalagem");
         //painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
 
-        //Novo Cliente
-        String[] atributosCliente = new String[]{"Nome", "Telefone", "Email",
-                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número"};
-        FormularioDeCadastro fNovoCliente = new FormularioDeCadastro("Cliente", loja);
-        fNovoCliente.addTitulo("Novo Cliente");
-        for(String atributo : atributosCliente){
-            fNovoCliente.addInputComponent(new JTextField(), atributo);
-        }
-        fNovoCliente.addBotoes();
-        fNovoCliente.atualizarLayout();
-        painelPrincipal.add(fNovoCliente, "AdicionarCliente");
-
-        //Novo Fornecedor
-        String[] atributosFornecedor = new String[]{"Nome", "Telefone", "Email",
-                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número", "CNPJ", "Site"};
-        FormularioDeCadastro fNovoFornecedor = new FormularioDeCadastro("Fornecedor", loja);
-        fNovoFornecedor.addTitulo("Novo Fornecedor");
-        for(String atributo : atributosFornecedor){
-            fNovoFornecedor.addInputComponent(new JTextField(), atributo);
-        }
-        fNovoFornecedor.addBotoes();
-        fNovoFornecedor.atualizarLayout();
-        painelPrincipal.add(fNovoFornecedor, "AdicionarFornecedor");
-
-        //Novo Funcionário
-        String[] atributosFuncionario = {"Nome", "Telefone", "Email",
-                "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número", "Cargo", "Salario"};
-        String[] cargos = {"Cargo1", "Cargo2", "Cargo3"};
-        FormularioDeCadastro fNovoFuncionario = new FormularioDeCadastro("Funcionario", loja);
-        fNovoFuncionario.addTitulo("Novo Funcionário");
-        for(String atributo : atributosFuncionario){
-            if(atributo.equals("Cargo")){
-                fNovoFuncionario.addInputComponent(new JComboBox<>(cargos), atributo);
-            }
-            else{
-                fNovoFuncionario.addInputComponent(new JTextField(), atributo);
-            }
-        }
-        fNovoFuncionario.addBotoes();
-        fNovoFuncionario.atualizarLayout();
-        painelPrincipal.add(fNovoFuncionario, "AdicionarFuncionario");
+        painelPrincipal.add(NovaPagina.novoPedido(loja), "AdicionarPedido");
+        painelPrincipal.add(NovaPagina.novoCliente(loja), "AdicionarCliente");
+        painelPrincipal.add(NovaPagina.novoFornecedor(loja), "AdicionarFornecedor");
+        painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
     }
 
 
     private JMenuBar criarMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-//        menuBar.add(criarMenuComAcao("Início", "Inicio"));
-
         // Adicionar o botão "Início"
         JButton inicioButton = new JButton("Início");
         inicioButton.addActionListener(e -> alterarPagina("Inicio"));
         menuBar.add(inicioButton);
-
-        menuBar.add(criarMenu("Menu Pedidos", new String[]{"Novo Pedido", "Listar Pedidos", "Atualizar Pedido"}));
+        menuBar.add(criarMenu("Menu Pedidos", new String[]{"Adicionar Pedido", "Listar Pedidos", "Atualizar Pedido"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
                 new String[]{"Produto", "Ingrediente", "Embalagem"},
                 new String[][]{{"Adicionar", "Status"}, {"Adicionar", "Status"}, {"Adicionar", "Status"}}));
@@ -183,6 +146,7 @@ public class InterfaceGrafica extends JFrame {
         for (String itemName : itemNames) {
             JMenuItem menuItem = new JMenuItem(itemName);
             menu.add(menuItem);
+            menuItem.addActionListener(e -> alterarPagina(itemName.replaceAll("\\s+", "")));
         }
         return menu;
     }

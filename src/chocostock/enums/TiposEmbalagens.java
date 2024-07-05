@@ -60,6 +60,9 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
         return msg.toString();
     }
 
+    /**
+     * Retorna um array com todos os nomes de tipos de embalagens.
+     */
     public static String[] getTipos(){
         int num_tipos = TiposEmbalagens.values().length;
         int i = 0;

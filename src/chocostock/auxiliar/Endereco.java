@@ -34,6 +34,15 @@ public class Endereco implements Escolhivel, Serializable {
         this.estado = estado;
     }
 
+    public Endereco(String cep, Estados estado, String cidade, String bairro, String rua, int numero) {
+        this.numero = numero;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+    }
+
     public Endereco() {
         this(0, "", "", "", "", Estados.XX);
     }

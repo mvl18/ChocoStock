@@ -33,4 +33,16 @@ public enum TiposChocolates implements Identificavel, Nomeavel {
     public int getId() {
         return id;
     }
+
+    /**
+     * Retorna um array com todos os nomes de tipos de chocolates.
+     */
+    public static String[] getTipos() {
+        int num_tipos = TiposChocolates.values().length;
+        String[] tipos = new String[num_tipos];
+        for(int i = 0; i < num_tipos; i++){
+            tipos[i] = TiposChocolates.values()[i].getNome();
+        }
+        return tipos;
+    }
 }

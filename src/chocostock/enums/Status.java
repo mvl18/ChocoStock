@@ -7,8 +7,8 @@ import chocostock.interfaces.Nomeavel;
  * Seta o status do pedido.
  */
 public enum Status implements Identificavel, Nomeavel {
-    CANCELADO("Cancelado", 1),
     PENDENTE("Pendente", 2),
+    CANCELADO("Cancelado", 1),
     PRONTO("Pronto", 3),
     TRANSITO("Transito", 4),
     FINALIZADO("Finalizado", 5);
@@ -27,5 +27,24 @@ public enum Status implements Identificavel, Nomeavel {
 
     public int getId() {
         return id;
+    }
+    /**
+     * Retorna um array com todos os possíveis status.
+     */
+    public static String[] getTipos() {
+        int num_tipos = Status.values().length;
+        String[] tipos = new String[num_tipos];
+        for(int i = 0; i < num_tipos; i++){
+            tipos[i] = Status.values()[i].getNome();
+        }
+        return tipos;
+    }
+
+    public static Status parseStatus(String nome) {
+        for (Status status : Status.values()) {
+            if (status.getNome().equals(nome))
+                return status;
+        }
+        return PENDENTE;
     }
 }

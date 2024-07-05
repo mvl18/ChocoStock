@@ -35,6 +35,9 @@ public enum TiposCaixas implements Identificavel, Nomeavel {
         return nome;
     }
 
+    /**
+     * Retorna um array com todos os nomes de tipos de caixas.
+     */
     public static String[] getTipos() {
         int num_tipos = TiposCaixas.values().length;
         String[] tipos = new String[num_tipos];

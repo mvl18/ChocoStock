@@ -1,21 +1,24 @@
 package chocostock.interfaceGrafica;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Processa;
 import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
 import chocostock.enums.Cargos;
 import chocostock.enums.Estados;
+import chocostock.enums.Status;
 import chocostock.interfaces.ValidadorInput;
+import chocostock.itens.produtos.Pendente;
 import chocostock.loja.Loja;
+import chocostock.loja.Pedido;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FormularioDeCadastro extends JPanel {
 
@@ -99,27 +102,37 @@ public class FormularioDeCadastro extends JPanel {
     public void criaObjeto() {
         if (tag.equals("Cliente"))
             loja.addCliente(new Cliente(getDadosDosInputs().get(0),
-                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
-                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
-                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
-                            Estados.SP))); // Arrumar a recepção de estado;
+                                getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                                    new Endereco(getDadosDosInputs().get(3),
+                                        Estados.parseEstado(getDadosDosInputs().get(4)),
+                                        getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                                        getDadosDosInputs().get(7),
+                                        Integer.parseInt(getDadosDosInputs().get(8)))));
         else if (tag.equals("Fornecedor"))
             loja.getEstoque().addFornecedor(new Fornecedor(getDadosDosInputs().get(0),
-                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
-                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
-                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
-                            Estados.SP), getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
+                                                getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                                                new Endereco(getDadosDosInputs().get(3),
+                                                    Estados.parseEstado(getDadosDosInputs().get(4)),
+                                                    getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                                                    getDadosDosInputs().get(7),
+                                                    Integer.parseInt(getDadosDosInputs().get(8))),
+                                                    getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
         else if (tag.equals("Funcionario"))
             loja.addFuncionario(new Funcionario(getDadosDosInputs().get(0),
-                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
-                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
-                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
-                            Estados.SP), Cargos.ASSISTENTE_DE_COZINHA,
-                            Float.parseFloat(getDadosDosInputs().get(10))));
-        // Arrumar coisas com Enum
+                                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                                    new Endereco(getDadosDosInputs().get(3),
+                                        Estados.parseEstado(getDadosDosInputs().get(4)),
+                                        getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                                        getDadosDosInputs().get(7),
+                                        Integer.parseInt(getDadosDosInputs().get(8))),
+                                        Cargos.parseCargo(getDadosDosInputs().get(9)),
+                                        Float.parseFloat(getDadosDosInputs().get(10))));
+        else if (tag.equals("Pedido"))
+            loja.addPedido(new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
+                    LocalDate.parse(getDadosDosInputs().get(1), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    LocalDate.parse(getDadosDosInputs().get(2), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    Processa.parseBool(getDadosDosInputs().get(3)), Status.parseStatus(getDadosDosInputs().get(4)),
+                    new ArrayList<Pendente>(), Float.parseFloat(getDadosDosInputs().get(6))));
     }
 
     public void addBotoes(){
@@ -136,18 +149,25 @@ public class FormularioDeCadastro extends JPanel {
             correto = true;
             System.out.println(getDadosDosInputs());
             for (int i = 0; i < getLabelsDosInputs().size(); i++) {
-                if (getLabelsDosInputs().get(i).equals("Telefone"))
-                    validaCampo(i, Verifica::isTelefone);
-                else if (getLabelsDosInputs().get(i).equals("Email"))
-                    validaCampo(i, Verifica::isEmail);
-                else if (getLabelsDosInputs().get(i).equals("CNPJ"))
-                    validaCampo(i, Verifica::isCnpj);
-                else if (getLabelsDosInputs().get(i).equals("Site"))
-                    validaCampo(i, Verifica::isSite);
-                else if (getLabelsDosInputs().get(i).equals("CEP"))
-                    validaCampo(i, Verifica::isCep);
-                else if (getLabelsDosInputs().get(i).equals("Número"))
-                    validaCampo(i, Verifica::isNatural);
+                switch (getLabelsDosInputs().get(i)) {
+                    case "Telefone" -> validaCampo(i, Verifica::isTelefone);
+                    case "Email" -> validaCampo(i, Verifica::isEmail);
+                    case "CNPJ" -> validaCampo(i, Verifica::isCnpj);
+                    case "Site" -> validaCampo(i, Verifica::isSite);
+                    case "CEP" -> validaCampo(i, Verifica::isCep);
+                    case "Número" -> validaCampo(i, Verifica::isNatural);
+                    case "Quantidade" -> validaCampo(i, Verifica::isNatural);
+                    case "Quantos kg por Unidade" -> validaCampo(i, Verifica::isFloat);
+                    case "Preço" -> validaCampo(i, Verifica::isFloat);
+                    case "Data de Compra" -> validaCampo(i, Verifica::isData);
+                    case "Data de fabricação" -> validaCampo(i, Verifica::isData);
+                    case "Data de entrega" -> validaCampo(i, Verifica::isData);
+                    case "Data de Validade" -> validaCampo(i, Verifica::isDataFutura);
+                    case "Preço por pacote" -> validaCampo(i, Verifica::isFloat);
+                    case "Quantidade por pacote" -> validaCampo(i, Verifica::isNatural);
+                    case "ID cliente" -> validaCampo(i, Verifica::isNatural);
+                    case "Valor total" -> validaCampo(i, Verifica::isNatural);
+                }
             }
             if (correto) {
                 criaObjeto();
@@ -155,7 +175,6 @@ public class FormularioDeCadastro extends JPanel {
             }
         });
         registrarBotao.setFont(fontePequena);
-
         panelBotoes.add(cancelarBotao);
         panelBotoes.add(registrarBotao);
         getPainelRegistro().add(panelBotoes);
@@ -180,5 +199,4 @@ public class FormularioDeCadastro extends JPanel {
         }
         return dados;
     }
-
 }
