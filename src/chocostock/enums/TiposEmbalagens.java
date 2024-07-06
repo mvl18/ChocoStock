@@ -8,6 +8,7 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
     /**
     * Enumera os tipos de embalagem que a fábrica precisa comprar.
     */
+    INDEFINIDO("", "", -1),
     CAIXA_PP("Caixa PP", "4cm x 12cm x 4cm", 1),
     CAIXA_P("Caixa borda premium P", "4 doces", 2),
     CAIXA_M("Caixa borda premium M", "6 doces", 3),
@@ -61,6 +62,9 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
         return msg.toString();
     }
 
+    /**
+     * Retorna um array com todos os nomes de tipos de embalagens.
+     */
     public static String[] getTipos(){
         int num_tipos = TiposEmbalagens.values().length;
         int i = 0;
@@ -83,6 +87,14 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
                 return tipo;
             }
         }
-        return CAIXA_PP;
+        return INDEFINIDO;
     }
+
+//    public static TiposEmbalagens parseTipoEmbalagem(String nome) {
+//        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
+//            if (nome.equals(tipo.getNome() + " - " + tipo.getTamanho()))
+//                return tipo;
+//        }
+//        return INDEFINIDO;
+//    }
 }

@@ -1,6 +1,7 @@
 package chocostock.auxiliar;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 
 /**
  * A classe Processa fornece métodos utilitários para normalizar strings e números. <br>
@@ -11,6 +12,10 @@ public class Processa {
      * Normaliza uma string removendo acentuação, convertendo todos os caracteres
      * para minúsculas e removendo todos os espaços em branco.
      */
+    public static boolean parseBool(String entrada) {
+        return normalizaString(entrada).matches("sim|s");
+    }
+
     public static String normalizaString(String entrada) {
         return Normalizer.normalize(entrada, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")

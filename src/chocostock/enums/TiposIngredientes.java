@@ -34,6 +34,9 @@ public enum TiposIngredientes implements Identificavel, Nomeavel {
 
     public int getId() {return id;}
 
+    /**
+     * Retorna um array com todos os nomes de tipos de ingredientes.
+     */
     public static String[] getTipos(){
         int num_tipos = TiposIngredientes.values().length;
         int i = 0;

@@ -58,6 +58,9 @@ public enum Estados implements Nomeavel, Codificavel {
         return id;
     }
 
+    /**
+     * Retorna um array com todos os nomes de estados.
+     */
     public static String[] getTipos(){
         int num_tipos = Estados.values().length;
         int i = 0;
@@ -76,6 +79,7 @@ public enum Estados implements Nomeavel, Codificavel {
         }
         return XX;
     }
+}
 
     public static Estados parseEstadoCodigo(String codigo) {
         for (Estados estado : Estados.values()) {
