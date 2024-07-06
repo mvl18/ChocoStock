@@ -116,11 +116,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     }
 
 
-    // BUG -> verificar se esse codigo funciona
     private void setColumnOrder(String[] order, int[] colWidths) {
-        if (order.length == colWidths.length) {
-            System.out.println("NORMAL");
-        }
         TableColumnModel columnModel = table.getColumnModel();
         ArrayList<String> orderList = new ArrayList<>(Arrays.asList(order));
 
@@ -147,7 +143,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 columnModel.moveColumn(index, i);
             }
             // Define a largura da coluna
-            if (i < colWidths.length) { // TALVEZ ESSA SEJA A SOLUÇÃO PARA O PROBLEMA DO BOTAO DE REMOVER
+            if (i < colWidths.length) {
                 TableColumn column = columnModel.getColumn(i);
                 column.setMinWidth(colWidths[i]);
                 column.setPreferredWidth(colWidths[i]);
@@ -181,11 +177,11 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     }
 
     class ButtonEditor extends DefaultCellEditor {
-        private JButton button;
+        private final JButton button;
         private boolean isPushed;
         private Loja loja;
-        private Listar listarPanel;
-        private boolean isRemoveButton;
+        private final Listar listarPanel;
+        private final boolean isRemoveButton;
         private int row;
 
         public ButtonEditor(JCheckBox checkBox, Loja loja, Listar listarPanel, boolean isRemoveButton) {
@@ -235,43 +231,20 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                             boolean valido = false;
                                             while (!valido) {
                                                 if (novoValor != null) {
-                                                    switch (field.getName()) {
-                                                        case "id", "quantidade_por_pacote", "quantidade":
-                                                            valido = Verifica.isNatural(novoValor);
-                                                            break;
-                                                        case "nome":
-                                                            valido = Verifica.isNome(novoValor);
-                                                            break;
-                                                        case "email":
-                                                            valido = Verifica.isEmail(novoValor);
-                                                            break;
-                                                        case "telefone":
-                                                            valido = Verifica.isTelefone(novoValor);
-                                                            break;
-                                                        case "cnpj", "cnpj_fornecedor":
-                                                            valido = Verifica.isCnpj(novoValor);
-                                                            break;
-                                                        case "tipo_embalagem":
-                                                            valido = Verifica.isEmbalagem(novoValor);
-                                                            break;
-                                                        case "cargo":
-                                                            valido = Verifica.isCargo(novoValor);
-                                                            break;
-                                                        case "endereco":
-                                                            valido = Verifica.isEndereco(novoValor); // falta criar
-                                                            break;
-                                                        case "data":
-                                                            valido = Verifica.isData(novoValor);
-                                                            break;
-                                                        case "data_entrega":
-                                                            valido = Verifica.isDataFutura(novoValor);
-                                                            break;
-                                                        case "preco_pacote", "preco_total", "salario":
-                                                            valido = Verifica.isFloat(novoValor);
-                                                            break;
-                                                        default:
-                                                            valido = true;
-                                                    }
+                                                    valido = switch (field.getName()) {
+                                                        case "id", "quantidade_por_pacote", "quantidade" -> Verifica.isNatural(novoValor);
+                                                        case "nome" -> Verifica.isNome(novoValor);
+                                                        case "email" -> Verifica.isEmail(novoValor);
+                                                        case "telefone" -> Verifica.isTelefone(novoValor);
+                                                        case "cnpj", "cnpj_fornecedor" -> Verifica.isCnpj(novoValor);
+//                                                        case "tipo_embalagem" -> Verifica.isEmbalagem(novoValor);
+//                                                        case "cargo" -> Verifica.isCargo(novoValor);
+//                                                        case "endereco" -> Verifica.isEndereco(novoValor);
+                                                        case "data" -> Verifica.isData(novoValor);
+                                                        case "data_entrega", "data_validade" -> Verifica.isDataFutura(novoValor);
+                                                        case "preco_pacote", "preco_total", "salario" -> Verifica.isFloat(novoValor);
+                                                        default -> true;
+                                                    };
                                                 }
                                                 if (!valido) {
                                                     novoValor = JOptionPane.showInputDialog("Valor de " + field.getName() + " inválido. Digite novamente: ", oldValue);
@@ -303,6 +276,8 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 return Integer.parseInt(value);
             } else if (type == long.class || type == Long.class) {
                 return Long.parseLong(value);
+            } else if (type == float.class || type == Float.class) {
+                return Float.parseFloat(value);
             } else if (type == double.class || type == Double.class) {
                 return Double.parseDouble(value);
             } else if (type == boolean.class || type == Boolean.class) {
@@ -332,7 +307,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
 
         @Override
         protected void fireEditingStopped() {
-            try {
+            try { // solução amatongas
                 super.fireEditingStopped();
             } catch (Exception e) {
                 System.out.println("Erro " + e);

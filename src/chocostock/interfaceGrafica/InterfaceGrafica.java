@@ -70,7 +70,7 @@ public class InterfaceGrafica extends JFrame {
         else if("ListarFornecedor".equals(chavePagina)) {
             painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
                     new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
-                    new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
+                    new int[]{50, 120, 105, 150, 100, 100, 100}), chavePagina);
         }
         else if("Listar Pedidos".equals(chavePagina)){
             painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
@@ -128,7 +128,7 @@ public class InterfaceGrafica extends JFrame {
                 new int[]{50, 100, 200, 150, 100, 100, 100}), "ListarFuncionario");
         painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
                 new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
-                new int[]{50, 100, 200, 150, 100, 100, 100}), "ListarFornecedor");
+                new int[]{50, 120, 105, 150, 100, 100, 100}), "ListarFornecedor");
         painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
                 new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"},
                 new int[]{50, 100, 200, 150, 100, 100}), "StatusEmbalagem");
