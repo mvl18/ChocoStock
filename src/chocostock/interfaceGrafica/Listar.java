@@ -146,10 +146,12 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 columnModel.moveColumn(index, i);
             }
             // Define a largura da coluna
-//            TableColumn column = columnModel.getColumn(i);
-//            column.setMinWidth(colWidths[i]);
-//            column.setPreferredWidth(colWidths[i]);
-//            column.setMaxWidth(colWidths[i]);
+            if (i < colWidths.length) { // TALVEZ ESSA SEJA A SOLUÇÃO PARA O PROBLEMA DO BOTAO DE REMOVER
+                TableColumn column = columnModel.getColumn(i);
+                column.setMinWidth(colWidths[i]);
+                column.setPreferredWidth(colWidths[i]);
+                column.setMaxWidth(colWidths[i]);
+            }
         }
     }
 
@@ -332,7 +334,11 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
 
         @Override
         protected void fireEditingStopped() {
-            super.fireEditingStopped();
+            try {
+                super.fireEditingStopped();
+            } catch (Exception e) {
+                System.out.println("Erro " + e);
+            }
         }
     }
 }
