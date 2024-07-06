@@ -12,7 +12,7 @@ public class PaginaNovaEmbalagem extends FormularioDeCadastro{
             "Quantidade por Pacote", "Fornecedor"};
 
     public PaginaNovaEmbalagem(Loja loja){
-        super();
+        super("Embalagem", loja);
         addTitulo("Nova Embalagem");
         addInputComponent(new JComboBox<>(TiposEmbalagens.getTipos()), "Tipo da Embalagem");
         for(int i = 1; i < atributosEmbalagem.length-1; i++){

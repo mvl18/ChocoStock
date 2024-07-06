@@ -34,6 +34,15 @@ public class Endereco implements Escolhivel, Serializable {
         this.estado = estado;
     }
 
+    public Endereco(String cep, Estados estado, String cidade, String bairro, String rua, int numero) {
+        this.numero = numero;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+    }
+
     public Endereco() {
         this(0, "", "", "", "", Estados.XX);
     }
@@ -123,8 +132,8 @@ public class Endereco implements Escolhivel, Serializable {
         // ESTADO
         endereco.achaEstado(endereco.getCep());
         String resposta = Normalizer.normalize(ValidadorInput.getInput(scanner, endereco.getEstado().getNome() + " é o estado do endereço? (Sim ou Não) ", "Por favor, insira uma resposta valida. ",
-                   input -> input.matches("sim|nao|s|n")).toLowerCase().replaceAll("\\s", ""),
-                        Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+                        input -> input.matches("sim|nao|s|n")).toLowerCase().replaceAll("\\s", ""),
+                Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
         if (resposta.equals("nao") || resposta.equals("n")) {
             System.out.print("Estado: ");
@@ -144,5 +153,3 @@ public class Endereco implements Escolhivel, Serializable {
         return endereco;
     }
 }
-
-

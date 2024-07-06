@@ -57,4 +57,23 @@ public enum Estados implements Nomeavel, Codificavel {
     public int getId() {
         return id;
     }
+
+    public static String[] getTipos(){
+        int num_tipos = Estados.values().length;
+        int i = 0;
+        String[] tipos = new String[num_tipos];
+        for(Estados t : Estados.values()){
+            tipos[i] = t.getNome();
+            i++;
+        }
+        return tipos;
+    }
+
+    public static Estados parseEstado(String nome) {
+        for (Estados estado : Estados.values()) {
+            if (estado.getNome().equals(nome))
+                return estado;
+        }
+        return XX;
+    }
 }

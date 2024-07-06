@@ -30,4 +30,15 @@ public enum TiposComplementos implements Identificavel, Nomeavel {
     public int getId() {
         return id;
     }
+
+    public static String[] getTipos() {
+        int num_tipos = TiposComplementos.values().length;
+        int i = 0;
+        String[] tipos = new String[num_tipos];
+        for(TiposComplementos t : TiposComplementos.values()){
+            tipos[i] = t.getNome();
+            i++;
+        }
+        return tipos;
+    }
 }

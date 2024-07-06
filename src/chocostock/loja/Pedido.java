@@ -3,10 +3,7 @@ package chocostock.loja;
 import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Cliente;
 import chocostock.enums.Status;
-import chocostock.interfaces.AddRemovivel;
-import chocostock.interfaces.Escolhivel;
-import chocostock.interfaces.Iteravel;
-import chocostock.interfaces.ValidadorInput;
+import chocostock.interfaces.*;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 
@@ -24,7 +21,7 @@ import java.util.Scanner;
  * Implementa os métodos "isPago", "addProduto", "removeProduto",
  * "addProduto_pendente", "removeProduto_pendente" e "calculaPrecoTotal".
  */
-public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhivel, Serializable {
+public class Pedido implements AddRemovivel, Iteravel, Identificavel, ValidadorInput, Escolhivel, Serializable {
     private static int id_pedidos = 100000;
     private final int id;
     private int id_cliente;

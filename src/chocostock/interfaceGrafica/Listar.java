@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Cliente;
+import chocostock.interfaces.AddRemovivel;
+import chocostock.interfaces.Identificavel;
+import chocostock.interfaces.ValidadorInput;
 import chocostock.loja.Loja;
 
 // Classe personalizada de DefaultTableModel
@@ -26,15 +30,17 @@ class CustomTableModel extends DefaultTableModel {
     }
 }
 
-public class Listar<T> extends JPanel {
+public class Listar<T extends Identificavel> extends JPanel implements ValidadorInput, AddRemovivel {
     private JTable table;
     private DefaultTableModel model;
     private String nomeObjeto;
     private ArrayList<T> dataList;
+    private String[] nomesColunasOficiais;
 
     public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) { // nao esta pegando as paradas do super de um classe
         this.nomeObjeto = nomeObjeto;
         this.dataList = dataList;
+        this.nomesColunasOficiais = nomesColunasOficiais;
         //nomesColunas += {"Editar", "Remover"};
         String[] columnNames = getFieldNames(dataList.get(0));
         model = new CustomTableModel(columnNames, 0);
@@ -101,16 +107,6 @@ public class Listar<T> extends JPanel {
         values.add("❌");
         return values.toArray(new Object[0]);
     }
-
-//    private void setColumnOrder(String[] order) {
-//        TableColumnModel columnModel = table.getColumnModel();
-//        for (int i = 0; i < order.length; i++) {
-//            int index = columnModel.getColumnIndex(order[i]);
-//            if (index != i) {
-//                columnModel.moveColumn(index, i);
-//            }
-//        }
-//    }
 
 
     // BUG -> verificar se esse codigo funciona
@@ -200,15 +196,14 @@ public class Listar<T> extends JPanel {
             if (isPushed) {
                 int modelRow = table.convertRowIndexToModel(this.row);
                 if (modelRow >= 0 && modelRow < model.getRowCount()) {
-                    // Supondo que o ID é sempre a primeira coluna
-                    int objectId = (int) model.getValueAt(modelRow, 1);
+                    int objectId = (int) model.getValueAt(modelRow, table.getColumn("id").getModelIndex());
 
                     if (isRemoveButton) {
-                        // loja.removeClientePorId(objectId); // BUG -> precisa criar um removeObjetoPorId para cada objeto listavel
+                        removeObjetoPorId(objectId, dataList); // BUG -> precisa criar um removeObjetoPorId para cada objeto listavel
                         listarPanel.refreshTable();
                         JOptionPane.showMessageDialog(button, nomeObjeto + " removido: " + objectId);
                     } else {
-                        T objeto = (T) loja.getClientePorId(objectId); // BUG -> precisa criar um getObjetoPorId para cada objeto listavel
+                        T objeto = getObjetoPorId(objectId, dataList); // BUG -> precisa criar um getObjetoPorId para cada objeto listavel
                         if (objeto != null) {
                             try {
                                 Class<?> clazz = objeto.getClass();
@@ -216,8 +211,49 @@ public class Listar<T> extends JPanel {
                                     for (Field field : clazz.getDeclaredFields()) {
                                         field.setAccessible(true);
                                         Object oldValue = field.get(objeto);
-                                        String novoValor = JOptionPane.showInputDialog("Novo valor para " + field.getName() + ":", oldValue);
-                                        if (novoValor != null) {
+                                        ArrayList<String> nomesColunasList = new ArrayList<String>(Arrays.asList(nomesColunasOficiais));
+                                        if (nomesColunasList.contains(field.getName())) {
+                                            String novoValor = JOptionPane.showInputDialog("Novo valor para " + field.getName() + ":", oldValue);
+
+                                            boolean valido = false;
+                                            while (!valido) {
+                                                if (novoValor != null) {
+                                                    switch (field.getName()) {
+                                                        case "id", "quantidade_por_pacote", "quantidade":
+                                                            valido = Verifica.isNatural(novoValor);
+                                                            break;
+                                                        case "nome":
+                                                            valido = Verifica.isNome(novoValor);
+                                                            break;
+                                                        case "email":
+                                                            valido = Verifica.isEmail(novoValor);
+                                                            break;
+                                                        case "telefone":
+                                                            valido = Verifica.isTelefone(novoValor);
+                                                            break;
+                                                        case "cnpj", "cnpj_fornecedor":
+                                                            valido = Verifica.isCnpj(novoValor);
+                                                            break;
+//                                                        case "tipo_embalagem":
+//                                                            valido = Verifica.isEmbalagem(novoValor);
+//                                                            break;
+//                                                        case "cargo":
+//                                                            valido = Verifica.isCargo(novoValor);
+//                                                            break;
+//                                                        case "endereco":
+//                                                            valido = Verifica.isEndereco(novoValor); // falta criar
+//                                                            break;
+                                                        case "preco_pacote":
+                                                            valido = Verifica.isFloat(novoValor);
+                                                            break;
+                                                        default:
+                                                            valido = true;
+                                                    }
+                                                }
+                                                if (!valido) {
+                                                    novoValor = JOptionPane.showInputDialog("Valor de " + field.getName() + " inválido. Digite novamente: ", oldValue);
+                                                }
+                                            }
                                             // Converter o valor da string para o tipo adequado
                                             Object typedValue = convertToFieldType(field, novoValor);
                                             field.set(objeto, typedValue);
@@ -226,7 +262,7 @@ public class Listar<T> extends JPanel {
                                     clazz = clazz.getSuperclass();
                                 }
                                 listarPanel.refreshTable();
-                                JOptionPane.showMessageDialog(button, "Objeto atualizado: " + objectId);
+                                JOptionPane.showMessageDialog(button,  nomeObjeto + " atualizado: " + objectId);
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
                             }
@@ -260,39 +296,6 @@ public class Listar<T> extends JPanel {
                 return value; // Trata outros tipos como string
             }
         }
-
-
-//        @Override
-//        public Object getCellEditorValue() { // BUG ao tirar o ultimo elemento da lista
-//            if (isPushed) {
-//                int modelRow = table.convertRowIndexToModel(this.row);
-//                if (modelRow >= 0 && modelRow < model.getRowCount()) {
-//                    int clientId = (int) model.getValueAt(modelRow, 0);
-//
-//                    if (isRemoveButton) {
-//                        loja.removeClientePorId(clientId);
-//                        listarPanel.refreshTable();
-//                        JOptionPane.showMessageDialog(button, "Cliente removido: " + clientId);
-//                    } else {
-//                        Cliente cliente = loja.getClientePorId(clientId);
-//                        if (cliente != null) {
-//                            String novoNome = JOptionPane.showInputDialog("Novo Nome:", cliente.getNome());
-//                            String novoTelefone = JOptionPane.showInputDialog("Novo Telefone:", cliente.getTelefone());
-//                            String novoEmail = JOptionPane.showInputDialog("Novo Email:", cliente.getEmail());
-//
-//                            cliente.setNome(novoNome);
-//                            cliente.setTelefone(novoTelefone);
-//                            cliente.setEmail(novoEmail);
-//
-//                            listarPanel.refreshTable();
-//                            JOptionPane.showMessageDialog(button, "Cliente atualizado: " + clientId);
-//                        }
-//                    }
-//                }
-//            }
-//            isPushed = false;
-//            return button.getText();
-//        }
 
         @Override
         public boolean stopCellEditing() {
