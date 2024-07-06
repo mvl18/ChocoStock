@@ -59,19 +59,23 @@ public class InterfaceGrafica extends JFrame {
         // ############# LISTAR ##############
         else if("ListarCliente".equals(chavePagina)){
             painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(),
-                    new String[]{"id", "nome", "telefone", "email", "pedidos"}), chavePagina);
+                    new String[]{"id", "nome", "telefone", "email", "endereco", "pedidos"},
+                    new int[]{50, 100, 200, 150, 100, 100}), chavePagina);
         }
         else if("ListarFuncionario".equals(chavePagina)){
             painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios(),
-                    new String[]{"id", "nome", "cargo", "telefone", "email", "salario", "endereco"}), chavePagina);
+                    new String[]{"id", "nome", "cargo", "telefone", "email", "endereco", "salario"},
+                    new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
         }
         else if("ListarFornecedor".equals(chavePagina)) {
             painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
-                    new String[]{"id", "nome", "telefone", "email", "endereco", "site", "cnpj"}), chavePagina);
+                    new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
+                    new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
         }
         else if("Listar Pedidos".equals(chavePagina)){
             painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
-                    new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "preco_total", "status", "data", "data_entrega"}), chavePagina);
+                    new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"},
+                    new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
         }
 
         // ############# STATUS ##############
@@ -80,11 +84,13 @@ public class InterfaceGrafica extends JFrame {
 //        }
         else if("StatusEmbalagem".equals(chavePagina)) {
             painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
-                    new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"}), chavePagina);
+                    new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"},
+                    new int[]{50, 100, 200, 150, 100, 100}), chavePagina);
         }
         else if("StatusProduto".equals(chavePagina)) {
             painelPrincipal.add(new Listar<>(loja, "Produto", loja.getEstoque().getProdutos(),
-                    new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"}), chavePagina);
+                    new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"},
+                    new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
         }
 
         // ############# ADICIIONAR ##############
@@ -112,20 +118,26 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal.add(new Inicio(loja), "Inicio");
         // painelPrincipal.add(new ListarCliente(loja), "ListarCliente");
         painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(),
-                new String[]{"id", "nome", "telefone", "email", "pedidos"}), "ListarCliente");
+                new String[]{"id", "nome", "telefone", "email", "endereco", "pedidos"},
+                new int[]{50, 100, 200, 150, 100, 100}), "ListarCliente");
 
         //painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), "Listar Pedidos");
 
         painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios(),
-                new String[]{"id", "nome", "cargo", "telefone", "email", "salario", "endereco"}), "ListarFuncionario");
+                new String[]{"id", "nome", "cargo", "telefone", "email", "endereco", "salario"},
+                new int[]{50, 100, 200, 150, 100, 100, 100}), "ListarFuncionario");
         painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
-                new String[]{"id", "nome", "telefone", "email", "endereco", "site", "cnpj"}), "ListarFornecedor");
+                new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
+                new int[]{50, 100, 200, 150, 100, 100, 100}), "ListarFornecedor");
         painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
-                new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"}), "StatusEmbalagem");
+                new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"},
+                new int[]{50, 100, 200, 150, 100, 100}), "StatusEmbalagem");
         painelPrincipal.add(new Listar<>(loja, "Produto", loja.getEstoque().getProdutos(),
-                new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"}), "StatusProduto");
+                new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"},
+                new int[]{50, 100, 200, 150, 100, 100, 100}), "StatusProduto");
         painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
-                new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "preco_total", "status", "data", "data_entrega"}), "Listar Pedidos");
+                new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"},
+                new int[]{50, 100, 200, 150, 100, 100, 100}), "Listar Pedidos");
         // painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), "StatusIngrediente"); // DA ERRO PQ N TEM INGREDIENTES
 
 
@@ -221,6 +233,7 @@ public class InterfaceGrafica extends JFrame {
         JMenu menu = new JMenu(menuName);
         for (String itemName : itemNames) {
             JMenuItem menuItem = new JMenuItem(itemName);
+            menuItem.addActionListener(e -> alterarPagina(itemName));
             menu.add(menuItem);
         }
         return menu;
