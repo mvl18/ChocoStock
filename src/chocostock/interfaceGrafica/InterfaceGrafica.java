@@ -20,17 +20,16 @@ public class InterfaceGrafica extends JFrame {
         // Adiciona um WindowListener para capturar o evento de fechamento
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
-                // Executa a função personalizada
-                Persistencia.salvarLoja(loja);
-
-                // Fecha a aplicação
-                System.exit(0);
+            public void windowClosing(WindowEvent e) {Persistencia.salvarLoja(loja); System.exit(0);
             }
         });
+
         setSize(600, 600);
         setTitle("ChocoStock");
         setLayout(new BorderLayout());
+        ImageIcon imgIcon = new ImageIcon("imagens/logoChocostock.png");
+        Image img = imgIcon.getImage();
+        setIconImage(img);
 
         cardLayout = new CardLayout();
         painelPrincipal = new JPanel(cardLayout);

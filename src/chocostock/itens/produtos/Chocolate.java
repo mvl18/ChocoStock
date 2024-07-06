@@ -73,16 +73,16 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
     }
 
     public Chocolate selecionaBarra(Scanner scanner) {
-        Chocolate produto = new Chocolate();
+        Chocolate chocolate = new Chocolate();
         for (TiposChocolates tipo : TiposChocolates.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // TIPO
-        produto.setTipo(Escolhivel.escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
+        chocolate.setTipo(Escolhivel.escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio"));
         // NOME
-        produto.setNome(produto.getTipo().getNome());
+        chocolate.setNome(chocolate.getTipo().getNome());
         // COMPLEMENTO
-        if (Processa.normalizaString(ValidadorInput.getInput(scanner, "O produto tem algum adicional? Sim OU Não ", "Por favor, insira uma resposta válida. ",
+        if (Processa.normalizaString(ValidadorInput.getInput(scanner, "O chocolate tem algum adicional? Sim OU Não ", "Por favor, insira uma resposta válida. ",
                 input -> input.matches("sim|nao|s|n"))).matches("sim|s")) {
 
             for (TiposComplementos complemento : TiposComplementos.values()) {
@@ -92,30 +92,35 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
             // Opção para sair da seleção de complementos
             System.out.println("(0) - Sair");
             System.out.println("Selecione até " + TiposComplementos.values().length + " complementos diferentes.");
-            produto.setComplementos(Escolhivel.escolheObjeto(scanner, TiposComplementos.values(), "Por favor, selecione um complemento válido.", "0",
+            chocolate.setComplementos(Escolhivel.escolheObjeto(scanner, TiposComplementos.values(), "Por favor, selecione um complemento válido.", "0",
                     TiposComplementos.values().length));
-            produto.getComplementos().removeIf(Objects::isNull);
+            chocolate.getComplementos().removeIf(Objects::isNull);
+            if (chocolate.getComplementos() == null)
+                chocolate.setComplementos(new ArrayList<TiposComplementos>());
         }
         // ORIGEM CACAU
-        produto.setOrigem_cacau(ValidadorInput.getInput(scanner, "Digite a origem do cacau: ", "Origem inválida, digite uma origem válida.", Verifica::isNome));
+        chocolate.setOrigem_cacau(ValidadorInput.getInput(scanner, "Digite a origem do cacau: ", "Origem inválida, digite uma origem válida.", Verifica::isNome));
         // QUANTIDADE
-        produto.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produto.getNome() + ": ",
+        chocolate.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + chocolate.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
         // PRECO
-        produto.setPreco(Float.parseFloat(ValidadorInput.getInput(scanner, "Valor da unidade de " + produto.getNome() + ": ",
+        chocolate.setPreco(Float.parseFloat(ValidadorInput.getInput(scanner, "Valor da unidade de " + chocolate.getNome() + ": ",
                 "Coloque um valor válido", Verifica::isFloat)));
         // VALIDADE
-        produto.setValidade(Escolhivel.escolheDataFutura(scanner, "Qual a data de validade do produto? Digite uma data futura no formato DD/MM/YYYY: ",
+        chocolate.setValidade(Escolhivel.escolheDataFutura(scanner, "Qual a data de validade do chocolate? Digite uma data futura no formato DD/MM/YYYY: ",
                 "Formato de data inválido. Por favor, insira uma data futura no formato DD/MM/YYYY."));
         // PESO
-        produto.setPeso(Integer.parseInt(ValidadorInput.getInput(scanner, "Peso da unidade de " + produto.getNome() + " em quilos: ",
+        chocolate.setPeso(Integer.parseInt(ValidadorInput.getInput(scanner, "Peso da unidade de " + chocolate.getNome() + " em quilos: ",
                 "Coloque um valor decimal válido", Verifica::isNatural)));
         // EMBALAGEM
         System.out.println("Escolha um dos tipos de embalagem abaixo:");
         for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
-        produto.setEmbalagem(Escolhivel.escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
-        return produto;
+        chocolate.setEmbalagem(Escolhivel.escolheObjeto(scanner, TiposEmbalagens.values(), "Por favor selecione uma embalagem válida", "obrigatorio"));
+        // LOTE
+        chocolate.setLote(Integer.parseInt(ValidadorInput.getInput(scanner, "Digite o lote de " + chocolate.getNome() + ": ",
+                "Coloque um número inteiro maior que 0", Verifica::isNatural)));
+        return chocolate;
     }
 }

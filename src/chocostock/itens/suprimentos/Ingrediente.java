@@ -98,7 +98,8 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
                 System.out.println("Insira o CNPJ ou nome do seu fornecedor");
                 fornecedor = Escolhivel.escolheObjeto(input, estoque.getFornecedores(), "Fornecedor inexistente. Digite o CNPJ ou nome de algum fornecedor listado.", "novo");
                 if (fornecedor == null) {
-                    fornecedor = new Fornecedor().novoFornecedor(input);
+                    new Fornecedor();
+                    fornecedor = Fornecedor.novoFornecedor(input);
                     estoque.addFornecedor(fornecedor);
                     ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
                     break;
@@ -106,7 +107,8 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
                 ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
                 break;
             case 2:
-                fornecedor = new Fornecedor().novoFornecedor(input);
+                new Fornecedor();
+                fornecedor = Fornecedor.novoFornecedor(input);
                 estoque.addFornecedor(fornecedor);
                 ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
                 break;
