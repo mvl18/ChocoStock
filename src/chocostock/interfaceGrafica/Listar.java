@@ -5,15 +5,19 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Cliente;
+import chocostock.enums.Cargos;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.ValidadorInput;
+import chocostock.itens.suprimentos.Embalagem;
 import chocostock.loja.Loja;
 
 // Classe personalizada de DefaultTableModel
@@ -36,11 +40,13 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     private String nomeObjeto;
     private ArrayList<T> dataList;
     private String[] nomesColunasOficiais;
+    private int[] colWidths;
 
-    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) { // nao esta pegando as paradas do super de um classe
+    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais, int[] colWidths) { // nao esta pegando as paradas do super de um classe
         this.nomeObjeto = nomeObjeto;
         this.dataList = dataList;
         this.nomesColunasOficiais = nomesColunasOficiais;
+        this.colWidths = colWidths;  // Armazene as larguras das colunas
         //nomesColunas += {"Editar", "Remover"};
         String[] columnNames = getFieldNames(dataList.get(0));
         model = new CustomTableModel(columnNames, 0);
@@ -62,7 +68,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         scrollPane.setPreferredSize(new Dimension(800, 600));
         add(scrollPane, BorderLayout.CENTER);
 
-        setColumnOrder(nomesColunasOficiais); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
+        setColumnOrder(nomesColunasOficiais, colWidths); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
     }
 
     public void refreshTable() {
@@ -110,7 +116,10 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
 
 
     // BUG -> verificar se esse codigo funciona
-    private void setColumnOrder(String[] order) {
+    private void setColumnOrder(String[] order, int[] colWidths) {
+        if (order.length == colWidths.length) {
+            System.out.println("NORMAL");
+        }
         TableColumnModel columnModel = table.getColumnModel();
         ArrayList<String> orderList = new ArrayList<>(Arrays.asList(order));
 
@@ -130,12 +139,17 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             }
         }
 
-        // Reordenar as colunas
+        // Reordenar as colunas e definir suas larguras
         for (int i = 0; i < orderList.size(); i++) {
             int index = columnModel.getColumnIndex(orderList.get(i));
             if (index != i) {
                 columnModel.moveColumn(index, i);
             }
+            // Define a largura da coluna
+//            TableColumn column = columnModel.getColumn(i);
+//            column.setMinWidth(colWidths[i]);
+//            column.setPreferredWidth(colWidths[i]);
+//            column.setMaxWidth(colWidths[i]);
         }
     }
 
@@ -199,11 +213,11 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                     int objectId = (int) model.getValueAt(modelRow, table.getColumn("id").getModelIndex());
 
                     if (isRemoveButton) {
-                        removeObjetoPorId(objectId, dataList); // BUG -> precisa criar um removeObjetoPorId para cada objeto listavel
+                        removeObjetoPorId(objectId, dataList);
                         listarPanel.refreshTable();
                         JOptionPane.showMessageDialog(button, nomeObjeto + " removido: " + objectId);
                     } else {
-                        T objeto = getObjetoPorId(objectId, dataList); // BUG -> precisa criar um getObjetoPorId para cada objeto listavel
+                        T objeto = getObjetoPorId(objectId, dataList);
                         if (objeto != null) {
                             try {
                                 Class<?> clazz = objeto.getClass();
@@ -243,7 +257,13 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
 //                                                        case "endereco":
 //                                                            valido = Verifica.isEndereco(novoValor); // falta criar
 //                                                            break;
-                                                        case "preco_pacote":
+                                                        case "data":
+                                                            valido = Verifica.isData(novoValor);
+                                                            break;
+                                                        case "data_entrega":
+                                                            valido = Verifica.isDataFutura(novoValor);
+                                                            break;
+                                                        case "preco_pacote", "preco_total", "salario":
                                                             valido = Verifica.isFloat(novoValor);
                                                             break;
                                                         default:
@@ -290,6 +310,13 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             } else if (type == Endereco.class) { // BUG -> como converter string em endereço?
                 // return Endereco.parseEndereco(value);
                 return value; // BUGADO APENAS PARA NAO DAR ERRO NO CODIGO
+            } else if (type == LocalDate.class) {
+                return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } else if (type == Embalagem.class) {
+                // return Embalagem.parse(value);
+                return value;
+            } else if (type == Cargos.class) {
+                return Cargos.parseCargo(value);
             }
 
             else {
