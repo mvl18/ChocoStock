@@ -1,5 +1,6 @@
 package chocostock.enums;
 
+import chocostock.auxiliar.Endereco;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
@@ -69,5 +70,19 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
             i++;
         }
         return tipos;
+    }
+
+    public static TiposEmbalagens parseEmbalagem(String embalagemStr) {
+        String[] divideEmbalagem = embalagemStr.split(", ");
+
+        String nome = divideEmbalagem[0].replace("Modelo: ", "").trim();
+        String tamanho = divideEmbalagem[1].trim();
+
+        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
+            if (tipo.getNome().equalsIgnoreCase(nome) && tipo.getTamanho().equalsIgnoreCase(tamanho)) {
+                return tipo;
+            }
+        }
+        return CAIXA_PP;
     }
 }

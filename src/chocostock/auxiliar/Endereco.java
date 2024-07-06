@@ -152,4 +152,18 @@ public class Endereco implements Escolhivel, Serializable {
 
         return endereco;
     }
+
+    public static Endereco parseEndereco(String enderecoStr) {
+        String[] ruaNumero = enderecoStr.split(", n° ");
+        String[] bairroCepCidadeEstado = ruaNumero[1].split(" - Bairro |\\. CEP: |\\. ");
+
+        String rua = ruaNumero[0].replace("Rua ", "").trim();
+        int numero = Integer.parseInt(bairroCepCidadeEstado[0].trim());
+        String bairro = bairroCepCidadeEstado[1].trim();
+        String cep = bairroCepCidadeEstado[2].trim();
+        String cidade = bairroCepCidadeEstado[3].split(" - ")[0].trim();
+        Estados estado = Estados.parseEstadoCodigo(bairroCepCidadeEstado[3].split(" - ")[1].trim());
+
+        return new Endereco(numero, cep, rua, bairro, cidade, estado);
+    }
 }
