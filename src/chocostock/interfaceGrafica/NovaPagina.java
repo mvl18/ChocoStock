@@ -1,10 +1,17 @@
 package chocostock.interfaceGrafica;
 
 import chocostock.enums.*;
+import chocostock.itens.produtos.Pendente;
 import chocostock.itens.suprimentos.Embalagem;
 import chocostock.loja.Loja;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Fornece métodos para criação da maioria dos tipos de página do sistema.
@@ -23,6 +30,7 @@ public class NovaPagina {
                 case "Status" -> f.addInputComponent(new JComboBox<>(Status.getTipos()), atributo);
                 case "Pago" -> f.addInputComponent(new JComboBox<>(new String[]{"Não", "Sim"}), atributo);
                 case "Cliente" -> f.addInputComponent(new JComboBox<>(loja.arrayClientes()), atributo);
+                case "Produtos" -> f.addInputComponent(FormularioDeCadastro.novoEscolhaProdutos(), atributo);
                 default -> f.addInputComponent(new JTextField(), atributo);
             }
         }
@@ -59,6 +67,13 @@ public class NovaPagina {
                 "CEP", "Estado", "Cidade", "Bairro", "Rua", "Número", "Cargo", "Salario"});
     }
 
+    public static FormularioDeCadastro novoProduto(Loja loja) {
+        NovaPagina.loja = loja;
+        return generico("Novo Produto", "Produto",
+                new String[]{"Nome", "Quantidade", "Preço",
+                        "Data de validade", "Peso", "Tipo embalagem"});
+    }
+
     public static FormularioDeCadastro novaEmbalagem(Loja loja) {
         NovaPagina.loja = loja;
         return generico("Nova Embalagem", "Embalagem",
@@ -70,6 +85,6 @@ public class NovaPagina {
         NovaPagina.loja = loja;
         return generico("Novo Ingrediente", "Ingrediente",
                 new String[]{"Tipo ingrediente", "Quantidade", "Quantos kg por Unidade",
-                "Preço", "Data de Compra", "Data de Validade", "Fornecedor"});
+                "Preço", "Data de Compra", "Data de validade", "Fornecedor"});
     }
 }

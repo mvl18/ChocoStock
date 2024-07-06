@@ -6,11 +6,10 @@ import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
-import chocostock.enums.Cargos;
-import chocostock.enums.Estados;
-import chocostock.enums.Status;
+import chocostock.enums.*;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.produtos.Pendente;
+import chocostock.itens.produtos.Produto;
 import chocostock.loja.Loja;
 import chocostock.loja.Pedido;
 
@@ -19,6 +18,8 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class FormularioDeCadastro extends JPanel {
 
@@ -90,6 +91,27 @@ public class FormularioDeCadastro extends JPanel {
         getPainelRegistro().add(panel);
     }
 
+    public static JScrollPane novoEscolhaProdutos() {
+        String[] nomesProdutos = Stream.concat(Arrays.stream(TiposCaixas.getTipos()),
+                Arrays.stream(TiposChocolates.getTipos())).toArray(String[]::new);
+        JPanel painelProdutos = new JPanel();
+        painelProdutos.setLayout(new BoxLayout(painelProdutos, BoxLayout.Y_AXIS));
+        int numProdutosPorLinha = 3;
+        int numLinhas = (int) Math.ceil(nomesProdutos.length / (double) numProdutosPorLinha);
+        JPanel[] paineis = new JPanel[numLinhas];
+        for (int i = 0; i < numLinhas; i++) {
+            paineis[i] = new JPanel();
+            paineis[i].setLayout(new BoxLayout(paineis[i], BoxLayout.X_AXIS));
+            for (int j = 0; j < numProdutosPorLinha || (i == numLinhas-1 && i*numProdutosPorLinha + j < nomesProdutos.length); j++) {
+                paineis[i].add(new PainelProduto(new Pendente(nomesProdutos[i*numProdutosPorLinha + j])));
+            }
+            painelProdutos.add(paineis[i]);
+        }
+        JScrollPane scrollPane = new JScrollPane(painelProdutos);
+        scrollPane.setPreferredSize(new Dimension(400, 200));
+        return scrollPane;
+    }
+
     public void validaCampo(int i, ValidadorInput.Validador validador) {
         if (validador.isValid(getDadosDosInputs().get(i)))
             getInputs().get(i).setForeground(Color.BLACK);
@@ -100,39 +122,42 @@ public class FormularioDeCadastro extends JPanel {
     }
 
     public void criaObjeto() {
-        if (tag.equals("Cliente"))
-            loja.addCliente(new Cliente(getDadosDosInputs().get(0),
-                                getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                                    new Endereco(getDadosDosInputs().get(3),
-                                        Estados.parseEstado(getDadosDosInputs().get(4)),
-                                        getDadosDosInputs().get(5), getDadosDosInputs().get(6),
-                                        getDadosDosInputs().get(7),
-                                        Integer.parseInt(getDadosDosInputs().get(8)))));
-        else if (tag.equals("Fornecedor"))
-            loja.getEstoque().addFornecedor(new Fornecedor(getDadosDosInputs().get(0),
-                                                getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                                                new Endereco(getDadosDosInputs().get(3),
-                                                    Estados.parseEstado(getDadosDosInputs().get(4)),
-                                                    getDadosDosInputs().get(5), getDadosDosInputs().get(6),
-                                                    getDadosDosInputs().get(7),
-                                                    Integer.parseInt(getDadosDosInputs().get(8))),
-                                                    getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
-        else if (tag.equals("Funcionario"))
-            loja.addFuncionario(new Funcionario(getDadosDosInputs().get(0),
-                                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                                    new Endereco(getDadosDosInputs().get(3),
-                                        Estados.parseEstado(getDadosDosInputs().get(4)),
-                                        getDadosDosInputs().get(5), getDadosDosInputs().get(6),
-                                        getDadosDosInputs().get(7),
-                                        Integer.parseInt(getDadosDosInputs().get(8))),
-                                        Cargos.parseCargo(getDadosDosInputs().get(9)),
-                                        Float.parseFloat(getDadosDosInputs().get(10))));
-        else if (tag.equals("Pedido"))
-            loja.addPedido(new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
+        switch (tag) {
+            case "Cliente" -> loja.addCliente(new Cliente(getDadosDosInputs().get(0),
+                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                    new Endereco(getDadosDosInputs().get(3),
+                            Estados.parseEstado(getDadosDosInputs().get(4)),
+                            getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                            getDadosDosInputs().get(7),
+                            Integer.parseInt(getDadosDosInputs().get(8)))));
+            case "Fornecedor" -> loja.getEstoque().addFornecedor(new Fornecedor(getDadosDosInputs().get(0),
+                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                    new Endereco(getDadosDosInputs().get(3),
+                            Estados.parseEstado(getDadosDosInputs().get(4)),
+                            getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                            getDadosDosInputs().get(7),
+                            Integer.parseInt(getDadosDosInputs().get(8))),
+                    getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
+            case "Funcionario" -> loja.addFuncionario(new Funcionario(getDadosDosInputs().get(0),
+                    getDadosDosInputs().get(1), getDadosDosInputs().get(2),
+                    new Endereco(getDadosDosInputs().get(3),
+                            Estados.parseEstado(getDadosDosInputs().get(4)),
+                            getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                            getDadosDosInputs().get(7),
+                            Integer.parseInt(getDadosDosInputs().get(8))),
+                    Cargos.parseCargo(getDadosDosInputs().get(9)),
+                    Float.parseFloat(getDadosDosInputs().get(10))));
+            case "Pedido" -> loja.addPedido(new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
                     LocalDate.parse(getDadosDosInputs().get(1), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     LocalDate.parse(getDadosDosInputs().get(2), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     Processa.parseBool(getDadosDosInputs().get(3)), Status.parseStatus(getDadosDosInputs().get(4)),
                     new ArrayList<Pendente>(), Float.parseFloat(getDadosDosInputs().get(6))));
+            case "Produto" -> loja.getEstoque().addProduto(new Produto(getDadosDosInputs().get(0),
+                    Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
+                    LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    Integer.parseInt(getDadosDosInputs().get(4)),
+                    TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5))));
+        }
     }
 
     public void addBotoes(){
@@ -155,18 +180,14 @@ public class FormularioDeCadastro extends JPanel {
                     case "CNPJ" -> validaCampo(i, Verifica::isCnpj);
                     case "Site" -> validaCampo(i, Verifica::isSite);
                     case "CEP" -> validaCampo(i, Verifica::isCep);
-                    case "Número" -> validaCampo(i, Verifica::isNatural);
-                    case "Quantidade" -> validaCampo(i, Verifica::isNatural);
-                    case "Quantos kg por Unidade" -> validaCampo(i, Verifica::isFloat);
-                    case "Preço" -> validaCampo(i, Verifica::isFloat);
-                    case "Data de Compra" -> validaCampo(i, Verifica::isData);
-                    case "Data de fabricação" -> validaCampo(i, Verifica::isData);
-                    case "Data de entrega" -> validaCampo(i, Verifica::isData);
-                    case "Data de Validade" -> validaCampo(i, Verifica::isDataFutura);
-                    case "Preço por pacote" -> validaCampo(i, Verifica::isFloat);
-                    case "Quantidade por pacote" -> validaCampo(i, Verifica::isNatural);
-                    case "ID cliente" -> validaCampo(i, Verifica::isNatural);
-                    case "Valor total" -> validaCampo(i, Verifica::isNatural);
+                    case "Número", "Peso", "Quantidade",
+                            "Quantidade por pacote", "ID cliente",
+                            "Valor total" -> validaCampo(i, Verifica::isNatural);
+                    case "Quantos kg por Unidade", "Preço",
+                            "Preço por pacote" -> validaCampo(i, Verifica::isFloat);
+                    case "Data de Compra", "Data de fabricação",
+                            "Data de entrega" -> validaCampo(i, Verifica::isData);
+                    case "Data de validade" -> validaCampo(i, Verifica::isDataFutura);
                 }
             }
             if (correto) {

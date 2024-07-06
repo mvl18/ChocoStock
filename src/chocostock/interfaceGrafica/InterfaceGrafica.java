@@ -57,11 +57,12 @@ public class InterfaceGrafica extends JFrame {
         switch (chavePagina) {
             case "Inicio" -> painelPrincipal.add(new Inicio(loja), chavePagina);
             case "AdicionarPedido" -> painelPrincipal.add(NovaPagina.novoPedido(loja), chavePagina);
+            case "AdicionarProduto" -> painelPrincipal.add(NovaPagina.novoProduto(loja), chavePagina);
             case "AdicionarCliente" -> painelPrincipal.add(NovaPagina.novoCliente(loja), chavePagina);
             case "AdicionarFornecedor" ->  painelPrincipal.add(NovaPagina.novoFornecedor(loja), "AdicionarFornecedor");
             case "AdicionarFuncionario" -> painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
-            case "ListarCliente" ->
-                    painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), chavePagina);
+            case "ListarCliente" -> painelPrincipal.add(new Listar<>(loja, "Cliente",
+                    loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), chavePagina);
             case "ListarFuncionario" -> {
                 //painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), chavePagina);
             }
@@ -101,16 +102,16 @@ public class InterfaceGrafica extends JFrame {
         // painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), "Listar Pedidos");
 //        painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), "ListarFuncionario");
 //        painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores()), "ListarFornecedor");
-        painelPrincipal.add(NovaPagina.novoIngrediente(loja), "AdicionarIngrediente");
-        // painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), "StatusIngrediente"); // DA ERRO PQ N TEM INGREDIENTES
-        painelPrincipal.add(NovaPagina.novaEmbalagem(loja), "AdicionarEmbalagem");
+//        painelPrincipal.add(NovaPagina.novoIngrediente(loja), "AdicionarIngrediente");
+//        painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), "StatusIngrediente"); // DA ERRO PQ N TEM INGREDIENTES
+//        painelPrincipal.add(NovaPagina.novaEmbalagem(loja), "AdicionarEmbalagem");
 //        painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens()), "StatusEmbalagem");
         //painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
-
-        painelPrincipal.add(NovaPagina.novoPedido(loja), "AdicionarPedido");
-        painelPrincipal.add(NovaPagina.novoCliente(loja), "AdicionarCliente");
-        painelPrincipal.add(NovaPagina.novoFornecedor(loja), "AdicionarFornecedor");
-        painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
+//
+//        painelPrincipal.add(NovaPagina.novoPedido(loja), "AdicionarPedido");
+//        painelPrincipal.add(NovaPagina.novoCliente(loja), "AdicionarCliente");
+//        painelPrincipal.add(NovaPagina.novoFornecedor(loja), "AdicionarFornecedor");
+//        painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
     }
 
 
