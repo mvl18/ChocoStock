@@ -3,7 +3,6 @@ package chocostock.colaboradores;
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Verifica;
 import chocostock.enums.Cargos;
-import chocostock.enums.Status;
 import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.ValidadorInput;
@@ -56,17 +55,10 @@ public class Funcionario extends Colaborador implements Identificavel {
         this.cargo = cargo;
     }
 
-    public Cargos getCargo() {
-        return cargo;
-    }
-
     public void setSalario(float salario) {
         this.salario = salario;
     }
 
-    public float getSalario() {
-        return salario;
-    }
 
     public static Funcionario novoFuncionario(Scanner scanner) {
         Funcionario funcionario = new Funcionario();

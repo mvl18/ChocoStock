@@ -1,8 +1,5 @@
 package chocostock.loja;
 
-import chocostock.auxiliar.Endereco;
-import chocostock.auxiliar.Processa;
-import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.*;
 import chocostock.interfaces.*;
@@ -18,7 +15,6 @@ import chocostock.itens.suprimentos.Ingrediente;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -144,8 +140,7 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
             if (produto instanceof Complementavel) {
                 ArrayList<?> complementos = ((Complementavel) produto).getComplementos();
                 String complementosStr = complementos != null ? Iteravel.listaHorizontal(complementos) : "sem complementos";
-                System.out.println(" com " + complementosStr +
-                        " (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
+                System.out.println(" com " + complementosStr + " (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)") + (produto.getId_pedido() != -1 ? " Tem dono" : ""));
             } else {
                 System.out.println(" (" + produto.getQuantidade() + (produto.getQuantidade() > 1 ? " unidades)" : " unidade)"));
             }
@@ -246,7 +241,9 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
                         // Verifica se o produto é complementável (Chocolate)
                         if (getProdutos().get(i) instanceof Complementavel) {
                             // Verifica se os complementos do produto no estoque correspondem aos complementos do produto pendente
-                            if (produto_pendente.getComplementos().equals(((Complementavel) getProdutos().get(i)).getComplementos())) {
+                            if ((produto_pendente.getComplementos().isEmpty() && ((Complementavel) getProdutos().get(i)).getComplementos() == null) ||
+                                (produto_pendente.getComplementos().containsAll(((Complementavel) getProdutos().get(i)).getComplementos()) &&
+                                ((Complementavel) getProdutos().get(i)).getComplementos().containsAll(produto_pendente.getComplementos()))) {
                                 posicoes.add(i);
                                 quantidade += getProdutos().get(i).getQuantidade();
                                 // Verifica se a quantidade acumulada é suficiente para atender ao produto pendente
@@ -263,14 +260,16 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
                                         } else {
                                             // Reserva o produto inteiro para o pedido
                                             getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());  //Pega tudo
-                                            pedido.addProduto(getProdutos().get(i).getId());
+                                            pedido.addProduto(getProdutos().get(posicoes.get(j)).getId());
                                         }
-                                        // Adiciona o produto pendente à lista de produtos concluídos
-                                        produtos_concluidos.add(produto_pendente);
                                     }
+                                    // Adiciona o produto pendente à lista de produtos concluídos
+                                    produtos_concluidos.add(produto_pendente);
+                                    break;
                                 }
                             }
-                        } else { // Produto não é complementavel (Caixa)
+                        }
+                        else { // Produto não é complementavel (Caixa)
                             // Verifica se o nome do produto pendente contém "Caixa"
                             if (produto_pendente.getNome().contains("Caixa")) {
                                 posicoes.add(i);
@@ -288,8 +287,9 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
                                             getProdutos().get(posicoes.get(j)).setId_pedido(pedido.getId());
                                             pedido.addProduto(getProdutos().get(i).getId());
                                         }
-                                        produtos_concluidos.add(produto_pendente);
                                     }
+                                    produtos_concluidos.add(produto_pendente);
+                                    break;
                                 }
                             }
                         }
@@ -304,6 +304,57 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
         // Retorna o pedido atualizado
         return pedido;
     }
+
+    /**
+     * Processa o cancelamento de um pedido e devolve os produtos ao estoque.
+     */
+    public void devolveProdutosEstoque(Pedido pedido_cancelado) {
+        // Itera sobre os produtos do pedido cancelado
+        for (int idProduto_cancelado : pedido_cancelado.getProdutos()) {
+            // Itera sobre os produtos do estoque pedido
+            Produto produto_cancelado = getObjetoPorId(idProduto_cancelado, produtos);
+            produto_cancelado.setId_pedido(-1);
+
+            // Itera sobre os produtos do estoque para encontrar produtos semelhantes
+            for (Produto produto_estoque : produtos) {
+                // Checa se são do mesmo tipo
+                if (produto_estoque.getClass().equals(produto_cancelado.getClass()) && produto_estoque.getId() != produto_cancelado.getId()) {
+                    boolean iguais = false;
+
+                    if (produto_cancelado instanceof Chocolate chocolate_cancelado) {
+                        Chocolate chocolate_estoque = (Chocolate) produto_estoque;
+                        iguais = chocolate_cancelado.getNome().equals(chocolate_estoque.getNome()) &&
+                                chocolate_cancelado.getPreco() == chocolate_estoque.getPreco() &&
+                                chocolate_cancelado.getEmbalagem().equals(chocolate_estoque.getEmbalagem()) &&
+                                chocolate_cancelado.getPeso() == chocolate_estoque.getPeso() &&
+                                chocolate_cancelado.getValidade().equals(chocolate_estoque.getValidade()) &&
+                                chocolate_cancelado.getTipo().equals(chocolate_estoque.getTipo()) &&
+                                chocolate_cancelado.getOrigem_cacau().equals(chocolate_estoque.getOrigem_cacau()) &&
+                                chocolate_cancelado.getLote() == chocolate_estoque.getLote();
+                    }
+
+                    else if (produto_cancelado instanceof Caixa caixa_cancelada) {
+                        Caixa caixa_estoque = (Caixa) produto_estoque;
+                        iguais = caixa_cancelada.getNome().equals(caixa_estoque.getNome()) &&
+                                caixa_cancelada.getPreco() == caixa_estoque.getPreco() &&
+                                caixa_cancelada.getEmbalagem().equals(caixa_estoque.getEmbalagem()) &&
+                                caixa_cancelada.getPeso() == caixa_estoque.getPeso() &&
+                                caixa_cancelada.getValidade().equals(caixa_estoque.getValidade()) &&
+                                caixa_cancelada.getTipo().equals(caixa_estoque.getTipo()) &&
+                                caixa_cancelada.getLote() == caixa_estoque.getLote();
+                    }
+
+                    // Se os produtos são iguais, soma as quantidades e remove o duplicado
+                    if (iguais) {
+                        produto_estoque.setQuantidade(produto_estoque.getQuantidade() + produto_cancelado.getQuantidade());
+                        produtos.remove(produto_cancelado);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
 
     /**
      * Cria uma nova instância de um produto a partir de um produto existente,

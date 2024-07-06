@@ -8,6 +8,7 @@ import chocostock.colaboradores.Cliente;
 import chocostock.auxiliar.Verifica;
 import chocostock.itens.produtos.Pendente;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -21,7 +22,8 @@ import java.util.Scanner;
  * "novoCliente", "novoPedido".
  */
 public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput, Serializable {
-    private static final long serialVersionUID = 1l;
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String nome;
     private String telefone;
     private String descricao;
@@ -59,10 +61,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     }
 
     // DESCRIÇÃO
-    public String getDescricao() {
-        return descricao;
-    }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -111,8 +109,6 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
     public void addCliente(Cliente cliente) {
         addObjeto(clientes, cliente);
     }
-
-    public void removeCliente(Cliente cliente) { removeObjeto(clientes, cliente);}
 
     public void removeClientePorId(int id) {
         clientes.removeIf(cliente -> cliente.getId() == id);

@@ -1,6 +1,5 @@
 package chocostock.itens;
 
-import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 import java.io.Serializable;

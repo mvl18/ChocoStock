@@ -18,11 +18,6 @@ public class Persistencia {
 
     public static void salvarLoja(Loja loja) {
         try {
-            File dir = new File(DIRETORIO_BANCO);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
             FileOutputStream fos = new FileOutputStream(DIRETORIO_BANCO + "/" + ARQUIVO_LOJA);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(loja);
@@ -33,7 +28,7 @@ public class Persistencia {
             salvarIDs();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao salvar a loja: " + e.getMessage());
         }
     }
 
@@ -54,7 +49,7 @@ public class Persistencia {
             loja = new Loja().criarNovaLoja(scanner);
         }
         catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao salvar a loja: " + e.getMessage());
         }
         return loja;
     }
@@ -87,4 +82,3 @@ public class Persistencia {
         fis.close();
     }
 }
-

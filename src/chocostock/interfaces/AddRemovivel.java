@@ -60,7 +60,7 @@ public interface AddRemovivel {
      * @param <T> O tipo de objeto na lista.
      * @return true se o objeto foi removido com sucesso, false caso contrário.
      */
-    default <T> boolean removeObjeto(ArrayList<T> lista, T objeto) {
+    static <T> boolean removeObjeto(ArrayList<T> lista, T objeto) {
         if(lista.contains(objeto)) {
             lista.remove(objeto);
             return true;
