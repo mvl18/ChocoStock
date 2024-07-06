@@ -79,7 +79,6 @@ public enum Estados implements Nomeavel, Codificavel {
         }
         return XX;
     }
-}
 
     public static Estados parseEstadoCodigo(String codigo) {
         for (Estados estado : Estados.values()) {

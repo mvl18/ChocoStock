@@ -5,11 +5,20 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import chocostock.auxiliar.Endereco;
+import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Cliente;
+import chocostock.enums.Cargos;
+import chocostock.enums.TiposEmbalagens;
+import chocostock.interfaces.AddRemovivel;
+import chocostock.interfaces.Identificavel;
+import chocostock.interfaces.ValidadorInput;
+import chocostock.itens.suprimentos.Embalagem;
 import chocostock.loja.Loja;
 
 // Classe personalizada de DefaultTableModel
@@ -26,15 +35,19 @@ class CustomTableModel extends DefaultTableModel {
     }
 }
 
-public class Listar<T> extends JPanel {
+public class Listar<T extends Identificavel> extends JPanel implements ValidadorInput, AddRemovivel {
     private JTable table;
     private DefaultTableModel model;
     private String nomeObjeto;
     private ArrayList<T> dataList;
+    private String[] nomesColunasOficiais;
+    private int[] colWidths;
 
-    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) { // nao esta pegando as paradas do super de um classe
+    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais, int[] colWidths) { // nao esta pegando as paradas do super de um classe
         this.nomeObjeto = nomeObjeto;
         this.dataList = dataList;
+        this.nomesColunasOficiais = nomesColunasOficiais;
+        this.colWidths = colWidths;  // Armazene as larguras das colunas
         //nomesColunas += {"Editar", "Remover"};
         String[] columnNames = getFieldNames(dataList.get(0));
         model = new CustomTableModel(columnNames, 0);
@@ -56,7 +69,7 @@ public class Listar<T> extends JPanel {
         scrollPane.setPreferredSize(new Dimension(800, 600));
         add(scrollPane, BorderLayout.CENTER);
 
-        setColumnOrder(nomesColunasOficiais); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
+        setColumnOrder(nomesColunasOficiais, colWidths); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
     }
 
     public void refreshTable() {
@@ -102,19 +115,8 @@ public class Listar<T> extends JPanel {
         return values.toArray(new Object[0]);
     }
 
-//    private void setColumnOrder(String[] order) {
-//        TableColumnModel columnModel = table.getColumnModel();
-//        for (int i = 0; i < order.length; i++) {
-//            int index = columnModel.getColumnIndex(order[i]);
-//            if (index != i) {
-//                columnModel.moveColumn(index, i);
-//            }
-//        }
-//    }
 
-
-    // BUG -> verificar se esse codigo funciona
-    private void setColumnOrder(String[] order) {
+    private void setColumnOrder(String[] order, int[] colWidths) {
         TableColumnModel columnModel = table.getColumnModel();
         ArrayList<String> orderList = new ArrayList<>(Arrays.asList(order));
 
@@ -134,11 +136,18 @@ public class Listar<T> extends JPanel {
             }
         }
 
-        // Reordenar as colunas
+        // Reordenar as colunas e definir suas larguras
         for (int i = 0; i < orderList.size(); i++) {
             int index = columnModel.getColumnIndex(orderList.get(i));
             if (index != i) {
                 columnModel.moveColumn(index, i);
+            }
+            // Define a largura da coluna
+            if (i < colWidths.length) {
+                TableColumn column = columnModel.getColumn(i);
+                column.setMinWidth(colWidths[i]);
+                column.setPreferredWidth(colWidths[i]);
+                column.setMaxWidth(colWidths[i]);
             }
         }
     }
@@ -168,11 +177,11 @@ public class Listar<T> extends JPanel {
     }
 
     class ButtonEditor extends DefaultCellEditor {
-        private JButton button;
+        private final JButton button;
         private boolean isPushed;
         private Loja loja;
-        private Listar listarPanel;
-        private boolean isRemoveButton;
+        private final Listar listarPanel;
+        private final boolean isRemoveButton;
         private int row;
 
         public ButtonEditor(JCheckBox checkBox, Loja loja, Listar listarPanel, boolean isRemoveButton) {
@@ -200,15 +209,14 @@ public class Listar<T> extends JPanel {
             if (isPushed) {
                 int modelRow = table.convertRowIndexToModel(this.row);
                 if (modelRow >= 0 && modelRow < model.getRowCount()) {
-                    // Supondo que o ID é sempre a primeira coluna
-                    int objectId = (int) model.getValueAt(modelRow, 1);
+                    int objectId = (int) model.getValueAt(modelRow, table.getColumn("id").getModelIndex());
 
                     if (isRemoveButton) {
-                        // loja.removeClientePorId(objectId); // BUG -> precisa criar um removeObjetoPorId para cada objeto listavel
+                        removeObjetoPorId(objectId, dataList);
                         listarPanel.refreshTable();
                         JOptionPane.showMessageDialog(button, nomeObjeto + " removido: " + objectId);
                     } else {
-                        T objeto = (T) loja.getClientePorId(objectId); // BUG -> precisa criar um getObjetoPorId para cada objeto listavel
+                        T objeto = getObjetoPorId(objectId, dataList);
                         if (objeto != null) {
                             try {
                                 Class<?> clazz = objeto.getClass();
@@ -216,8 +224,32 @@ public class Listar<T> extends JPanel {
                                     for (Field field : clazz.getDeclaredFields()) {
                                         field.setAccessible(true);
                                         Object oldValue = field.get(objeto);
-                                        String novoValor = JOptionPane.showInputDialog("Novo valor para " + field.getName() + ":", oldValue);
-                                        if (novoValor != null) {
+                                        ArrayList<String> nomesColunasList = new ArrayList<String>(Arrays.asList(nomesColunasOficiais));
+                                        if (nomesColunasList.contains(field.getName())) {
+                                            String novoValor = JOptionPane.showInputDialog("Novo valor para " + field.getName() + ":", oldValue);
+
+                                            boolean valido = false;
+                                            while (!valido) {
+                                                if (novoValor != null) {
+                                                    valido = switch (field.getName()) {
+                                                        case "id", "quantidade_por_pacote", "quantidade" -> Verifica.isNatural(novoValor);
+                                                        case "nome" -> Verifica.isNome(novoValor);
+                                                        case "email" -> Verifica.isEmail(novoValor);
+                                                        case "telefone" -> Verifica.isTelefone(novoValor);
+                                                        case "cnpj", "cnpj_fornecedor" -> Verifica.isCnpj(novoValor);
+//                                                        case "tipo_embalagem" -> Verifica.isEmbalagem(novoValor);
+//                                                        case "cargo" -> Verifica.isCargo(novoValor);
+//                                                        case "endereco" -> Verifica.isEndereco(novoValor);
+                                                        case "data" -> Verifica.isData(novoValor);
+                                                        case "data_entrega", "data_validade" -> Verifica.isDataFutura(novoValor);
+                                                        case "preco_pacote", "preco_total", "salario" -> Verifica.isFloat(novoValor);
+                                                        default -> true;
+                                                    };
+                                                }
+                                                if (!valido) {
+                                                    novoValor = JOptionPane.showInputDialog("Valor de " + field.getName() + " inválido. Digite novamente: ", oldValue);
+                                                }
+                                            }
                                             // Converter o valor da string para o tipo adequado
                                             Object typedValue = convertToFieldType(field, novoValor);
                                             field.set(objeto, typedValue);
@@ -226,7 +258,7 @@ public class Listar<T> extends JPanel {
                                     clazz = clazz.getSuperclass();
                                 }
                                 listarPanel.refreshTable();
-                                JOptionPane.showMessageDialog(button, "Objeto atualizado: " + objectId);
+                                JOptionPane.showMessageDialog(button,  nomeObjeto + " atualizado: " + objectId);
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
                             }
@@ -244,55 +276,28 @@ public class Listar<T> extends JPanel {
                 return Integer.parseInt(value);
             } else if (type == long.class || type == Long.class) {
                 return Long.parseLong(value);
+            } else if (type == float.class || type == Float.class) {
+                return Float.parseFloat(value);
             } else if (type == double.class || type == Double.class) {
                 return Double.parseDouble(value);
             } else if (type == boolean.class || type == Boolean.class) {
                 return Boolean.parseBoolean(value);
             } else if (type == ArrayList.class) {
-                ArrayList<String> list = new ArrayList<>(Arrays.asList(value.split(","))); // transforma lista em array
+                ArrayList<String> list = new ArrayList<>(Arrays.asList(value.split(",")));
                 return list;
-            } else if (type == Endereco.class) { // BUG -> como converter string em endereço?
-                // return Endereco.parseEndereco(value);
-                return value; // BUGADO APENAS PARA NAO DAR ERRO NO CODIGO
+            } else if (type == Endereco.class) {
+                return Endereco.parseEndereco(value);
+            } else if (type == LocalDate.class) {
+                return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } else if (type == Embalagem.class) {
+                return TiposEmbalagens.parseEmbalagem(value);
+            } else if (type == Cargos.class) {
+                return Cargos.parseCargo(value);
             }
-
             else {
                 return value; // Trata outros tipos como string
             }
         }
-
-
-//        @Override
-//        public Object getCellEditorValue() { // BUG ao tirar o ultimo elemento da lista
-//            if (isPushed) {
-//                int modelRow = table.convertRowIndexToModel(this.row);
-//                if (modelRow >= 0 && modelRow < model.getRowCount()) {
-//                    int clientId = (int) model.getValueAt(modelRow, 0);
-//
-//                    if (isRemoveButton) {
-//                        loja.removeClientePorId(clientId);
-//                        listarPanel.refreshTable();
-//                        JOptionPane.showMessageDialog(button, "Cliente removido: " + clientId);
-//                    } else {
-//                        Cliente cliente = loja.getClientePorId(clientId);
-//                        if (cliente != null) {
-//                            String novoNome = JOptionPane.showInputDialog("Novo Nome:", cliente.getNome());
-//                            String novoTelefone = JOptionPane.showInputDialog("Novo Telefone:", cliente.getTelefone());
-//                            String novoEmail = JOptionPane.showInputDialog("Novo Email:", cliente.getEmail());
-//
-//                            cliente.setNome(novoNome);
-//                            cliente.setTelefone(novoTelefone);
-//                            cliente.setEmail(novoEmail);
-//
-//                            listarPanel.refreshTable();
-//                            JOptionPane.showMessageDialog(button, "Cliente atualizado: " + clientId);
-//                        }
-//                    }
-//                }
-//            }
-//            isPushed = false;
-//            return button.getText();
-//        }
 
         @Override
         public boolean stopCellEditing() {
@@ -302,7 +307,11 @@ public class Listar<T> extends JPanel {
 
         @Override
         protected void fireEditingStopped() {
-            super.fireEditingStopped();
+            try { // solução amatongas
+                super.fireEditingStopped();
+            } catch (Exception e) {
+                System.out.println("Erro " + e);
+            }
         }
     }
 }

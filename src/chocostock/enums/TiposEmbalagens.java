@@ -90,11 +90,11 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
         return INDEFINIDO;
     }
 
-//    public static TiposEmbalagens parseTipoEmbalagem(String nome) {
-//        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
-//            if (nome.equals(tipo.getNome() + " - " + tipo.getTamanho()))
-//                return tipo;
-//        }
-//        return INDEFINIDO;
-//    }
+    public static TiposEmbalagens parseTipoEmbalagem(String nome) {
+        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
+            if (nome.equals(tipo.getNome() + " - " + tipo.getTamanho()))
+                return tipo;
+        }
+        return INDEFINIDO;
+    }
 }

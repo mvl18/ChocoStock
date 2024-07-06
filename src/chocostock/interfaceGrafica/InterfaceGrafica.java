@@ -70,7 +70,7 @@ public class InterfaceGrafica extends JFrame {
             case "ListarFornecedor" -> painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
                     new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
                     new int[]{50, 120, 105, 150, 100, 100, 100}), chavePagina);
-            case "Listar Pedidos" -> painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
+            case "ListarPedidos" -> painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
                     new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"},
                     new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
 //            case "StatusIngrediente" -> painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), chavePagina);
@@ -95,7 +95,7 @@ public class InterfaceGrafica extends JFrame {
     public void adicionarPaginas(){
         painelPrincipal.add(new Inicio(loja), "Inicio");
         // painelPrincipal.add(new ListarCliente(loja), "ListarCliente");
-        painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), "ListarCliente");
+//        painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), "ListarCliente");
         // painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), "Listar Pedidos");
 //        painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), "ListarFuncionario");
 //        painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores()), "ListarFornecedor");
