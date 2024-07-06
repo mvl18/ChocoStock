@@ -127,13 +127,13 @@ public class PaginaNovoProduto extends FormularioDeCadastro implements ActionLis
         getLabelsDosInputs().clear();
     }
 
-    @Override
-    public void limparInputs() {
-        limparPagina();
-        createFormsInicial();
-        getPainelRegistro().revalidate();
-        getPainelRegistro().repaint();
-    }
+//    @Override
+//    public void limparInputs() {
+//        limparPagina();
+//        createFormsInicial();
+//        getPainelRegistro().revalidate();
+//        getPainelRegistro().repaint();
+//    }
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Evento de ação");

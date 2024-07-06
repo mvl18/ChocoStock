@@ -100,26 +100,28 @@ public class FormularioDeCadastro extends JPanel {
         if (tag.equals("Cliente"))
             loja.addCliente(new Cliente(getDadosDosInputs().get(0),
                     getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
-                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
-                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
-                            Estados.SP))); // Arrumar a recepção de estado;
+                    new Endereco(getDadosDosInputs().get(3),
+                            Estados.parseEstado(getDadosDosInputs().get(4)),
+                            getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                            getDadosDosInputs().get(7),
+                            Integer.parseInt(getDadosDosInputs().get(8))))); // Arrumar a recepção de estado;
         else if (tag.equals("Fornecedor"))
             loja.getEstoque().addFornecedor(new Fornecedor(getDadosDosInputs().get(0),
                     getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
-                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
-                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
-                            Estados.SP), getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
+                    new Endereco(getDadosDosInputs().get(3),
+                            Estados.parseEstado(getDadosDosInputs().get(4)),
+                            getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                            getDadosDosInputs().get(7),
+                            Integer.parseInt(getDadosDosInputs().get(8))), getDadosDosInputs().get(9), getDadosDosInputs().get(10)));
         else if (tag.equals("Funcionario"))
             loja.addFuncionario(new Funcionario(getDadosDosInputs().get(0),
                     getDadosDosInputs().get(1), getDadosDosInputs().get(2),
-                    new Endereco(Integer.parseInt(getDadosDosInputs().get(3)),
-                            getDadosDosInputs().get(4), getDadosDosInputs().get(5),
-                            getDadosDosInputs().get(6), getDadosDosInputs().get(7),
-                            Estados.SP), Cargos.ASSISTENTE_DE_COZINHA,
-                            Float.parseFloat(getDadosDosInputs().get(10))));
-        // Arrumar coisas com Enum
+                    new Endereco(getDadosDosInputs().get(3),
+                            Estados.parseEstado(getDadosDosInputs().get(4)),
+                            getDadosDosInputs().get(5), getDadosDosInputs().get(6),
+                            getDadosDosInputs().get(7),
+                            Integer.parseInt(getDadosDosInputs().get(8))), Cargos.parseCargo(getDadosDosInputs().get(9)),
+                    Float.parseFloat(getDadosDosInputs().get(10))));
     }
 
     public void addBotoes(){
@@ -129,33 +131,31 @@ public class FormularioDeCadastro extends JPanel {
 
         cancelarBotao.setFont(fontePequena);
         cancelarBotao.addActionListener(e -> {
-            int resp = JOptionPane.showConfirmDialog(getPainelRegistro(), "Realmente deseja cancelar o registro?");
-            if(resp == 0){
-                limparInputs();
-                JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado.");
-            }
+            JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado.");
         });
 
         registrarBotao.addActionListener(e -> {
             correto = true;
+            System.out.println(getDadosDosInputs());
             for (int i = 0; i < getLabelsDosInputs().size(); i++) {
-                if (getLabelsDosInputs().get(i).equals("Telefone"))
-                    validaCampo(i, Verifica::isTelefone);
-                else if (getLabelsDosInputs().get(i).equals("Email"))
-                    validaCampo(i, Verifica::isEmail);
-                else if (getLabelsDosInputs().get(i).equals("CNPJ"))
-                    validaCampo(i, Verifica::isCnpj);
-                else if (getLabelsDosInputs().get(i).equals("Site"))
-                    validaCampo(i, Verifica::isSite);
-                else if (getLabelsDosInputs().get(i).equals("CEP"))
-                    validaCampo(i, Verifica::isCep);
-                else if (getLabelsDosInputs().get(i).equals("Número"))
-                    validaCampo(i, Verifica::isNatural);
+                switch (getLabelsDosInputs().get(i)) {
+                    case "Telefone" -> validaCampo(i, Verifica::isTelefone);
+                    case "Email" -> validaCampo(i, Verifica::isEmail);
+                    case "CNPJ" -> validaCampo(i, Verifica::isCnpj);
+                    case "Site" -> validaCampo(i, Verifica::isSite);
+                    case "CEP" -> validaCampo(i, Verifica::isCep);
+                    case "Número" -> validaCampo(i, Verifica::isNatural);
+                    case "Quantidade" -> validaCampo(i, Verifica::isNatural);
+                    case "Quantos kg por Unidade" -> validaCampo(i, Verifica::isFloat);
+                    case "Preço" -> validaCampo(i, Verifica::isFloat);
+                    case "Data de Compra" -> validaCampo(i, Verifica::isData);
+                    case "Data de Validade" -> validaCampo(i, Verifica::isDataFutura);
+                    case "Preço por pacote" -> validaCampo(i, Verifica::isFloat);
+                    case "Quantidade por pacote" -> validaCampo(i, Verifica::isNatural);
+                }
             }
             if (correto) {
-                System.out.println(getDadosDosInputs());
                 criaObjeto();
-                limparInputs();
                 JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi concluído.");
             }
         });
@@ -164,18 +164,6 @@ public class FormularioDeCadastro extends JPanel {
         panelBotoes.add(cancelarBotao);
         panelBotoes.add(registrarBotao);
         getPainelRegistro().add(panelBotoes);
-    }
-
-    public void limparInputs() {
-        for(JComponent comp : inputs){
-            if(comp instanceof JTextField){
-                ((JTextField) comp).setText("");
-            }
-            if(comp instanceof JComboBox<?>){
-                ((JComboBox<?>) comp).setEnabled(true);
-                ((JComboBox<?>) comp).setSelectedIndex(0);
-            }
-        }
     }
 
     public ArrayList<String> getDadosDosInputs(){
@@ -194,23 +182,8 @@ public class FormularioDeCadastro extends JPanel {
                 boolean b = ((JRadioButton) comp).isSelected();
                 dados.add(((Boolean)b).toString());
             }
-            if(comp instanceof JMenu){
-                //EU ESTOU DEFININDO O HIFEN AQUI
-                //PEGA OS COMPONENTES DO MENU QUE TEM OS COMPLEMENTOS
-                Component[] items = ((JMenu) comp).getMenuComponents();
-                s = "";
-                //PASSA POR TODOS OS ITEMS SELECIONADOS ADICINOANDO O TEXTO COM UM HIFEN
-                for(Component c : items){
-                    System.out.println("TESTANDO");
-                    JMenuItem item = (JMenuItem)c;
-                    if(item.isSelected()){
-                        s += item.getText() + "-";
-                    }
-                }
-                //ADICIONA A STRING FINAL NO ARRAY DE INPUTS
-                dados.add(s);
-            }
         }
         return dados;
     }
+
 }

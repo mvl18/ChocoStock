@@ -400,6 +400,14 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
         return produto_pedido;
     }
 
+    public ArrayList<Item> getEquipamentos() {
+        return equipamentos;
+    }
+
+    public ArrayList<Embalagem> getEmbalagens() {
+        return embalagens;
+    }
+
     private static Chocolate duplicaChocolate(Produto produto, int quantidade) {
         Chocolate chocolate_pedido = new Chocolate();
         chocolate_pedido.setTipo(((Chocolate) produto).getTipo());

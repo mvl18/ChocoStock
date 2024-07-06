@@ -21,7 +21,7 @@ import java.util.Scanner;
  * Implementa os métodos "isPago", "addProduto", "removeProduto",
  * "addProduto_pendente", "removeProduto_pendente" e "calculaPrecoTotal".
  */
-public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhivel, Serializable, Identificavel {
+public class Pedido implements AddRemovivel, Iteravel, Identificavel, ValidadorInput, Escolhivel, Serializable {
     private static int id_pedidos = 100000;
     private final int id;
     private int id_cliente;

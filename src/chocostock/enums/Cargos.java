@@ -4,9 +4,10 @@ import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 /**
- * Seta o cargo de um funcionário.
- */
+
+ Seta o cargo de um funcionário.*/
 public enum Cargos implements Identificavel, Nomeavel {
+    INDEFINIDO("", -1),
     PROPRIETARIO("Proprietario", 1),
     VENDEDOR("Vendedor", 2),
     ENTREGADOR("Entregador", 3),
@@ -42,4 +43,11 @@ public enum Cargos implements Identificavel, Nomeavel {
         return tipos;
     }
 
+    public static Cargos parseCargo(String nome) {
+        for (Cargos cargo : Cargos.values()) {
+            if (cargo.getNome().equals(nome))
+                return cargo;
+        }
+        return INDEFINIDO;
+    }
 }
