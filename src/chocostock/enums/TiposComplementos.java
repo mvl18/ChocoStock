@@ -31,13 +31,14 @@ public enum TiposComplementos implements Identificavel, Nomeavel {
         return id;
     }
 
+    /**
+     * Retorna um array com todos os nomes de tipos de complementos.
+     */
     public static String[] getTipos() {
         int num_tipos = TiposComplementos.values().length;
-        int i = 0;
         String[] tipos = new String[num_tipos];
-        for(TiposComplementos t : TiposComplementos.values()){
-            tipos[i] = t.getNome();
-            i++;
+        for(int i = 0; i < num_tipos; i++){
+            tipos[i] = TiposComplementos.values()[i].getNome();
         }
         return tipos;
     }

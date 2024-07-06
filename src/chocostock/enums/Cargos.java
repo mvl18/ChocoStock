@@ -4,8 +4,8 @@ import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 
 /**
-
- Seta o cargo de um funcionário.*/
+ * Seta o cargo de um funcionário.
+ */
 public enum Cargos implements Identificavel, Nomeavel {
     INDEFINIDO("", -1),
     PROPRIETARIO("Proprietario", 1),
@@ -32,6 +32,9 @@ public enum Cargos implements Identificavel, Nomeavel {
         return id;
     }
 
+    /**
+     * Retorna um array com todos os nomes de cargos.
+     */
     public static String[] getTipos(){
         int num_tipos = Cargos.values().length;
         int i = 0;
