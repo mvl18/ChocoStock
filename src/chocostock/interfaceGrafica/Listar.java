@@ -14,6 +14,7 @@ import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Verifica;
 import chocostock.colaboradores.Cliente;
 import chocostock.enums.Cargos;
+import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.ValidadorInput;
@@ -248,15 +249,15 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                                         case "cnpj", "cnpj_fornecedor":
                                                             valido = Verifica.isCnpj(novoValor);
                                                             break;
-//                                                        case "tipo_embalagem":
-//                                                            valido = Verifica.isEmbalagem(novoValor);
-//                                                            break;
-//                                                        case "cargo":
-//                                                            valido = Verifica.isCargo(novoValor);
-//                                                            break;
-//                                                        case "endereco":
-//                                                            valido = Verifica.isEndereco(novoValor); // falta criar
-//                                                            break;
+                                                        case "tipo_embalagem":
+                                                            valido = Verifica.isEmbalagem(novoValor);
+                                                            break;
+                                                        case "cargo":
+                                                            valido = Verifica.isCargo(novoValor);
+                                                            break;
+                                                        case "endereco":
+                                                            valido = Verifica.isEndereco(novoValor); // falta criar
+                                                            break;
                                                         case "data":
                                                             valido = Verifica.isData(novoValor);
                                                             break;
@@ -305,20 +306,17 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             } else if (type == boolean.class || type == Boolean.class) {
                 return Boolean.parseBoolean(value);
             } else if (type == ArrayList.class) {
-                ArrayList<String> list = new ArrayList<>(Arrays.asList(value.split(","))); // transforma lista em array
+                ArrayList<String> list = new ArrayList<>(Arrays.asList(value.split(",")));
                 return list;
-            } else if (type == Endereco.class) { // BUG -> como converter string em endereço?
-                // return Endereco.parseEndereco(value);
-                return value; // BUGADO APENAS PARA NAO DAR ERRO NO CODIGO
+            } else if (type == Endereco.class) {
+                return Endereco.parseEndereco(value);
             } else if (type == LocalDate.class) {
                 return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else if (type == Embalagem.class) {
-                // return Embalagem.parse(value);
-                return value;
+                return TiposEmbalagens.parseEmbalagem(value);
             } else if (type == Cargos.class) {
                 return Cargos.parseCargo(value);
             }
-
             else {
                 return value; // Trata outros tipos como string
             }

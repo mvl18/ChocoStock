@@ -1,5 +1,10 @@
 package chocostock.auxiliar;
 
+import chocostock.enums.Cargos;
+import chocostock.enums.Estados;
+import chocostock.enums.Status;
+import chocostock.enums.TiposEmbalagens;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -145,4 +150,56 @@ public class Verifica {
             return false;
         }
     }
+
+    public static boolean isEmbalagem(String nomeEmbalagem) {
+        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
+            if (tipo.toString().equalsIgnoreCase(nomeEmbalagem)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isCodigoEstado(String codigoEstado) {
+        for (Estados codigo : Estados.values()) {
+            if (codigo.getCodigo().equalsIgnoreCase(codigoEstado)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isCargo(String nomeCargo) {
+        for (Cargos tipo : Cargos.values()) {
+            if (tipo.toString().equalsIgnoreCase(nomeCargo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isEndereco(String enderecoStr) {
+        // Verifica se a string fornecida é nula ou vazia. Se for, retorna false.
+        if (enderecoStr == null || enderecoStr.isEmpty()) {
+            return false;
+        }
+
+        String[] ruaNumero = enderecoStr.split(", n° ");
+        if (ruaNumero.length != 2) {
+            return false;
+        }
+
+        String[] bairroCepCidadeEstado = ruaNumero[1].split(" - Bairro |\\. CEP: |\\. ");
+        if (bairroCepCidadeEstado.length != 4) {
+            return false;
+        }
+
+        return isNome(ruaNumero[0].trim()) &&
+                isNatural(bairroCepCidadeEstado[0].trim()) &&
+                isNome(bairroCepCidadeEstado[1].trim()) &&
+                isCep(bairroCepCidadeEstado[2].trim()) &&
+                isNome(bairroCepCidadeEstado[3].split(" - ")[0].trim()) &&
+                isCodigoEstado(bairroCepCidadeEstado[3].split(" - ")[1].trim());
+    }
+
 }
