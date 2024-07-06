@@ -3,10 +3,7 @@ package chocostock.loja;
 import chocostock.auxiliar.Processa;
 import chocostock.colaboradores.Cliente;
 import chocostock.enums.Status;
-import chocostock.interfaces.AddRemovivel;
-import chocostock.interfaces.Escolhivel;
-import chocostock.interfaces.Iteravel;
-import chocostock.interfaces.ValidadorInput;
+import chocostock.interfaces.*;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 
@@ -24,7 +21,7 @@ import java.util.Scanner;
  * Implementa os métodos "isPago", "addProduto", "removeProduto",
  * "addProduto_pendente", "removeProduto_pendente" e "calculaPrecoTotal".
  */
-public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhivel, Serializable {
+public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhivel, Serializable, Identificavel {
     private static int id_pedidos = 100000;
     private final int id;
     private int id_cliente;
@@ -33,7 +30,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
     private boolean pago;
     private Status status;
     private ArrayList<Integer> produtos;
-    private ArrayList<Pendente> produtos_pendentes; //talvez seja bom ter uma quantidade junto, mas ai precisa fazer algo diferente de ArrayList<E>
+    private ArrayList<Pendente> produtos_pendentes;
     private float preco_total;
 
     public Pedido(int id_cliente, LocalDate data, LocalDate data_entrega, boolean pago, Status status, ArrayList<Pendente> produtos_pendentes, float preco_total) {
@@ -70,6 +67,10 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
 
     public void setId_cliente(int id_cliente) {
         this.id_cliente = id_cliente;
+    }
+
+    public int getId_Cliente() {
+        return id_cliente;
     }
 
     public LocalDate getData_entrega() {
@@ -163,7 +164,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
     /**
      * Cria um novo pedido com as informações fornecidas pelo usuário.
      */
-    public static Pedido novoPedido(Scanner scanner, Loja loja)  {
+    public static Pedido novoPedido(Scanner scanner, Loja loja) {
         Pedido pedido = new Pedido();
 
         // CLIENTE
@@ -183,7 +184,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 System.out.println("Insira o ID ou nome do seu cliente");
                 cliente = Escolhivel.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
                 if (cliente == null) {
-                    cliente = cliente.novoCliente(scanner);
+                    cliente = Cliente.novoCliente(scanner);
                     loja.addCliente(cliente);
                     pedido.setId_cliente(cliente.getId());
                     break;
@@ -192,7 +193,7 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
                 cliente.addPedido(pedido.getId());
                 break;
             case 2:
-                cliente = cliente.novoCliente(scanner);
+                cliente = Cliente.novoCliente(scanner);
                 loja.addCliente(cliente);
                 pedido.setId_cliente(cliente.getId());
                 cliente.addPedido(pedido.getId());
@@ -249,82 +250,39 @@ public class Pedido implements AddRemovivel, Iteravel, ValidadorInput, Escolhive
         return pedido;
     }
 
-    public Cliente escolheCliente(Scanner scanner, Pedido pedido, Loja loja) {
-        // CLIENTE
-        Cliente cliente = null;
+    public static void cancelaPedido(Scanner scanner, Loja loja) {
         String msg =   """
-                --- NOVO PEDIDO ---
+                --- CANCELA PEDIDO ---
                 Selecione uma das opções:
-                (1) - Mostrar lista de clientes já cadastrados.
-                (2) - Adicionar novo cliente.
+                (1) - Cancelar pedido a partir da lista de clientes.
+                (2) - Cancelar pedido a partir da lista de pedidos.
                 """;
 
-        // Solicita ao usuário que escolha entre mostrar clientes cadastrados ou adicionar um novo cliente
+        // Solicita ao usuário que escolha entre mostrar clientes ou pedidos para o cancelamento
         switch (ValidadorInput.verificaOpcao(scanner, msg, 1, 2)) {
-            case 1:
-                System.out.println(loja.listaClientes());
-                System.out.println("Seu cliente não está na lista? Para adicionar um novo cliente digite 'novo'.");
-                System.out.println("Insira o ID ou nome do seu cliente");
-                cliente = Escolhivel.escolheObjeto(scanner, loja.getClientes(), "Cliente inexistente. Digite o ID ou nome de algum usuário listado.", "novo");
-                if (cliente == null) {
-                    cliente = new Cliente().novoCliente(scanner);
-                    loja.addCliente(cliente);
-                    pedido.setId_cliente(cliente.getId());
+            case 1: System.out.println(loja.listaClientes());
                     break;
-                }
-                pedido.setId_cliente(cliente.getId());
-                cliente.addPedido(pedido.getId());
-                break;
-            case 2:
-                cliente = new Cliente().novoCliente(scanner);
-                loja.addCliente(cliente);
-                pedido.setId_cliente(cliente.getId());
-                cliente.addPedido(pedido.getId());
-                break;
-            default:
-                System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
-                break;
+            case 2: System.out.println(loja.listaPedidos());
+                    break;
+            default: System.out.println("Da próxima selecione uma resposta válida! Finalizando programa!");
+                    break;
         }
+        System.out.println("Agora insira o ID do pedido. Se desistir, digite 'cancela'.");
+        Pedido pedido_cancelado = Escolhivel.escolheObjeto(scanner, loja.getPedidos(), "Pedido inexistente. Digite um ID listado.", "cancela");
+        if (pedido_cancelado == null) {
+            return;
+        }
+        System.out.println("Legal, o pedido cancelado foi escolhido");
 
-        return cliente;
+        // Tira o pedido do cliente
+        Cliente cliente = loja.getClientePorId(pedido_cancelado.getId_Cliente());
+        AddRemovivel.removeObjeto(cliente.getPedidos(), pedido_cancelado.getId());
+
+        // Tira o pedido da loja
+        AddRemovivel.removeObjeto(loja.getPedidos(), pedido_cancelado);
+
+        // Tira os produtos do pedido e retorna para o estoque
+        loja.getEstoque().devolveProdutosEstoque(pedido_cancelado);
     }
 
-    public void atualiza(Scanner scanner, Loja loja) {
-        System.out.println(this.toString());
-
-        String msg = """
-                --- ATUALIZA PEDIDO ---
-                Escolha o que quer atualizar:
-                (1) - Cliente.
-                (2) - Produtos.
-                (3) - Status.
-                (4) - Pago ou não.
-                (0) - Voltar para o menu inicial.
-                """;
-
-//        switch(verificaOpcao(scanner, msg, 0, 4)) {
-//            case 0: return;
-//                break;
-//            case 1: ;
-//                menuPedidos();
-//                break;
-//            case 2: System.out.println("Qual dos seguintes pedidos deseja atualizar? Para voltar digite 'sair'.");
-//                System.out.println("Insira o ID ou nome do seu cliente");
-//                Pedido pedido = escolheObjeto(input, loja.getPedidos(), "Pedido inexistente. Digite o ID" +
-//                        " ou nome de algum pedido listado.", "sair");
-//                if (pedido != null) {
-//                    pedido.atualiza();
-//                }
-//                menuPedidos();
-//                break;
-//            case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
-//                menuPedidos();
-//                break;
-//            case 4: System.out.println("Não implementado\n");//loja.cancelaPedido();
-//                menuPedidos();
-//                break;
-//            default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
-//                menuInicial();
-//                break;
-                }
 }

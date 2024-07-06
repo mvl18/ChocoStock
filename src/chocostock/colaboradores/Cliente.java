@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class Cliente extends Colaborador implements AddRemovivel, Identificavel, Iteravel {
     private static int id_clientes = 100000;
     private final int id; // final, pois nao pode ser modificado apos criado
-    private ArrayList<Integer> pedidos;
+    private final ArrayList<Integer> pedidos;
 
     public Cliente(String nome, String telefone, String email, Endereco endereco) {
         super(nome, telefone, email, endereco);
@@ -45,10 +45,6 @@ public class Cliente extends Colaborador implements AddRemovivel, Identificavel,
 
     public ArrayList<Integer> getPedidos() {
         return pedidos;
-    }
-
-    public void setPedidos(ArrayList<Integer> pedidos) {
-        this.pedidos = pedidos;
     }
 
      public void addPedido(Integer idPedido) {

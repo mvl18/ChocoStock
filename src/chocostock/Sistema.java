@@ -13,6 +13,8 @@ import chocostock.loja.Pedido;
 
 import java.util.Scanner;
 
+import static chocostock.loja.Pedido.cancelaPedido;
+
 
 /**
  * A classe Sistema é responsável por: <br>
@@ -80,8 +82,7 @@ public class Sistema implements Criavel, ValidadorInput {
                 Selecione uma opção:
                 (1) - Novo pedido.
                 (2) - Listar pedidos.
-                (3) - Atualizar pedido.
-                (4) - Cancelar pedido.
+                (3) - Cancelar pedido.
                 (0) - Voltar para o menu inicial.
                 """;
 
@@ -89,23 +90,14 @@ public class Sistema implements Criavel, ValidadorInput {
         switch(opcao) {
             case 0: menuInicial();
                     break;
-            case 1: Pedido novoPedido = Pedido.novoPedido(input,loja);
+            case 1: Pedido novoPedido = Pedido.novoPedido(input, loja);
                     loja.addPedido(novoPedido);
                     menuPedidos();
                     break;
-            case 2: System.out.println("Qual dos seguintes pedidos deseja atualizar? Para voltar digite 'sair'.");
-                    System.out.println("Insira o ID ou nome do seu cliente");
-                    Pedido pedido = Escolhivel.escolheObjeto(input, loja.getPedidos(), "Pedido inexistente. Digite o ID" +
-                            " ou nome de algum pedido listado.", "sair");
-                    if (pedido != null) {
-                        pedido.atualiza(input, loja);
-                    }
+            case 2: System.out.println(loja.listaPedidos());
                     menuPedidos();
                     break;
-            case 3: System.out.println("Não implementado\n");//loja.atualizaPedido();
-                    menuPedidos();
-                    break;
-            case 4: System.out.println("Não implementado\n");//loja.cancelaPedido();
+            case 3: cancelaPedido(input, loja);
                     menuPedidos();
                     break;
             default: System.out.println("Opção inválida. Voltando para o MENU INICIAL.");
