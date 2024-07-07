@@ -76,23 +76,10 @@ public enum TiposEmbalagens implements Nomeavel, Identificavel {
         return tipos;
     }
 
-    public static TiposEmbalagens parseEmbalagem(String embalagemStr) {
-        String[] divideEmbalagem = embalagemStr.split(", ");
-
-        String nome = divideEmbalagem[0].replace("Modelo: ", "").trim();
-        String tamanho = divideEmbalagem[1].trim();
-
-        for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
-            if (tipo.getNome().equalsIgnoreCase(nome) && tipo.getTamanho().equalsIgnoreCase(tamanho)) {
-                return tipo;
-            }
-        }
-        return INDEFINIDO;
-    }
-
     public static TiposEmbalagens parseTipoEmbalagem(String nome) {
         for (TiposEmbalagens tipo : TiposEmbalagens.values()) {
-            if (nome.equals(tipo.getNome() + " - " + tipo.getTamanho()))
+            String embalagem = ("Modelo: " + tipo.getNome() + ", " + tipo.getTamanho()).trim();
+            if (nome.trim().equalsIgnoreCase(embalagem))
                 return tipo;
         }
         return INDEFINIDO;

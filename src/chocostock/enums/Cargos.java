@@ -48,7 +48,7 @@ public enum Cargos implements Identificavel, Nomeavel {
 
     public static Cargos parseCargo(String nome) {
         for (Cargos cargo : Cargos.values()) {
-            if (cargo.getNome().equals(nome))
+            if (cargo.getNome().equalsIgnoreCase(nome))
                 return cargo;
         }
         return INDEFINIDO;

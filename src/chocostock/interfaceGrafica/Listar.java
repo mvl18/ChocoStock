@@ -237,9 +237,9 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                                         case "email" -> Verifica.isEmail(novoValor);
                                                         case "telefone" -> Verifica.isTelefone(novoValor);
                                                         case "cnpj", "cnpj_fornecedor" -> Verifica.isCnpj(novoValor);
-//                                                        case "tipo_embalagem" -> Verifica.isEmbalagem(novoValor);
-//                                                        case "cargo" -> Verifica.isCargo(novoValor);
-//                                                        case "endereco" -> Verifica.isEndereco(novoValor);
+                                                        case "tipo_embalagem" -> Verifica.isEmbalagem(novoValor);
+                                                        case "cargo" -> Verifica.isCargo(novoValor);
+                                                        case "endereco" -> Verifica.isEndereco(novoValor);
                                                         case "data" -> Verifica.isData(novoValor);
                                                         case "data_entrega", "data_validade" -> Verifica.isDataFutura(novoValor);
                                                         case "preco_pacote", "preco_total", "salario" -> Verifica.isFloat(novoValor);
@@ -290,7 +290,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             } else if (type == LocalDate.class) {
                 return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else if (type == Embalagem.class) {
-                return TiposEmbalagens.parseEmbalagem(value);
+                return TiposEmbalagens.parseTipoEmbalagem(value);
             } else if (type == Cargos.class) {
                 return Cargos.parseCargo(value);
             }
