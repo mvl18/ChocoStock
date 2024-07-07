@@ -168,7 +168,7 @@ public class Pedido implements AddRemovivel, Iteravel, Identificavel, ValidadorI
         Pedido pedido = new Pedido();
 
         // CLIENTE
-        Cliente cliente = null;
+        Cliente cliente;
         String msg =   """
                 --- NOVO PEDIDO ---
                 Selecione uma das opções:

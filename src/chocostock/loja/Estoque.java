@@ -3,7 +3,6 @@ package chocostock.loja;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.*;
 import chocostock.interfaces.*;
-import chocostock.itens.suprimentos.Equipamento;
 import chocostock.itens.Item;
 import chocostock.itens.suprimentos.Embalagem;
 import chocostock.itens.produtos.Caixa;
@@ -42,10 +41,7 @@ public class Estoque implements AddRemovivel, Escolhivel, Iteravel, Serializable
     }
 
     public ArrayList<Produto> getProdutos() {
-        ArrayList<Produto> produtos = new ArrayList<>();
-        for (Produto produto : this.produtos)
-            produtos.add((Produto) produto);
-        return produtos;
+        return new ArrayList<>(this.produtos);
     }
 
     public ArrayList<Caixa> getCaixas() {
@@ -103,21 +99,6 @@ public class Estoque implements AddRemovivel, Escolhivel, Iteravel, Serializable
         return arrFornecedores;
     }
 
-//    /**
-//     * Método para criar um novo fornecedor com dados fornecidos pelo usuário.
-//     * Solicita ao usuário que insira as informações do fornecedor via console.
-//     */
-//    public Fornecedor novoFornecedor(Scanner scanner) {
-//        Fornecedor fornecedor = new Fornecedor();
-//        fornecedor.setNome(getInput(scanner, "Nome do fornecedor: ", "Nome invalido. Insira novamente.", Verifica::isNome));
-//        fornecedor.setTelefone(getInput(scanner, "Telefone do fornecedor: ","Telefone inválido. Insira novamente.", Verifica::isTelefone));
-//        fornecedor.setEmail(getInput(scanner, "Email do fornecedor:", "Email inválido. Insira novamente.", Verifica::isEmail));
-//        fornecedor.setEndereco(new Endereco().criaEndereco(scanner));
-//        fornecedor.setCnpj(Processa.normalizaNumero(getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
-//        fornecedor.setSite(getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
-//        return fornecedor;
-//    }
-
     /**
      * Adiciona uma embalagem na lista de embalagens do estoque.
      */
@@ -134,13 +115,6 @@ public class Estoque implements AddRemovivel, Escolhivel, Iteravel, Serializable
 
     public void addProduto(Produto produto) {
         addObjeto(produtos, produto);
-    }
-
-    /**
-     * Adiciona um equipamento à lista de equipamentos.
-     */
-    public void addEquipamento(Equipamento equipamento) {
-        addObjeto(equipamentos, equipamento);
     }
 
     /**
@@ -419,11 +393,6 @@ public class Estoque implements AddRemovivel, Escolhivel, Iteravel, Serializable
 
         return produto_pedido;
     }
-
-    public ArrayList<Item> getEquipamentos() {
-        return equipamentos;
-    }
-
     public ArrayList<Embalagem> getEmbalagens() {
         return embalagens;
     }

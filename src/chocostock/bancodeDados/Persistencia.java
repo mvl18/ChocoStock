@@ -9,7 +9,6 @@ import chocostock.itens.suprimentos.Suprimento;
 import chocostock.loja.Pedido;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class Persistencia {
     private static final String DIRETORIO_BANCO = "src/chocostock/bancodeDados";
@@ -32,7 +31,7 @@ public class Persistencia {
         }
     }
 
-    public static Loja carregarLoja(Scanner scanner) {
+    public static Loja carregarLoja() {
         Loja loja = null;
         try {
             FileInputStream fis = new FileInputStream(DIRETORIO_BANCO + "/" + ARQUIVO_LOJA);

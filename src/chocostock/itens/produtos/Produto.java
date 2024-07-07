@@ -1,5 +1,6 @@
 package chocostock.itens.produtos;
 
+import chocostock.colaboradores.Fornecedor;
 import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.Identificavel;
 import chocostock.itens.Item;
@@ -17,6 +18,15 @@ public class Produto extends Item implements Identificavel {
     private LocalDate validade;
     private int peso;
     private TiposEmbalagens embalagem;
+
+    public Produto(String nome, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem, Fornecedor fornecedor) {
+        super(nome, quantidade, preco, fornecedor);
+        this.id = id_produtos++;
+        this.id_pedido = -1;
+        this.validade = validade;
+        this.peso = peso;
+        this.embalagem = embalagem;
+    }
 
     public Produto(String nome, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem) {
         super(nome, quantidade, preco);

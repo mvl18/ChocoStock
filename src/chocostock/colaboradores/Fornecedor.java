@@ -3,7 +3,6 @@ package chocostock.colaboradores;
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.auxiliar.Verifica;
-import chocostock.enums.Estados;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.ValidadorInput;
 

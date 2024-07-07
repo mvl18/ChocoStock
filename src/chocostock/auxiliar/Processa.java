@@ -1,7 +1,6 @@
 package chocostock.auxiliar;
 
 import java.text.Normalizer;
-import java.util.ArrayList;
 
 /**
  * A classe Processa fornece métodos utilitários para normalizar strings e números. <br>
