@@ -23,7 +23,9 @@ public class InterfaceGrafica extends JFrame {
             public void windowClosing(WindowEvent e) {Persistencia.salvarLoja(loja); System.exit(0);
             }
         });
-        setSize(600, 600);
+        setMinimumSize(new Dimension(960, 540));
+        setMaximumSize(new Dimension(1200, 800));
+        setSize(1300, 800);
         setTitle("ChocoStock");
         setLayout(new BorderLayout());
         ImageIcon imgIcon = new ImageIcon("imagens/logoChocostock.png");
@@ -97,7 +99,7 @@ public class InterfaceGrafica extends JFrame {
         JButton inicioButton = new JButton("Início");
         inicioButton.addActionListener(e -> alterarPagina("Inicio"));
         menuBar.add(inicioButton);
-        menuBar.add(criarMenu("Menu Pedidos", new String[]{"Adicionar Pedido", "Listar Pedidos", "Atualizar Pedido"}));
+        menuBar.add(criarMenu("Menu Pedidos", new String[]{"Adicionar Pedido", "Listar Pedidos"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
                 new String[]{"Produto", "Ingrediente", "Embalagem"},
                 new String[][]{{"Adicionar", "Status"}, {"Adicionar", "Status"}, {"Adicionar", "Status"}}));
