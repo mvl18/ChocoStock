@@ -133,6 +133,7 @@ public class FormularioDeCadastro extends JPanel {
                             1);
                     loja.getEstoque().addProduto(caixa);
                 }
+                // Se for chocolate
                 else {
                     Chocolate chocolate = new Chocolate(TiposChocolates.parseChocolate(getDadosDosInputs().get(0)),
                             Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
