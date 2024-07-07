@@ -42,9 +42,10 @@ public enum Status implements Identificavel, Nomeavel {
 
     public static Status parseStatus(String nome) {
         for (Status status : Status.values()) {
-            if (status.getNome().equals(nome))
+            if (status.getNome().equalsIgnoreCase(nome))
                 return status;
         }
         return PENDENTE;
     }
 }
+

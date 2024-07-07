@@ -61,26 +61,21 @@ public class InterfaceGrafica extends JFrame {
             case "AdicionarIngrediente" -> painelPrincipal.add(NovaPagina.novoIngrediente(loja), chavePagina);
             case "AdicionarEmbalagem" -> painelPrincipal.add(NovaPagina.novaEmbalagem(loja), chavePagina);
             case "ListarCliente" -> painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(),
-                    new String[]{"id", "nome", "telefone", "email", "endereco", "pedidos"},
-                    new double[]{0.05,  0.10,     0.10,      0.10,     0.15,       0.20}), chavePagina);
+                    new String[]{"id", "nome", "telefone", "email", "endereco", "pedidos"}), chavePagina);
             case "ListarFuncionario" -> painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios(),
-                    new String[]{"id", "nome", "cargo", "telefone", "email", "endereco", "salario"},
-                    new double[]{0.05,  0.10,   0.10,      0.10,     0.15,     0.20,       0.05}), chavePagina);
+                    new String[]{"id", "nome", "cargo", "telefone", "email", "endereco", "salario"}), chavePagina);
             case "ListarFornecedor" -> painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
-                    new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
-                    new double[]{0.10,  0.15,   0.15,     0.15,     0.15,     0.15,      0.15}), chavePagina);
+                    new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"}), chavePagina);
             case "ListarPedidos" -> painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
-                    new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"},
-                    new double[]{0.10,    0.10,        0.25,           0.25,             0.10,        0.10,          0.10}), chavePagina);
+                    new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"}), chavePagina);
             case "StatusIngrediente" -> painelPrincipal.add(new Listar<>(loja, "Ingrediente", loja.getEstoque().getIngredientes(),
-                    new String[]{"id", "nome", "quantidade", "unidade", "preco", "dataCompra", "validade", "fornecedor"},
-                    new double[]{0.10,  0.15,      0.10,       0.10,      0.10,     0.10,         0.10,        0.25}), chavePagina);
+                    new String[]{"id", "nome", "quantidade", "unidade", "preco", "dataCompra", "validade", "fornecedor"}), chavePagina);
             case "StatusEmbalagem" -> painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
-                    new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"},
-                    new double[]{0.10,  0.15,     0.10,           0.25,               0.10,                 0.10}), chavePagina);
-            case "StatusProduto" -> painelPrincipal.add(new Listar<>(loja, "Produto", loja.getEstoque().getProdutos(),
-                    new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"},
-                    new double[]{0.10,  0.15,      0.15,        0.15,     0.30,     0.15,        0.20}), chavePagina);
+                    new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"}), chavePagina);
+            case "Status CaixasProduto" -> painelPrincipal.add(new Listar<>(loja, "Caixa", loja.getEstoque().getCaixas(),
+                    new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"}), chavePagina);
+            case "Status ChocolatesProduto" -> painelPrincipal.add(new Listar<>(loja, "Chococlate", loja.getEstoque().getChocolates(),
+                    new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"}), chavePagina);
         }
     }
 
@@ -102,7 +97,7 @@ public class InterfaceGrafica extends JFrame {
         menuBar.add(criarMenu("Menu Pedidos", new String[]{"Adicionar Pedido", "Listar Pedidos"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
                 new String[]{"Produto", "Ingrediente", "Embalagem"},
-                new String[][]{{"Adicionar", "Status"}, {"Adicionar", "Status"}, {"Adicionar", "Status"}}));
+                new String[][]{{"Adicionar", "Status Chocolates", "Status Caixas"}, {"Adicionar", "Status"}, {"Adicionar", "Status"}}));
         menuBar.add(criarMenuComSubMenus("Menu Colaboradores",
                 new String[]{"Cliente", "Fornecedor", "Funcionario"},
                 new String[][]{{"Adicionar", "Listar"}, {"Adicionar", "Listar"}, {"Adicionar", "Listar"}}));

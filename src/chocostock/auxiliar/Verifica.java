@@ -137,12 +137,31 @@ public class Verifica {
         }
     }
 
+    public static boolean isDataAmatongas(String dataString) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        try {
+            LocalDate data = LocalDate.parse(dataString, dateFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
     /**
      * Verifica se a string fornecida é uma data no formato "dd/MM/yyyy"
      * e se a data é futura ou não.
      */
     public static boolean isDataFutura(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate data = LocalDate.parse(dataString, dateFormatter);
+            return (!data.isBefore(LocalDate.now()));
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+    public static boolean isDataFuturaAmatongas(String dataString) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
         try {
             LocalDate data = LocalDate.parse(dataString, dateFormatter);
             return (!data.isBefore(LocalDate.now()));
@@ -202,4 +221,11 @@ public class Verifica {
                 isCodigoEstado(bairroCepCidadeEstado[3].split(" - ")[1].trim());
     }
 
+    public static boolean isStatus(String nome) {
+        for (Status status : Status.values()) {
+            if (status.getNome().equalsIgnoreCase(nome))
+                return true;
+        }
+        return false;
+    }
 }

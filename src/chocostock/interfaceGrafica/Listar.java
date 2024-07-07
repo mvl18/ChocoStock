@@ -3,6 +3,7 @@ package chocostock.interfaceGrafica;
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Verifica;
 import chocostock.enums.Cargos;
+import chocostock.enums.Status;
 import chocostock.enums.TiposEmbalagens;
 import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
@@ -26,19 +27,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-// Classe personalizada de DefaultTableModel
-class CustomTableModel extends DefaultTableModel {
-    public CustomTableModel(String[] columnNames, int rowCount) {
-        super(columnNames, rowCount);
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        // Permitir edição apenas nas colunas "Editar" e "Remover"
-        String columnName = getColumnName(column);
-        return columnName.equals("Editar") || columnName.equals("Remover");
-    }
-}
 
 public class Listar<T extends Identificavel> extends JPanel implements ValidadorInput, AddRemovivel {
     private final JTable table;
@@ -50,18 +38,37 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     private final Map<String, Integer> largurasColunasMinimas;
     private final ArrayList<String> camposEditaveis;
 
-    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais, double[] largurasColunasPercent) {
+
+    // Classe personalizada de DefaultTableModel
+    class CustomTableModel extends DefaultTableModel {
+        public CustomTableModel(String[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Permitir edição apenas nas colunas "Editar" e "Remover"
+            String columnName = getColumnName(column);
+            return columnName.equals("Editar") || columnName.equals("Remover");
+        }
+    }
+
+    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) {
         this.nomeObjeto = nomeObjeto;
         this.dataList = dataList;
         this.nomesColunasOficiais = nomesColunasOficiais;
       
         this.largurasColunasMaximas = new HashMap<>();
         largurasColunasMaximas.put("id", 100);
+        largurasColunasMaximas.put("id_cliente", 100);
+        largurasColunasMaximas.put("id_pedido", 100);
         largurasColunasMaximas.put("Editar", 100);
         largurasColunasMaximas.put("Remover", 100);
 
         this.largurasColunasMinimas = new HashMap<>();
         largurasColunasMinimas.put("id", 50);
+        largurasColunasMinimas.put("id_cliente", 50);
+        largurasColunasMinimas.put("id_pedido", 50);
         largurasColunasMinimas.put("Editar", 100);
         largurasColunasMinimas.put("Remover", 100);
 
@@ -102,7 +109,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
       
       
         if (!vazia)
-            setColumnOrder(nomesColunasOficiais, colWidths); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
+            setColumnOrder(nomesColunasOficiais); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
       
         // Adiciona um listener para ajustar a largura das colunas quando a janela for redimensionada
         scrollPane.addComponentListener(new ComponentAdapter() {
@@ -185,27 +192,6 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             }
         }
     }
-
-//    private void setColumnWidthsByPercentage(double[] percentages) {
-//        int tableWidth = table.getWidth();
-//        TableColumnModel columnModel = table.getColumnModel();
-//
-//        int i = 0;
-//        for (; i < percentages.length; i++) {
-//            int width = (int) (300 * percentages[i]);
-//            TableColumn column = columnModel.getColumn(i);
-//            // column.setPreferredWidth(width);
-//            // column.setMinWidth(width);
-//            column.setMaxWidth(width);
-//        }
-////        columnModel.getColumn(i).setPreferredWidth((int) (tableWidth * 0.15));
-////        columnModel.getColumn(i).setMinWidth((int) (tableWidth * 0.15));
-//        columnModel.getColumn(i).setMaxWidth((int) (100));
-////        columnModel.getColumn(i+1).setPreferredWidth((int) (tableWidth * 0.15));
-////        columnModel.getColumn(i+1).setMinWidth((int) (tableWidth * 0.15));
-//        columnModel.getColumn(i+1).setMaxWidth((int) (100));
-//
-//    }
 
     private void setColumnWidths() {
         TableColumnModel columnModel = table.getColumnModel();
@@ -300,7 +286,6 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                     for (Field field : clazz.getDeclaredFields()) {
                                         field.setAccessible(true);
                                         Object oldValue = field.get(objeto);
-                                        ArrayList<String> nomesColunasList = new ArrayList<String>(Arrays.asList(nomesColunasOficiais));
                                         if (camposEditaveis.contains(field.getName())) {
                                             String novoValor = JOptionPane.showInputDialog("Novo valor para " + field.getName() + ":", oldValue);
 
@@ -316,8 +301,9 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                                         case "tipo_embalagem" -> Verifica.isEmbalagem(novoValor);
                                                         case "cargo" -> Verifica.isCargo(novoValor);
                                                         case "endereco" -> Verifica.isEndereco(novoValor);
-                                                        case "data" -> Verifica.isData(novoValor);
-                                                        case "data_entrega", "data_validade" -> Verifica.isDataFutura(novoValor);
+                                                        case "data" -> Verifica.isDataAmatongas(novoValor);
+                                                        case "status" -> Verifica.isStatus(novoValor);
+                                                        case "data_entrega", "data_validade" -> Verifica.isDataFuturaAmatongas(novoValor);
                                                         case "preco_pacote", "preco_total", "salario" -> Verifica.isFloat(novoValor);
                                                         default -> true;
                                                     };
@@ -359,16 +345,17 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             } else if (type == boolean.class || type == Boolean.class) {
                 return Boolean.parseBoolean(value);
             } else if (type == ArrayList.class) {
-                ArrayList<String> list = new ArrayList<>(Arrays.asList(value.split(",")));
-                return list;
+                return new ArrayList<>(Arrays.asList(value.replaceAll("[|]", "").split(",")));
             } else if (type == Endereco.class) {
                 return Endereco.parseEndereco(value);
             } else if (type == LocalDate.class) {
-                return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-dd-MM"));
             } else if (type == Embalagem.class) {
                 return TiposEmbalagens.parseTipoEmbalagem(value);
             } else if (type == Cargos.class) {
                 return Cargos.parseCargo(value);
+            } else if (type == Status.class) {
+                return Status.parseStatus(value);
             }
             else {
                 return value; // Trata outros tipos como string
