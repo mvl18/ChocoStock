@@ -10,6 +10,8 @@ import chocostock.enums.*;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
+import chocostock.itens.suprimentos.Embalagem;
+import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.loja.Loja;
 import chocostock.loja.Pedido;
 
@@ -91,27 +93,6 @@ public class FormularioDeCadastro extends JPanel {
         getPainelRegistro().add(panel);
     }
 
-    public static JScrollPane novoEscolhaProdutos() {
-        String[] nomesProdutos = Stream.concat(Arrays.stream(TiposCaixas.getTipos()),
-                Arrays.stream(TiposChocolates.getTipos())).toArray(String[]::new);
-        JPanel painelProdutos = new JPanel();
-        painelProdutos.setLayout(new BoxLayout(painelProdutos, BoxLayout.Y_AXIS));
-        int numProdutosPorLinha = 3;
-        int numLinhas = (int) Math.ceil(nomesProdutos.length / (double) numProdutosPorLinha);
-        JPanel[] paineis = new JPanel[numLinhas];
-        for (int i = 0; i < numLinhas; i++) {
-            paineis[i] = new JPanel();
-            paineis[i].setLayout(new BoxLayout(paineis[i], BoxLayout.X_AXIS));
-            for (int j = 0; j < numProdutosPorLinha || (i == numLinhas-1 && i*numProdutosPorLinha + j < nomesProdutos.length); j++) {
-                paineis[i].add(new PainelProduto(new Pendente(nomesProdutos[i*numProdutosPorLinha + j])));
-            }
-            painelProdutos.add(paineis[i]);
-        }
-        JScrollPane scrollPane = new JScrollPane(painelProdutos);
-        scrollPane.setPreferredSize(new Dimension(400, 200));
-        return scrollPane;
-    }
-
     public void validaCampo(int i, ValidadorInput.Validador validador) {
         if (validador.isValid(getDadosDosInputs().get(i)))
             getInputs().get(i).setForeground(Color.BLACK);
@@ -123,6 +104,36 @@ public class FormularioDeCadastro extends JPanel {
 
     public void criaObjeto() {
         switch (tag) {
+            case "Pedido" -> {
+                // Cria uma lista dos produtos adicionados no pedido
+                ArrayList<Pendente> pendenteList = new ArrayList<>();
+                for (Component component : this.getInputs()) {
+                    if (component instanceof JScrollPane pane) {
+                        pendenteList = PainelProduto.getPainelProdutos(pane);
+                        break;
+                    }
+                }
+                loja.addPedido(new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
+                        LocalDate.parse(getDadosDosInputs().get(1), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        LocalDate.parse(getDadosDosInputs().get(2), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        Processa.parseBool(getDadosDosInputs().get(3)), Status.parseStatus(getDadosDosInputs().get(4)),
+                        pendenteList, Float.parseFloat(getDadosDosInputs().get(6))));
+            }
+            case "Produto" -> loja.getEstoque().addProduto(new Produto(getDadosDosInputs().get(0),
+                    Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
+                    LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    Integer.parseInt(getDadosDosInputs().get(4)),
+                    TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5))));
+            case "Ingrediente" -> loja.getEstoque().addIngrediente(new Ingrediente(getDadosDosInputs().get(0),
+                    Integer.parseInt(getDadosDosInputs().get(1)), Integer.parseInt(getDadosDosInputs().get(2)),
+                    Float.parseFloat(getDadosDosInputs().get(3)),
+                    LocalDate.parse(getDadosDosInputs().get(4), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    LocalDate.parse(getDadosDosInputs().get(5), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    Fornecedor.parseFornecedor(loja.getEstoque().getFornecedores(), getDadosDosInputs().get(6))));
+            case "Embalagem" -> loja.getEstoque().addEmbalagem(new Embalagem(getDadosDosInputs().get(0),
+                    TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(0)), Integer.parseInt(getDadosDosInputs().get(1)),
+                    Float.parseFloat(getDadosDosInputs().get(2)), Integer.parseInt(getDadosDosInputs().get(3)),
+                    Fornecedor.parseFornecedor(loja.getEstoque().getFornecedores(), getDadosDosInputs().get(4))));
             case "Cliente" -> loja.addCliente(new Cliente(getDadosDosInputs().get(0),
                     getDadosDosInputs().get(1), getDadosDosInputs().get(2),
                     new Endereco(getDadosDosInputs().get(3),
@@ -147,16 +158,6 @@ public class FormularioDeCadastro extends JPanel {
                             Integer.parseInt(getDadosDosInputs().get(8))),
                     Cargos.parseCargo(getDadosDosInputs().get(9)),
                     Float.parseFloat(getDadosDosInputs().get(10))));
-            case "Pedido" -> loja.addPedido(new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
-                    LocalDate.parse(getDadosDosInputs().get(1), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    LocalDate.parse(getDadosDosInputs().get(2), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    Processa.parseBool(getDadosDosInputs().get(3)), Status.parseStatus(getDadosDosInputs().get(4)),
-                    new ArrayList<Pendente>(), Float.parseFloat(getDadosDosInputs().get(6))));
-            case "Produto" -> loja.getEstoque().addProduto(new Produto(getDadosDosInputs().get(0),
-                    Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
-                    LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    Integer.parseInt(getDadosDosInputs().get(4)),
-                    TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5))));
         }
     }
 
@@ -181,10 +182,9 @@ public class FormularioDeCadastro extends JPanel {
                     case "Site" -> validaCampo(i, Verifica::isSite);
                     case "CEP" -> validaCampo(i, Verifica::isCep);
                     case "Número", "Peso", "Quantidade",
-                            "Quantidade por pacote", "ID cliente",
-                            "Valor total" -> validaCampo(i, Verifica::isNatural);
+                            "Quantidade por pacote", "ID cliente" -> validaCampo(i, Verifica::isNatural);
                     case "Quantos kg por Unidade", "Preço",
-                            "Preço por pacote" -> validaCampo(i, Verifica::isFloat);
+                            "Preço por pacote", "Valor total" -> validaCampo(i, Verifica::isFloat);
                     case "Data de Compra", "Data de fabricação",
                             "Data de entrega" -> validaCampo(i, Verifica::isData);
                     case "Data de validade" -> validaCampo(i, Verifica::isDataFutura);
@@ -216,6 +216,9 @@ public class FormularioDeCadastro extends JPanel {
             if(comp instanceof JRadioButton){
                 boolean b = ((JRadioButton) comp).isSelected();
                 dados.add(((Boolean)b).toString());
+            }
+            if(comp instanceof JScrollPane){
+                dados.add("");
             }
         }
         return dados;

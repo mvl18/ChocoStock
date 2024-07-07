@@ -20,7 +20,16 @@ public class Embalagem extends Suprimento implements ValidadorInput, Escolhivel 
     private int quantidade_por_pacote;
     private String cnpj_fornecedor;
 
-    public Embalagem(String nome, Fornecedor fornecedor, TiposEmbalagens tipo_embalagem, float preco_pacote, int quantidade_por_pacote) {
+    public Embalagem(String nome, TiposEmbalagens tipo_embalagem, int quantidade, float preco_pacote,
+                     int quantidade_por_pacote, Fornecedor fornecedor) {
+        super(nome, quantidade, preco_pacote / quantidade_por_pacote, fornecedor);
+        this.preco_pacote = preco_pacote;
+        this.quantidade_por_pacote = quantidade_por_pacote;
+        this.tipo_embalagem = tipo_embalagem;
+    }
+
+    public Embalagem(String nome, Fornecedor fornecedor, TiposEmbalagens tipo_embalagem,
+                     float preco_pacote, int quantidade_por_pacote) {
         super(nome, 0, preco_pacote / quantidade_por_pacote, fornecedor);
         this.tipo_embalagem = tipo_embalagem;
         this.preco_pacote = preco_pacote;

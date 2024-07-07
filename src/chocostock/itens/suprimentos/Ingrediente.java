@@ -23,6 +23,14 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
     private LocalDate validade;
     private String cnpj_fornecedor;
 
+    public Ingrediente(String nome, int quantidade, float unidade, float preco,
+                       LocalDate dataCompra, LocalDate validade, Fornecedor fornecedor) {
+        super(nome, quantidade, preco, fornecedor);
+        this.unidade = unidade;
+        this.dataCompra = dataCompra;
+        this.validade = validade;
+    }
+
     public Ingrediente(String nome, int quantidade, float preco, Fornecedor fornecedor) {
         super(nome, quantidade, preco, fornecedor);
     }
