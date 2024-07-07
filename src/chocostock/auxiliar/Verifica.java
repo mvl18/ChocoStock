@@ -171,7 +171,7 @@ public class Verifica {
 
     public static boolean isCargo(String nomeCargo) {
         for (Cargos tipo : Cargos.values()) {
-            if (tipo.toString().equalsIgnoreCase(nomeCargo)) {
+            if (tipo.toString().equalsIgnoreCase(nomeCargo)) { // esse ignore case buga o sistema
                 return true;
             }
         }
