@@ -37,7 +37,7 @@ public class InterfaceGrafica extends JFrame {
         painelPrincipal = new JPanel(cardLayout);
         add(painelPrincipal, BorderLayout.CENTER);
 
-        adicionarPaginas();
+        painelPrincipal.add(new Inicio(loja), "Inicio");
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -90,48 +90,6 @@ public class InterfaceGrafica extends JFrame {
         }
         menuBar.revalidate();
         menuBar.repaint();
-    }
-
-    public void adicionarPaginas(){
-        painelPrincipal.add(new Inicio(loja), "Inicio");
-        // painelPrincipal.add(new ListarCliente(loja), "ListarCliente");
-//        painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(), new String[]{"id", "nome", "telefone", "email", "pedidos"}), "ListarCliente");
-        // painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), "Listar Pedidos");
-//        painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios()), "ListarFuncionario");
-//        painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores()), "ListarFornecedor");
-//        painelPrincipal.add(NovaPagina.novoIngrediente(loja), "AdicionarIngrediente");
-//        painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), "StatusIngrediente"); // DA ERRO PQ N TEM INGREDIENTES
-//        painelPrincipal.add(NovaPagina.novaEmbalagem(loja), "AdicionarEmbalagem");
-//        painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens()), "StatusEmbalagem");
-        //painelPrincipal.add(new PaginaNovoProduto(loja), "AdicionarProduto");
-//
-//        painelPrincipal.add(NovaPagina.novoPedido(loja), "AdicionarPedido");
-//        painelPrincipal.add(NovaPagina.novoCliente(loja), "AdicionarCliente");
-//        painelPrincipal.add(NovaPagina.novoFornecedor(loja), "AdicionarFornecedor");
-//        painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
-        // painelPrincipal.add(new ListarCliente(loja), "ListarCliente");
-        painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(),
-                new String[]{"id", "nome", "telefone", "email", "endereco", "pedidos"},
-                new int[]{50, 100, 200, 150, 100, 100}), "ListarCliente");
-
-        //painelPrincipal.add(new Listar<>(loja, loja.getPedidos()), "Listar Pedidos");
-
-        painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios(),
-                new String[]{"id", "nome", "cargo", "telefone", "email", "endereco", "salario"},
-                new int[]{50, 100, 200, 150, 100, 100, 100}), "ListarFuncionario");
-        painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
-                new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"},
-                new int[]{50, 120, 105, 150, 100, 100, 100}), "ListarFornecedor");
-        painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
-                new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"},
-                new int[]{50, 100, 200, 150, 100, 100}), "StatusEmbalagem");
-        painelPrincipal.add(new Listar<>(loja, "Produto", loja.getEstoque().getProdutos(),
-                new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"},
-                new int[]{50, 100, 200, 150, 100, 100, 100}), "StatusProduto");
-        painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
-                new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"},
-                new int[]{50, 100, 200, 150, 100, 100, 100}), "Listar Pedidos");
-        // painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), "StatusIngrediente"); // DA ERRO PQ N TEM INGREDIENTES
     }
 
     private JMenuBar criarMenuBar() {

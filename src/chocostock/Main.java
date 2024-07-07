@@ -52,9 +52,14 @@ public class Main implements Escolhivel {
         // EMBALAGENS
         ArrayList<Float> valores = new ArrayList<>(Arrays.asList(1.80f, 3.40f, 3.85f, 4.40f, 6.50f, 4.50f, 12.80f, 9.90f, 5.20f, 4.25f, 4.15f, 7.35f, 9.90f, 18.90f));
         ArrayList<Integer> quantidades = new ArrayList<>(Arrays.asList(1, 1, 1, 1, 1, 50, 300, 300, 50, 100, 1, 1, 10, 50));
-        for (TiposEmbalagens embalagem : TiposEmbalagens.values())
-            loja.getEstoque().addEmbalagem(new Embalagem(embalagem.getNome(), loja.getEstoque().getFornecedores().get(0),
-                    embalagem, valores.remove(0), quantidades.remove(0)));
+        int i = 0;
+        for (TiposEmbalagens embalagem : TiposEmbalagens.values()) {
+            if (embalagem != TiposEmbalagens.INDEFINIDO) {
+                loja.getEstoque().addEmbalagem(new Embalagem(embalagem.getNome(), loja.getEstoque().getFornecedores().get(0),
+                        embalagem, valores.get(i), quantidades.get(i)));
+                i++;
+            }
+        }
 
         // CHOCOLATES
         loja.getEstoque().addProduto(new Chocolate(TiposChocolates.CHOCOLATE_AO_LEITE_INTENSO, 3, 5.50F, null, 1, null, 1, "Bahia"));

@@ -3,9 +3,11 @@ package chocostock.colaboradores;
 import chocostock.auxiliar.Endereco;
 import chocostock.auxiliar.Processa;
 import chocostock.auxiliar.Verifica;
+import chocostock.enums.Estados;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.ValidadorInput;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -80,5 +82,13 @@ public class Fornecedor extends Colaborador implements Identificavel {
         fornecedor.setCnpj(Processa.normalizaNumero(ValidadorInput.getInput(scanner, "CNPJ do fornecedor:", "CNPJ inválido. Insira novamente.", Verifica::isCnpj)));
         fornecedor.setSite(ValidadorInput.getInput(scanner, "Site do fornecedor:", "Site inválido. Insira novamente.", Verifica::isSite));
         return fornecedor;
+    }
+
+    public static Fornecedor parseFornecedor(ArrayList<Fornecedor> fornecedores, String nome) {
+        for (Fornecedor f : fornecedores) {
+            if (f.getNome().equals(nome))
+                return f;
+        }
+        return new Fornecedor();
     }
 }

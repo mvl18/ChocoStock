@@ -22,6 +22,12 @@ public class Pendente implements Nomeavel, AddRemovivel, Iteravel, Serializable 
         this.quantidade = quantidade;
     }
 
+    public Pendente(String nome, int quantidade) {
+        this.nome = nome; // chave primaria
+        this.complementos = new ArrayList<>();
+        this.quantidade = quantidade;
+    }
+
     public Pendente(String nome) {
         this.nome = nome; // chave primaria
         this.complementos = new ArrayList<>();
