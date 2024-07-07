@@ -42,7 +42,28 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
     }
 
     public ArrayList<Produto> getProdutos() {
+        ArrayList<Produto> produtos = new ArrayList<>();
+        for (Produto produto : this.produtos)
+            produtos.add((Produto) produto);
         return produtos;
+    }
+
+    public ArrayList<Caixa> getCaixas() {
+        ArrayList<Caixa> caixas = new ArrayList<>();
+        for (Produto produto : getProdutos()) {
+            if (produto instanceof Caixa)
+                caixas.add((Caixa) produto);
+        }
+        return caixas;
+    }
+
+    public ArrayList<Chocolate> getChocolates() {
+        ArrayList<Chocolate> chocolates = new ArrayList<>();
+        for (Produto produto : getProdutos()) {
+            if (produto instanceof Chocolate)
+                chocolates.add((Chocolate) produto);
+        }
+        return chocolates;
     }
 
     public ArrayList<Ingrediente> getIngredientes() {

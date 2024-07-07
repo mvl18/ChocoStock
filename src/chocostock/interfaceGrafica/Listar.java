@@ -54,7 +54,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         this.nomeObjeto = nomeObjeto;
         this.dataList = dataList;
         this.nomesColunasOficiais = nomesColunasOficiais;
-
+      
         this.largurasColunasMaximas = new HashMap<>();
         largurasColunasMaximas.put("id", 100);
         largurasColunasMaximas.put("Editar", 100);
@@ -71,27 +71,39 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 "peso", "embalagem", "id_pedido", "status", "data_entrega", "preco_total"
                 )); // Exemplo de campos editáveis
 
-        String[] columnNames = getFieldNames(dataList.get(0));
+        String[] columnNames;
+        boolean vazia = false;
+        try {
+            columnNames = getFieldNames(dataList.get(0));
+        } catch (IndexOutOfBoundsException e) {
+            columnNames = nomesColunasOficiais;
+            vazia = true;
+        }
         model = new CustomTableModel(columnNames, 0);
         table = new JTable(model);
-
         table.getTableHeader().setReorderingAllowed(false);
 
-        // Adicionando dados à tabela
-        refreshTable();
 
-        table.getColumn("Editar").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, false));
-        table.getColumn("Remover").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, true));
+        if (!vazia) {
+            // Adicionando dados à tabela
+            refreshTable();
+
+            table.getColumn("Editar").setCellRenderer(new ButtonRenderer());
+            table.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, false));
+            table.getColumn("Remover").setCellRenderer(new ButtonRenderer());
+            table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, true));
+        }
 
         setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(800, 600));
         add(scrollPane, BorderLayout.CENTER);
 
-        setColumnOrder(nomesColunasOficiais); // Muda a ordem das colunas de acordo com nomesColunasOficiais
-
+      
+      
+        if (!vazia)
+            setColumnOrder(nomesColunasOficiais, colWidths); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
+      
         // Adiciona um listener para ajustar a largura das colunas quando a janela for redimensionada
         scrollPane.addComponentListener(new ComponentAdapter() {
             @Override
@@ -99,7 +111,6 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 setColumnWidths();
             }
         });
-
         setColumnWidths();
     }
 

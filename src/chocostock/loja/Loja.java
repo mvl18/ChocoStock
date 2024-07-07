@@ -101,6 +101,15 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return pedidos;
     }
 
+    public void atualizarPedido(Pedido pedidoAtualizado) {
+        for (int i = 0; i < pedidos.size(); i++) {
+            if (pedidos.get(i).getId() == pedidoAtualizado.getId()) {
+                pedidos.set(i, pedidoAtualizado);
+                break;
+            }
+        }
+    }
+
     public void addPedido(Pedido pedido) {
         addObjeto(pedidos, pedido);
     }

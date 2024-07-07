@@ -113,17 +113,26 @@ public class FormularioDeCadastro extends JPanel {
                         break;
                     }
                 }
-                loja.addPedido(new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
+                Pedido pedido = new Pedido(loja.getCliente(getDadosDosInputs().get(0)).getId(),
                         LocalDate.parse(getDadosDosInputs().get(1), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         LocalDate.parse(getDadosDosInputs().get(2), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         Processa.parseBool(getDadosDosInputs().get(3)), Status.parseStatus(getDadosDosInputs().get(4)),
-                        pendenteList, Float.parseFloat(getDadosDosInputs().get(6))));
+                        pendenteList, Float.parseFloat(getDadosDosInputs().get(6)));
+                pedido = loja.getEstoque().retiraProdutosEstoque(pedido);
+                loja.addPedido(pedido);
             }
-            case "Produto" -> loja.getEstoque().addProduto(new Produto(getDadosDosInputs().get(0),
-                    Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
-                    LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    Integer.parseInt(getDadosDosInputs().get(4)),
-                    TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5))));
+            case "Produto" -> {
+                loja.getEstoque().addProduto(new Produto(getDadosDosInputs().get(0),
+                        Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
+                        LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        Integer.parseInt(getDadosDosInputs().get(4)),
+                        TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5))));
+                // Assim que um novo produto é adicionado, o sistema verifica se pode completar algum pedido
+                for (Pedido pedido : loja.getPedidos()) {
+                    pedido = loja.getEstoque().retiraProdutosEstoque(pedido);
+                    loja.atualizarPedido(pedido);
+                }
+            }
             case "Ingrediente" -> loja.getEstoque().addIngrediente(new Ingrediente(getDadosDosInputs().get(0),
                     Integer.parseInt(getDadosDosInputs().get(1)), Integer.parseInt(getDadosDosInputs().get(2)),
                     Float.parseFloat(getDadosDosInputs().get(3)),
@@ -173,7 +182,6 @@ public class FormularioDeCadastro extends JPanel {
 
         registrarBotao.addActionListener(e -> {
             correto = true;
-            System.out.println(getDadosDosInputs());
             for (int i = 0; i < getLabelsDosInputs().size(); i++) {
                 switch (getLabelsDosInputs().get(i)) {
                     case "Telefone" -> validaCampo(i, Verifica::isTelefone);
@@ -186,7 +194,7 @@ public class FormularioDeCadastro extends JPanel {
                     case "Quantos kg por Unidade", "Preço",
                             "Preço por pacote", "Valor total" -> validaCampo(i, Verifica::isFloat);
                     case "Data de Compra", "Data de fabricação",
-                            "Data de entrega" -> validaCampo(i, Verifica::isData);
+                            "Data de entrega", "Data do pedido" -> validaCampo(i, Verifica::isData);
                     case "Data de validade" -> validaCampo(i, Verifica::isDataFutura);
                 }
             }
