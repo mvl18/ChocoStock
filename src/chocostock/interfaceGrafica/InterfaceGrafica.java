@@ -73,7 +73,9 @@ public class InterfaceGrafica extends JFrame {
             case "ListarPedidos" -> painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
                     new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"},
                     new int[]{50, 100, 200, 150, 100, 100, 100}), chavePagina);
-//            case "StatusIngrediente" -> painelPrincipal.add(new Listar<>(loja, loja.getEstoque().getIngredientes()), chavePagina);
+            case "StatusIngrediente" -> painelPrincipal.add(new Listar<>(loja, "Ingrediente", loja.getEstoque().getIngredientes(),
+                    new String[]{"id", "nome", "quantidade", "unidade", "preco", "dataCompra", "validade", "fornecedor"},
+                    new int[]{50, 200, 100, 100, 100, 100, 100}), chavePagina);
             case "StatusEmbalagem" -> painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
                     new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"},
                     new int[]{50, 100, 200, 150, 100, 100}), chavePagina);
