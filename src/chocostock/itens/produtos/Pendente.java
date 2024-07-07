@@ -65,7 +65,6 @@ public class Pendente implements Nomeavel, AddRemovivel, Iteravel, Serializable 
 
     @Override
     public String toString() {
-        return nome + " (" + quantidade + " unidade" + (quantidade > 1 ? "s" : "") + ")" +
-                "\nComplementos: " + listaHorizontalQuebraLinha(complementos);
+        return nome + " (" + quantidade + " unidade" + (quantidade > 1 ? "s" : "") + ")";
     }
 }
