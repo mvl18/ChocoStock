@@ -247,21 +247,27 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return produtoPendente;
     }
 
-    public Loja criarNovaLoja(Scanner scanner) {
-        Loja novaLoja = new Loja();
-        // Solicitação do nome da loja
-        novaLoja.setNome(ValidadorInput.getInput(scanner, "Nome do loja: ", "Nome inválido.", Verifica::isNome));
-        // Solicitação da descrição da loja
-        novaLoja.setDescricao(ValidadorInput.getInput(scanner, "Descrição da loja: ", "Nome inválido.", input -> true));
-        // Solicitação do telefone da loja
-        novaLoja.setTelefone(ValidadorInput.getInput(scanner, "Telefone da loja: ", "Insira um número válido, não esqueça o DDD!",
-                Verifica::isTelefone).replaceAll("\\D", ""));
-        // Solicitação do endereço da loja
-        Endereco endereco = new Endereco();
-        novaLoja.setEndereco(endereco.criaEndereco(scanner));
-        System.out.println("Loja " + novaLoja.getNome() + " criada com sucesso!");
-        System.out.println("\n");
+    public Loja criarNovaLoja() {
+        Endereco endereco = new Endereco(2023, "13083898", "Alan Turing", "Cidade Universitária", "Campinas", Estados.SP);
+        return new Loja("ChocoStock", "O doce controle de vendas e estoque", "2023322000", endereco);
 
-        return novaLoja;
     }
+
+//    public Loja criarNovaLoja(Scanner scanner) {
+//        Loja novaLoja = new Loja();
+//        // Solicitação do nome da loja
+//        novaLoja.setNome(ValidadorInput.getInput(scanner, "Nome do loja: ", "Nome inválido.", Verifica::isNome));
+//        // Solicitação da descrição da loja
+//        novaLoja.setDescricao(ValidadorInput.getInput(scanner, "Descrição da loja: ", "Nome inválido.", input -> true));
+//        // Solicitação do telefone da loja
+//        novaLoja.setTelefone(ValidadorInput.getInput(scanner, "Telefone da loja: ", "Insira um número válido, não esqueça o DDD!",
+//                Verifica::isTelefone).replaceAll("\\D", ""));
+//        // Solicitação do endereço da loja
+//        Endereco endereco = new Endereco();
+//        novaLoja.setEndereco(endereco.criaEndereco(scanner));
+//        System.out.println("Loja " + novaLoja.getNome() + " criada com sucesso!");
+//        System.out.println("\n");
+//
+//        return novaLoja;
+//    }
 }
