@@ -46,10 +46,31 @@ public class Persistencia {
         }
         catch (FileNotFoundException e) {
             System.out.println("Criando nova loja!");
-            loja = new Loja().criarNovaLoja(scanner);
+            loja = new Loja().criarNovaLoja();
+        }
+        catch (InvalidClassException ice) {
+            // Caso a versão da classe serializada seja incompatível
+            System.err.println("Erro ao carregar a loja: versão incompatível da classe serializada.");
+            System.err.println("Excluindo o arquivo .dat anterior. E iniciando loja vazia");
+            File arquivoLoja = new File(DIRETORIO_BANCO + "/" + ARQUIVO_LOJA);
+            File arquivoIDs = new File(DIRETORIO_BANCO + "/" + ARQUIVO_IDS);
+
+            if (arquivoLoja.exists()) {
+                boolean delLoja = arquivoLoja.delete(); // Exclui o arquivo .dat anterior
+                if (!delLoja) {
+                    System.err.println("Falha ao excluir o arquivo loja.dat");
+                }
+            }
+            if (arquivoIDs.exists()) {
+                boolean delIDs = arquivoIDs.delete(); // Exclui o arquivo .dat anterior
+                if (!delIDs) {
+                    System.err.println("Falha ao excluir o arquivo ids.dat");
+                }
+            }
+            loja = new Loja().criarNovaLoja(); // Cria uma nova loja vazia
         }
         catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erro ao salvar a loja: " + e.getMessage());
+            System.err.println("Erro ao carregar a loja: " + e.getMessage());
         }
         return loja;
     }
