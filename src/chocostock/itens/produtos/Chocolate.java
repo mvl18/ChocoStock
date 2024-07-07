@@ -23,11 +23,20 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
     private ArrayList<TiposComplementos> complementos;
     private String origem_cacau;
 
-    public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem, int lote, String origem_cacau) {
+    public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso,
+                     TiposEmbalagens embalagem, int lote, String origem_cacau) {
         super(tipo.getNome(), quantidade, preco, validade, peso, embalagem);
         this.lote = lote;
         this.complementos = new ArrayList<>();
         this.origem_cacau = origem_cacau;
+    }
+
+    public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso,
+                     TiposEmbalagens embalagem, int lote) {
+        super(tipo.getNome(), quantidade, preco, validade, peso, embalagem);
+        this.lote = lote;
+        this.complementos = new ArrayList<>();
+        this.origem_cacau = "";
     }
 
     public Chocolate(TiposChocolates tipo, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem, int lote, ArrayList<TiposComplementos> complementos, String origem_cacau) {
