@@ -125,7 +125,7 @@ public class Main implements Escolhivel {
         Loja lojaCarregada = Persistencia.carregarLoja(scanner);
 
         //COMENTAR APÓS PRIMEIRA VEZ
-        instancia(lojaCarregada);
+        // instancia(lojaCarregada);
 
         new InterfaceGrafica(lojaCarregada);
         Sistema sistema = new Sistema(scanner, lojaCarregada);
