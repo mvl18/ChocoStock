@@ -17,7 +17,8 @@ public class Caixa extends Produto implements ValidadorInput, Escolhivel {
     private TiposCaixas tipo;
     private int lote;
 
-    public Caixa(TiposCaixas tipo, int quantidade, float preco, LocalDate validade, int peso, TiposEmbalagens embalagem, int lote) {
+    public Caixa(TiposCaixas tipo, int quantidade, float preco, LocalDate validade, int peso,
+                 TiposEmbalagens embalagem, int lote) {
         super(tipo.getNome(), quantidade, preco, validade, peso, embalagem);
         this.tipo = tipo;
         this.lote = lote;

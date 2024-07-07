@@ -7,6 +7,7 @@ import chocostock.interfaces.Nomeavel;
  * Enumera todos os tipos de chocolate que a fábrica produz.
  */
 public enum TiposChocolates implements Identificavel, Nomeavel {
+    INDEFINIDO(-1, ""),
     CHOCOLATE_AO_LEITE_CARAMELIZADO(1, "Chocolate ao leite caramelizado"),
     CHOCOLATE_AO_LEITE_INTENSO(2, "Chocolate ao leite intenso"),
     CHOCOLATE_INTENSO(3, "Chocolate intenso"),
@@ -39,5 +40,13 @@ public enum TiposChocolates implements Identificavel, Nomeavel {
             tipos[i] = TiposChocolates.values()[i].getNome();
         }
         return tipos;
+    }
+
+    public static TiposChocolates parseChocolate(String nome) {
+        for (TiposChocolates caixa : TiposChocolates.values()) {
+            if (caixa.getNome().equals(nome))
+                return caixa;
+        }
+        return INDEFINIDO;
     }
 }

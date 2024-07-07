@@ -169,7 +169,6 @@ public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Ser
         System.out.println();
     }
 
-
     @Override
     public String toString() {
         return "--- ESTOQUE ---" +

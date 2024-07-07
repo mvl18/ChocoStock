@@ -7,6 +7,7 @@ import chocostock.interfaces.Nomeavel;
  * - `TiposCaixas`: Enumera todos os tipos de caixa que a fábrica vende.
  */
 public enum TiposCaixas implements Identificavel, Nomeavel {
+    INDEFINIDO(-1, ""),
     CAIXA_MINI_TABLETES_70(1, "Caixa mini tabletes"),
     CAIXA_BARRAS_AO_LEITE_CARAMELIZADO_40(2, "Caixa barras ao leite caramelizado"),
     CAIXA_ASORTI_P(3, "Caixa sortida P"),
@@ -41,5 +42,13 @@ public enum TiposCaixas implements Identificavel, Nomeavel {
             tipos[i] = TiposCaixas.values()[i].getNome();
         }
         return tipos;
+    }
+
+    public static TiposCaixas parseCaixa(String nome) {
+        for (TiposCaixas caixa : TiposCaixas.values()) {
+            if (caixa.getNome().equals(nome))
+                return caixa;
+        }
+        return INDEFINIDO;
     }
 }

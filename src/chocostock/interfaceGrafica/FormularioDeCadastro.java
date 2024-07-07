@@ -8,6 +8,8 @@ import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
 import chocostock.enums.*;
 import chocostock.interfaces.ValidadorInput;
+import chocostock.itens.produtos.Caixa;
+import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
 import chocostock.itens.suprimentos.Embalagem;
@@ -122,11 +124,23 @@ public class FormularioDeCadastro extends JPanel {
                 loja.addPedido(pedido);
             }
             case "Produto" -> {
-                loja.getEstoque().addProduto(new Produto(getDadosDosInputs().get(0),
-                        Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
-                        LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        Integer.parseInt(getDadosDosInputs().get(4)),
-                        TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5))));
+                // Se for caixa
+                if (TiposCaixas.parseCaixa(getDadosDosInputs().get(0)) != TiposCaixas.INDEFINIDO) {
+                    Caixa caixa = new Caixa(TiposCaixas.parseCaixa(getDadosDosInputs().get(0)),
+                            Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
+                            LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            Integer.parseInt(getDadosDosInputs().get(4)), TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5)),
+                            1);
+                    loja.getEstoque().addProduto(caixa);
+                }
+                else {
+                    Chocolate chocolate = new Chocolate(TiposChocolates.parseChocolate(getDadosDosInputs().get(0)),
+                            Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
+                            LocalDate.parse(getDadosDosInputs().get(3), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            Integer.parseInt(getDadosDosInputs().get(4)), TiposEmbalagens.parseTipoEmbalagem(getDadosDosInputs().get(5)),
+                            1);
+                    loja.getEstoque().addProduto(chocolate);
+                }
                 // Assim que um novo produto é adicionado, o sistema verifica se pode completar algum pedido
                 for (Pedido pedido : loja.getPedidos()) {
                     pedido = loja.getEstoque().retiraProdutosEstoque(pedido);
@@ -190,7 +204,7 @@ public class FormularioDeCadastro extends JPanel {
                     case "Site" -> validaCampo(i, Verifica::isSite);
                     case "CEP" -> validaCampo(i, Verifica::isCep);
                     case "Número", "Peso", "Quantidade",
-                            "Quantidade por pacote", "ID cliente" -> validaCampo(i, Verifica::isNatural);
+                            "Quantidade por pacote", "ID cliente", "Lote" -> validaCampo(i, Verifica::isNatural);
                     case "Quantos kg por Unidade", "Preço",
                             "Preço por pacote", "Valor total" -> validaCampo(i, Verifica::isFloat);
                     case "Data de Compra", "Data de fabricação",
