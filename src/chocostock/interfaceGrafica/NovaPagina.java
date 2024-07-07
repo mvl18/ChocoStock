@@ -33,9 +33,12 @@ public class NovaPagina {
                 case "Cliente" -> f.addInputComponent(new JComboBox<>(loja.arrayClientes()), atributo);
                 case "Produtos" -> f.addInputComponent(PainelProduto.novoEscolhaProdutos(), atributo);
                 case "Data de fabricação" -> f.addInputComponent(new Placeholder("DD/MM/YYYY"), atributo);
+                case "Data do pedido" -> f.addInputComponent(new Placeholder("DD/MM/YYYY"), atributo);
                 case "Data de entrega" -> f.addInputComponent(new Placeholder("DD/MM/YYYY"), atributo);
                 case "Data de validade" -> f.addInputComponent(new Placeholder("DD/MM/YYYY"), atributo);
                 case "Data de compra" -> f.addInputComponent(new Placeholder("DD/MM/YYYY"), atributo);
+                case "Nome produto" -> f.addInputComponent(new JComboBox<>(Stream.concat(Arrays.stream(TiposCaixas.getTipos()),
+                        Arrays.stream(TiposChocolates.getTipos())).toArray()), atributo);
                 default -> f.addInputComponent(new JTextField(), atributo);
             }
         }
@@ -47,7 +50,7 @@ public class NovaPagina {
     public static FormularioDeCadastro novoPedido(Loja loja) {
         NovaPagina.loja = loja;
         return generico("Novo Pedido", "Pedido",
-                new String[]{"Cliente", "Data de fabricação",
+                new String[]{"Cliente", "Data do pedido",
                 "Data de entrega", "Pago", "Status", "Produtos", "Valor total"});
     }
 
@@ -75,7 +78,7 @@ public class NovaPagina {
     public static FormularioDeCadastro novoProduto(Loja loja) {
         NovaPagina.loja = loja;
         return generico("Novo Produto", "Produto",
-                new String[]{"Nome", "Quantidade", "Preço",
+                new String[]{"Nome produto", "Quantidade", "Preço",
                         "Data de validade", "Peso", "Tipo embalagem"});
     }
 

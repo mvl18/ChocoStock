@@ -49,27 +49,35 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         this.nomesColunasOficiais = nomesColunasOficiais;
         this.colWidths = colWidths;  // Armazene as larguras das colunas
         //nomesColunas += {"Editar", "Remover"};
-        String[] columnNames = getFieldNames(dataList.get(0));
+        String[] columnNames;
+        boolean vazia = false;
+        try {
+            columnNames = getFieldNames(dataList.get(0));
+        } catch (IndexOutOfBoundsException e) {
+            columnNames = nomesColunasOficiais;
+            vazia = true;
+        }
         model = new CustomTableModel(columnNames, 0);
         table = new JTable(model);
-
         table.getTableHeader().setReorderingAllowed(false);
 
+        if (!vazia) {
+            // Adicionando dados à tabela
+            refreshTable();
 
-        // Adicionando dados à tabela
-        refreshTable();
-
-        table.getColumn("Editar").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, false));
-        table.getColumn("Remover").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, true));
+            table.getColumn("Editar").setCellRenderer(new ButtonRenderer());
+            table.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, false));
+            table.getColumn("Remover").setCellRenderer(new ButtonRenderer());
+            table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, true));
+        }
 
         setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(800, 600));
         add(scrollPane, BorderLayout.CENTER);
 
-        setColumnOrder(nomesColunasOficiais, colWidths); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
+        if (!vazia)
+            setColumnOrder(nomesColunasOficiais, colWidths); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
     }
 
     public void refreshTable() {
