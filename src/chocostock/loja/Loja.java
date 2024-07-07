@@ -21,7 +21,7 @@ import java.util.Scanner;
  * "selecionaCaixa", "selecionaBarra", "estocarIngrediente",
  * "novoCliente", "novoPedido".
  */
-public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, ValidadorInput, Serializable {
+public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private String nome;
@@ -247,6 +247,7 @@ public class Loja implements AddRemovivel, Criavel, Escolhivel, Iteravel, Valida
         return produtoPendente;
     }
 
+    // Cria loja vazia
     public Loja criarNovaLoja() {
         Endereco endereco = new Endereco(2023, "13083898", "Alan Turing", "Cidade Universitária", "Campinas", Estados.SP);
         return new Loja("ChocoStock", "O doce controle de vendas e estoque", "2023322000", endereco);

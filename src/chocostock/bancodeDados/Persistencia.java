@@ -54,6 +54,7 @@ public class Persistencia {
             System.err.println("Excluindo o arquivo .dat anterior. E iniciando loja vazia");
             File arquivoLoja = new File(DIRETORIO_BANCO + "/" + ARQUIVO_LOJA);
             File arquivoIDs = new File(DIRETORIO_BANCO + "/" + ARQUIVO_IDS);
+
             if (arquivoLoja.exists()) {
                 boolean delLoja = arquivoLoja.delete(); // Exclui o arquivo .dat anterior
                 if (!delLoja) {

@@ -3,12 +3,10 @@ package chocostock;
 import chocostock.colaboradores.Cliente;
 import chocostock.colaboradores.Fornecedor;
 import chocostock.colaboradores.Funcionario;
-import chocostock.interfaces.Escolhivel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.suprimentos.Embalagem;
 import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.loja.Loja;
-import chocostock.interfaces.Criavel;
 import chocostock.loja.Pedido;
 
 import java.util.Scanner;
@@ -26,7 +24,7 @@ import static chocostock.loja.Pedido.cancelaPedido;
  * - Fornecer métodos de interação com a loja (instância da classe Loja) para adicionar pedidos,
  * clientes, fornecedores e ingredientes, e para listar os pedidos, clientes e fornecedores existentes.
  */
-public class Sistema implements Criavel, ValidadorInput {
+public class Sistema implements ValidadorInput {
 
     private final Scanner input;
     private String msg;

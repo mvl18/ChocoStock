@@ -25,7 +25,7 @@ import java.util.Scanner;
  * "statusIngredientes", "retiraProdutoEstoque", "estocarCliente",
  * "estocarEmbalagem" e o método privado "meioseProduto".
  */
-public class Estoque implements AddRemovivel, Criavel, Escolhivel, Iteravel, Serializable {
+public class Estoque implements AddRemovivel, Escolhivel, Iteravel, Serializable {
     private ArrayList<Produto> produtos;
     private final ArrayList<Ingrediente> ingredientes;
     private final ArrayList<Item> equipamentos;
