@@ -31,7 +31,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     private final JTable table;
     private final DefaultTableModel model;
     private final String nomeObjeto;
-    private final ArrayList<T> dataList;
+    private final ArrayList<T> listaDados;
     private final Map<String, Integer> largurasColunasMaximas;
     private final Map<String, Integer> largurasColunasMinimas;
     private final ArrayList<String> camposEditaveis;
@@ -39,8 +39,8 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
 
     // Classe personalizada de DefaultTableModel
     static class CustomTableModel extends DefaultTableModel {
-        public CustomTableModel(String[] columnNames, int rowCount) {
-            super(columnNames, rowCount);
+        public CustomTableModel(String[] nomesColunas, int rowCount) {
+            super(nomesColunas, rowCount);
         }
 
         @Override
@@ -51,9 +51,9 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         }
     }
 
-    public Listar(String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) {
+    public Listar(String nomeObjeto, ArrayList<T> listaDados, String[] nomesColunasOficiais) {
         this.nomeObjeto = nomeObjeto;
-        this.dataList = dataList;
+        this.listaDados = listaDados;
 
         this.largurasColunasMaximas = new HashMap<>();
         largurasColunasMaximas.put("id", 100);
@@ -75,15 +75,15 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 "peso", "id_pedido", "status", "data_entrega", "preco_total"
                 )); // Exemplo de campos editáveis
 
-        String[] columnNames;
+        String[] nomesColunas;
         boolean vazia = false;
         try {
-            columnNames = getFieldNames(dataList.get(0));
+            nomesColunas = getNomesCampos(listaDados.get(0));
         } catch (IndexOutOfBoundsException e) {
-            columnNames = nomesColunasOficiais;
+            nomesColunas = nomesColunasOficiais;
             vazia = true;
         }
-        model = new CustomTableModel(columnNames, 0);
+        model = new CustomTableModel(nomesColunas, 0);
         table = new JTable(model);
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -106,34 +106,34 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
       
       
         if (!vazia)
-            setColumnOrder(nomesColunasOficiais); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
+            setOrdemColunas(nomesColunasOficiais); // muda a ordem das colunas de acordo com nomesColunasOficiais BUG -> falta melhorar
       
         // Adiciona um listener para ajustar a largura das colunas quando a janela for redimensionada
         scrollPane.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                setColumnWidths();
+                setLargurasColunas();
             }
         });
-        setColumnWidths();
+        setLargurasColunas();
     }
 
     public void refreshTable() {
         model.setRowCount(0); // Limpa os dados existentes
-        for (T item : dataList) {
-            Object[] row = getFieldValues(item);
+        for (T item : listaDados) {
+            Object[] row = getValoresCampos(item);
             model.addRow(row);
         }
     }
 
-    private String[] getFieldNames(T obj) {
+    private String[] getNomesCampos(T obj) {
         ArrayList<String> nomes = new ArrayList<>();
-        Class<T> clazz = (Class<T>) obj.getClass();
+        Class<?> clazz = obj.getClass();
         while (clazz != null) {
             for (Field field : clazz.getDeclaredFields()) {
                 nomes.add(field.getName());
             }
-            clazz = (Class<T>) clazz.getSuperclass();
+            clazz = clazz.getSuperclass();
         }
         nomes.add("Editar");
         nomes.add("Remover");
@@ -141,7 +141,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     }
 
     // Obtém os valores dos campos de um objeto, incluindo os da superclasse
-    private Object[] getFieldValues(T obj) {
+    private Object[] getValoresCampos(T obj) {
         ArrayList<Object> values = new ArrayList<>();
         Class<?> clazz = obj.getClass();
         try {
@@ -153,14 +153,14 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                 clazz = clazz.getSuperclass();
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            System.err.println("Erro: " + e);
         }
         values.add("Editar");
         values.add("❌");
         return values.toArray(new Object[0]);
     }
 
-    private void setColumnOrder(String[] order) {
+    private void setOrdemColunas(String[] order) {
         TableColumnModel columnModel = table.getColumnModel();
         ArrayList<String> orderList = new ArrayList<>(Arrays.asList(order));
 
@@ -189,7 +189,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         }
     }
 
-    private void setColumnWidths() {
+    private void setLargurasColunas() {
         TableColumnModel columnModel = table.getColumnModel();
 
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
@@ -210,17 +210,6 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         }
     }
 
-
-
-
-
-
-
-
-
-
-    // FALTA FAZER ESSES BOTOES FUNCIONAREM PRA QUALQUER LISTA DE COISA
-
     // Renderer for the buttons
     static class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
@@ -237,11 +226,11 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     class ButtonEditor extends DefaultCellEditor {
         private final JButton button;
         private boolean isPushed;
-        private final Listar listarPanel;
+        private final Listar<T> listarPanel;
         private final boolean isRemoveButton;
         private int row;
 
-        public ButtonEditor(JCheckBox checkBox, Listar listarPanel, boolean isRemoveButton) {
+        public ButtonEditor(JCheckBox checkBox, Listar<T> listarPanel, boolean isRemoveButton) {
             super(checkBox);
             this.listarPanel = listarPanel;
             this.isRemoveButton = isRemoveButton;
@@ -268,11 +257,11 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                     int objectId = (int) model.getValueAt(modelRow, table.getColumn("id").getModelIndex());
 
                     if (isRemoveButton) {
-                        removeObjetoPorId(objectId, dataList);
+                        removeObjetoPorId(objectId, listaDados);
                         listarPanel.refreshTable();
                         JOptionPane.showMessageDialog(button, nomeObjeto + " removido: " + objectId);
                     } else {
-                        T objeto = getObjetoPorId(objectId, dataList);
+                        T objeto = getObjetoPorId(objectId, listaDados);
                         if (objeto != null) {
                             try {
                                 Class<?> clazz = objeto.getClass();
@@ -295,9 +284,9 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                                         case "tipo_embalagem" -> Verifica.isEmbalagem(novoValor);
                                                         case "cargo" -> Verifica.isCargo(novoValor);
                                                         case "endereco" -> Verifica.isEndereco(novoValor);
-                                                        case "data" -> Verifica.isDataAmatongas(novoValor);
+                                                        case "data" -> Verifica.isDataEUA(novoValor);
                                                         case "status" -> Verifica.isStatus(novoValor);
-                                                        case "data_entrega", "data_validade" -> Verifica.isDataFuturaAmatongas(novoValor);
+                                                        case "data_entrega", "data_validade" -> Verifica.isDataFuturaEUA(novoValor);
                                                         case "preco_pacote", "preco_total", "salario" -> Verifica.isFloat(novoValor);
                                                         default -> true;
                                                     };
@@ -316,7 +305,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
                                 listarPanel.refreshTable();
                                 JOptionPane.showMessageDialog(button,  nomeObjeto + " atualizado: " + objectId);
                             } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                                System.err.println("Erro: " + e);
                             }
                         }
                     }

@@ -8,13 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 public class PainelProduto extends JPanel {
-    private String nome;
-    private JSpinner spinnerQuantidade;
+    private final String nome;
+    private final JSpinner spinnerQuantidade;
 
     public PainelProduto(String nome) {
         this.nome = nome;

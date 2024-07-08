@@ -55,10 +55,6 @@ public class FormularioDeCadastro extends JPanel {
         return painelRegistro;
     }
 
-    public Font getFontePequena() {
-        return fontePequena;
-    }
-
     public ArrayList<JComponent> getInputs() {
         return inputs;
     }

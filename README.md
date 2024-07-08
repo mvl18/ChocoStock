@@ -1,7 +1,7 @@
 ***
 # **ChocoStock - O doce controle de vendas e estoque**
 ## Descrição
-- Este é um projeto de um sistema de controle de estoque e vendas para uma fábrica de chocolate, desenvolvido em Java como parte de um Projeto Prático da matéria **MC302 - Programação Orientada a Objetos do Instituto de Computação da UNICAMP** no ano de 2024. O sistema permite gerenciar o estoque de produtos da fábrica, realizar vendas e controlar o fluxo de entrada e saída de produtos.
+- Este é um projeto de um sistema de controle de estoque e vendas para uma fábrica de chocolate, desenvolvido em Java como parte de um Projeto Prático da matéria **MC322 - Programação Orientada a Objetos do Instituto de Computação da UNICAMP** no ano de 2024. O sistema permite gerenciar o estoque de produtos da fábrica, realizar vendas e controlar o fluxo de entrada e saída de produtos.
 
 ## Desenvolvedores
 - [Ainaras Marão](https://github.com/MaraoLT) - 182338
@@ -71,7 +71,7 @@ Este sistema pode ser utilizado no cotidiano da fábrica de chocolate para reali
 - `Nomeavel`: A interface Nomeavel define o contrato para classes que possuem um método para obter um nome.
 - `ValidadorInput`: Interface que define um método padrão para obter entrada do usuário com validação. Também define uma interface interna para validadores de entrada.
 
-![Diagrama UML](imagens/ChocoStock_UML_Transparent.png){#figura1}
+![Diagrama UML](imagens/ChocoStock_UML_Transparent.png)
 
 ## Heranças e Relações
 O projeto utiliza herança e relações entre as classes para organizar e facilitar o desenvolvimento do sistema:
@@ -96,6 +96,5 @@ Para utilizar este sistema, siga os passos abaixo:
 Contribuições são bem-vindas! Se você identificar algum problema ou tiver sugestões de melhorias, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
 ## Futuro do projeto
-- [ ] Implementar interface gráfica.
-- [ ] Implementar a classe Insumos, que abrangerá os gastos da fábrica com toda a matéria prima, pessoal, energia, água...
-- [ ] Implementar a atualização de pedidos, para, por exemplo, ser possível cancelar um pedido.
+- [X] Implementação da interface gráfica.
+- [X] Implementação da atualização de pedidos para, por exemplo, ser possível cancelar um pedido.

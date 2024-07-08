@@ -94,7 +94,7 @@ public class InterfaceGrafica extends JFrame {
         JButton inicioButton = new JButton("Início");
         inicioButton.addActionListener(e -> alterarPagina("Inicio"));
         menuBar.add(inicioButton);
-        menuBar.add(criarMenu("Menu Pedidos", new String[]{"Adicionar Pedido", "Listar Pedidos"}));
+        menuBar.add(criarMenu(new String[]{"Adicionar Pedido", "Listar Pedidos"}));
         menuBar.add(criarMenuComSubMenus("Menu Estoque",
                 new String[]{"Produto", "Ingrediente", "Embalagem"},
                 new String[][]{{"Adicionar", "Status Chocolates", "Status Caixas"}, {"Adicionar", "Status"}, {"Adicionar", "Status"}}));
@@ -104,8 +104,8 @@ public class InterfaceGrafica extends JFrame {
         return menuBar;
     }
 
-    private JMenu criarMenu(String menuName, String[] itemNames) {
-        JMenu menu = new JMenu(menuName);
+    private JMenu criarMenu(String[] itemNames) {
+        JMenu menu = new JMenu("Menu Pedidos");
         for (String itemName : itemNames) {
             JMenuItem menuItem = new JMenuItem(itemName);
             menu.add(menuItem);

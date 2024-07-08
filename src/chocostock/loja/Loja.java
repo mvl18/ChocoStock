@@ -112,10 +112,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput,
         addObjeto(clientes, cliente);
     }
 
-    public void removeClientePorId(int id) {
-        clientes.removeIf(cliente -> cliente.getId() == id);
-    }
-
     public Cliente getClientePorId(int id) {
         for (Cliente cliente : clientes) {
             if (cliente.getId() == id) {
