@@ -67,16 +67,13 @@ public class Inicio extends JPanel {
         esquerda.add(painelProdutos);
         esquerda.add(informacoes);
 
-        ArrayList<String> pedidosPendentes = new ArrayList<String>();
+        ArrayList<String> pedidosPendentes = new ArrayList<>();
         for (Pedido pedido : loja.getPedidos()) {
             if (pedido.getStatus().getNome().equals("Pendente")) {
-                pedidosPendentes.add(String.valueOf(pedido.getId()) + " - Data: " + pedido.getData_entrega());
+                pedidosPendentes.add(pedido.getId() + " - Data: " + pedido.getData_entrega());
             }
         }
         JPanel painelPedidos = criarListaComTitulo("Pedidos Pendentes", pedidosPendentes, Color.BLACK);
-
-//        for (int i = 0; i < 20; i++)
-//            painelPedidos.add(new JLabel(String.valueOf(i)));
 
         JPanel direita = new JPanel();
         direita.setLayout(new BoxLayout(direita, BoxLayout.Y_AXIS));

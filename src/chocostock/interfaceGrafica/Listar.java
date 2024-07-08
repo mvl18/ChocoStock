@@ -9,7 +9,6 @@ import chocostock.interfaces.AddRemovivel;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.suprimentos.Embalagem;
-import chocostock.loja.Loja;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -33,14 +32,13 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     private final DefaultTableModel model;
     private final String nomeObjeto;
     private final ArrayList<T> dataList;
-    private final String[] nomesColunasOficiais;
     private final Map<String, Integer> largurasColunasMaximas;
     private final Map<String, Integer> largurasColunasMinimas;
     private final ArrayList<String> camposEditaveis;
 
 
     // Classe personalizada de DefaultTableModel
-    class CustomTableModel extends DefaultTableModel {
+    static class CustomTableModel extends DefaultTableModel {
         public CustomTableModel(String[] columnNames, int rowCount) {
             super(columnNames, rowCount);
         }
@@ -53,11 +51,10 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         }
     }
 
-    public Listar(Loja loja, String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) {
+    public Listar(String nomeObjeto, ArrayList<T> dataList, String[] nomesColunasOficiais) {
         this.nomeObjeto = nomeObjeto;
         this.dataList = dataList;
-        this.nomesColunasOficiais = nomesColunasOficiais;
-      
+
         this.largurasColunasMaximas = new HashMap<>();
         largurasColunasMaximas.put("id", 100);
         largurasColunasMaximas.put("id_cliente", 100);
@@ -72,7 +69,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
         largurasColunasMinimas.put("Editar", 100);
         largurasColunasMinimas.put("Remover", 100);
 
-        this.camposEditaveis = new ArrayList<String>(Arrays.asList(
+        this.camposEditaveis = new ArrayList<>(Arrays.asList(
                 "nome", "telefone", "email", "endereco", "cnpj", "site", "cargo", "salario", "preco", "quantidade",
                 "quantidade_por_pacote", "preco_pacote", "dataCompra", "validade", // talvez tirar o fornecedor
                 "peso", "id_pedido", "status", "data_entrega", "preco_total"
@@ -96,9 +93,9 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             refreshTable();
 
             table.getColumn("Editar").setCellRenderer(new ButtonRenderer());
-            table.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, false));
+            table.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), this, false));
             table.getColumn("Remover").setCellRenderer(new ButtonRenderer());
-            table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), loja, this, true));
+            table.getColumn("Remover").setCellEditor(new ButtonEditor(new JCheckBox(), this, true));
         }
 
         setLayout(new BorderLayout());
@@ -130,7 +127,6 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     }
 
     private String[] getFieldNames(T obj) {
-        Field[] fields = obj.getClass().getDeclaredFields();
         ArrayList<String> nomes = new ArrayList<>();
         Class<T> clazz = (Class<T>) obj.getClass();
         while (clazz != null) {
@@ -226,7 +222,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     // FALTA FAZER ESSES BOTOES FUNCIONAREM PRA QUALQUER LISTA DE COISA
 
     // Renderer for the buttons
-    class ButtonRenderer extends JButton implements TableCellRenderer {
+    static class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);
         }
@@ -241,14 +237,12 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
     class ButtonEditor extends DefaultCellEditor {
         private final JButton button;
         private boolean isPushed;
-        private Loja loja;
         private final Listar listarPanel;
         private final boolean isRemoveButton;
         private int row;
 
-        public ButtonEditor(JCheckBox checkBox, Loja loja, Listar listarPanel, boolean isRemoveButton) {
+        public ButtonEditor(JCheckBox checkBox, Listar listarPanel, boolean isRemoveButton) {
             super(checkBox);
-            this.loja = loja;
             this.listarPanel = listarPanel;
             this.isRemoveButton = isRemoveButton;
             button = new JButton();
