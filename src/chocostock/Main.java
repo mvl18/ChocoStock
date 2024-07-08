@@ -10,6 +10,7 @@ import chocostock.interfaceGrafica.InterfaceGrafica;
 import chocostock.itens.produtos.Caixa;
 import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.suprimentos.Embalagem;
+import chocostock.itens.suprimentos.Equipamento;
 import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.loja.Loja;
 import chocostock.interfaces.Escolhivel;
@@ -62,6 +63,9 @@ public class Main implements Escolhivel {
             }
         }
 
+        // EQUIPAMENTO
+        Equipamento equipamento = new Equipamento("Batedeira", 1, 1000, loja.getEstoque().getFornecedores().get(1));
+        loja.getEstoque().addEquipamento(equipamento);
         //INGREDIENTE
         loja.getEstoque().addIngrediente(new Ingrediente("Cacau", 1, 4, 4.50F, LocalDate.parse("11/01/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 LocalDate.parse("11/01/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")), fornecedor));

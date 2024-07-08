@@ -9,6 +9,7 @@ import chocostock.itens.produtos.Caixa;
 import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.produtos.Pendente;
 import chocostock.itens.produtos.Produto;
+import chocostock.itens.suprimentos.Equipamento;
 import chocostock.itens.suprimentos.Ingrediente;
 
 import java.io.Serializable;
@@ -418,5 +419,9 @@ public class Estoque implements AddRemovivel, Escolhivel, Iteravel, Serializable
             case 2 -> new Caixa().selecionaCaixa(scanner);
             default -> null;
         };
+    }
+
+    public void addEquipamento(Equipamento equipamento) {
+        addObjeto(equipamentos, equipamento);
     }
 }

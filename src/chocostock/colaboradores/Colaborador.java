@@ -37,10 +37,6 @@ public abstract class Colaborador implements Nomeavel, Escolhivel, ValidadorInpu
         return telefone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }

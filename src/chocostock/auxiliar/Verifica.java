@@ -130,17 +130,17 @@ public class Verifica {
     public static boolean isData(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
-            LocalDate data = LocalDate.parse(dataString, dateFormatter);
+            LocalDate.parse(dataString, dateFormatter);
             return true;
         } catch (DateTimeParseException e) {
             return false;
         }
     }
 
-    public static boolean isDataAmatongas(String dataString) {
+    public static boolean isDataEUA(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            LocalDate data = LocalDate.parse(dataString, dateFormatter);
+            LocalDate.parse(dataString, dateFormatter);
             return true;
         } catch (DateTimeParseException e) {
             return false;
@@ -160,7 +160,8 @@ public class Verifica {
             return false;
         }
     }
-    public static boolean isDataFuturaAmatongas(String dataString) {
+
+    public static boolean isDataFuturaEUA(String dataString) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             LocalDate data = LocalDate.parse(dataString, dateFormatter);
