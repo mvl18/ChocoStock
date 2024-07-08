@@ -138,7 +138,7 @@ public class Verifica {
     }
 
     public static boolean isDataAmatongas(String dataString) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             LocalDate data = LocalDate.parse(dataString, dateFormatter);
             return true;
@@ -161,7 +161,7 @@ public class Verifica {
         }
     }
     public static boolean isDataFuturaAmatongas(String dataString) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             LocalDate data = LocalDate.parse(dataString, dateFormatter);
             return (!data.isBefore(LocalDate.now()));

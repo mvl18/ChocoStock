@@ -74,8 +74,8 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
 
         this.camposEditaveis = new ArrayList<String>(Arrays.asList(
                 "nome", "telefone", "email", "endereco", "cnpj", "site", "cargo", "salario", "preco", "quantidade",
-                "tipo_embalagem", "quantidade_por_pacote", "preco_pacote", "dataCompra", "validade", // talvez tirar o fornecedor
-                "peso", "embalagem", "id_pedido", "status", "data_entrega", "preco_total"
+                "quantidade_por_pacote", "preco_pacote", "dataCompra", "validade", // talvez tirar o fornecedor
+                "peso", "id_pedido", "status", "data_entrega", "preco_total"
                 )); // Exemplo de campos editáveis
 
         String[] columnNames;
@@ -349,7 +349,7 @@ public class Listar<T extends Identificavel> extends JPanel implements Validador
             } else if (type == Endereco.class) {
                 return Endereco.parseEndereco(value);
             } else if (type == LocalDate.class) {
-                return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-dd-MM"));
+                return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             } else if (type == Embalagem.class) {
                 return TiposEmbalagens.parseTipoEmbalagem(value);
             } else if (type == Cargos.class) {
