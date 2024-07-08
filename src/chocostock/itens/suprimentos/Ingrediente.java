@@ -59,6 +59,14 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
         this.unidade = unidade;
     }
 
+    public LocalDate getDataCompra() {
+        return dataCompra;
+    }
+
+    public String getCnpj_fornecedor() {
+        return cnpj_fornecedor;
+    }
+
     public void setDataCompra(LocalDate dataCompra) {
         this.dataCompra = dataCompra;
     }
@@ -95,6 +103,7 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
 
         //DATA DE COMPRA E VALIDADE
         ingrediente.setDataCompra(Escolhivel.escolheData(input, "Digite a data de compra: (dd/mm/yyyy) ", "Digite uma data válida."));
+        ingrediente.setDataCompra(ingrediente.getDataCompra());
         ingrediente.setValidade(Escolhivel.escolheDataFutura(input, "Digite a data de validade: (dd/mm/yyyy) ", "Digite uma data futura válida."));
 
         //FORNECEDOR
@@ -110,6 +119,7 @@ public class Ingrediente extends Suprimento implements ValidadorInput, Escolhive
                     fornecedor = Fornecedor.novoFornecedor(input);
                     estoque.addFornecedor(fornecedor);
                     ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());
+                    ingrediente.setCnpj_fornecedor(ingrediente.getCnpj_fornecedor());
                     break;
                 }
                 ingrediente.setCnpj_fornecedor(fornecedor.getCnpj());

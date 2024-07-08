@@ -105,7 +105,7 @@ public class Chocolate extends Produto implements AddRemovivel, Iteravel, Comple
                     TiposComplementos.values().length));
             chocolate.getComplementos().removeIf(Objects::isNull);
             if (chocolate.getComplementos() == null)
-                chocolate.setComplementos(new ArrayList<TiposComplementos>());
+                chocolate.setComplementos(new ArrayList<>());
         }
         // ORIGEM CACAU
         chocolate.setOrigem_cacau(ValidadorInput.getInput(scanner, "Digite a origem do cacau: ", "Origem inválida, digite uma origem válida.", Verifica::isNome));

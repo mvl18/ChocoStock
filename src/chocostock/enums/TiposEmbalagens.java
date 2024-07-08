@@ -1,6 +1,5 @@
 package chocostock.enums;
 
-import chocostock.auxiliar.Endereco;
 import chocostock.interfaces.Identificavel;
 import chocostock.interfaces.Nomeavel;
 

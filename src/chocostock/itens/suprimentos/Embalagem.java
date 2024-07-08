@@ -71,6 +71,9 @@ public class Embalagem extends Suprimento implements ValidadorInput, Escolhivel 
         return quantidade_por_pacote;
     }
 
+    public String getCnpj_fornecedor() {
+        return cnpj_fornecedor;
+    }
 
     public void setCnpj_fornecedor(String cnpj_fornecedor) {
         this.cnpj_fornecedor = cnpj_fornecedor;
@@ -110,6 +113,7 @@ public class Embalagem extends Suprimento implements ValidadorInput, Escolhivel 
                     fornecedor = Fornecedor.novoFornecedor(input);
                     estoque.addFornecedor(fornecedor);
                     embalagem.setCnpj_fornecedor(fornecedor.getCnpj());
+                    embalagem.setCnpj_fornecedor(embalagem.getCnpj_fornecedor());
                     break;
                 }
                 embalagem.setCnpj_fornecedor(fornecedor.getCnpj());

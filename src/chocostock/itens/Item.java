@@ -1,5 +1,6 @@
 package chocostock.itens;
 
+import chocostock.colaboradores.Fornecedor;
 import chocostock.interfaces.Nomeavel;
 
 import java.io.Serializable;
@@ -14,11 +15,23 @@ public abstract class Item implements Nomeavel, Serializable {
     private String nome;
     private int quantidade;
     private float preco;
+    private final Fornecedor fornecedor;
 
+    public Item(String nome, int quantidade, float preco, Fornecedor fornecedor) {
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        this.fornecedor = fornecedor;
+    }
     public Item(String nome, int quantidade, float preco) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.preco = preco;
+        this.fornecedor = new Fornecedor();
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
     public String getNome() {

@@ -12,11 +12,10 @@ import chocostock.itens.Item;
 public abstract class Suprimento extends Item implements Identificavel {
     private static int id_suprimentos = 100000;
     private final int id;
-    private final Fornecedor fornecedor;
+
     public Suprimento(String nome, int quantidade, float preco, Fornecedor fornecedor) {
-        super(nome, quantidade, preco);
+        super(nome, quantidade, preco, fornecedor);
         this.id = id_suprimentos++;
-        this.fornecedor = fornecedor;
     }
 
     public int getId() {

@@ -26,16 +26,14 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput,
     private static final long serialVersionUID = 1L;
     private String nome;
     private String telefone;
-    private String descricao;
     private Endereco endereco;
     private final ArrayList<Pedido> pedidos;
     private final Estoque estoque;
     private final ArrayList<Cliente> clientes;
     private final ArrayList<Funcionario> funcionarios;
 
-    public Loja(String nome, String descricao, String telefone, Endereco endereco) {
+    public Loja(String nome, String telefone, Endereco endereco) {
         this.nome = nome;
-        this.descricao = descricao;
         this.telefone = telefone;
         this.endereco = endereco;
         this.pedidos = new ArrayList<>();
@@ -58,11 +56,6 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput,
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    // DESCRIÇÃO
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     // TELEFONE
@@ -208,7 +201,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput,
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // Solicita ao usuário que selecione um tipo de caixa
-        produtoPendente.setNome(Escolhivel.escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+        produtoPendente.setNome(Objects.requireNonNull(Escolhivel.escolheObjeto(scanner, TiposCaixas.values(), "Por favor selecione um tipo válido.", "obrigatorio")).getNome());
         // Solicita ao usuário a quantidade desejada da caixa selecionada
         produtoPendente.setQuantidade(Integer.parseInt(ValidadorInput.getInput(scanner, "Quantidade de " + produtoPendente.getNome() + ": ",
                 "Coloque um número inteiro maior que 0", Verifica::isNatural)));
@@ -226,7 +219,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput,
             System.out.println("(" + tipo.getId() + ") - " + tipo.getNome());
         }
         // Solicita ao usuário que selecione um tipo de chocolate
-        produtoPendente.setNome(Escolhivel.escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio").getNome());
+        produtoPendente.setNome(Objects.requireNonNull(Escolhivel.escolheObjeto(scanner, TiposChocolates.values(), "Por favor selecione um tipo válido.", "obrigatorio")).getNome());
 
         // Lista todos os tipos de complementos disponíveis
         for (TiposComplementos complemento : TiposComplementos.values()) {
@@ -250,25 +243,7 @@ public class Loja implements AddRemovivel, Escolhivel, Iteravel, ValidadorInput,
     // Cria loja vazia
     public Loja criarNovaLoja() {
         Endereco endereco = new Endereco(2023, "13083898", "Alan Turing", "Cidade Universitária", "Campinas", Estados.SP);
-        return new Loja("ChocoStock", "O doce controle de vendas e estoque", "2023322000", endereco);
+        return new Loja("ChocoStock", "2023322000", endereco);
 
     }
-
-//    public Loja criarNovaLoja(Scanner scanner) {
-//        Loja novaLoja = new Loja();
-//        // Solicitação do nome da loja
-//        novaLoja.setNome(ValidadorInput.getInput(scanner, "Nome do loja: ", "Nome inválido.", Verifica::isNome));
-//        // Solicitação da descrição da loja
-//        novaLoja.setDescricao(ValidadorInput.getInput(scanner, "Descrição da loja: ", "Nome inválido.", input -> true));
-//        // Solicitação do telefone da loja
-//        novaLoja.setTelefone(ValidadorInput.getInput(scanner, "Telefone da loja: ", "Insira um número válido, não esqueça o DDD!",
-//                Verifica::isTelefone).replaceAll("\\D", ""));
-//        // Solicitação do endereço da loja
-//        Endereco endereco = new Endereco();
-//        novaLoja.setEndereco(endereco.criaEndereco(scanner));
-//        System.out.println("Loja " + novaLoja.getNome() + " criada com sucesso!");
-//        System.out.println("\n");
-//
-//        return novaLoja;
-//    }
 }
