@@ -11,7 +11,6 @@ import chocostock.interfaces.ValidadorInput;
 import chocostock.itens.produtos.Caixa;
 import chocostock.itens.produtos.Chocolate;
 import chocostock.itens.produtos.Pendente;
-import chocostock.itens.produtos.Produto;
 import chocostock.itens.suprimentos.Embalagem;
 import chocostock.itens.suprimentos.Ingrediente;
 import chocostock.loja.Loja;
@@ -22,27 +21,26 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 public class FormularioDeCadastro extends JPanel {
 
-    private Font fonteTitulo = new Font("Tahoma", Font.BOLD, 48);
-    private Font fontePequena = new Font("Tahome", Font.PLAIN, 26);
+    private final Font fonteTitulo = new Font("Tahoma", Font.BOLD, 48);
+    private final Font fontePequena = new Font("Tahome", Font.PLAIN, 26);
     //Componentes
-    private JPanel painelRegistro;
-    private ArrayList<String> labelsDosInputs;
-    private ArrayList<JComponent> inputs;
-    private Loja loja;
-    private String tag;
+    private final JPanel painelRegistro;
+    private final ArrayList<String> labelsDosInputs;
+    private final ArrayList<JComponent> inputs;
+    private final Loja loja;
+    private final String tag;
     private boolean correto = true;
 
     public FormularioDeCadastro(String tag, Loja loja) {
         this.tag = tag;
         this.loja = loja;
         setLayout(new BorderLayout());
-        inputs = new ArrayList<JComponent>();
-        labelsDosInputs = new ArrayList<String>();
+        inputs = new ArrayList<>();
+        labelsDosInputs = new ArrayList<>();
 
         painelRegistro = new JPanel();
         painelRegistro.setLayout(new GridLayout(0, 1, 5, 5));
@@ -67,10 +65,6 @@ public class FormularioDeCadastro extends JPanel {
 
     public ArrayList<String> getLabelsDosInputs() {
         return labelsDosInputs;
-    }
-
-    public void setPainelRegistro(JPanel panel){
-        this.painelRegistro = panel;
     }
 
     public void addTitulo(String titulo) {
@@ -133,6 +127,7 @@ public class FormularioDeCadastro extends JPanel {
                             1);
                     loja.getEstoque().addProduto(caixa);
                 }
+                // Se for chocolate
                 else {
                     Chocolate chocolate = new Chocolate(TiposChocolates.parseChocolate(getDadosDosInputs().get(0)),
                             Integer.parseInt(getDadosDosInputs().get(1)), Float.parseFloat(getDadosDosInputs().get(2)),
@@ -190,9 +185,7 @@ public class FormularioDeCadastro extends JPanel {
         JButton registrarBotao = new JButton("Registrar");
 
         cancelarBotao.setFont(fontePequena);
-        cancelarBotao.addActionListener(e -> {
-            JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado.");
-        });
+        cancelarBotao.addActionListener(e -> JOptionPane.showMessageDialog(getPainelRegistro(), "O registro foi cancelado."));
 
         registrarBotao.addActionListener(e -> {
             correto = true;
@@ -224,7 +217,7 @@ public class FormularioDeCadastro extends JPanel {
     }
 
     public ArrayList<String> getDadosDosInputs(){
-        ArrayList<String> dados = new ArrayList<String>();
+        ArrayList<String> dados = new ArrayList<>();
         String s;
         for(JComponent comp : inputs){
             if(comp instanceof JTextField){
@@ -232,7 +225,7 @@ public class FormularioDeCadastro extends JPanel {
                 dados.add(s);
             }
             if(comp instanceof JComboBox<?>){
-                s = ((JComboBox<?>) comp).getSelectedItem().toString();
+                s = Objects.requireNonNull(((JComboBox<?>) comp).getSelectedItem()).toString();
                 dados.add(s);
             }
             if(comp instanceof JRadioButton){

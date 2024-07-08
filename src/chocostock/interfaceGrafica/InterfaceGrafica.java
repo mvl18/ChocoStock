@@ -60,21 +60,21 @@ public class InterfaceGrafica extends JFrame {
             case "AdicionarFuncionario" -> painelPrincipal.add(NovaPagina.novoFuncionario(loja), "AdicionarFuncionario");
             case "AdicionarIngrediente" -> painelPrincipal.add(NovaPagina.novoIngrediente(loja), chavePagina);
             case "AdicionarEmbalagem" -> painelPrincipal.add(NovaPagina.novaEmbalagem(loja), chavePagina);
-            case "ListarCliente" -> painelPrincipal.add(new Listar<>(loja, "Cliente", loja.getClientes(),
+            case "ListarCliente" -> painelPrincipal.add(new Listar<>("Cliente", loja.getClientes(),
                     new String[]{"id", "nome", "telefone", "email", "endereco", "pedidos"}), chavePagina);
-            case "ListarFuncionario" -> painelPrincipal.add(new Listar<>(loja, "Funcionário", loja.getFuncionarios(),
+            case "ListarFuncionario" -> painelPrincipal.add(new Listar<>("Funcionário", loja.getFuncionarios(),
                     new String[]{"id", "nome", "cargo", "telefone", "email", "endereco", "salario"}), chavePagina);
-            case "ListarFornecedor" -> painelPrincipal.add(new Listar<>(loja, "Fornecedor", loja.getEstoque().getFornecedores(),
+            case "ListarFornecedor" -> painelPrincipal.add(new Listar<>("Fornecedor", loja.getEstoque().getFornecedores(),
                     new String[]{"id", "nome", "cnpj", "telefone", "email", "endereco", "site"}), chavePagina);
-            case "ListarPedidos" -> painelPrincipal.add(new Listar<>(loja, "Pedido", loja.getPedidos(),
+            case "ListarPedidos" -> painelPrincipal.add(new Listar<>("Pedido", loja.getPedidos(),
                     new String[]{"id", "id_cliente", "produtos", "produtos_pendentes", "status", "data_entrega", "preco_total"}), chavePagina);
-            case "StatusIngrediente" -> painelPrincipal.add(new Listar<>(loja, "Ingrediente", loja.getEstoque().getIngredientes(),
+            case "StatusIngrediente" -> painelPrincipal.add(new Listar<>("Ingrediente", loja.getEstoque().getIngredientes(),
                     new String[]{"id", "nome", "quantidade", "unidade", "preco", "dataCompra", "validade", "fornecedor"}), chavePagina);
-            case "StatusEmbalagem" -> painelPrincipal.add(new Listar<>(loja, "Embalagem", loja.getEstoque().getEmbalagens(),
+            case "StatusEmbalagem" -> painelPrincipal.add(new Listar<>("Embalagem", loja.getEstoque().getEmbalagens(),
                     new String[]{"id", "nome", "quantidade", "tipo_embalagem", "quantidade_por_pacote", "preco_pacote"}), chavePagina);
-            case "Status CaixasProduto" -> painelPrincipal.add(new Listar<>(loja, "Caixa", loja.getEstoque().getCaixas(),
+            case "Status CaixasProduto" -> painelPrincipal.add(new Listar<>("Caixa", loja.getEstoque().getCaixas(),
                     new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"}), chavePagina);
-            case "Status ChocolatesProduto" -> painelPrincipal.add(new Listar<>(loja, "Chococlate", loja.getEstoque().getChocolates(),
+            case "Status ChocolatesProduto" -> painelPrincipal.add(new Listar<>("Chococlate", loja.getEstoque().getChocolates(),
                     new String[]{"id", "nome", "quantidade", "validade", "peso", "embalagem", "id_pedido"}), chavePagina);
         }
     }
@@ -102,17 +102,6 @@ public class InterfaceGrafica extends JFrame {
                 new String[]{"Cliente", "Fornecedor", "Funcionario"},
                 new String[][]{{"Adicionar", "Listar"}, {"Adicionar", "Listar"}, {"Adicionar", "Listar"}}));
         return menuBar;
-    }
-
-    private JMenu criarMenuComAcao(String nome, String acao) {
-        JMenu menu = new JMenu(nome);
-        menu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                alterarPagina(acao);
-            }
-        });
-        return menu;
     }
 
     private JMenu criarMenu(String menuName, String[] itemNames) {
